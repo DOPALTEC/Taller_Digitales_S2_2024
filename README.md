@@ -90,13 +90,8 @@ Estos circuitos integrados emplean la tecnología lógica de óxido metálico-se
 
 [4] Texas Instruments. (n.d.). SN54LS00 [Hoja de Datos]. Recuperado de https://www.ti.com/lit/ds/symlink/sn54ls00.pdf
 
-[5] Nexperia. (n.d.). 74HC_HCT [Hoja de Datos]. Recuperado de https://assets.nexperia.com/documents/data-sheet/74HC_HCT.pdf
+[6] ON Semiconductor. (n.d.). 4000 Series CMOS [Hoja de Datos]. Recuperado de https://www.onsemi.com/pdf/datasheet/mc14001b-d.pdf
 
-[6] Texas Instruments. (n.d.). CD4000B CMOS Data Book [Hoja de Datos]. Recuperado de https://www.ti.com/lit/ds/symlink/cd4000.pdf
-
-[7] ON Semiconductor. (n.d.). 4000 Series CMOS [Hoja de Datos]. Recuperado dehttps://www.onsemi.com/pdf/datasheet/mc14001b-d.pdf
-
-[8] Nexperia. (n.d.). HEF4000B Family [Hoja de Datos]. Recuperado de https://assets.nexperia.com/documents/data-sheet/HEF4000B.pdf
 
 
 
