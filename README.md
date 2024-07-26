@@ -82,6 +82,25 @@ Estos son llamados parámetros de voltaje, y especifican los niveles de entrada 
 
 ## 5. Investigue qué son los tiempos de propagación t<sub>PD</sub>, t<sub>PLH</sub>, t<sub>PHL</sub> y los tiempos de transición t<sub>t</sub>, t<sub>tr</sub> y t<sub>f</sub>.
 
+Estos tiempos se subdividen en dos principales:
+
+##Tiempos de Propagación:
+
+### t<sub>PD</sub> (Propagation Delay Time):
+
+- Tiempo que tarda una señal en pasar de la entrada hasta la salida de un circuito. En otras palabras es el tiempo que tarda la señal en cambiar de un estado lógico midiendo desde la entrada hasta otro estado lógico en la salida.
+
+### t<sub>PLH</sub> (Propagation Delay Time, Low-to-High):
+
+- Tiempo en el que tarda la salida en cambiar de un valor lógico en bajo a uno en alto, a partir del momento en el que la entrada ha cambiado.
+
+### t<sub>PHL</sub> (Propagation Delay Time, High-to-Low):
+
+- Tiempo que tarda la salida de un circuito en cambiar de un nivel alto a uno bajo despues de detectar un cambio en la entrada.
+
+##Tiempos de Transición: 
+
+
 ## 6. Investigue qué significa el término fan-out y cuáles valores típicos se encuentran en las familias TTL y CMOS.
 
 ## 7. Para cada una de las variantes TTL y CMOS especifique en una tabla:
