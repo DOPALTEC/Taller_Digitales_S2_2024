@@ -7,6 +7,14 @@
 
 ## 4. Investigue el significado de los parámetros V<sub>IL</sub>, V<sub>IH</sub>, V<sub>OL</sub>, V<sub>OH</sub>, V<sub>IK</sub>, V<sub>OK</sub>.
 
-## 5. Investigue qué son los tiempos de propagación \( t_{PD} \), \( t_{PLH} \) y \( t_{PHL} \), y los tiempos de transición \( t_t \), \( t_r \) y \( t_f \).
+## 5. Investigue qué son los tiempos de propagación t<sub>PD</sub>, t<sub>PLH</sub>, t<sub>PHL</sub> y los tiempos de transición t<sub>t</sub>, t<sub>tr</sub> y t<sub>f</sub>.
+
+## 6. Investigue qué significa el término fan-out y cuáles valores típicos se encuentran en las familias TTL y CMOS.
+
+## 7. Para cada una de las variantes TTL y CMOS especifique en una tabla:
+
+### a) rango de tensión eléctrica de alimentación V<sub>CC</sub> o V<sub>DD</sub> y V<sub>SS</sub>
+
+
 
 
