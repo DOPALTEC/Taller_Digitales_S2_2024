@@ -15,6 +15,12 @@
 
 ### a) rango de tensión eléctrica de alimentación V<sub>CC</sub> o V<sub>DD</sub> y V<sub>SS</sub>
 
+### b) rango de tensiones de entrada y salida
+
+### c) tiempos de propagación y transición
+
+## 8. Revise la hoja de datos de los circuitos integrados 74∗00,74∗02,74∗04,74∗14, 4001, 4011, 4069 y 40106. Resuma para qué sirve cada uno.
+
 
 
 
