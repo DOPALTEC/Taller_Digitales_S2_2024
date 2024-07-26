@@ -7,5 +7,6 @@
 
 ## 4. Investigue el significado de los parámetros V<sub>IL</sub>, V<sub>IH</sub>, V<sub>OL</sub>, V<sub>OH</sub>, V<sub>IK</sub>, V<sub>OK</sub>.
 
-##
+## 5. Investigue qué son los tiempos de propagación \( t_{PD} \), \( t_{PLH} \) y \( t_{PHL} \), y los tiempos de transición \( t_t \), \( t_r \) y \( t_f \).
+
 
