@@ -56,6 +56,30 @@ Estos circuitos integrados emplean la tecnología lógica de óxido metálico-se
 
 ## 4. Investigue el significado de los parámetros V<sub>IL</sub>, V<sub>IH</sub>, V<sub>OL</sub>, V<sub>OH</sub>, V<sub>IK</sub>, V<sub>OK</sub>.
 
+Estos son llamados parámetros de voltaje, y especifican los niveles de entrada y salida para estas tecnologías CMOS y TTL. Definen el comportamiento y compatibilidad de los circuitos lógcios. 
+
+### V<sub>IL</sub> (Voltage Input Low):
+
+- Es el voltaje máximo que una entrada de un dispositivo reconoce como un nivel lógico bajo. En otras palabras es un cero lógico.
+
+### V<sub>IH</sub> (Voltage Input High):
+- Voltaje mínimo que una entrada de un dipositivo reconoce como un nivel lógico alto. Se toma como un 1 lógico.
+
+### V<sub>OL</sub> (Voltage Output Low): 
+- Voltaje máximo de salida que un dispositivo proporciona cuando se está en un estado lógico bajo. Un cero lógico.
+
+### V<sub>OH</sub> (Voltage Output High):
+- Cuando el circuito integrado está en un estado lógico alto existe un voltaje mínimo de salida que tiene el dispositivo, el cual se toma como un 1 lógico.
+
+### V<sub>IK</sub> (Input Clamp Voltage):
+
+- Se trata del voltaje en el que el chip comienza a conducir corriente en sentido de la entrada para así proterse de las altas tensiones.
+
+
+### V<sub>OK</sub> (Output Clamp Voltage):
+- Cumple la misma función del V<sub>IK</sub> pero en este caso la corriente conduce en el sentido desde la salida para así protegerse de voltajes altos.
+
+
 ## 5. Investigue qué son los tiempos de propagación t<sub>PD</sub>, t<sub>PLH</sub>, t<sub>PHL</sub> y los tiempos de transición t<sub>t</sub>, t<sub>tr</sub> y t<sub>f</sub>.
 
 ## 6. Investigue qué significa el término fan-out y cuáles valores típicos se encuentran en las familias TTL y CMOS.
