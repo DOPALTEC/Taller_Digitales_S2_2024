@@ -1,7 +1,31 @@
 # Taller_Digitales_S2_2024
 ##  1. Investigue las características de las familias TTL bajo las series 74∗xx en particular las diferencias entre las variantes ∗ ∈ {L, LS y HC}.
 
+### Serie 74L (Low Power)
 
+- Consumo de energía bajo
+- Menor velocidad de operación en comparación con las otras variantes
+- Usadas en aplicaciones donde el ahorro de energía es más importante que la velocidad
+- Voltaje de Operación: 4.75V a 5.25V
+- Tiempo de Propagación: 33 ns (para puertas lógicas simples)
+- Consumo de Energía Aproximado: 1 mW por puerta 
+
+### Serie 74LS (Low Power Schottky)
+- Consumo de energía moderado.
+- Velocidad de operación mayor al de las series 74L debido a el uso de los diodos Schottky, los cuales por su tecnología reducen los tiempos de conmutación.
+- Aplicaciones en sistemas que requieran un consumo de energía y velocidad óptimos
+- Voltaje de Operación: 4.75V a 5.25V
+- Tiempo de Propagación: 9 ns (para puertas lógicas simples)
+- Consumo de Energía Aproximado: 2 mW por puerta 
+
+### Serie 74HC (High-Speed CMOS)
+
+- Bajo consumo de energía, debido al uso de CMOS. Su consumo es comparable a los TTL tradicionales CMOS.
+- Velocidad de operación de alta velocidad. Igual o superior a la serie 74LS
+- Se utilizan en aplicaciones de alta velocidad y bajo consumo de energía, además de en usos en los cuales se requiera compatibilidad con sistemas CMOS.
+- Voltaje de Operación: 2V a 6V
+- Tiempo de Propagación: 8 ns (para puertas lógicas simples)
+- Consumo de Energía Aproximado: 0.1 mW por puerta 
 
 ## 2. Investigue las características de la familia CMOS 4000
 
@@ -43,8 +67,15 @@
 
 # Referencias
 
-[1] [En línea]. Disponible en: 
-La Familia Lógica «74»”, Unican.es. https://personales.unican.es/manzanom/Planantiguo/EDigitalI/Familia74.pdf [Consultado: 26-jul-2024].
+[1] La Familia Lógica «74»”, Unican.es. Recuperado de https://personales.unican.es/manzanom/Planantiguo/EDigitalI/Familia74.pdf [Consultado: 26-jul-2024].
+
+[2] Millman, J., & Grabel, A. (1987). Microelectronics. McGraw-Hill.
+
+[3] Horowitz, P., & Hill, W. (1989). The Art of Electronics (2nd ed.). Cambridge University Press.
+
+[4] Texas Instruments. (n.d.). SN54LS00 [Hoja de Datos]. Recuperado de https://www.ti.com/lit/ds/symlink/sn54ls00.pdf
+
+[5] Nexperia. (n.d.). 74HC_HCT [Hoja de Datos]. Recuperado de https://assets.nexperia.com/documents/data-sheet/74HC_HCT.pdf
 
 
 
