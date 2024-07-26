@@ -124,6 +124,7 @@ Estos son llamados parámetros de voltaje, y especifican los niveles de entrada 
 
 [6] ON Semiconductor. (n.d.). 4000 Series CMOS [Hoja de Datos]. Recuperado de https://www.onsemi.com/pdf/datasheet/mc14001b-d.pdf
 
+[7] Techopedia. (n.d.) Clamping Voltage. https://www.techopedia.com/definition/1735/clamping-voltage#:~:text=Clamping%20voltage%20refers%20to%20the,is%20protected%20from%20electrical%20surges.
 
 
 
