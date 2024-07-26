@@ -29,6 +29,22 @@
 
 ## 2. Investigue las características de la familia CMOS 4000
 
+Estos circuitos integrados emplean la tecnología lógica de óxido metálico-semiconductor (CMOS) y es conocida por:
+
+### Bajo Consumo de Energía: Consumen poca energía estática lo que los hace atractivos para su uso en aplicaciones alimentadas por batería. 
+
+### Alta inmunidad al ruido lo cual permite que se desempeñen en entornos con alta interferencia y ruido, por ejemplo aplicaciones militares, industriales, circuitos de temporización, secuenciación, controladores de pantalla, sistemas de comunicación así como la rama de las telecomunicaciones.
+
+### Su rango de voltajes es bastante amplio (3V-15V)
+
+### Bajo Consumo de Corriente en estado estático. La corriente de fuga es baja lo que reduce el cunsumo total del sistema del que forma parte el circuito integrado.
+
+### Es compatible con las tecnologías TTL.
+
+### Su tiempo de propagación es más lento que el de las tecnologías TTL y HC
+
+
+
 ## 3. Investigue qué cuidados deben tenerse al manipular las tecnologías CMOS.
 
 ## 4. Investigue el significado de los parámetros V<sub>IL</sub>, V<sub>IH</sub>, V<sub>OL</sub>, V<sub>OH</sub>, V<sub>IK</sub>, V<sub>OK</sub>.
@@ -77,7 +93,9 @@
 
 [5] Nexperia. (n.d.). 74HC_HCT [Hoja de Datos]. Recuperado de https://assets.nexperia.com/documents/data-sheet/74HC_HCT.pdf
 
-
+[6] Texas Instruments. (n.d.). CD4000B CMOS Data Book [Hoja de Datos]. Recuperado de https://www.ti.com/lit/ds/symlink/cd4000.pdf
+[7] ON Semiconductor. (n.d.). 4000 Series CMOS [Hoja de Datos]. Recuperado dehttps://www.onsemi.com/pdf/datasheet/mc14001b-d.pdf
+[8] Nexperia. (n.d.). HEF4000B Family [Hoja de Datos]. Recuperado de https://assets.nexperia.com/documents/data-sheet/HEF4000B.pdf
 
 
 
