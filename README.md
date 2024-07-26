@@ -46,6 +46,14 @@ Estos circuitos integrados emplean la tecnología lógica de óxido metálico-se
 
 ## 3. Investigue qué cuidados deben tenerse al manipular las tecnologías CMOS.
 
+- Al tratar con estos dispositivos se debe evitar el contacto directo con sus terminales. Se recomienda manipularlos por los extremos, usar pinzas o guantes aislantes que eviten daños por descargas electrostáticas. Se recomienda unsar también pulseras antiestáticas y trabajar en areas de trabajo como las ESD-safe.
+-Es recomendable tocar una superficie metálica conectada a tierra antes de manipular los componentes.
+- Se debe evitar tocar los pines de los dispositivos ya que la humedad y los aceites de la piel causan corrosión y afectan la conectivadad eléctrica
+- Almacenar los dispositivos en bolsas antiestáticas cuando no están en uso.
+- Mantener los componentes en ambientes secos para prevenir la formación de humedad y utilizar bolsitas con silica gel para prevenir esto.
+- Una desventaja es que son susceptibles al fenómeno de latch-up. Esto sucede cuando la salida excede la alimentación por la inducción de la red, lo cual activa un tiristor parásito en CMOS que puede dañar el circuito integrado.
+- La tecnología CMOS es sensible a las cargas atrapadas en el óxido, lo cual puede alterar el circuito por partículas alfa o beta, que modifican la tensión umbral de los transistores que componen el chip.
+
 ## 4. Investigue el significado de los parámetros V<sub>IL</sub>, V<sub>IH</sub>, V<sub>OL</sub>, V<sub>OH</sub>, V<sub>IK</sub>, V<sub>OK</sub>.
 
 ## 5. Investigue qué son los tiempos de propagación t<sub>PD</sub>, t<sub>PLH</sub>, t<sub>PHL</sub> y los tiempos de transición t<sub>t</sub>, t<sub>tr</sub> y t<sub>f</sub>.
