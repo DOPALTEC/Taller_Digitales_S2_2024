@@ -5,7 +5,7 @@
 
 ## 3. Investigue qué cuidados deben tenerse al manipular las tecnologías CMOS.
 
-## 4. Investigue el significado de los parámetros V_{IL}, VIH, VOL, VOH, IIK, IOK.
+## 4. Investigue el significado de los parámetros V<sub>IL</sub>, V<sub>IH</sub>, V<sub>OL</sub>, V<sub>OH</sub>, V<sub>IK</sub>, V<sub>OK</sub>.
 
 ##
 
