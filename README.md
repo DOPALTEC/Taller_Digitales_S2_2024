@@ -39,6 +39,7 @@
 
 ## Investigue sobre los proyectos de YOSYS y nextpnr ¿Cuáles son sus funciones como herramientas?
 
+# Referencias
 
 
 
