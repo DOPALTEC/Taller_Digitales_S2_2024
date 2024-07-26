@@ -67,7 +67,7 @@
 
 # Referencias
 
-[1] La Familia Lógica «74»”, Unican.es. Recuperado de https://personales.unican.es/manzanom/Planantiguo/EDigitalI/Familia74.pdf [Consultado: 26-jul-2024].
+[1] La Familia Lógica «74»”, Unican.es. Recuperado de https://personales.unican.es/manzanom/Planantiguo/EDigitalI/Familia74.pdf
 
 [2] Millman, J., & Grabel, A. (1987). Microelectronics. McGraw-Hill.
 
