@@ -1,6 +1,8 @@
 # Taller_Digitales_S2_2024
 ##  1. Investigue las características de las familias TTL bajo las series 74∗xx en particular las diferencias entre las variantes ∗ ∈ {L, LS y HC}.
 
+
+
 ## 2. Investigue las características de la familia CMOS 4000
 
 ## 3. Investigue qué cuidados deben tenerse al manipular las tecnologías CMOS.
@@ -40,6 +42,9 @@
 ## Investigue sobre los proyectos de YOSYS y nextpnr ¿Cuáles son sus funciones como herramientas?
 
 # Referencias
+
+[1] [En línea]. Disponible en: 
+La Familia Lógica «74»”, Unican.es. https://personales.unican.es/manzanom/Planantiguo/EDigitalI/Familia74.pdf [Consultado: 26-jul-2024].
 
 
 
