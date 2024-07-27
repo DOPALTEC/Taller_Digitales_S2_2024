@@ -25,7 +25,9 @@ module mi_modulo(
 - `salida_i`: descripción de la salida
 
 #### 4. Criterios de diseño
-Diagramas, texto explicativo...
+
+![pin_map](https://github.com/user-attachments/assets/e29f3a75-c2ac-441d-ada5-0436738a9cc2)
+
 
 #### 5. Testbench
 Descripción y resultados de las pruebas hechas
