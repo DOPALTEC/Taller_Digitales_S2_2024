@@ -150,6 +150,7 @@ Estos tiempos se subdividen en dos principales:
 
 [7] Techopedia. (n.d.) Clamping Voltage. https://www.techopedia.com/definition/1735/clamping-voltage#:~:text=Clamping%20voltage%20refers%20to%20the,is%20protected%20from%20electrical%20surges.
 
+[8] Harris, D. M., & Harris, S. L. (2015). Digital Design and Computer Architecture: ARM Edition. Morgan Kaufmann.
 
 
 
