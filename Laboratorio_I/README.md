@@ -1,4 +1,4 @@
-# Lab. 1: Introducci´on al dise˜no digital con HDL y herramientas EDA de síntesis
+# Lab. 1: Introducción al diseño digital con HDL y herramientas EDA de síntesis
 
 ## 1. Abreviaturas y definiciones
 - **FPGA**: Field Programmable Gate Arrays
