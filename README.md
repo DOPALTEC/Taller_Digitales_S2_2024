@@ -100,6 +100,11 @@ Estos tiempos se subdividen en dos principales:
 
 ##Tiempos de Transición: 
 
+- t<sub>t</sub> (Transition Time): Es el tiempo en el que una señal pasa de un estado lógico a otro, ya sea alto o bajo.
+
+- t<sub>r</sub> (Rise Time): Es la denotación apra el tiempo en el que dura una señal digital en pasar de un nivel bajo, el cuál se toma por el 10% del nivel máximo a un nivel alto, el cual se toma a partir de un 90% del nivel máximo.
+- t<sub>f</sub> (Fall Time):
+- Es el inverso del tiempo de transición t<sub>r</sub>, es el tiempo medido a partir del cambio de un nivel alto el cual se toma a partir del 90% del nivel máximo del pulso, hasta el tiempo en el que el puslo alcanza el 10% de este nivel máximo.
 
 ## 6. Investigue qué significa el término fan-out y cuáles valores típicos se encuentran en las familias TTL y CMOS.
 
