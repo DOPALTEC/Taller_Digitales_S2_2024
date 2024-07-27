@@ -84,7 +84,7 @@ Estos son llamados parámetros de voltaje, y especifican los niveles de entrada 
 
 Estos tiempos se subdividen en dos principales:
 
-##Tiempos de Propagación:
+## Tiempos de Propagación:
 
 ### t<sub>PD</sub> (Propagation Delay Time):
 
@@ -98,7 +98,7 @@ Estos tiempos se subdividen en dos principales:
 
 - Tiempo que tarda la salida de un circuito en cambiar de un nivel alto a uno bajo despues de detectar un cambio en la entrada.
 
-##Tiempos de Transición: 
+## Tiempos de Transición: 
 
 - t<sub>t</sub> (Transition Time): Es el tiempo en el que una señal pasa de un estado lógico a otro, ya sea alto o bajo.
 
