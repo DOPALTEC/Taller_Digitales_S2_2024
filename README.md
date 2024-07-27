@@ -108,6 +108,11 @@ Estos tiempos se subdividen en dos principales:
 
 ## 6. Investigue qué significa el término fan-out y cuáles valores típicos se encuentran en las familias TTL y CMOS.
 
+Este término se refiere a la capacidad de un sistema digital para manejar multiples cargas de entrada a la vez que su rendimeinto no se degrada de una forma significativa. Es la cantidad máxima de las entradas del dispositivo que puede soportar y controlar de manera que el dispositivo no pierda sus propiedades iniciales o esté dentro de un rango aceptable de las mismas.
+
+- Para las familias TTL el fan-out general es de 10 a 15 compuertas lógicas que pueden ser soportadas. Para las serie 74LS por ejemplo tiene un fan-out de alrededor de 10 mientras que para la 74S, se puede llagar hasta 20.
+- En el caso de las familias CMOS, su valor es mucho mayor, en promedio alrededor de unas 50 a 100 compuertas lógicas. Esto debido a que estos dispositivos tienen baja carga de entrada.
+
 ## 7. Para cada una de las variantes TTL y CMOS especifique en una tabla:
 
 ### a) rango de tensión eléctrica de alimentación V<sub>CC</sub> o V<sub>DD</sub> y V<sub>SS</sub>
