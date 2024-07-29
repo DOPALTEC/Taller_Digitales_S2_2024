@@ -159,13 +159,36 @@ La modulación de ancho de pulso (PWM) se utiliza para controlar la cantidad de 
 
 ## 13. Investigue qué es el efecto de rebote y típicos circuitos anti-rebote (debouncing circuits).
 
+El efecto de rebote se define como el cambio no deseado de un valor lógico causado por variaciones en la señal. Normalmente se relaciona con pulsadores o algún otro tipo de interruptor, ya que cuando este se presiona, se pueden generar múltiples pulsos antes de que el circuito se estabilice [13].
+
+### Circuitos Anti-rebote
+
+- Filtro RC: Se utiliza una resistencia y un capacitor para cargar y descargar lentamente las respuestas a la señal de entrada para estabilizar la salida del circuito.
+- Flip-Flop SR: Se conecta la salida del interruptor a las entradas del flip-flop para que solo se registre un estado cuando la salida se ha estabilizado.
+- Circuito Disparador Schmitt: El circuito cambia de estado hasta que sobrepase alguno de los umbrales, evitando las oscilaciones no deseadas y generando una salida más estable.
+
+
 ## 14. Explique qué es el modelado de comportamiento y de estructura en diseño digital. Brinde un ejemplo de cada uno.
+
+- Modelado de Comportamiento: Define la función básica del sistema y describe su comportamiento en términos de entradas y salidas [11]. 
+- Ejemplo: Modelar un contador binario de 4 bits, en el que se especifica que este aumenta su valor cada vez que recibe una señal de reloj y que al llegar al valor más alto (1111) se reinicia a 0000, sin entrar en detalle de cómo se compone físicamente.
+- Modelado de Estructura: Describe como se construye el sistema y qué componentes utiliza, así como sus interconexiones [11].
+- Ejemplo: Un MUX 2 a 1 compuesto por compuertas AND, NOT y OR.
+
 
 ## 15. Explique el proceso de síntesis lógica en el diseño de circuitos digitales, tanto para el desarrollo de un ASIC como para una FPGA.
 
+El proceso de síntesis lógica en el diseño de circuitos digitales se encarga de convertir una descripción de un diseño de alto nivel (escrita en HDL como Verilog o SystemVerilog) en una de bajo nivel para aplicarlo en hardware [14].
+
 ## 16. Investigue sobre la tecnología de FPGAs. Describa el funcionamiento de la lógica programable en general, así como los componentes básicos de una.
 
+Una FPGA es un dispositivo de lógica programable, lo cual permite configurar circuitos de acuerdo con las especificaciones requeridas. Se configura inicialmente con un archivo que define el comportamiento del circuito, generado a partir de un HDL. Se configuran las conexiones para que los bloques lógicos programables se comuniquen entre sí, para luego programar las diferentes entradas y salidas y así cumplir con el comportamiento esperado. Se compone principalmente de look-up tables, bloques lógicos programables, flip flops, bloques de memoria, entradas y salidas. [15]. 
+
 ## 17. Investigue sobre los proyectos de YOSYS y nextpnr ¿Cuáles son sus funciones como herramientas?
+
+- YOSYS: Herramienta de síntesis que transforma un diseño descrito en HDL en una netlist (representación de los componentes lógicos interconectados), utilizada principalmente en el ámbito de diseño de circuitos digitales. Puede ser utilizado para extraer FMS y realizar operaciones en ellas [16].
+- Nextpnr: Herramienta de Place and Route, la cual se encarga de tomar la netlist generada por YOSYS y ubicar físicamente los componentes de la FPGA y sus interconexiones. Además, produce un archivo de configuración que se carga en la FPGA para implementar el diseño [17].
+
 
 # Referencias
 
@@ -190,3 +213,14 @@ La modulación de ancho de pulso (PWM) se utiliza para controlar la cantidad de 
 [11] Wakerly, J. F. (2001). Diseño digital. Pearson educación.
 
 [12] Bolton, W. (2018). Mecatrónica: Sistemas de Control Electrónico en la Ingeniería Mecánica y Eléctrica (5ta ed.). Alfaomega. 
+
+[13] Maloney, T. J. (2006). Electrónica industrial moderna. Pearson Educación.
+
+[14] Harris, S.L., & Harris, D. M. (2016). Digital Design and Computer Architecture. Morgan Kaufmann.
+
+[15] Iida, M. (2018). Principles and Structures of FPGAs. Springer.
+
+[16] Haase, J. (2012). Models, Methods, and Tools for Complex Chip Design. Springer.
+
+[17] Jantsch, A. (2023). Taking AIMS at Digital Design. Springer.
+
