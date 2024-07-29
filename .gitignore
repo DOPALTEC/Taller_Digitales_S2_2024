@@ -26,6 +26,7 @@
 *.info
 *.html
 *.sdb
+*.wdm
 
 Laboratorio_I/Ejercicio_III/MUX_4_1/MUX_4_1.sim/sim_1/behav/xsim/glbl.v
 Laboratorio_I/Ejercicio_III/MUX_4_1/MUX_4_1.sim/sim_1/behav/xsim/xsim.dir/MUX_4_1_tb_behav/Compile_Options.txt
