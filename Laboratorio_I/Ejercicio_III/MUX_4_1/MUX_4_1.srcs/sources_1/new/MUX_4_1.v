@@ -17,6 +17,4 @@ always @(*) begin
     2'b11: OUT=IN_4;
     endcase
 end
-
-
 endmodule
