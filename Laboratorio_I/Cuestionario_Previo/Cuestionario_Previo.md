@@ -121,15 +121,41 @@ Este término se refiere a la capacidad de un sistema digital para manejar multi
 
 ### c) tiempos de propagación y transición
 
+[![Captura-de-pantalla-2024-07-28-182350.png](https://i.postimg.cc/SKcxs7p0/Captura-de-pantalla-2024-07-28-182350.png)](https://postimg.cc/p9XHcjTk)
+
 ## 8. Revise la hoja de datos de los circuitos integrados 74∗00,74∗02,74∗04,74∗14, 4001, 4011, 4069 y 40106. Resuma para qué sirve cada uno.
+
+- 74*00: Cuenta con cuatro compuertas NAND de dos entradas.
+- 74*02: Cuenta con cuatro compuertas NOR de dos entradas. 
+- 74*04: Cuenta con seis inversores independientes. 
+- 74*14: Cuenta con seis inversores con disparador Schmitt.
+- 4001: Cuenta con cuatro compuertas NOR.
+- 4011: Cuenta con cuatro compuertas NAND.
+- 4069: Cuenta con seis inversores. 
+- 40106: Cuenta con seis inversores con disparador Schmitt.
 
 ## 9. Revise la estructura básica, a nivel de transistores, de una compuerta NAND en circuitos integrados CMOS.
 
+Esta compuerta se compone de transistores MOSFET. Se conectan dos transistores tipo PMOS en paralelo entre la fuente de alimentación (V_DD) y la salida, y dos transistores tipo NMOS en serie con tierra. Cada entrada de la compuerta se conecta en las compuertas de cada NMOS. Cuando alguna de las entradas es 0, al menos uno de los transistores PMOS conduce V_DD, por lo que la salida está en estado alto. Si ambas entradas son 1, los NMOS se activan, conectando la salida a tierra y generando que esta se encuentre en estado bajo [9].
+
 ## 10. Investigue sobre el concepto y el uso de los de circuitos pull-up y pull-down en electrónica digital.
+
+Las resistencias pull-up y pull-down se utilizan para que el circuito tome un valor específico (alto o bajo). La resistencia pull-up se conecta entre la fuente de alimentación y la señal de entrada. Cuando esta señal no está conducida por otro dispositivo la resistencia se encarga de mantener la salida en alto. Por otro lado, la resistencia de pull-down se conecta directamente a tierra para mantener la salida en bajo mientras la señal no esté conducida por otro dispositivo. [10].
 
 ## 11. Investigue qué es un circuito disparador Schmitt (Schmitt trigger). Revise las características técnicas del circuito 74∗14.
 
+El circuito disparador Schmitt se encarga de convertir una señal de entrada analógica en una señal de salida digital con histéresis, por lo que la señal cambia de estado alto a bajo cuando cruza el voltaje de umbral superior, y de bajo a alto cuando cruza el voltaje de umbral inferior (la diferencia entre ambos umbrales es conocida como histéresis). La histéresis evita que el circuito responda al ruido, haciéndolo más estable [11].
+
+### Características Técnicas del 7414
+
+- Cuenta con seis inversores con disparador Schmitt.
+- Tecnología CMOS.
+- Voltaje de Operación: 4.75 V a 5.25 V.
+- Consumo de corriente bajo.
+
 ## 12. Investigue en que consiste la modulación de ancho de pulso (PWM).
+
+La modulación de ancho de pulso (PWM) se utiliza para controlar la cantidad de potencia que se transmite a una carga. Para lograrlo, se regula el ancho de los pulsos de la señal, por lo que entre más ancho sea el pulso, mayor potencia tendrá la carga. Al aumentar el ancho de los pulsos se incrementa el ciclo de trabajo, el cual representa el porcentaje de un periodo en el que la señal está en alto [12].
 
 ## 13. Investigue qué es el efecto de rebote y típicos circuitos anti-rebote (debouncing circuits).
 
@@ -139,7 +165,7 @@ Este término se refiere a la capacidad de un sistema digital para manejar multi
 
 ## 16. Investigue sobre la tecnología de FPGAs. Describa el funcionamiento de la lógica programable en general, así como los componentes básicos de una.
 
-## Investigue sobre los proyectos de YOSYS y nextpnr ¿Cuáles son sus funciones como herramientas?
+## 17. Investigue sobre los proyectos de YOSYS y nextpnr ¿Cuáles son sus funciones como herramientas?
 
 # Referencias
 
@@ -157,6 +183,10 @@ Este término se refiere a la capacidad de un sistema digital para manejar multi
 
 [8] Harris, D. M., & Harris, S. L. (2015). Digital Design and Computer Architecture: ARM Edition. Morgan Kaufmann.
 
+[9] González, J.L., Castaño, A., & Morales, F. (2018). Compuerta NAND CMOS para Módulo de Electrónica. Universidad Autónoma del Estado de Hidalgo. https://doi.org/10.29057/icbi.v6i11.3032
 
+[10] González, J. L. M. (2006). Electrónica digital. Delta Publicaciones.
 
+[11] Wakerly, J. F. (2001). Diseño digital. Pearson educación.
 
+[12] Bolton, W. (2018). Mecatrónica: Sistemas de Control Electrónico en la Ingeniería Mecánica y Eléctrica (5ta ed.). Alfaomega. 
