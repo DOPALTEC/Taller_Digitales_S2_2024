@@ -165,7 +165,7 @@ La modulación de ancho de pulso (PWM) se utiliza para controlar la cantidad de 
 
 ## 16. Investigue sobre la tecnología de FPGAs. Describa el funcionamiento de la lógica programable en general, así como los componentes básicos de una.
 
-## Investigue sobre los proyectos de YOSYS y nextpnr ¿Cuáles son sus funciones como herramientas?
+## 17. Investigue sobre los proyectos de YOSYS y nextpnr ¿Cuáles son sus funciones como herramientas?
 
 # Referencias
 
