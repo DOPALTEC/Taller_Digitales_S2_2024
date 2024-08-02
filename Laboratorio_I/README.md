@@ -49,6 +49,7 @@ module mi_modulo(
 #### 4. Criterios de diseño
 
 
+
 #### 5. Testbench
 Descripción y resultados de las pruebas hechas
 
@@ -76,6 +77,9 @@ module MUX_4_1 #(parameter N=3)(
 - `OUT`: Salida del multiplexor portando el valor de la entrada seleccionada
 
 #### 4. Criterios de diseño
+
+Se solicita un multiplexor parametrizable con lo cual las lineas y salida de entrada serán designadas por N bits mientras que el selector requiere de dos bits.
+![image](https://github.com/user-attachments/assets/dc3c42fd-8d50-481d-a99a-69ce1caa09bf)
 
 
 #### 5. Testbench
