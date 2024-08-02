@@ -58,23 +58,28 @@ Descripción y resultados de las pruebas hechas
 
 #### 1. Encabezado del módulo
 ```SystemVerilog
-module mi_modulo(
-    input logic     entrada_i,      
-    output logic    salida_i 
+module MUX_4_1 #(parameter N=3)(
+    input [N:0] IN_1,
+    input [N:0] IN_2,
+    input [N:0] IN_3,
+    input [N:0] IN_4,
+    input [1:0] sel,
+    output reg [N:0] OUT
     );
 ```
 #### 2. Parámetros
-- Lista de parámetros
+- `N`: Representa el tamaño en bits que van a tener las entradas y salidas del multiplexor. Para las pruebas solicitadas en el testbench se  denotan como: 4,8 y 16 bits.
 
 #### 3. Entradas y salidas:
-- `entrada_i`: descripción de la entrada
-- `salida_i`: descripción de la salida
+- `IN_1,IN_2,IN_3,IN_4`: Bits correspondientes a las entradas del multiplexor
+- `sel`: Entrada perteneciente a el selector del multiplexor
+- `OUT`: Salida del multiplexor portando el valor de la entrada seleccionada
 
 #### 4. Criterios de diseño
 
 
 #### 5. Testbench
-Descripción y resultados de las pruebas hechas
+
 
 
 ## Ejercicio 4
