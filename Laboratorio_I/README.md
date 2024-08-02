@@ -8,9 +8,6 @@
 
 ##Ejercicio 1
 
-## Desarrollo
-
-
 #### 1. Encabezado del módulo
 ```SystemVerilog
 module mi_modulo(
@@ -33,8 +30,6 @@ Descripción y resultados de las pruebas hechas
 
 
 ##Ejercicio 2
-
-## Desarrollo
 
 
 #### 1. Encabezado del módulo
@@ -59,7 +54,6 @@ Descripción y resultados de las pruebas hechas
 
 ##Ejercicio 3
 
-## Desarrollo
 
 
 #### 1. Encabezado del módulo
@@ -85,8 +79,6 @@ Descripción y resultados de las pruebas hechas
 
 ##Ejercicio 4
 
-## Desarrollo
-
 
 #### 1. Encabezado del módulo
 ```SystemVerilog
@@ -111,7 +103,6 @@ Descripción y resultados de las pruebas hechas
 
 ##Ejercicio 5
 
-## Desarrollo
 
 
 #### 1. Encabezado del módulo
