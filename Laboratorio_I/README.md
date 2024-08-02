@@ -85,7 +85,21 @@ Se solicita un multiplexor parametrizable con lo cual las lineas y salida de ent
 
 
 #### 5. Testbench
+Se observa la separación en el testbench entre cada prueba con diferentes valores en el parámetro N. 4,8 y 16 respectivamente.
 
+![image](https://github.com/user-attachments/assets/c8f2ed0c-2a17-4e15-97ef-404d636c22d2)
+
+Para el primer muestreo, con salidas y la entrada de 4 bits se obtuvieron los resultados mostrados. Correspondientes a los 50 casos los cuales son valores aleatorios.
+
+![image](https://github.com/user-attachments/assets/48777de1-fe5e-47df-869f-304a93e9f910)
+
+Posteriormente para las entradas y salidas de 8 bits generando el testbench de la figura
+
+![image](https://github.com/user-attachments/assets/1a194984-3c6c-4037-b2cd-03d612450055)
+
+Finalmente se asignaron valores aleatorios a el muestreo con 16 bits entregando un testbench con un comportamiento similar a los anteriores.
+
+![image](https://github.com/user-attachments/assets/33b75e0e-464d-4f05-8a29-1e7e39796dd3)
 
 
 ## Ejercicio 4
