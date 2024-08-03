@@ -54,6 +54,8 @@ Se muestra en la tabla los resultantes que se van a obtener al aplicar el comple
 
 Para realizar la codificacion a complemento a dos se aplican dos pasos, primeramente se recurre al complemento a 1 lo cual consiste en invertir los valores de los digitos binarios que forman los switches para posteriormente sumarle a este valor un valor de 0001.
 
+![image](https://github.com/user-attachments/assets/30d69d71-deef-4aa8-aa8f-63fe78ddce4f)
+
 
 #### 5. Testbench
 Para todos los casos de 4 bits que corresponden a los switches se realizó un testbench para todos los posibles casos de los numeros binarios que estos mismos pueden abarcar.
