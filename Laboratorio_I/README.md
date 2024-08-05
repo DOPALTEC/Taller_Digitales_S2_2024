@@ -34,24 +34,35 @@ Descripción y resultados de las pruebas hechas
 
 #### 1. Encabezado del módulo
 ```SystemVerilog
-module mi_modulo(
-    input logic     entrada_i,      
-    output logic    salida_i 
-    );
+module TOP_Leds(
+    input [3:0] sw,
+    output [3:0] led
+);
 ```
 #### 2. Parámetros
-- Lista de parámetros
+- N/A
 
 #### 3. Entradas y salidas:
-- `entrada_i`: descripción de la entrada
-- `salida_i`: descripción de la salida
+- `sw`: Corresponde a las entradas de valor binario que representa cada switch.
+- `led`: Salidas asignadas al valor transformado en complemento a dos de los valores ingresados por el usuario mediante los switches. Este output se asocian a los leds de la fpga.
 
 #### 4. Criterios de diseño
 
+Se muestra en la tabla los resultantes que se van a obtener al aplicar el complemento a dos a los valores binarios de los switches así como el valor decimal de cada uno de ellos.
+
+![image](https://github.com/user-attachments/assets/7ce9306b-c443-49b3-a091-0f471c08fd1c)
+
+Para realizar la codificacion a complemento a dos se aplican dos pasos, primeramente se recurre al complemento a 1 lo cual consiste en invertir los valores de los digitos binarios que forman los switches para posteriormente sumarle a este valor un valor de 0001.
+
+![image](https://github.com/user-attachments/assets/30d69d71-deef-4aa8-aa8f-63fe78ddce4f)
 
 
 #### 5. Testbench
-Descripción y resultados de las pruebas hechas
+Para todos los casos de 4 bits que corresponden a los switches se realizó un testbench para todos los posibles casos de los numeros binarios que estos mismos pueden abarcar.
+
+![image](https://github.com/user-attachments/assets/f4b0c271-42ba-4546-ac3b-04e8bfa1a37c)
+
+
 
 ## Ejercicio 3
 
