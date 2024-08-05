@@ -5,7 +5,7 @@ module tb_Complemento_a_2;
 reg [3:0] sw;
 wire [3:0] led;
 
-TOP_Leds uut(
+TOP_Leds Leds(
     .sw(sw),
     .led(led)
 );
@@ -14,7 +14,7 @@ integer i;
 
 initial begin
     sw = 4'b0000;
-    $display("Time\t sw\t led");
+    $display("Tiempo\t sw\t led");
     $display("------------------------");
 
 

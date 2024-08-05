@@ -27,9 +27,12 @@
 *.html
 *.sdb
 *.wdm
+*.wcfg
 
 Laboratorio_I/Ejercicio_III/MUX_4_1/MUX_4_1.sim/sim_1/behav/xsim/glbl.v
 Laboratorio_I/Ejercicio_III/MUX_4_1/MUX_4_1.sim/sim_1/behav/xsim/xsim.dir/MUX_4_1_tb_behav/Compile_Options.txt
 Laboratorio_I/Ejercicio_III/MUX_4_1/MUX_4_1.sim/sim_1/behav/xsim/xsim.dir/MUX_4_1_tb_behav/TempBreakPointFile.txt
 Laboratorio_I/Ejercicio_III/MUX_4_1/MUX_4_1.ip_user_files/README.txt
 Laboratorio_I/Ejercicio_II/Switch_Button_Led/Switch_Button_Led.sim/sim_1/behav/xsim/glbl.v
+Laboratorio_I/Ejercicio_II/Switch_Button_Led/Switch_Button_Led.sim/sim_1/behav/xsim/xsim.dir/tb_Complemento_a_2_behav/Compile_Options.txt
+Laboratorio_I/Ejercicio_II/Switch_Button_Led/Switch_Button_Led.sim/sim_1/behav/xsim/xsim.dir/tb_Complemento_a_2_behav/TempBreakPointFile.txt
