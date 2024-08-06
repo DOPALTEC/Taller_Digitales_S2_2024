@@ -91,6 +91,8 @@ Tiempo   sw      led
 Run directory: D:\UNI\Taller_Digitales_S2_2024\Laboratorio_I\Ejercicio_II\Switch_Button_Led\Switch_Button_Led.srcs
   System timescale is 1ps / 1ps
 ```
+![image](https://github.com/user-attachments/assets/fe3e7383-b1b2-45d5-a128-fb952ebff34c)
+
 
 ## Ejercicio 3
 
