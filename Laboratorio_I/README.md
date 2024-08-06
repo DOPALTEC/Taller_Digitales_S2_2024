@@ -62,7 +62,35 @@ Para todos los casos de 4 bits que corresponden a los switches se realizó un te
 
 ![image](https://github.com/user-attachments/assets/f4b0c271-42ba-4546-ac3b-04e8bfa1a37c)
 
+En el caso de Dsim se realizó la simulación para obtener un resultado con el mismo comportamiento.
 
+```sh
+=N:[dumpMXD] preparing MXD dump to 'waves.mxd'.
+=N:[dump] Dump started at time 0
+=N:Starting event scheduler...
+Tiempo   sw      led
+------------------------
+10ns     0000    0000
+20ns     0001    1111
+30ns     0010    1110
+40ns     0011    1101
+50ns     0100    1100
+60ns     0101    1011
+70ns     0110    1010
+80ns     0111    1001
+90ns     1000    1000
+100ns    1001    0111
+110ns    1010    0110
+120ns    1011    0101
+130ns    1100    0100
+140ns    1101    0011
+150ns    1110    0010
+160ns    1111    0001
+=N:[dumpMXD] closing MXD dump
+=T:Simulation terminated by $finish at time 160000 (sim_1\new\Complemento_a_2_tb.v:27);
+Run directory: D:\UNI\Taller_Digitales_S2_2024\Laboratorio_I\Ejercicio_II\Switch_Button_Led\Switch_Button_Led.srcs
+  System timescale is 1ps / 1ps
+```
 
 ## Ejercicio 3
 
