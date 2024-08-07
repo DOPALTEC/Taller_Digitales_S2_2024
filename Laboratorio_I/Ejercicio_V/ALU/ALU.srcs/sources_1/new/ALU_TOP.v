@@ -39,6 +39,17 @@ always @* begin
             else begin
                 Y=~A;
             end
+        4'b0110:  //RESTA COMPLENETO A 2
+            {C,Y} = A+(~B+1)+ALUFlagIn;
+        4'b0111:  //XOR
+            Y=A^B;
+        4'b1000:  //CORRIMIENTO IZQ
+            if (ALUFlagIn) begin
+            end
+            else begin
+                Y=A<<B;
+            end
+           
     endcase
 
 end
