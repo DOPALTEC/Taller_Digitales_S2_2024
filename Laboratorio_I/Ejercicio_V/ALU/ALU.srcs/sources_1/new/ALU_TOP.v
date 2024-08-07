@@ -6,7 +6,7 @@ module ALU_TOP #(parameter N=3) (
     input [N:0] ALUControl,
     input ALUFlagIn,
     output reg C,
-    output reg zero,
+    output reg Z,
     output reg [N:0] Y
 );
 
@@ -39,19 +39,35 @@ always @* begin
             else begin
                 Y=~A;
             end
-        4'b0110:  //RESTA COMPLENETO A 2
+        4'b0110:  //RESTA COMPLEMETO A 2
             {C,Y} = A+(~B+1)+ALUFlagIn;
         4'b0111:  //XOR
             Y=A^B;
         4'b1000:  //CORRIMIENTO IZQ
             if (ALUFlagIn) begin
+                C=A[N-B]; 
+                Y=(A<<B)|({(N+1){1'b1}}>>((N+1)-B));
             end
             else begin
+                C=A[N-B]; 
                 Y=A<<B;
             end
-           
-    endcase
+        4'b1001:  // CORRIMIENTO DER
 
+            if (ALUFlagIn) begin
+                C=A[N-B]; 
+                Y=(A >> B)|({(N+1){1'b1}}<<((N+1)-B));
+            end else begin
+                C=A[N-B]; 
+                Y=A>>B;
+            end 
+        default: begin
+            Y = 0;
+            C = 0;
+            Z = 0;
+        end
+    endcase
+    Z=(Y==0);
 end
     
     
