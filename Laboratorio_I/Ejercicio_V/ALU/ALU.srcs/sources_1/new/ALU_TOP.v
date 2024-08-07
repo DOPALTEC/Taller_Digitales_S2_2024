@@ -56,7 +56,7 @@ always @* begin
 
             if (ALUFlagIn) begin
                 C=A[N-B]; 
-                Y=(A >> B)|({(N+1){1'b1}}<<((N+1)-B));
+                Y=(A>>B)|({(N+1){1'b1}}<<((N+1)-B));
             end else begin
                 C=A[N-B]; 
                 Y=A>>B;
