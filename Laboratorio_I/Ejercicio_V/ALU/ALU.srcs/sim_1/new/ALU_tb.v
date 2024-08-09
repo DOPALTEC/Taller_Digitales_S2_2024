@@ -28,7 +28,8 @@ module ALU_TOP_TB;
         B = 0;
         ALUControl = 0;
         ALUFlagIn = 0;
-
+        
+        #10;
         // AND
         A = $random % 4;
         B = $random % 4;

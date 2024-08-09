@@ -53,3 +53,6 @@ Laboratorio_I/Ejercicio_II/Switch_Button_Led/Switch_Button_Led.srcs/dsim_work/si
 Laboratorio_I/Ejercicio_V/ALU/ALU.sim/sim_1/behav/xsim/glbl.v
 Laboratorio_I/Ejercicio_V/ALU/ALU.sim/sim_1/behav/xsim/xsim.dir/ALU_TOP_behav/Compile_Options.txt
 Laboratorio_I/Ejercicio_V/ALU/ALU.sim/sim_1/behav/xsim/xsim.dir/ALU_TOP_behav/TempBreakPointFile.txt
+Laboratorio_I/Ejercicio_V/ALU/ALU.sim/sim_1/behav/xsim/xsim.dir/ALU_TOP_TB_behav/TempBreakPointFile.txt
+Laboratorio_I/Ejercicio_V/ALU/ALU.sim/sim_1/behav/xsim/xsim.dir/ALU_TOP_TB_behav/Compile_Options.txt
+Laboratorio_I/Ejercicio_V/ALU/ALU_TOP_TB_behav.wcfg
