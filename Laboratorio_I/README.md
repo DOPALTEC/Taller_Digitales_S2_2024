@@ -148,7 +148,12 @@ module mi_modulo(
 
 
 #### 5. Testbench
-Descripción y resultados de las pruebas hechas
+
+
+Con Semilla para randoms: seed = 32'hDEADBEEF;
+
+![image](https://github.com/user-attachments/assets/771ed6c4-6b3d-4b35-bb3e-08e286356524)
+
 
 
 
