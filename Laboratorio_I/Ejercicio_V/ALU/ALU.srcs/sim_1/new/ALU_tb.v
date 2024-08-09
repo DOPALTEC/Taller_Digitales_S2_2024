@@ -22,8 +22,13 @@ module ALU_TOP_TB;
         .Y(Y)
     );
 
+    reg [31:0] seed; 
     initial begin
+    
         //Inicializar
+        //integer seed;
+        seed = 32'hDEADBEEF;
+        
         A = 0;
         B = 0;
         ALUControl = 0;
@@ -31,69 +36,69 @@ module ALU_TOP_TB;
         
         #10;
         // AND
-        A = $random % 4;
-        B = $random % 4;
+        A = $random(seed) % 16;  // Genera un número aleatorio de 4 bits para A
+        B = $random(seed) % 16;  // Genera un número aleatorio de 4 bits para B
         ALUControl = 4'b0000;
         #10;
 
         // OR
-        A = $random % 4;
-        B = $random % 4;
+        A = $random(seed) % 16;  // Genera un número aleatorio de 4 bits para A
+        B = $random(seed) % 16;  // Genera un número aleatorio de 4 bits para B
         ALUControl = 4'b0001;
         #10;
 
         // SUMA COMPLEMETO A 2
-        A = $random % 4;
-        B = $random % 4;
-        ALUFlagIn = $random % 2;
+        A = $random(seed) % 16;  // Genera un número aleatorio de 4 bits para A
+        B = $random(seed) % 16;  // Genera un número aleatorio de 4 bits para B
+        ALUFlagIn = $random(seed) % 2;
         ALUControl = 4'b0010;
         #10;
 
         // INCREMENTO A 1
-        A = $random % 4;
-        B = $random % 4;
-        ALUFlagIn = $random % 2;
+        A = $random(seed) % 16;  // Genera un número aleatorio de 4 bits para A
+        B = $random(seed) % 16;  // Genera un número aleatorio de 4 bits para B
+        ALUFlagIn = $random(seed) % 2;
         ALUControl = 4'b0011;
         #10;
 
         // DECREMENTO A 1
-        A = $random % 4;
-        B = $random % 4;
-        ALUFlagIn = $random % 2;
+        A = $random(seed) % 16;  // Genera un número aleatorio de 4 bits para A
+        B = $random(seed) % 16;  // Genera un número aleatorio de 4 bits para B
+        ALUFlagIn = $random(seed) % 2;
         ALUControl = 4'b0100;
         #10;
 
         // NOT
-        A = $random % 4;
-        B = $random % 4;
-        ALUFlagIn = $random % 2;
+        A = $random(seed) % 16;  // Genera un número aleatorio de 4 bits para A
+        B = $random(seed) % 16;  // Genera un número aleatorio de 4 bits para B
+        ALUFlagIn = $random(seed) % 2;
         ALUControl = 4'b0101;
         #10;
 
         // RESTA COMPLEMENTO A 2
-        A = $random % 4;
-        B = $random % 4;
-        ALUFlagIn = $random % 2;
+        A = $random(seed) % 16;  // Genera un número aleatorio de 4 bits para A
+        B = $random(seed) % 16;  // Genera un número aleatorio de 4 bits para B
+        ALUFlagIn = $random(seed) % 2;
         ALUControl = 4'b0110;
         #10;
 
         // XOR 
-        A = $random % 4;
-        B = $random % 4;
+        A = $random(seed) % 16;  // Genera un número aleatorio de 4 bits para A
+        B = $random(seed) % 16;  // Genera un número aleatorio de 4 bits para B
         ALUControl = 4'b0111;
         #10;
 
         // CORRIMIENTO IZQ
-        A = $random % 4;
-        B = $random % 4;
-        ALUFlagIn = $random % 2;
+        A = $random(seed) % 16;  // Genera un número aleatorio de 4 bits para A
+        B = $random(seed) % 16;  // Genera un número aleatorio de 4 bits para B
+        ALUFlagIn = $random(seed) % 2;
         ALUControl = 4'b1000;
         #10;
 
         // CORRIMIENTO DER
-        A = $random % 4;
-        B = $random % 4;
-        ALUFlagIn = $random % 2;
+        A = $random(seed) % 16;  // Genera un número aleatorio de 4 bits para A
+        B = $random(seed) % 16;  // Genera un número aleatorio de 4 bits para B
+        ALUFlagIn = $random(seed) % 2;
         ALUControl = 4'b1001;
         #10;
 
