@@ -45,30 +45,41 @@ always @* begin
             Y=A^B;
         4'b1000:  //CORRIMIENTO IZQ
             if (ALUFlagIn) begin
-                if (B>bits(A)) begin
+                if (B>N) begin
                     C=ALUFlagIn;
                 end
                 else begin
-                    C=A[N-B];
+                    C=A[N+1-B];
                 end 
                 Y=(A<<B)|({(N+1){1'b1}}>>((N+1)-B));
             end
             else begin
-                C=A[N-B]; 
+               if (B>N) begin
+                    C=ALUFlagIn;
+                end
+                else begin
+                    C=A[N+1-B];
+                end  
                 Y=A<<B;
             end
         4'b1001:  // CORRIMIENTO DER
 
             if (ALUFlagIn) begin
-                if (B>bits(A)) begin
+                if (B>N) begin
                     C=ALUFlagIn;
                 end
                 else begin
-                    C=A[N-B];
+                    C=A[N+1-B];
                 end 
                 Y=(A>>B)|({(N+1){1'b1}}<<((N+1)-B));
-            end else begin
-                C=A[N-B]; 
+            end 
+            else begin
+                if (B>N) begin
+                    C=ALUFlagIn;
+                end
+                else begin
+                    C=A[N+1-B];
+                end 
                 Y=A>>B;
             end 
         default: begin
