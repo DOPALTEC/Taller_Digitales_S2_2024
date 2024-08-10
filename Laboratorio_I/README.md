@@ -172,13 +172,36 @@ Operación OR:
 ![image](https://github.com/user-attachments/assets/d9cccb6e-27eb-445b-8b8a-856b488288bf)
 
 Operación Suma (Complemento a 2):
-Considerar que para la tabla se omite el valor de la bandera de entrada ALUFlagIn, la que corresponde a un acarreo de entrada, por tanto el resultado de la tabla, se le sumaría el valor del acarreo cambiando el valor de C.
 
-![image](https://github.com/user-attachments/assets/b56ea218-4450-4699-8ec3-3a71d59ace4a)
+
+| **ALUControl** | **ALUFlagIn** | **Operando A (2 bits)** | **Operando B (2 bits)** | **Y = Suma (A + B) (2 bits)** | **C_out** | **Zero** |
+|:--------------:|:-------------:|:-----------------------:|:-----------------------:|:----------------------------:|:---------:|:--------:|
+| 2              | 0             | A = 00                  | B = 00                  | 00                           | 0         | 1        |
+| 2              | 0             | A = 00                  | B = 01                  | 01                           | 0         | 0        |
+| 2              | 0             | A = 00                  | B = 10                  | 10                           | 0         | 0        |
+| 2              | 0             | A = 00                  | B = 11                  | 11                           | 0         | 0        |
+| 2              | 0             | A = 01                  | B = 00                  | 01                           | 0         | 0        |
+| 2              | 0             | A = 01                  | B = 01                  | 10                           | 0         | 0        |
+| 2              | 0             | A = 01                  | B = 10                  | 11                           | 0         | 0        |
+| 2              | 0             | A = 01                  | B = 11                  | 00                           | 1         | 1        |
+| 2              | 0             | A = 10                  | B = 00                  | 10                           | 0         | 0        |
+| 2              | 0             | A = 10                  | B = 01                  | 11                           | 0         | 0        |
+| 2              | 0             | A = 10                  | B = 10                  | 00                           | 1         | 1        |
+| 2              | 0             | A = 10                  | B = 11                  | 01                           | 1         | 0        |
+| 2              | 0             | A = 11                  | B = 00                  | 11                           | 0         | 0        |
+| 2              | 0             | A = 11                  | B = 01                  | 00                           | 1         | 1        |
+| 2              | 0             | A = 11                  | B = 10                  | 01                           | 1         | 0        |
+| 2              | 0             | A = 11                  | B = 11                  | 10                           | 1         | 0        |
+| 2              | 1             | A = 00                  | B = 00                  | 00                           | 0         | 1        |
+| 2              | 1             | A = 00                  | B = 01                  | 01                           | 0         | 0        |
+| 2              | 1             | A = 00                  | B = 10                  | 10                           | 0         | 0        |
+| 2              | 1             |
+
 
 Incremento en Uno:
 
-![image](https://github.com/user-attachments/assets/44de6ef4-ba9d-4861-806f-fa63ff191c97)
+![image](https://github.com/user-attachments/assets/31efacd8-b49c-40ed-8b1f-185ccd263ebd)
+
 
 Decremento en Uno:
 
