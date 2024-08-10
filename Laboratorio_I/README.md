@@ -157,6 +157,38 @@ module ALU_TOP #(parameter N=3) (
 
 #### 4. Criterios de diseño
 
+Para al ALU solicitada se realiza un diseño para visualizar las salidas y entradas así como su funcionalidad.
+
+![image](https://github.com/user-attachments/assets/6e1316e9-ab7e-4641-bf51-b3a71b94a3fe)
+
+A modo de simplicidad se muestra solo la tabla de verdad correspondiente a operandos de dos bits.
+
+Operación AND:
+
+![image](https://github.com/user-attachments/assets/e0a46ae0-9af8-4006-b299-86c31075a227)
+
+Operación OR:
+
+![image](https://github.com/user-attachments/assets/d9cccb6e-27eb-445b-8b8a-856b488288bf)
+
+Operación Suma (Complemento a 2):
+Considerar que para la tabla se omite el valor de la bandera de entrada ALUFlagIn, la que corresponde a un acarreo de entrada, por tanto el resultado de la tabla, se le sumaría el valor del acarreo cambiando el valor de C.
+
+![image](https://github.com/user-attachments/assets/b56ea218-4450-4699-8ec3-3a71d59ace4a)
+
+Incremento en Uno:
+
+![image](https://github.com/user-attachments/assets/44de6ef4-ba9d-4861-806f-fa63ff191c97)
+
+Decremento en Uno:
+
+![image](https://github.com/user-attachments/assets/ba19edd3-da8b-4670-ad75-a36e35273a27)
+
+
+Operación NOT:
+
+![image](https://github.com/user-attachments/assets/88582561-aa01-43aa-adf4-cef904c9ce02)
+
 
 #### 5. Testbench
 
