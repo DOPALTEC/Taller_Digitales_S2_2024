@@ -165,7 +165,25 @@ A modo de simplicidad se muestra solo la tabla de verdad correspondiente a opera
 
 Operación AND:
 
-![image](https://github.com/user-attachments/assets/e0a46ae0-9af8-4006-b299-86c31075a227)
+| **ALUControl** | **ALUFlagIn** | **Operando A (2 bits)** | **Operando B (2 bits)** | **Y = A and B** | **Zero** |
+|:--------------:|:-------------:|:-----------------------:|:-----------------------:|:---------------:|:--------:|
+| 0              | X             | 00                     | 00                     | 00              | 1        |
+| 0              | X             | 00                     | 01                     | 00              | 1        |
+| 0              | X             | 00                     | 10                     | 00              | 1        |
+| 0              | X             | 00                     | 11                     | 00              | 1        |
+| 0              | X             | 01                     | 00                     | 00              | 1        |
+| 0              | X             | 01                     | 01                     | 01              | 0        |
+| 0              | X             | 01                     | 10                     | 00              | 1        |
+| 0              | X             | 01                     | 11                     | 01              | 0        |
+| 0              | X             | 10                     | 00                     | 00              | 1        |
+| 0              | X             | 10                     | 01                     | 00              | 1        |
+| 0              | X             | 10                     | 10                     | 10              | 0        |
+| 0              | X             | 10                     | 11                     | 10              | 0        |
+| 0              | X             | 11                     | 00                     | 00              | 1        |
+| 0              | X             | 11                     | 01                     | 01              | 0        |
+| 0              | X             | 11                     | 10                     | 10              | 0        |
+| 0              | X             | 11                     | 11                     | 11              | 0        |
+
 
 Operación OR:
 | **ALUControl** | **ALUFlagIn** | **Operando A (2 bits)** | **Operando B (2 bits)** | **Y = A or B** | **Zero** |
