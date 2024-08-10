@@ -169,33 +169,12 @@ Operación AND:
 
 Operación OR:
 
-## Tabla de Verdad para la Operación OR
-
-### Operación OR (ALUControl = 1)
 
 | **ALUControl** | **ALUFlagIn** | **Operando A (2 bits)** | **Operando B (2 bits)** | **Y = OR (A | B) (2 bits)** | **Zero** |
 |:--------------:|:-------------:|:-----------------------:|:-----------------------:|:--------------------------:|:--------:|
 | 1              | 0             | 00                      | 00                      | 00                         | 1        |
-| 1              | 0             | 00                      | 01                      | 01                         | 0        |
-| 1              | 0             | 00                      | 10                      | 10                         | 0        |
-| 1              | 0             | 00                      | 11                      | 11                         | 0        |
-| 1              | 0             | 01                      | 00                      | 01                         | 0        |
-| 1              | 0             | 01                      | 01                      | 01                         | 0        |
-| 1              | 0             | 01                      | 10                      | 11                         | 0        |
-| 1              | 0             | 01                      | 11                      | 11                         | 0        |
-| 1              | 1             | 00                      | 00                      | 00                         | 1        |
-| 1              | 1             | 00                      | 01                      | 01                         | 0        |
-| 1              | 1             | 00                      | 10                      | 10                         | 0        |
-| 1              | 1             | 00                      | 11                      | 11                         | 0        |
-| 1              | 1             | 01                      | 00                      | 01                         | 0        |
-| 1              | 1             | 01                      | 01                      | 01                         | 0        |
-| 1              | 1             | 01                      | 10                      | 11                         | 0        |
-| 1              | 1             | 01                      | 11                      | 11                         | 0        |
 
-- **ALUControl**: 1 (en hexadecimal) indica que se debe realizar la operación OR.
-- **ALUFlagIn**: 0 indica que se selecciona A para la operación OR; 1 indica que se selecciona B.
-- **Y** es el resultado de la operación OR aplicada a los operandos seleccionados, solo cuando **ALUControl** es 1.
-- **Zero** es 1 cuando el resultado **Y** es 00.
+
 
 
 Operación Suma (Complemento a 2):
