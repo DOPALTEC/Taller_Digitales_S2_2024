@@ -170,7 +170,6 @@ Operación AND:
 Operación OR:
 
 | **ALUControl** | **ALUFlagIn** | **Operando A (2 bits)** | **Operando B (2 bits)** | **Y = Suma (A or B) (2 bits)** | **C_out** | **Zero** |
-|:--------------:|:-------------:|:--------------:|:--------------:|:-------------:|:--------:|
 
 
 Operación Suma (Complemento a 2):
