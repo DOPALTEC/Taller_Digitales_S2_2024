@@ -169,7 +169,7 @@ Operación AND:
 
 Operación OR:
 
-| ALUControl | ALUFlagIn | Operando A | Operando B | Y (A | B) | Zero |
+| **ALUControl** | **ALUFlagIn** | **Operando A (2 bits)** | **Operando B (2 bits)** | **Y = Suma (A or B) (2 bits)** | **C_out** | **Zero** |
 |:--------------:|:-------------:|:--------------:|:--------------:|:-------------:|:--------:|
 | 1 | 0 | 00 | 00 | 00 | 1 |
 | 1 | 0 | 00 | 01 | 01 | 0 |
