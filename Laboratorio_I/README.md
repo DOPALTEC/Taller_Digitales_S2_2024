@@ -132,17 +132,28 @@ Descripción y resultados de las pruebas hechas
 
 #### 1. Encabezado del módulo
 ```SystemVerilog
-module mi_modulo(
-    input logic     entrada_i,      
-    output logic    salida_i 
-    );
+module ALU_TOP #(parameter N=3) (
+    input [N:0] A,
+    input [N:0] B,
+    input [N:0] ALUControl,
+    input ALUFlagIn,
+    output reg C,
+    output reg Z,
+    output reg [N:0] Y
+);
 ```
 #### 2. Parámetros
-- Lista de parámetros
+- parameter N=3: Representa el tamaño que van a tener tanto los operandos, como la salida del resultado Y.
 
 #### 3. Entradas y salidas:
-- `entrada_i`: descripción de la entrada
-- `salida_i`: descripción de la salida
+- `A`: Entrada correspondiente al primer operando de la ALU, se considera el operando principal al que se le aplican las operaciones.
+- `B`: Input referente al segundo operando, este operando varía más con respecto a cual de las operaciones a realizar, puede estar sujeto a indicar cuantos corrimientos se hacen para el caso de esa operación o el segundo operando de las operaciones lógicas o aritméticas.
+- `ALUControl`: Señal de dos bits correspondiente al selector de la operación a realizar, de las cuales hay 10 disponibles y cada una con su código de operación correspondiente. 
+- `ALUFlagIn`: Entrada de un bit con distintas aplicaciones dependiendo de la operación a realizar, puede representar un acarreo de entrada o un valor binario para rellenar un operando por ejemplo.
+  
+- `C`: Corresponde a la bandera de salida que representa un bit de acarreo para las operaciones aritméticas o para el caso de corrimientos, el último bit que sale de el arreglo escogido.
+- `Z`: Bandera de salida que resulta al momento en el que se tiene un resultado de la operación correspondiente a un cero.
+- `Y`: Arreglo de bits que representa la salida de la ALU principal, la cual es la operación resultante dependiendo de la operación elegida por el control.
 
 #### 4. Criterios de diseño
 
