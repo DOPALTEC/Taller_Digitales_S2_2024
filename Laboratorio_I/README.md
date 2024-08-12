@@ -495,12 +495,53 @@ Corrimiento a la Derecha:
 
 #### 5. Testbench
 
+Las semillas para generar numeros aleatorios se puede cambiar de manera accesible mediante el testbench cambiando el valor hexa de 32 bits de la variable "seed".
 
 Con Semilla para randoms: seed = 32'hDEADBEEF;
 
 ![image](https://github.com/user-attachments/assets/771ed6c4-6b3d-4b35-bb3e-08e286356524)
 
 
+Con semilla para randoms: seed = 32'hDFADAEAF;
+
+Y utilizando la herramienta dsim se obtuvo en la terminal:
+
+```SystemVerilog
+=N:[UsageMeter (2024-08-11 23:49:02 Hora de verano de las Monta±as)] usage server initial connection
+=N:[License] 
+Licensed for Metrics Design Automation.
+=N:[License] New lease granted.
+Analyzing...
+Elaborating...
+  Top-level modules:
+    $unit
+    ALU_tb
+  Found 5 unique specialization(s) of 5 design element(s).
+Optimizing...
+Building models...
+PLI/VPI access: +b
+Simulation time precision is 1ps.
+  [3/4] module ALU_tb#(3): 8 functions, 117 basic blocks
+Linking image.so...
+Using default typical min/typ/max.
+=S:Begin run-time elaboration and static initialization...
+=N:[dumpMXD] preparing MXD dump to 'waves.mxd'.
+=N:[dump] Dump started at time 0
+=N:Starting event scheduler...
+Operaci¾n Exitosa: ALUControl=0000, A=1101, B=0010, ALUFlagIn=0, Y=0000, C=x, Z=1
+Operaci¾n Exitosa: ALUControl=0001, A=0000, B=0100, ALUFlagIn=1, Y=0100, C=x, Z=0
+Operaci¾n Exitosa: ALUControl=0010, A=0100, B=0110, ALUFlagIn=0, Y=1010, C=0, Z=0
+Operaci¾n Exitosa: ALUControl=0011, A=0101, B=1100, ALUFlagIn=1, Y=1101, C=0, Z=0
+Operaci¾n Exitosa: ALUControl=0100, A=0010, B=0011, ALUFlagIn=1, Y=0010, C=0, Z=0
+Operaci¾n Exitosa: ALUControl=0101, A=1001, B=0110, ALUFlagIn=1, Y=1001, C=0, Z=0
+Operaci¾n Exitosa: ALUControl=0110, A=0111, B=1110, ALUFlagIn=0, Y=1001, C=1, Z=0
+Operaci¾n Exitosa: ALUControl=0111, A=0101, B=1101, ALUFlagIn=0, Y=1000, C=1, Z=0
+Operaci¾n Exitosa: ALUControl=1000, A=1000, B=1100, ALUFlagIn=1, Y=0000, C=1, Z=1
+Operaci¾n Exitosa: ALUControl=1001, A=1110, B=1101, ALUFlagIn=1, Y=0000, C=1, Z=1
+=N:[dumpMXD] closing MXD dump
+=T:Simulation terminated by $finish at time 100000 (sim_1\new\ALU_tb.v:125);
+```
+![image](https://github.com/user-attachments/assets/bf7a8bf4-0d82-43f3-83ea-2e3309009f80)
 
 
 ## Referencias
