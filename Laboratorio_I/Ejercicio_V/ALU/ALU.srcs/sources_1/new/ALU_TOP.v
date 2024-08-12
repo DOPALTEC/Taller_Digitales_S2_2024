@@ -48,40 +48,46 @@ always @* begin
             if (ALUFlagIn) begin
                 if (B>N) begin
                     C=ALUFlagIn;
+                    Y={(N+1){1'b1}};
                 end
                 else begin
                     C=A[N+1-B];
+                    Y=(A<<B)|({(N+1){1'b1}}>>((N+1)-B));
                 end 
-                Y=(A<<B)|({(N+1){1'b1}}>>((N+1)-B));
+                
             end
             else begin
                if (B>N) begin
                     C=ALUFlagIn;
+                    Y={(N+1){1'b0}};
                 end
                 else begin
                     C=A[N+1-B];
+                    Y=A<<B;
                 end  
-                Y=A<<B;
             end
         4'b1001:  // CORRIMIENTO DER
 
             if (ALUFlagIn) begin
                 if (B>N) begin
                     C=ALUFlagIn;
+                    Y={(N+1){1'b1}};
                 end
                 else begin
                     C=A[N+1-B];
+                    Y=(A>>B)|({(N+1){1'b1}}<<((N+1)-B));
                 end 
-                Y=(A>>B)|({(N+1){1'b1}}<<((N+1)-B));
+                
             end 
             else begin
                 if (B>N) begin
                     C=ALUFlagIn;
+                    Y={(N+1){1'b0}};
                 end
                 else begin
                     C=A[N+1-B];
+                    Y=A>>B;
                 end 
-                Y=A>>B;
             end 
         default: begin
             Y = 0;

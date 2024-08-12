@@ -80,34 +80,41 @@ module ALU_tb;
                 if (ALUFlagIn) begin
                     if (B > N) begin
                         expected_C = ALUFlagIn;
+                        expected_Y ={(N+1){1'b1}};
                     end else begin
                         expected_C = A[N+1-B];
-                    end 
-                    expected_Y = (A << B) | ({(N+1){1'b1}} >> ((N+1)-B));
+                        expected_Y = (A << B) | ({(N+1){1'b1}} >> ((N+1)-B));
+                    end     
                 end else begin
                     if (B > N) begin
                         expected_C = ALUFlagIn;
+                        expected_Y ={(N+1){1'b0}};
                     end else begin
                         expected_C = A[N+1-B];
+                        expected_Y = A << B;
                     end  
-                    expected_Y = A << B;
+                    
                 end
 
                 4'b1001:  // CORRIMIENTO DER
                 if (ALUFlagIn) begin
                     if (B > N) begin
                         expected_C = ALUFlagIn;
+                        expected_Y ={(N+1){1'b1}};
                     end else begin
                         expected_C = A[N+1-B];
+                        expected_Y = (A >> B) | ({(N+1){1'b1}} << ((N+1)-B));
                     end 
-                    expected_Y = (A >> B) | ({(N+1){1'b1}} << ((N+1)-B));
+                    
                 end else begin
                     if (B > N) begin
                         expected_C = ALUFlagIn;
+                        expected_Y ={(N+1){1'b0}};
                     end else begin
                         expected_C = A[N+1-B];
+                        expected_Y = A >> B;
                     end 
-                    expected_Y = A >> B;
+                    
                 end
 
                 default: expected_Y = 0;
