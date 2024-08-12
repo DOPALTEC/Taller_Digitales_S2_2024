@@ -11,6 +11,7 @@ module ALU_TOP #(parameter N=3) (
 );
 
 always @* begin
+    C = 1'bx;
     case(ALUControl)
         4'b0000: Y= A&B; //AND
         

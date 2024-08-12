@@ -41,7 +41,10 @@ module ALU_tb;
             B = $random(seed) % 16;
             ALUFlagIn = $random(seed) % 2;
             ALUControl = i;
+
             #10;
+            expected_C = 1'bx;
+            
 
             case (ALUControl)
                 4'b0000: expected_Y = A & B;  // AND
@@ -69,7 +72,7 @@ module ALU_tb;
                     expected_Y = ~A; 
                 end
                 
-                4'b0110: {expected_C, expected_Y} = A - B - ALUFlagIn;  // RESTA
+                4'b0110: {expected_C, expected_Y} = A - B + ALUFlagIn;  // RESTA
 
                 4'b0111: expected_Y = A ^ B;  // XOR
 
