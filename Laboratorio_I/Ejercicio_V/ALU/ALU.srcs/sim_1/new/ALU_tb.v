@@ -29,7 +29,7 @@ module ALU_tb;
     integer i;  
 
     initial begin
-        seed = 32'hDFADAEAF;
+        seed = 32'h7E5D3A9F;
         
         A = 0;
         B = 0;
