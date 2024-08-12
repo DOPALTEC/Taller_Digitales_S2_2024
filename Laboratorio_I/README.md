@@ -497,16 +497,36 @@ Corrimiento a la Derecha:
 
 Las semillas para generar numeros aleatorios se puede cambiar de manera accesible mediante el testbench cambiando el valor hexa de 32 bits de la variable "seed".
 
-Con Semilla para randoms: seed = 32'hDEADBEEF;
+Con Semilla para randoms: seed = 32'hA3F7B9C1;
 
-![image](https://github.com/user-attachments/assets/771ed6c4-6b3d-4b35-bb3e-08e286356524)
+```bash
+Using default typical min/typ/max.
+=S:Begin run-time elaboration and static initialization...
+=N:[dumpMXD] preparing MXD dump to 'waves.mxd'.
+=N:[dump] Dump started at time 0
+=N:Starting event scheduler...
+Operaci¾n Exitosa: ALUControl=0000, A=0111, B=0001, ALUFlagIn=1, Y=0001, C=x, Z=0
+Operaci¾n Exitosa: ALUControl=0001, A=1111, B=1111, ALUFlagIn=0, Y=1111, C=x, Z=0
+Operaci¾n Exitosa: ALUControl=0010, A=0110, B=1001, ALUFlagIn=1, Y=0000, C=1, Z=1
+Operaci¾n Exitosa: ALUControl=0011, A=0111, B=1111, ALUFlagIn=1, Y=0000, C=1, Z=1
+Operaci¾n Exitosa: ALUControl=0100, A=0100, B=1101, ALUFlagIn=1, Y=1100, C=0, Z=0
+Operaci¾n Exitosa: ALUControl=0101, A=1001, B=1100, ALUFlagIn=0, Y=0110, C=x, Z=0
+Operaci¾n Exitosa: ALUControl=0110, A=1101, B=1000, ALUFlagIn=1, Y=0110, C=0, Z=0
+Operaci¾n Exitosa: ALUControl=0111, A=0110, B=1000, ALUFlagIn=1, Y=1110, C=x, Z=0
+Operaci¾n Exitosa: ALUControl=1000, A=0001, B=1000, ALUFlagIn=0, Y=0000, C=0, Z=1
+Operaci¾n Exitosa: ALUControl=1001, A=1010, B=1110, ALUFlagIn=0, Y=0000, C=0, Z=1
+=N:[dumpMXD] closing MXD dump
+=T:Simulation terminated by $finish at time 100000 (sim_1\new\ALU_tb.v:135);
+```
+![image](https://github.com/user-attachments/assets/d7d06fc7-c0d6-4d8a-81f2-ece2f17951e0)
+
 
 
 Con semilla para randoms: seed = 32'hDFADAEAF;
 
 Y utilizando la herramienta dsim se obtuvo en la terminal:
 
-```SystemVerilog
+```bash
 =S:Begin run-time elaboration and static initialization...
 =N:[dumpMXD] preparing MXD dump to 'waves.mxd'.
 =N:[dump] Dump started at time 0
@@ -519,11 +539,35 @@ Operaci¾n Exitosa: ALUControl=0100, A=0010, B=0011, ALUFlagIn=1, Y=0010, C=0, Z
 Operaci¾n Exitosa: ALUControl=0101, A=1001, B=0110, ALUFlagIn=1, Y=1001, C=x, Z=0
 Operaci¾n Exitosa: ALUControl=0110, A=0111, B=1110, ALUFlagIn=0, Y=1001, C=1, Z=0
 Operaci¾n Exitosa: ALUControl=0111, A=0101, B=1101, ALUFlagIn=0, Y=1000, C=x, Z=0
-Operaci¾n Exitosa: ALUControl=1000, A=1000, B=1100, ALUFlagIn=1, Y=0000, C=1, Z=1
-Operaci¾n Exitosa: ALUControl=1001, A=1110, B=1101, ALUFlagIn=1, Y=0000, C=1, Z=1
+Operaci¾n Exitosa: ALUControl=1000, A=1000, B=1100, ALUFlagIn=1, Y=1111, C=1, Z=0
+Operaci¾n Exitosa: ALUControl=1001, A=1110, B=1101, ALUFlagIn=1, Y=1111, C=1, Z=0
 =N:[dumpMXD] closing MXD dump
+=T:Simulation terminated by $finish at time 100000 (sim_1\new\ALU_tb.v:135);
 ```
-![image](https://github.com/user-attachments/assets/04cf4c27-886a-4512-8234-cdd8338b8ffe)
+![image](https://github.com/user-attachments/assets/3890b563-b3c5-4cbe-a22f-f9da1aee7082)
+
+Como última prueba se generaron los valores con la semilla: seed = 32'h7E5D3A9F;
+
+
+```bash
+=N:[dumpMXD] preparing MXD dump to 'waves.mxd'.
+=N:[dump] Dump started at time 0
+=N:Starting event scheduler...
+Operaci¾n Exitosa: ALUControl=0000, A=1110, B=0001, ALUFlagIn=0, Y=0000, C=x, Z=1
+Operaci¾n Exitosa: ALUControl=0001, A=0110, B=1010, ALUFlagIn=1, Y=1110, C=x, Z=0
+Operaci¾n Exitosa: ALUControl=0010, A=0010, B=0110, ALUFlagIn=1, Y=1001, C=0, Z=0
+Operaci¾n Exitosa: ALUControl=0011, A=1011, B=1000, ALUFlagIn=0, Y=1100, C=0, Z=0
+Operaci¾n Exitosa: ALUControl=0100, A=0001, B=1010, ALUFlagIn=0, Y=0000, C=0, Z=1
+Operaci¾n Exitosa: ALUControl=0101, A=1110, B=1000, ALUFlagIn=0, Y=0001, C=x, Z=0
+Operaci¾n Exitosa: ALUControl=0110, A=0001, B=0000, ALUFlagIn=0, Y=0001, C=0, Z=0
+Operaci¾n Exitosa: ALUControl=0111, A=1101, B=0111, ALUFlagIn=0, Y=1010, C=x, Z=0
+Operaci¾n Exitosa: ALUControl=1000, A=1100, B=1100, ALUFlagIn=0, Y=0000, C=0, Z=1
+Operaci¾n Exitosa: ALUControl=1001, A=1111, B=0010, ALUFlagIn=0, Y=0011, C=1, Z=0
+=N:[dumpMXD] closing MXD dump
+=T:Simulation terminated by $finish at time 100000 (sim_1\new\ALU_tb.v:135);
+```
+
+![image](https://github.com/user-attachments/assets/ac0bce5c-c7a8-4c30-b9d6-a88c704a519b)
 
 
 ## Referencias
