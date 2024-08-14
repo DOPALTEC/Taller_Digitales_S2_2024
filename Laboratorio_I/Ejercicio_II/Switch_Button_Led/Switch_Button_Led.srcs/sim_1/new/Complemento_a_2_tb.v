@@ -18,7 +18,7 @@ initial begin
     $display("------------------------");
 
 
-    for (i = 0; i < 16; i = i + 1) begin
+    for (i = 4'b0000; i < 16; i = i + 1) begin
         sw = i;
         #10;
         $display("%0dns\t %b\t %b", $time, sw, led);
