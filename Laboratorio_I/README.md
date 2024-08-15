@@ -17,7 +17,7 @@ Se utilizaron dos compuertas NOT y cuatro compuertas NAND para la activación de
 
 [![Captura-de-pantalla-2024-08-15-002457.png](https://i.postimg.cc/Dy6JpXsM/Captura-de-pantalla-2024-08-15-002457.png)](https://postimg.cc/tY14Y7B3)
 
-[Captura-de-pantalla-2024-08-14-225113.png](https://postimg.cc/2VsqFnJj)
+[![Captura-de-pantalla-2024-08-15-002719.png](https://i.postimg.cc/76XrrwVw/Captura-de-pantalla-2024-08-15-002719.png)](https://postimg.cc/CBZQjyXQ)
 
 [![Captura-de-pantalla-2024-08-14-225149.png](https://i.postimg.cc/4xSpx9WS/Captura-de-pantalla-2024-08-14-225149.png)](https://postimg.cc/4YpY8mk6)
 
