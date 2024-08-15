@@ -15,7 +15,7 @@ Se muestra el diseño realizado para el decodificador de 2 a 4 con salida baja a
 
 Se utilizaron dos compuertas NOT y cuatro compuertas NAND para la activación de cada columna del teclado cuando se recibe un cero lógico. A continuación, se muestran los resultados de la tabla de verdad, así como la simplificación con mapas de Karnaugh utilizados en el proceso de diseño.
 
-[![Captura-de-pantalla-2024-08-14-225038.png](https://i.postimg.cc/wMQhq4rX/Captura-de-pantalla-2024-08-14-225038.png)](https://postimg.cc/T5hyQ0f1)
+[![Captura-de-pantalla-2024-08-15-002457.png](https://i.postimg.cc/Dy6JpXsM/Captura-de-pantalla-2024-08-15-002457.png)](https://postimg.cc/tY14Y7B3)
 
 [Captura-de-pantalla-2024-08-14-225113.png](https://postimg.cc/2VsqFnJj)
 
