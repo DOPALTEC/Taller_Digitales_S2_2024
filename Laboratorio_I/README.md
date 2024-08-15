@@ -8,26 +8,31 @@
 
 ## Ejercicio 1
 
-#### 1. Encabezado del módulo
-```SystemVerilog
-module mi_modulo(
-    input logic     entrada_i,      
-    output logic    salida_i 
-    );
-```
-#### 2. Parámetros
-- Lista de parámetros
+#### 1. Criterios de diseño:
+Se muestra el diseño realizado para el decodificador de 2 a 4 con salida baja activa. 
 
-#### 3. Entradas y salidas:
-- `entrada_i`: descripción de la entrada
-- `salida_i`: descripción de la salida
+[![Decoder.png](https://i.postimg.cc/TPNNG1bd/Decoder.png)](https://postimg.cc/2qv77zTM)
 
-#### 4. Criterios de diseño
+Se utilizaron dos compuertas NOT y cuatro compuertas NAND para la activación de cada columna del teclado cuando se recibe un cero lógico. A continuación, se muestran los resultados de la tabla de verdad, así como la simplificación con mapas de Karnaugh utilizados en el proceso de diseño.
 
+[![Captura-de-pantalla-2024-08-14-225038.png](https://i.postimg.cc/wMQhq4rX/Captura-de-pantalla-2024-08-14-225038.png)](https://postimg.cc/T5hyQ0f1)
 
-#### 5. Testbench
-Descripción y resultados de las pruebas hechas
+[Captura-de-pantalla-2024-08-14-225113.png](https://postimg.cc/2VsqFnJj)
 
+[![Captura-de-pantalla-2024-08-14-225149.png](https://i.postimg.cc/4xSpx9WS/Captura-de-pantalla-2024-08-14-225149.png)](https://postimg.cc/4YpY8mk6)
+
+[![Captura-de-pantalla-2024-08-14-225224.png](https://i.postimg.cc/PxmDyFTg/Captura-de-pantalla-2024-08-14-225224.png)](https://postimg.cc/0Myr2n6n)
+
+[![Captura-de-pantalla-2024-08-14-225259.png](https://i.postimg.cc/1XBqhngM/Captura-de-pantalla-2024-08-14-225259.png)](https://postimg.cc/SYXscKfz)
+
+Para el bloque de codificación 2 key-rollover y key detect se utilizaron cuatro compuertas NOT y una compuerta NOR de 4 entradas. De esta forma se detecta cuando se presionan hasta dos teclas de la columna activa del teclado. El key detect, al igual que el decodificador, se activa cuando recibe una salida baja.
+Se muestra a continuación el diseño realizado, así como la tabla de verdad y mapa de Karnaugh utilizados en el proceso de diseño.
+
+[![Captura-de-pantalla-2024-08-15-002127.png](https://i.postimg.cc/nrtpp38G/Captura-de-pantalla-2024-08-15-002127.png)](https://postimg.cc/mzV0SNgP)
+
+[![Captura-de-pantalla-2024-08-15-002243.png](https://i.postimg.cc/v8Ld5LFC/Captura-de-pantalla-2024-08-15-002243.png)](https://postimg.cc/G92NCDpj)
+
+[![Captura-de-pantalla-2024-08-15-002311.png](https://i.postimg.cc/0QRLwrt8/Captura-de-pantalla-2024-08-15-002311.png)](https://postimg.cc/gwsS9cF5)
 
 ## Ejercicio 2
 
