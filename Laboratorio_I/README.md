@@ -153,27 +153,72 @@ Finalmente se asignaron valores aleatorios a el muestreo con 16 bits entregando 
 
 #### 1. Encabezado del módulo
 ```SystemVerilog
-module mi_modulo(
-    input logic     entrada_i,      
-    output logic    salida_i 
+module pwm_generador( 
+    input clk,
+    input [3:0] switch,  //Entrada de los switches 
+    output reg led
     );
 ```
 #### 2. Parámetros
-- Lista de parámetros
+- COUNTER_MAX: Un parámetro local establecido en 100_000 - 1. Este valor representa el valor máximo del contador y corresponde a un período de 1 ms cuando se utiliza
+  un reloj de 100 MHz. El contador contará hasta este valor antes de reiniciarse, definiendo así el período de la señal PWM.
+- counter: Un registro de 17 bits que se utiliza para contar ciclos de reloj. Este contador se incrementa en cada flanco de subida del reloj y se reinicia cuando
+  alcanza COUNTER_MAX.
 
 #### 3. Entradas y salidas:
-- `entrada_i`: descripción de la entrada
-- `salida_i`: descripción de la salida
+Entradas
+- clk: Señal de reloj. Es la señal principal que impulsa el módulo y determina el tiempo de la señal PWM.
+- switch: Entrada de 4 bits que determina el ciclo de trabajo de la señal PWM. El valor puede variar entre 0 y 15.
+
+Salida
+- led: Señal de salida PWM. El ciclo de trabajo de esta señal varía según el valor de switch. Esta salida puede utilizarse para controlar un LED, un motor u otros
+  dispositivos que requieran PWM.
 
 #### 4. Criterios de diseño
+1.	Contador de Reloj (counter):
+	- El registro counter se incrementa en cada flanco de subida de la señal clk.
+	- Cuando counter alcanza COUNTER_MAX, se reinicia a cero. Este proceso define la longitud del período de PWM.
+2.	Ciclo de Trabajo del PWM:
+    -  El ciclo de trabajo se controla comparando el valor de counter con una versión escalada de la entrada switch.
+	-  El factor de escalado (6667) se elige de manera que el valor máximo de switch (15) corresponda al ciclo de trabajo máximo, cercano al 100%.
 
+   ```SystemVerilog
+led <= (counter < (switch * 6667)) ? 1 : 0;
+```
+- Si counter es menor que el producto de switch * 6667, la salida led estará en alto (1). De lo contrario, estará en bajo (0).
+
+Cálculo del Ciclo de Trabajo
+
+- switch = 0: La señal PWM tiene un ciclo de trabajo del 0% (siempre en bajo).
+- switch = 15: La señal PWM tiene un ciclo de trabajo cercano al 100% (mayormente en alto).
 
 #### 5. Testbench
-Descripción y resultados de las pruebas hechas
+![WhatsApp Image 2024-08-14 at 17 05 48](https://github.com/user-attachments/assets/f23f9898-a5c5-4143-8990-9a7d98b56374)
+
+
+- clk: Es la señal de reloj. En la imagen, está constantemente en alto, indicando que es la señal que impulsa el contador interno.
+- switch[3:0]: Representa el valor de los switches. En la imagen, su valor es 15.
+- led: Es la señal PWM generada por el módulo, que se controla en función del valor de switch.
+
+Análisis de la Señal led:
+
+La señal led que vemos en la imagen tiene diferentes duraciones de estado alto y bajo, lo que corresponde al ciclo de trabajo (duty cycle) de la señal PWM.
+
+1.	Periodo de 1 a 1.5 ms:
+      - Cuando el valor del switch es 1, la señal led está en alto durante una pequeña fracción del periodo. Esto
+     significa que el ciclo de trabajo es bajo (~6.67% deltiempo total).
+2.	Periodo de 1.5 a 2.5 ms:
+      - Para el valor del switch igual a 4, la señal led está en alto durante una mayor fracción del tiempo comparado
+        con el anterior (~26.68% del tiempo total).
+3.	Periodo de 2.5 a 3.5 ms:
+	  - Con el switch configurado a 8, la señal led está en alto durante aproximadamente la mitad del periodo (~53.36%
+        del tiempo total).
+4.	Periodo de 3.5 a 4.5 ms:
+	  - Cuando el switch tiene el valor máximo de 15, la señal led permanece en alto durante casi todo el periodo
+        (~100% del tiempo total). Esto significa que el ciclo de trabajo es cercano al 100%.
 
 
 ## Ejercicio 5
-
 
 
 #### 1. Encabezado del módulo
