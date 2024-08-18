@@ -9,7 +9,7 @@ DEVICE = GW1NR-LV9QN88PC6/I5
 PROYECT = Ejercicio_II
 
 #Fuentes de diseno
-SOURCES := $(wildcard ../design/*.v ../design/*.sv) #Todas las fuentes .v o .sv que estan en design
+SOURCES := $(wildcard ../src/*.v ../src/*.sv) #Todas las fuentes .v o .sv que estan en design
 #Si quieren indicarlas una a una, pueden hacerlo como en este ejemplo:
 #SOURCES = ../design/module_top_deco_gray.v ../design/module_input_deco_gray.v 
 
@@ -19,14 +19,14 @@ TESTBENCH = ../sim/Complemento_a_2_tb.v
 
 # Constraints para el proyecto
 #aca va el archivo de constraints del proyecto
-CONSTRAINTS = ../constr/CONSTRAINTS.cst
+CONSTRAINTS = ../cst/TOP_Leds.cst
 
 #el top se indica sin la extension .v, esto hace referencia al nombre que le pusieron al módulo y no al archivo en si.
-TOP_DESIGN = 
-TOP_TB     = 
+TOP_DESIGN = top
+TOP_TB     = tb_Complemento_a_2
 
 #nombre del vcd que va a generar el tb
-VCD_FILE = 
+VCD_FILE = tb_Complemento_a_2.vcd
 
 
 all: synth pnr bitstream load
