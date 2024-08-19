@@ -20,12 +20,12 @@ pnr: $(BUILD_DIR)/MUX_4_1.json
 	nextpnr-gowin --json $(BUILD_DIR)/MUX_4_1.json --freq 27 --write $(BUILD_DIR)/TOP_Leds_pnr.json --device ${DEVICE} --family ${FAMILY} --cst ${CST_FILE}
 
 # Generate Bitstream
-fs: $(BUILD_DIR)/TOP_Leds_pnr.json
-	gowin_pack -d ${FAMILY} -o $(BUILD_DIR)/TOP_Leds.fs $(BUILD_DIR)/TOP_Leds_pnr.json
+fs: $(BUILD_DIR)/MUX_4_1_pnr.json
+	gowin_pack -d ${FAMILY} -o $(BUILD_DIR)/MUX_4_1.fs $(BUILD_DIR)/MUX_4_1_pnr.json
 
 # Program Board
-load: $(BUILD_DIR)/TOP_Leds.fs
-	openFPGALoader -b ${BOARD} $(BUILD_DIR)/TOP_Leds.fs -f
+load: $(BUILD_DIR)/MUX_4_1.fs
+	openFPGALoader -b ${BOARD} $(BUILD_DIR)/MUX_4_1.fs -f
 
 .PHONY: load
-.INTERMEDIATE: $(BUILD_DIR)/TOP_Leds_pnr.json $(BUILD_DIR)/TOP_Leds.json
+.INTERMEDIATE: $(BUILD_DIR)/MUX_4_1_pnr.json $(BUILD_DIR)/MUX_4_1.json
