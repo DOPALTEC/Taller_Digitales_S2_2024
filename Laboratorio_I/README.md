@@ -1,9 +1,15 @@
 # Lab. 1: Introducción al diseño digital con HDL y herramientas EDA de síntesis
 
 ## Abreviaturas y definiciones
-- **FPGA**: Field Programmable Gate Arrays
+- **FPGA (Field Programmable Gate Arrays)** Dispositivo semiconductor que se puede programar para realizar tareas lógicas específicas después de su fabricación.
 
-![pin_map](https://github.com/user-attachments/assets/e29f3a75-c2ac-441d-ada5-0436738a9cc2)
+## Referencias
+[0] David Harris y Sarah Harris. *Digital Design and Computer Architecture. RISC-V Edition.* Morgan Kaufmann, 2022. ISBN: 978-0-12-820064-3
+
+[1] Morris Mano y Michael D. Ciletti. Digital Design: With an Introduction to the Verilog HDL, VHDL, and SystemVerilog. 6ta edición. Pearson, 2017. ISBN: 978-0-13-454989-7
+
+[2] Pong P. Chu. FPGA Prototyping by Verilog Examples: Xilinx Spartan-3 Version. Wiley-Interscience, 2008. ISBN: 978-0-470-18532-2.
+
 
 
 ## Ejercicio 1
@@ -661,9 +667,9 @@ Operaci¾n Exitosa: ALUControl=1001, A=1111, B=0010, ALUFlagIn=0, Y=0011, C=1, Z
 ![image](https://github.com/user-attachments/assets/ac0bce5c-c7a8-4c30-b9d6-a88c704a519b)
 
 
-## Referencias
-[0] David Harris y Sarah Harris. *Digital Design and Computer Architecture. RISC-V Edition.* Morgan Kaufmann, 2022. ISBN: 978-0-12-820064-3
 
 ## Apendices:
-### Apendice 1:
-texto, imágen, etc
+### Apendice 1: Notación de Pines Tang Nano
+![pin_map](https://github.com/user-attachments/assets/e29f3a75-c2ac-441d-ada5-0436738a9cc2)
+
+
