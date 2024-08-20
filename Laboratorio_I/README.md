@@ -31,14 +31,13 @@ Se utilizaron dos compuertas NOT y cuatro compuertas NAND para la activación de
 
 [![Captura-de-pantalla-2024-08-14-225259.png](https://i.postimg.cc/1XBqhngM/Captura-de-pantalla-2024-08-14-225259.png)](https://postimg.cc/SYXscKfz)
 
-Para el bloque de codificación 2 key-rollover y key detect se utilizaron cuatro compuertas NOT y una compuerta NOR de 4 entradas. De esta forma se detecta cuando se presionan hasta dos teclas de la columna activa del teclado. El key detect, al igual que el decodificador, se activa cuando recibe una salida baja.
-Se muestra a continuación el diseño realizado, así como la tabla de verdad y mapa de Karnaugh utilizados en el proceso de diseño.
+Para el bloque de codificación 2 key-rollover y key detect se diseñó un codificador de 4 a 2 con salida baja activa. Para esto se utilizaron dos compuertas NAND, lo que permite mostrar la fila presionada.
+Se muestra a continuación el diseño realizado, así como la tabla de verdad y ecuación booleana utilizadas en el proceso de diseño.
 
-[![Captura-de-pantalla-2024-08-15-002127.png](https://i.postimg.cc/nrtpp38G/Captura-de-pantalla-2024-08-15-002127.png)](https://postimg.cc/mzV0SNgP)
+[![Captura-de-pantalla-2024-08-20-120031.png](https://i.postimg.cc/KjmXTjHV/Captura-de-pantalla-2024-08-20-120031.png)](https://postimg.cc/FdCn5rmg)
 
-[![Captura-de-pantalla-2024-08-15-002243.png](https://i.postimg.cc/v8Ld5LFC/Captura-de-pantalla-2024-08-15-002243.png)](https://postimg.cc/G92NCDpj)
+[![Captura-de-pantalla-2024-08-20-121628.png](https://i.postimg.cc/SRdBfq0K/Captura-de-pantalla-2024-08-20-121628.png)](https://postimg.cc/RJ3pvkZr)
 
-[![Captura-de-pantalla-2024-08-15-002311.png](https://i.postimg.cc/0QRLwrt8/Captura-de-pantalla-2024-08-15-002311.png)](https://postimg.cc/gwsS9cF5)
 
 ## Ejercicio 2
 
