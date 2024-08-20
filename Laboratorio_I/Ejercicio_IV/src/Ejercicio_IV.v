@@ -1,4 +1,4 @@
-module pwm_generador( 
+module top( 
     input clk,
     input [3:0] switch,  //Entrada de los switches 
     output reg led

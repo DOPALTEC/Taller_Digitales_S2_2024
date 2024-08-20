@@ -33,11 +33,11 @@ module pwm_generador_tb;
         switch = 4'b1000; // 80% duty cycle
         #1000000; 
         
-        switch = 4'b1111; // 100% duty cycle (capped)
+        switch = 4'b1111; // 100% duty cycle 
         #1000000; 
         
     
-        $finish;
+        
     end
 
 
