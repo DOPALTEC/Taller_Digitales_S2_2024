@@ -38,6 +38,9 @@ Se muestra a continuación el diseño realizado, así como la tabla de verdad y 
 
 [![Captura-de-pantalla-2024-08-20-121628.png](https://i.postimg.cc/SRdBfq0K/Captura-de-pantalla-2024-08-20-121628.png)](https://postimg.cc/RJ3pvkZr)
 
+#### 2. Implementación Física
+
+Laboratorio_I/Ejercicio_I/README.md
 
 ## Ejercicio 2
 
@@ -103,6 +106,9 @@ Run directory: D:\UNI\Taller_Digitales_S2_2024\Laboratorio_I\Ejercicio_II\Switch
 ```
 ![image](https://github.com/user-attachments/assets/fe3e7383-b1b2-45d5-a128-fb952ebff34c)
 
+#### 6. Implementación Física
+
+Laboratorio_I/Ejercicio_II/README.md
 
 ## Ejercicio 3
 
@@ -151,6 +157,9 @@ Posteriormente para las entradas y salidas de 8 bits generando el testbench de l
 Finalmente se asignaron valores aleatorios a el muestreo con 16 bits entregando un testbench con un comportamiento similar a los anteriores.
 
 ![image](https://github.com/user-attachments/assets/33b75e0e-464d-4f05-8a29-1e7e39796dd3)
+
+#### 6. Implementación Física
+
 
 
 ## Ejercicio 4
@@ -221,6 +230,10 @@ La señal led que vemos en la imagen tiene diferentes duraciones de estado alto 
 4.	Periodo de 3.5 a 4.5 ms:
 	  - Cuando el switch tiene el valor máximo de 15, la señal led permanece en alto durante casi todo el periodo
         (~100% del tiempo total). Esto significa que el ciclo de trabajo es cercano al 100%.
+
+ #### 6. Implementación Física
+
+Laboratorio_I/Ejercicio_IV/README.md 
 
 
 ## Ejercicio 5
