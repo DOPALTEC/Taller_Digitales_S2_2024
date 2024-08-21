@@ -39,8 +39,8 @@ Se muestra a continuación el diseño realizado, así como la tabla de verdad y 
 [![Captura-de-pantalla-2024-08-20-121628.png](https://i.postimg.cc/SRdBfq0K/Captura-de-pantalla-2024-08-20-121628.png)](https://postimg.cc/RJ3pvkZr)
 
 #### 2. Implementación Física
+<a href="https://github.com/DOPALTEC/Taller_Digitales_S2_2024/tree/main/Laboratorio_I/Ejercicio_I">Laboratorio_I/Ejercicio_I/README.md</a>
 
-Laboratorio_I/Ejercicio_I/README.md
 
 ## Ejercicio 2
 
@@ -108,7 +108,9 @@ Run directory: D:\UNI\Taller_Digitales_S2_2024\Laboratorio_I\Ejercicio_II\Switch
 
 #### 6. Implementación Física
 
-Laboratorio_I/Ejercicio_II/README.md
+<a href="https://github.com/DOPALTEC/Taller_Digitales_S2_2024/blob/main/Laboratorio_I/Ejercicio_II/README.md">Laboratorio_I/Ejercicio_II/README.md</a>
+
+
 
 ## Ejercicio 3
 
@@ -160,7 +162,7 @@ Finalmente se asignaron valores aleatorios a el muestreo con 16 bits entregando 
 
 #### 6. Implementación Física
 
-
+<a href="">Laboratorio_I/Ejercicio_III/README.md</a>
 
 ## Ejercicio 4
 
@@ -233,7 +235,8 @@ La señal led que vemos en la imagen tiene diferentes duraciones de estado alto 
 
  #### 6. Implementación Física
 
-Laboratorio_I/Ejercicio_IV/README.md 
+<a href="https://github.com/DOPALTEC/Taller_Digitales_S2_2024/blob/main/Laboratorio_I/Ejercicio_IV/README.md">Laboratorio_I/Ejercicio_IV/README.md</a>
+
 
 
 ## Ejercicio 5
