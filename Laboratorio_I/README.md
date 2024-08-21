@@ -162,7 +162,7 @@ Finalmente se asignaron valores aleatorios a el muestreo con 16 bits entregando 
 
 #### 6. Implementación Física
 
-<a href="">Laboratorio_I/Ejercicio_III/README.md</a>
+<a href="https://github.com/DOPALTEC/Taller_Digitales_S2_2024/blob/main/Laboratorio_I/Ejercicio_III/README.md">Laboratorio_I/Ejercicio_III/README.md</a>
 
 ## Ejercicio 4
 
