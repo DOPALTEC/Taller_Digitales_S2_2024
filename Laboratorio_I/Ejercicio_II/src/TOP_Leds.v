@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module TOP_Leds(
+module top(
     input [3:0] sw,
     output [3:0] led
 );

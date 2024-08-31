@@ -26,4 +26,8 @@ initial begin
 
     $finish;
 end
+initial begin 
+    $dumpfile("tb_Complemento_a_2.vcd");
+    $dumpvars(0,tb_Complemento_a_2);
+end
 endmodule

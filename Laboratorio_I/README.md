@@ -1,32 +1,45 @@
 # Lab. 1: Introducción al diseño digital con HDL y herramientas EDA de síntesis
 
 ## Abreviaturas y definiciones
-- **FPGA**: Field Programmable Gate Arrays
+- **FPGA (Field Programmable Gate Arrays)** Dispositivo semiconductor que se puede programar para realizar tareas lógicas específicas después de su fabricación.
 
-![pin_map](https://github.com/user-attachments/assets/e29f3a75-c2ac-441d-ada5-0436738a9cc2)
+## Referencias
+[0] David Harris y Sarah Harris. *Digital Design and Computer Architecture. RISC-V Edition.* Morgan Kaufmann, 2022. ISBN: 978-0-12-820064-3
+
+[1] Morris Mano y Michael D. Ciletti. Digital Design: With an Introduction to the Verilog HDL, VHDL, and SystemVerilog. 6ta edición. Pearson, 2017. ISBN: 978-0-13-454989-7
+
+[2] Pong P. Chu. FPGA Prototyping by Verilog Examples: Xilinx Spartan-3 Version. Wiley-Interscience, 2008. ISBN: 978-0-470-18532-2.
+
 
 
 ## Ejercicio 1
 
-#### 1. Encabezado del módulo
-```SystemVerilog
-module mi_modulo(
-    input logic     entrada_i,      
-    output logic    salida_i 
-    );
-```
-#### 2. Parámetros
-- Lista de parámetros
+#### 1. Criterios de diseño:
+Se muestra el diseño realizado para el decodificador de 2 a 4 con salida baja activa. 
 
-#### 3. Entradas y salidas:
-- `entrada_i`: descripción de la entrada
-- `salida_i`: descripción de la salida
+[![Decoder.png](https://i.postimg.cc/TPNNG1bd/Decoder.png)](https://postimg.cc/2qv77zTM)
 
-#### 4. Criterios de diseño
+Se utilizaron dos compuertas NOT y cuatro compuertas NAND para la activación de cada columna del teclado cuando se recibe un cero lógico. A continuación, se muestran los resultados de la tabla de verdad, así como la simplificación con mapas de Karnaugh utilizados en el proceso de diseño.
 
+[![Captura-de-pantalla-2024-08-15-002457.png](https://i.postimg.cc/Dy6JpXsM/Captura-de-pantalla-2024-08-15-002457.png)](https://postimg.cc/tY14Y7B3)
 
-#### 5. Testbench
-Descripción y resultados de las pruebas hechas
+[![Captura-de-pantalla-2024-08-15-002719.png](https://i.postimg.cc/76XrrwVw/Captura-de-pantalla-2024-08-15-002719.png)](https://postimg.cc/CBZQjyXQ)
+
+[![Captura-de-pantalla-2024-08-14-225149.png](https://i.postimg.cc/4xSpx9WS/Captura-de-pantalla-2024-08-14-225149.png)](https://postimg.cc/4YpY8mk6)
+
+[![Captura-de-pantalla-2024-08-14-225224.png](https://i.postimg.cc/PxmDyFTg/Captura-de-pantalla-2024-08-14-225224.png)](https://postimg.cc/0Myr2n6n)
+
+[![Captura-de-pantalla-2024-08-14-225259.png](https://i.postimg.cc/1XBqhngM/Captura-de-pantalla-2024-08-14-225259.png)](https://postimg.cc/SYXscKfz)
+
+Para el bloque de codificación 2 key-rollover y key detect se diseñó un codificador de 4 a 2 con salida baja activa. Para esto se utilizaron dos compuertas NAND, lo que permite mostrar la fila presionada.
+Se muestra a continuación el diseño realizado, así como la tabla de verdad y ecuación booleana utilizadas en el proceso de diseño.
+
+[![Captura-de-pantalla-2024-08-20-120031.png](https://i.postimg.cc/KjmXTjHV/Captura-de-pantalla-2024-08-20-120031.png)](https://postimg.cc/FdCn5rmg)
+
+[![Captura-de-pantalla-2024-08-20-121628.png](https://i.postimg.cc/SRdBfq0K/Captura-de-pantalla-2024-08-20-121628.png)](https://postimg.cc/RJ3pvkZr)
+
+#### 2. Implementación Física
+<a href="https://github.com/DOPALTEC/Taller_Digitales_S2_2024/tree/main/Laboratorio_I/Ejercicio_I">Laboratorio_I/Ejercicio_I/README.md</a>
 
 
 ## Ejercicio 2
@@ -93,6 +106,11 @@ Run directory: D:\UNI\Taller_Digitales_S2_2024\Laboratorio_I\Ejercicio_II\Switch
 ```
 ![image](https://github.com/user-attachments/assets/fe3e7383-b1b2-45d5-a128-fb952ebff34c)
 
+#### 6. Implementación Física
+
+<a href="https://github.com/DOPALTEC/Taller_Digitales_S2_2024/blob/main/Laboratorio_I/Ejercicio_II/README.md">Laboratorio_I/Ejercicio_II/README.md</a>
+
+
 
 ## Ejercicio 3
 
@@ -142,33 +160,86 @@ Finalmente se asignaron valores aleatorios a el muestreo con 16 bits entregando 
 
 ![image](https://github.com/user-attachments/assets/33b75e0e-464d-4f05-8a29-1e7e39796dd3)
 
+#### 6. Implementación Física
+
+<a href="https://github.com/DOPALTEC/Taller_Digitales_S2_2024/blob/main/Laboratorio_I/Ejercicio_III/README.md">Laboratorio_I/Ejercicio_III/README.md</a>
 
 ## Ejercicio 4
 
 
 #### 1. Encabezado del módulo
 ```SystemVerilog
-module mi_modulo(
-    input logic     entrada_i,      
-    output logic    salida_i 
+module pwm_generador( 
+    input clk,
+    input [3:0] switch,  //Entrada de los switches 
+    output reg led
     );
 ```
 #### 2. Parámetros
-- Lista de parámetros
+- COUNTER_MAX: Un parámetro local establecido en 100_000 - 1. Este valor representa el valor máximo del contador y corresponde a un período de 1 ms cuando se utiliza
+  un reloj de 100 MHz. El contador contará hasta este valor antes de reiniciarse, definiendo así el período de la señal PWM.
+- counter: Un registro de 17 bits que se utiliza para contar ciclos de reloj. Este contador se incrementa en cada flanco de subida del reloj y se reinicia cuando
+  alcanza COUNTER_MAX.
 
 #### 3. Entradas y salidas:
-- `entrada_i`: descripción de la entrada
-- `salida_i`: descripción de la salida
+Entradas
+- clk: Señal de reloj. Es la señal principal que impulsa el módulo y determina el tiempo de la señal PWM.
+- switch: Entrada de 4 bits que determina el ciclo de trabajo de la señal PWM. El valor puede variar entre 0 y 15.
+
+Salida
+- led: Señal de salida PWM. El ciclo de trabajo de esta señal varía según el valor de switch. Esta salida puede utilizarse para controlar un LED, un motor u otros
+  dispositivos que requieran PWM.
 
 #### 4. Criterios de diseño
+1.	Contador de Reloj (counter):
+	- El registro counter se incrementa en cada flanco de subida de la señal clk.
+	- Cuando counter alcanza COUNTER_MAX, se reinicia a cero. Este proceso define la longitud del período de PWM.
+2.	Ciclo de Trabajo del PWM:
+    -  El ciclo de trabajo se controla comparando el valor de counter con una versión escalada de la entrada switch.
+	-  El factor de escalado (6667) se elige de manera que el valor máximo de switch (15) corresponda al ciclo de trabajo máximo, cercano al 100%.
 
+   ```SystemVerilog
+led <= (counter < (switch * 6667)) ? 1 : 0;
+```
+- Si counter es menor que el producto de switch * 6667, la salida led estará en alto (1). De lo contrario, estará en bajo (0).
+
+Cálculo del Ciclo de Trabajo
+
+- switch = 0: La señal PWM tiene un ciclo de trabajo del 0% (siempre en bajo).
+- switch = 15: La señal PWM tiene un ciclo de trabajo cercano al 100% (mayormente en alto).
 
 #### 5. Testbench
-Descripción y resultados de las pruebas hechas
+![WhatsApp Image 2024-08-14 at 17 05 48](https://github.com/user-attachments/assets/f23f9898-a5c5-4143-8990-9a7d98b56374)
+
+
+- clk: Es la señal de reloj. En la imagen, está constantemente en alto, indicando que es la señal que impulsa el contador interno.
+- switch[3:0]: Representa el valor de los switches. En la imagen, su valor es 15.
+- led: Es la señal PWM generada por el módulo, que se controla en función del valor de switch.
+
+Análisis de la Señal led:
+
+La señal led que vemos en la imagen tiene diferentes duraciones de estado alto y bajo, lo que corresponde al ciclo de trabajo (duty cycle) de la señal PWM.
+
+1.	Periodo de 1 a 1.5 ms:
+      - Cuando el valor del switch es 1, la señal led está en alto durante una pequeña fracción del periodo. Esto
+     significa que el ciclo de trabajo es bajo (~6.67% deltiempo total).
+2.	Periodo de 1.5 a 2.5 ms:
+      - Para el valor del switch igual a 4, la señal led está en alto durante una mayor fracción del tiempo comparado
+        con el anterior (~26.68% del tiempo total).
+3.	Periodo de 2.5 a 3.5 ms:
+	  - Con el switch configurado a 8, la señal led está en alto durante aproximadamente la mitad del periodo (~53.36%
+        del tiempo total).
+4.	Periodo de 3.5 a 4.5 ms:
+	  - Cuando el switch tiene el valor máximo de 15, la señal led permanece en alto durante casi todo el periodo
+        (~100% del tiempo total). Esto significa que el ciclo de trabajo es cercano al 100%.
+
+ #### 6. Implementación Física
+
+<a href="https://github.com/DOPALTEC/Taller_Digitales_S2_2024/blob/main/Laboratorio_I/Ejercicio_IV/README.md">Laboratorio_I/Ejercicio_IV/README.md</a>
+
 
 
 ## Ejercicio 5
-
 
 
 #### 1. Encabezado del módulo
@@ -611,9 +682,9 @@ Operaci¾n Exitosa: ALUControl=1001, A=1111, B=0010, ALUFlagIn=0, Y=0011, C=1, Z
 ![image](https://github.com/user-attachments/assets/ac0bce5c-c7a8-4c30-b9d6-a88c704a519b)
 
 
-## Referencias
-[0] David Harris y Sarah Harris. *Digital Design and Computer Architecture. RISC-V Edition.* Morgan Kaufmann, 2022. ISBN: 978-0-12-820064-3
 
 ## Apendices:
-### Apendice 1:
-texto, imágen, etc
+### Apendice 1: Notación de Pines Tang Nano
+![pin_map](https://github.com/user-attachments/assets/e29f3a75-c2ac-441d-ada5-0436738a9cc2)
+
+
