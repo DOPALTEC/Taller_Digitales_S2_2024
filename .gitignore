@@ -152,3 +152,17 @@ Laboratorio_I/Ejercicio_V/ALU/ALU.srcs/dsim_work/sir/LM0db15a258e15c91063c6b5727
 Laboratorio_I/Ejercicio_V/ALU/ALU.srcs/dsim_work/sir/LMALU_tb.sir
 Laboratorio_I/Ejercicio_V/ALU/ALU.srcs/dsim_work/sir/LMALU_TOP_TB.sir
 Laboratorio_I/Ejercicio_V/ALU/ALU.srcs/dsim_work/sir/LR.sir
+metrics.db
+waves.mxd
+dsim_work/image.so
+dsim_work/obj/exports.def
+dsim_work/obj/LBstd.o
+dsim_work/obj/LM0db15a258e15c91063c6b572753a502d4b30f18913971db5ce0b98898920926ba.o
+dsim_work/obj/LMALU_tb.o
+dsim_work/obj/LR.o
+dsim_work/obj/objfiles
+dsim_work/sir/ir.cache
+dsim_work/sir/LBstd.sir
+dsim_work/sir/LM0db15a258e15c91063c6b572753a502d4b30f18913971db5ce0b98898920926ba.sir
+dsim_work/sir/LMALU_tb.sir
+dsim_work/sir/LR.sir
