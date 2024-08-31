@@ -1,11 +1,8 @@
 `timescale 1ns / 1ps
 
 
-module Antirebotes(
+module Top_Protocolo(
     input clk,
     input reset
     );
-    
-    
-    
 endmodule
