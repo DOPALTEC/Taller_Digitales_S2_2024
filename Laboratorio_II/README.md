@@ -36,7 +36,7 @@ Descripción y resultados de las pruebas hechas
 ### Apendice 1:
 texto, imágen, etc
 
-#Ejercicio 2
+# Ejercicio 2
 
 ## 1. Abreviaturas y definiciones
 - **FPGA**: Field Programmable Gate Arrays
