@@ -1,4 +1,6 @@
-# Nombre del proyecto / ejercicio
+# LABORATORIO 2 
+
+# Ejercicio 1
 
 ## 1. Abreviaturas y definiciones
 - **FPGA**: Field Programmable Gate Arrays
