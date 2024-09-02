@@ -35,7 +35,21 @@ Los sistemas pipeline se utilizan para maximizar la lectura de instrucciones. Es
 
 ## 4. Investigue sobre las mejores prácticas para la asignación de relojes y división de frecuencia en FPGAs. En este apartado haga énfasis en el uso de las entradas habilitadoras de reloj (clock enables) presentes en las celdas de la FPGA, para lograr tener tiempos de ejecución diferentes a lo largo del sistema mientras se utiliza un solo reloj.
 
+
+Los habilitadores de reloj son recomendados, ya que pueden ayudar a optimizar el uso de recursos de reloj en la FPGA y mejorar tanto las características de temporización como el análisis de temporización del diseño. El cruce de dominios de reloj es un problema común en el diseño de lógica digital. Cuando las señales atraviesan diferentes dominios de reloj, es posible que ocurran metástasis y pérdida de datos debido a violaciones en los tiempos de configuración y mantenimiento. La solución más común a este problema es el uso de sincronizadores compuestos por varios Flip-Flops, los cuales sincronizan las señales que provienen de otro dominio de reloj. Para evitar problemas de temporización o cruces de dominios de reloj en la FPGA, se recomienda generar una señal de habilitación de reloj lenta en lugar de crear un nuevo reloj (utilizando divisores de reloj o habilitadores de reloj) para controlar otra parte lógica del diseño [3]. 
+
+Primero, es necesario establecer una fase de control basada en Phase Locked Loop (PLL) o Delay Locked Loop, lo cual permitirá un mayor control interno y la implementación de múltiples relojes en caso de ser necesario. Finalmente, el conteo de n bits se realiza mediante el conteo de ciclos del reloj, donde un flip-flop tipo D almacena el estado final y gestiona el cambio del estado de salida (divisor de reloj). Esto permite que todo el sistema funcione dentro de un solo dominio de reloj, pero con habilitadores de reloj que simulan trabajar con diferentes frecuencias [3]. 
+
+
+
+
 ## 5. Investigue sobre el fenómeno de rebotes y ruido en pulsadores e interruptores. Defina qué técnicas digitales (circuitos) se utilizan para cancelar este fenómeno. Además, investigue sobre los problemas de metastabilidad cuando se tienen entradas asíncronas en circuitos digitales. Finalmente, presente circuitos que permitan la sincronización de entradas como pulsadores e interruptores.
+
+ 
+La metaestabilidad es un fenómeno que ocurre cuando se violan los tiempos de configuración (set up) y de umbral (treshold), lo que provoca que un flip-flop pueda combinar estados de manera impredecible, haciendo imposible predecir su próximo estado. Para evitar la metaestabilidad, se pueden usar dos flip-flops en serie. El primer flip-flop recibe la señal de forma asíncrona y puede entrar en un estado de metaestabilidad. El segundo flip-flop, al recibir la señal del primero, la sincroniza, aunque esto conlleva un aumento en la latencia del sistema [2]. 
+
+ 
+
 
 ## 6. Investigue sobre la especificación de la interfaz SPI. Preste atención a los aspectos necesarios para poder diseñar un controlador maestro de SPI, además de los diferentes modos de SPI.
 
@@ -49,3 +63,5 @@ Los sistemas pipeline se utilizan para maximizar la lectura de instrucciones. Es
 [1] S. L. Harris & D. M. Harris, Digital Design and Computer Architecture. ARM Edition. Morgan Kaufmann. 2016.
 
 [2] J. F. Wakerly, Digital Design: Principles and Practices, (4th Edition). 2005.
+
+[3] "How to generate a clock enable signal on FPGA,” FPGA4student.com. https://www.fpga4student.com/2017/08/how-to-generate-clock-enable-signal.html 
