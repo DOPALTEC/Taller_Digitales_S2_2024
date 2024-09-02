@@ -123,4 +123,4 @@ El controlador admite varias interfaces además de la SPI, tales como:
 
 [3] "How to generate a clock enable signal on FPGA,” FPGA4student.com. https://www.fpga4student.com/2017/08/how-to-generate-clock-enable-signal.html
 
-[4] Sitronix Technology Corporation, "ST7789V Datasheet," Version 1.0, 2013.
+[4] Sitronix Technology Corporation, "ST7789V Datasheet," Version 1.0, 2013. https://www.alldatasheet.com/datasheet-pdf/download/1132511/SITRONIX/ST7789V.html
