@@ -4,21 +4,28 @@ module tb_uart;
 
 // Parámetros
 parameter DATA_WIDTH = 8;
+//Entradas: reg
+//Salidas: wire
 
-// Entradas
 reg clk;
 reg rst;
-reg [DATA_WIDTH-1:0] s_axis_tdata;
-reg s_axis_tvalid;
-reg m_axis_tready;
-reg rxd;
 reg [15:0] prescale;
 
-// Salidas
+//TX
+
+reg [DATA_WIDTH-1:0] s_axis_tdata;
+reg s_axis_tvalid;
+wire txd;
+
+//RX
+reg m_axis_tready;
+reg rxd;
+
+
 wire [DATA_WIDTH-1:0] m_axis_tdata;
 wire m_axis_tvalid;
 wire s_axis_tready;
-wire txd;
+
 wire tx_busy;
 wire rx_busy;
 wire rx_overrun_error;
@@ -96,8 +103,10 @@ initial begin
 
     // Espera para observar las señales de salida
     #500;
-    m_axis_tready = 0;
-    #500; 
+    
+    m_axis_tready = 0;  // Aceptar datos recibidos
+    
+    #500;
     
     $finish;
 end
