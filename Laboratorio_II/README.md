@@ -88,8 +88,7 @@ module mi_modulo(
 Diagramas, texto explicativo...
 
 #### 5. Testbench
-Descripción y resultados de las pruebas hechas
-
+Se deben sincronizar las pruebas a 9600 baudios para poder obtener correctamente los resultados. Se tiene un reloj de 100MHz para las pruebas y a la entrada 
 
 
 # Ejercicio 4
