@@ -120,7 +120,7 @@ Diagramas, texto explicativo...
 Se deben sincronizar las pruebas a 9600 baudios para poder obtener correctamente los resultados. Se tiene un reloj de 100MHz para las pruebas y se está trabajando con una escala de tiempo de 1ns / 1ps, por tanto el valor de "prescale" se puede calcular de la siguiente manera:
 
 $$ 
-Prescale = Frecuencia de reloj (clk)/(Baud-Rate*16)
+Prescale = Frecuencia_de_reloj_(clk)/(Baud_Rate*16)
 $$
 
 
