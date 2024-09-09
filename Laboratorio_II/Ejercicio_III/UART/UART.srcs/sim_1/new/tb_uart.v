@@ -16,18 +16,18 @@ reg [15:0] prescale;
 reg [DATA_WIDTH-1:0] s_axis_tdata;
 reg s_axis_tvalid;
 wire txd;
-
-//RX
-reg m_axis_tready;
-reg rxd;
-
-
-wire [DATA_WIDTH-1:0] m_axis_tdata;
-wire m_axis_tvalid;
+wire tx_busy;
 wire s_axis_tready;
 
-wire tx_busy;
+//RX
+wire m_axis_tvalid;
+reg m_axis_tready;
+reg rxd;
 wire rx_busy;
+
+wire [DATA_WIDTH-1:0] m_axis_tdata;
+
+
 wire rx_overrun_error;
 wire rx_frame_error;
 
@@ -67,7 +67,7 @@ initial begin
     s_axis_tvalid = 0;
     m_axis_tready = 0;
     rxd = 1;  // Inactivo (idle) es alto
-    prescale = 16'd32; // Configuración de prescaler para tasa de baudios
+    prescale = 16'd1302; // Configuración de prescaler para tasa de baudios
 
     // Liberación del reset después de un tiempo
     #20;
@@ -89,17 +89,17 @@ initial begin
     m_axis_tready = 1;  // Aceptar datos recibidos
 
     // Simula el envío de bits de datos (0xA5)
-    #10416 rxd = 0;  // Start bit
-    #10416 rxd = 1;  // Bit 0
-    #10416 rxd = 0;  // Bit 1
-    #10416 rxd = 1;  // Bit 2
-    #10416 rxd = 0;  // Bit 3
-    #10416 rxd = 1;  // Bit 4
-    #10416 rxd = 0;  // Bit 5
-    #10416 rxd = 1;  // Bit 6
-    #10416 rxd = 0;  // Bit 7
-    #10416 rxd = 1;  // Stop bit
-    #10416;
+    #104167 rxd = 0;  // Start bit
+    #104167 rxd = 1;  // Bit 0
+    #104167 rxd = 0;  // Bit 1
+    #104167 rxd = 1;  // Bit 2
+    #104167 rxd = 0;  // Bit 3
+    #104167 rxd = 1;  // Bit 4
+    #104167 rxd = 0;  // Bit 5
+    #104167 rxd = 1;  // Bit 6
+    #104167 rxd = 0;  // Bit 7
+    #104167 rxd = 1;  // Stop bit
+    #104167;
 
     // Espera para observar las señales de salida
     #500;
