@@ -101,14 +101,14 @@ module uart #(
 - `s_axis_tvalid`: En alto, inicia la transmisión del UART a el otro dispositivo. En bajo finaliza la transmisión
 - `s_axis_tready`: Indica que la transmisión se está realizando si se encuentra en bajo. En alto, indica que no hay transisión. O bien no ha comenzado o ya finalizó
 - `m_axis_tdata`: Recolecta los bits que la FPGA recibe del dispositivo externo y los empaqueta en un solo dato
-- `m_axis_tvalid`: 
+- `m_axis_tvalid`: Señal de control que indica cuándo el módulo UART tiene datos válidos disponibles en m_axis_tdata para ser transferidos. Cuando m_axis_tvalid es 1, significa que los datos presentes en m_axis_tdata son válidos y pueden ser leídos por el receptor o el siguiente módulo en la cadena de comunicación.
 - `m_axis_tready`: Indica en alto que se están recibiendo bits. En bajo, que no está ocurriendo la recepción
 - `rxd`: Muestra los bits que se están recibiendo en un determinado ciclo. Representa la cadena de bits que se reciben
 - `txd`: Bit correspondiente a el valor que se está transmitiendo durante uno de los ciclos de transmisión. Juntos representan una cadena de bits que se están enviando
 - `tx_busy`: Indica en alto que la transmisión está ocurriendo
 - `rx_busy`: Indica en alto que la recepción está ocurriendo
-- `rx_overrun_error`:
-- `rx_frame_error`:
+- `rx_overrun_error`: Indicador que detecta un desbordamiento en el receptor, recibe un nuevo bit antes de que el anterior sea procesado
+- `rx_frame_error`: Habilita el pulso de error cuando se detecta una violación en la estructura esperada de la cadena de datos. No detecta ya sea el bit de inicio o de parada.
 - `prescale`: Designa la velocidad en la que el protocolo opera
 
 
