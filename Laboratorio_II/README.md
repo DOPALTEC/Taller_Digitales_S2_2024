@@ -121,7 +121,13 @@ Se deben sincronizar las pruebas a 9600 baudios para poder obtener correctamente
 
 
 $$ 
-T_{bits} = \frac{1}{9600}
+T_{bits} = \frac{1}{9600} [\frac{s_{bit}}{baudios}] = 104167 [ns]
+$$
+
+Por tanto el tiempo en la escala entre cada bit enviado es de 104167ns. Para la escala de el módulo, se procede a dividir entre la cantidad de bits a enviar en este caso, 8 bits:
+
+$$
+Prescale=\frac{104167}{8}=1302
 $$
 
 
