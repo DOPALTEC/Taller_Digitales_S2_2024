@@ -60,6 +60,10 @@ initial begin
 end
 
 // Estímulos de simulación
+reg [DATA_WIDTH-1:0] tx_muestreado;
+reg [DATA_WIDTH-1:0] rx_muestreado;
+integer i;
+
 initial begin
     // Inicialización de señales
     rst = 1;
@@ -68,6 +72,11 @@ initial begin
     m_axis_tready = 0;
     rxd = 1;  // Inactivo (idle) es alto
     prescale = 16'd1302; // Configuración de prescaler para tasa de baudios
+    
+    //Inicializar señales de verificación///
+    tx_muestreado=0;
+    
+    ////////////////////////////////////////
 
     // Liberación del reset después de un tiempo
     #20;
@@ -79,6 +88,9 @@ initial begin
     // Prueba de transmisión
     s_axis_tdata = 8'hA5;  // Dato a transmitir
     s_axis_tvalid = 1;
+    for(i=0; i<DATA_WIDTH;i=i+1)begin
+        #104167 tx_muestreado[i]=txd;
+    end
     #10;
     s_axis_tvalid = 0;  // Finaliza la transmisión de datos
 
@@ -106,6 +118,12 @@ initial begin
     
     m_axis_tready = 0;  // Aceptar datos recibidos
     
+    if(s_axis_tdata==tx_muestreado)begin
+        $display("Transmision Exitosa: Los datos enviados (%b) coinciden con los datos que se esperan transmitir(%b)", tx_muestreado, s_axis_tdata);
+    end
+    else begin
+        $display("Transmision Fallida: Los datos enviados (%b) NO coinciden con los datos que se esperan transmitir(%b)", tx_muestreado, s_axis_tdata);
+    end
     #500;
     
     $finish;
