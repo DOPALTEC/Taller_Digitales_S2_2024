@@ -87,17 +87,17 @@ initial begin
 
     // Simula recepción de datos
     m_axis_tready = 1;  // Aceptar datos recibidos
-
     // Simula el envío de bits de datos (0xA5)
-    #104167 rxd = 0;  // Start bit
-    #104167 rxd = 1;  // Bit 0
-    #104167 rxd = 0;  // Bit 1
-    #104167 rxd = 1;  // Bit 2
-    #104167 rxd = 0;  // Bit 3
+    //#104167 rxd = 0;  // Start bit
+    rxd = 0; // Start bit
+    #104167 rxd = 0;  // Bit 0 LSB (Bit mas a la derecha)
+    #104167 rxd = 1;  // Bit 1
+    #104167 rxd = 0;  // Bit 2
+    #104167 rxd = 1;  // Bit 3
     #104167 rxd = 1;  // Bit 4
     #104167 rxd = 0;  // Bit 5
     #104167 rxd = 1;  // Bit 6
-    #104167 rxd = 0;  // Bit 7
+    #104167 rxd = 1;  // Bit 7 MSB (Bit Mas a la Izquierda)
     #104167 rxd = 1;  // Stop bit
     #104167;
 
