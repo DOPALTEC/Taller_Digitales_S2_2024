@@ -130,7 +130,15 @@ $$
 Prescale=\frac{104167}{8}=1302
 $$
 
+Antes de aplicar un testbench autoverificable a manera de una mayor comprensión se muestra una prueba de manera "manual".
 
+Se puede observar la inicialización de los dos procesos tanto rx como tx los cuales son controlados con los bits de entrada "m_axis_tready" y "s_axis_tvalid" respectivamente. Despues de que el botón del reseteo del reloj se inactiva. Estos bits de entrada desencadenan la comunicación y otra señales que indican el estado de la misma. 
+
+![tb_uart_0](https://github.com/user-attachments/assets/c66440ae-b5e0-48cc-99b9-614bdf506078)
+
+A gran escala, se puede observar la transmisión a 9600 baudios ó 104167ns por bit. Se observa que para el caso de la transmisión se envía el dato hexadecimal 0xA5 el cual tiene su equivalente en binario como 1010 0101, y contanto con el start bit (0) y el stop bit (1), un valor binario de 0 1010 0101 1. Este valor se observa en la señal tx. Análogamente para la señal recibida se simula que se están recibiendo bits iniciando por el bit menos significativo de el dato a recibir, osea invertido. Para esta prueba se usó el numero 0xDA, traducido como 1101 1010 lo cual se tiene invertido en el pulso rx, mostrado como 0101 1011 y con los bits de inicio y parada el equivalente a 0 0101 1011 1.
+
+![tb_uart_I](https://github.com/user-attachments/assets/96f5890d-1f85-4e46-b403-c4b417187de6)
 
 
 # Ejercicio 4
