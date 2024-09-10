@@ -121,7 +121,7 @@ Se deben sincronizar las pruebas a 9600 baudios para poder obtener correctamente
 
 
 $$ 
-T_{bits} = frac{1}{9600}
+T_{bits} = \frac{1}{9600}
 $$
 
 
