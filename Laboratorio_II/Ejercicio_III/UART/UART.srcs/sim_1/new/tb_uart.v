@@ -63,6 +63,7 @@ end
 reg [DATA_WIDTH-1:0] tx_muestreado;
 reg [DATA_WIDTH-1:0] rx_esperado;
 integer i;
+integer seed;
 
 initial begin
     // Inicialización de señales
@@ -72,6 +73,7 @@ initial begin
     m_axis_tready = 0;
     rxd = 1;  // Inactivo (idle) es alto
     prescale = 16'd1302; // Configuración de prescaler para tasa de baudios
+    seed = 32'hDEADBEEF;
     
     //Inicializar señales de verificación///
     tx_muestreado=0;
@@ -87,8 +89,9 @@ initial begin
     #100;
 
     // Prueba de transmisión
-    s_axis_tdata=8'hA5;  // Dato a transmitir
-    rx_esperado=8'hDA;
+ // Generación de valores aleatorios
+    s_axis_tdata = $random(seed);  // Dato a transmitir esperado aleatorio
+    rx_esperado = $random(seed);   // Dato a recibir esperado aleatorio
     
     //Bits de Activacion de Envío y Recepción
     s_axis_tvalid = 1;  //Activa el envio de datos
