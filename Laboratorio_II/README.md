@@ -140,6 +140,90 @@ A gran escala, se puede observar la transmisión a 9600 baudios ó 104167ns por 
 
 ![tb_uart_I](https://github.com/user-attachments/assets/96f5890d-1f85-4e46-b403-c4b417187de6)
 
+- LOTE I Autoverificable
+Al realizar las pruebas de manera autoverificable se le asignó un valor tanto a el dato a transmitir como a una recepción de un dato, con valores de 0xA5 y 0xDA, para el tx y rx respectivamente.
+
+
+Y en la grafica de pulsos se observa a baja escala el funcionamiento de los pulsos de validación e iniciación de transmisión y recpción así como los valores constantes que se esperan transmitir y recibir.
+![tb_I_verificable_bajaescala](https://github.com/user-attachments/assets/0be96591-752b-4eea-ac13-77f5616f7d35)
+
+Mostrando los pulsos de las pruebas en su totalidad se observa que los datos tanto transmitidos como recibidos coinciden con lo esperado.
+
+![tb_I_verificable_completo](https://github.com/user-attachments/assets/f9b799da-c5d8-47f9-bbbb-6465082532b8)
+
+
+
+Dando como resultado en la terminal el display esperado cuando se obtiene una transmisión y recepción exitosa.
+
+```bash
+=N:[dumpMXD] preparing MXD dump to 'waves.mxd'.
+=N:[dump] Dump started at time 0
+=N:Starting event scheduler...
+Transmision Exitosa: Los datos enviados (10100101) coinciden con los datos que se esperan transmitir(10100101)
+Recepcion Exitosa: Los datos recibidos (11011010) coinciden con los datos que se esperan recibir(11011010)
+=N:[dumpMXD] closing MXD dump
+```
+
+
+- LOTE II Autoverificable
+A partir de aqui, se hace uso de una semilla distinta para valores aleatorios en cada una de las muestras.
+
+Utilizando la semilla:
+```verilog
+seed = 32'hDEADBEEF;
+```
+Se espera obtener para el receptor:
+
+$$
+rx=0x0B
+$$
+
+Y para el transmisor:
+$$
+tx=0xC5
+$$
+
+A pequeña escala se tienen entonces los pulsos:
+
+
+Y a escala completa:
+
+
+
+
+```bash
+    Optimizing...
+Building models...
+PLI/VPI access: +b
+Simulation time precision is 1ps.
+  [3/4] module tb_uart#(8): 22 functions, 131 basic blocks
+Linking image.so...
+Using default typical min/typ/max.
+=S:Begin run-time elaboration and static initialization...
+=N:[dumpMXD] preparing MXD dump to 'waves.mxd'.
+=N:[dump] Dump started at time 0
+=N:Starting event scheduler...
+Transmision Exitosa: Los datos enviados (11000101) coinciden con los datos que se esperan transmitir(11000101)
+Recepcion Exitosa: Los datos recibidos (00001011) coinciden con los datos que se esperan recibir(00001011)
+=N:[dumpMXD] closing MXD dump
+```
+  
+- LOTE III Autoverificable
+
+
+```bash
+
+```
+- LOTE IV Autoverificable
+
+```bash
+
+```
+- LOTE V Autoverificable
+
+```bash
+
+```
 
 # Ejercicio 4
 
