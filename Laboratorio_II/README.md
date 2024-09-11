@@ -114,7 +114,22 @@ module uart #(
 
 
 #### 4. Criterios de diseño
-Diagramas, texto explicativo...
+
+Para plantear un diseño compatible tanto con el teclado, la computadora externa, la fpga y los leds se relacionan las entradas y salidas escenciales físicas del módulo UART propuesto. 
+- DATA_WIDTH-1:  Ancho de las señales a transmitir y recibir.
+- s_axis_tdata: Representa el dato ingresado con las teclas, y almacenado en una cadena de bits con un ancho denotado por el parámetro. Este dato es el que será transmitido hacia la computadora, el cual tx recorrerá bit por bit para enviarlo de manera serial.
+- s_axis_tvalid: Corresponde a el bit de activación de la transmisión de los datos que se ingresaron con el teclado externo. 
+- m_axis_tdata: Cadena de bits la cual almacena los bits que se reciben para así enviarlos a los leds de la fpga.
+- m_axis_tready: Controla la recepción de datos enviados desde la computadora a la fpga.
+- RX (rxd): Bit que representa el valor de uno de los bits recibidos en un determinado ciclo de reloj.
+- TX (txd): Pulso que en un tiempo específico muestra el valor de uno de los bits correspondientes al dato a transmitir proveniente del teclado.
+- clk: Pulso de reloj para realizar la transmisión sincrónica.
+
+Es necesario que los datos intruducidos tengan un significado en el codigo hexadecimal para poder ser almacenados en una cadena de bits para que el UART pueda reconocerlos por eso mediante ese codificador, se reciben datos en las teclas que se traducen a un codigo hexadecimal de ancho "DATA_WIDTH-1".
+
+![diagrama_uart](https://github.com/user-attachments/assets/1a6ec625-ac0e-490c-a076-4e89cdfb079d)
+
+
 
 #### 5. Testbench
 Se deben sincronizar las pruebas a 9600 baudios para poder obtener correctamente los resultados. Se tiene un reloj de 100MHz para las pruebas y se está trabajando con una escala de tiempo de 1ns / 1ps, por tanto el valor de "prescale" y de los tiempos entre cada bit que se recibe para simular la lectura de bits se deben calcular como:
