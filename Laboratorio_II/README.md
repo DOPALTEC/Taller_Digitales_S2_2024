@@ -268,46 +268,87 @@ Utilizando la semilla:
 Se espera obtener para el receptor:
 
 $$
-    rx=0x
+    rx=0x44
 $$
 
 Y para el transmisor:
 
 $$
-    tx=0x
+    tx=0x1C
 $$
 
 A pequeña escala se tienen entonces los pulsos:
 
+![tb_4_baja](https://github.com/user-attachments/assets/74c8b195-0377-49db-9573-dd58ca78da9c)
+
+
 Y a gran escala:
+![tb_4_completo](https://github.com/user-attachments/assets/f6c2e1c5-b591-453c-8c17-99d8f48f80ab)
 
 ```bash
-
+Optimizing...
+Building models...
+PLI/VPI access: +b
+Simulation time precision is 1ps.
+  [3/4] module tb_uart#(8): 22 functions, 131 basic blocks
+Linking image.so...
+Using default typical min/typ/max.
+=S:Begin run-time elaboration and static initialization...
+=N:[dumpMXD] preparing MXD dump to 'waves.mxd'.
+=N:[dump] Dump started at time 0
+=N:Starting event scheduler...
+Transmision Exitosa: Los datos enviados (00011100) coinciden con los datos que se esperan transmitir(00011100)
+Recepcion Exitosa: Los datos recibidos (01000100) coinciden con los datos que se esperan recibir(01000100)
+=N:[dumpMXD] closing MXD dump
+=T:Simulation terminated by $finish at time 1042790000 (sim_1\new\tb_uart.v:131);
+  System timescale is 1ps / 1ps
+  Metrics DSim version: 20240422.9.0 (b:R #c:0 h:d63c52d5c2 os:msys2_)
+  Random seed: (defaulted to 1)
 ```
 - LOTE V Autoverificable
 
 Utilizando la semilla:
 ```verilog
-
+    seed = 32'h6C1322A8;
 ```
 Se espera obtener para el receptor:
 
 $$
-    rx=0x
+    rx=0xD5
 $$
 
 Y para el transmisor:
 
 $$
-    tx=0x
+    tx=0x4D
 $$
 
 A pequeña escala se tienen entonces los pulsos:
 
+![tb_5_baja](https://github.com/user-attachments/assets/aba227bf-23fa-4ac1-8249-588315889bfa)
+
 Y a gran escala:
+![tb_5_completo](https://github.com/user-attachments/assets/eaad7404-ed98-4735-bc66-18b5e81c368e)
 
 ```bash
-
+Optimizing...
+Building models...
+PLI/VPI access: +b
+Simulation time precision is 1ps.
+  [3/4] module tb_uart#(8): 22 functions, 131 basic blocks
+Linking image.so...
+Using default typical min/typ/max.
+=S:Begin run-time elaboration and static initialization...
+=N:[dumpMXD] preparing MXD dump to 'waves.mxd'.
+=N:[dump] Dump started at time 0
+=N:Starting event scheduler...
+Transmision Exitosa: Los datos enviados (01001101) coinciden con los datos que se esperan transmitir(01001101)
+Recepcion Exitosa: Los datos recibidos (11010101) coinciden con los datos que se esperan recibir(11010101)
+=N:[dumpMXD] closing MXD dump
+=T:Simulation terminated by $finish at time 1042790000 (sim_1\new\tb_uart.v:131);
+  System timescale is 1ps / 1ps
+  Metrics DSim version: 20240422.9.0 (b:R #c:0 h:d63c52d5c2 os:msys2_)
+  Random seed: (defaulted to 1)
 ```
 
 # Ejercicio 4
