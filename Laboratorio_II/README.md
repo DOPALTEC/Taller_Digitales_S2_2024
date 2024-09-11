@@ -175,12 +175,13 @@ seed = 32'hDEADBEEF;
 Se espera obtener para el receptor:
 
 $$
-rx=0x0B
+    rx=0x0B
 $$
 
 Y para el transmisor:
+
 $$
-tx=0xC5
+    tx=0xC5
 $$
 
 A pequeña escala se tienen entonces los pulsos:
