@@ -140,6 +140,175 @@ A gran escala, se puede observar la transmisión a 9600 baudios ó 104167ns por 
 
 ![tb_uart_I](https://github.com/user-attachments/assets/96f5890d-1f85-4e46-b403-c4b417187de6)
 
+- LOTE I Autoverificable
+Al realizar las pruebas de manera autoverificable se le asignó un valor tanto a el dato a transmitir como a una recepción de un dato, con valores de 0xA5 y 0xDA, para el tx y rx respectivamente.
+
+
+Y en la grafica de pulsos se observa a baja escala el funcionamiento de los pulsos de validación e iniciación de transmisión y recpción así como los valores constantes que se esperan transmitir y recibir.
+![tb_I_verificable_bajaescala](https://github.com/user-attachments/assets/0be96591-752b-4eea-ac13-77f5616f7d35)
+
+Mostrando los pulsos de las pruebas en su totalidad se observa que los datos tanto transmitidos como recibidos coinciden con lo esperado.
+
+![tb_I_verificable_completo](https://github.com/user-attachments/assets/f9b799da-c5d8-47f9-bbbb-6465082532b8)
+
+
+
+Dando como resultado en la terminal el display esperado cuando se obtiene una transmisión y recepción exitosa.
+
+```bash
+=N:[dumpMXD] preparing MXD dump to 'waves.mxd'.
+=N:[dump] Dump started at time 0
+=N:Starting event scheduler...
+Transmision Exitosa: Los datos enviados (10100101) coinciden con los datos que se esperan transmitir(10100101)
+Recepcion Exitosa: Los datos recibidos (11011010) coinciden con los datos que se esperan recibir(11011010)
+=N:[dumpMXD] closing MXD dump
+```
+
+
+- LOTE II Autoverificable
+A partir de aqui, se hace uso de una semilla distinta para valores aleatorios en cada una de las muestras.
+
+Utilizando la semilla:
+```verilog
+seed = 32'hDEADBEEF;
+```
+Se espera obtener para el receptor:
+
+$$
+    rx=0x0B
+$$
+
+Y para el transmisor:
+
+$$
+    tx=0xC5
+$$
+
+A pequeña escala se tienen entonces los pulsos:
+
+
+![tb_2_baja](https://github.com/user-attachments/assets/92ac613f-d1c2-4bb1-ac91-68b7c2a04687)
+
+
+Y a escala completa:
+
+![tb_2_completo](https://github.com/user-attachments/assets/8378f33e-6d95-410d-a748-55d670e68232)
+
+
+
+```bash
+    Optimizing...
+Building models...
+PLI/VPI access: +b
+Simulation time precision is 1ps.
+  [3/4] module tb_uart#(8): 22 functions, 131 basic blocks
+Linking image.so...
+Using default typical min/typ/max.
+=S:Begin run-time elaboration and static initialization...
+=N:[dumpMXD] preparing MXD dump to 'waves.mxd'.
+=N:[dump] Dump started at time 0
+=N:Starting event scheduler...
+Transmision Exitosa: Los datos enviados (11000101) coinciden con los datos que se esperan transmitir(11000101)
+Recepcion Exitosa: Los datos recibidos (00001011) coinciden con los datos que se esperan recibir(00001011)
+=N:[dumpMXD] closing MXD dump
+```
+  
+- LOTE III Autoverificable
+
+  Utilizando la semilla:
+```verilog
+    seed = 32'h37FE29A;
+```
+Se espera obtener para el receptor:
+
+$$
+    rx=0x7D
+$$
+
+Y para el transmisor:
+
+$$
+    tx=0x5D
+$$
+
+A pequeña escala se tienen entonces los pulsos:
+
+![tb_3_baja](https://github.com/user-attachments/assets/d3aed1eb-116f-4d0e-aedd-b83c28209896)
+
+
+Y a gran escala:
+![tb_3_completo](https://github.com/user-attachments/assets/7733e5b3-9b7d-4638-a7ef-e8194e3c79c8)
+
+```bash
+Optimizing...
+Building models...
+PLI/VPI access: +b
+Simulation time precision is 1ps.
+  [3/4] module tb_uart#(8): 22 functions, 131 basic blocks
+Linking image.so...
+Using default typical min/typ/max.
+=S:Begin run-time elaboration and static initialization...
+=N:[dumpMXD] preparing MXD dump to 'waves.mxd'.
+=N:[dump] Dump started at time 0
+=N:Starting event scheduler...
+Transmision Exitosa: Los datos enviados (01011101) coinciden con los datos que se esperan transmitir(01011101)
+Recepcion Exitosa: Los datos recibidos (01111101) coinciden con los datos que se esperan recibir(01111101)
+=N:[dumpMXD] closing MXD dump
+=T:Simulation terminated by $finish at time 1042790000 (sim_1\new\tb_uart.v:131);
+  System timescale is 1ps / 1ps
+  Metrics DSim version: 20240422.9.0 (b:R #c:0 h:d63c52d5c2 os:msys2_)
+
+```
+- LOTE IV Autoverificable
+
+Utilizando la semilla:
+```verilog
+
+```
+Se espera obtener para el receptor:
+
+$$
+    rx=0x
+$$
+
+Y para el transmisor:
+
+$$
+    tx=0x
+$$
+
+A pequeña escala se tienen entonces los pulsos:
+
+Y a gran escala:
+
+```bash
+
+```
+- LOTE V Autoverificable
+
+Utilizando la semilla:
+```verilog
+
+```
+Se espera obtener para el receptor:
+
+$$
+    rx=0x
+$$
+
+Y para el transmisor:
+
+$$
+    tx=0x
+$$
+
+A pequeña escala se tienen entonces los pulsos:
+
+Y a gran escala:
+
+```bash
+
+```
 
 # Ejercicio 4
 
