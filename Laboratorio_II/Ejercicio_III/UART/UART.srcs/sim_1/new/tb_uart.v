@@ -62,7 +62,7 @@ end
 // Estímulos de simulación
 reg [DATA_WIDTH-1:0] tx_muestreado;
 reg [DATA_WIDTH-1:0] rx_muestreado;
-reg [DATA_WIDTH-1:0] rx_recibido;
+reg [DATA_WIDTH-1:0] rx_esperado;
 integer i;
 
 initial begin
@@ -77,7 +77,7 @@ initial begin
     //Inicializar señales de verificación///
     tx_muestreado=0;
     rx_muestreado=0;
-    rx_recibido=0;
+    rx_esperado=0;
     
     ////////////////////////////////////////
 
@@ -99,13 +99,13 @@ initial begin
 
     // Espera mientras el dato se transmite
     #200;
-    rx_recibido=8'hDA;
+    rx_esperado=8'hDA;
     // Simula recepción de datos
     m_axis_tready = 1;  // Aceptar datos recibidos
     // Simula el envío de bits de datos (0xA5)
     rxd = 0; // Start bit
     for(i=0; i<DATA_WIDTH;i=i+1)begin
-        #104167 rxd=rx_recibido[i];
+        #104167 rxd=rx_esperado[i];
     end
     #104167 rxd = 1;  // Stop bit
     #104167;
