@@ -2,7 +2,7 @@
 
 module tb_uart;
 
-// Parámetros
+// Parï¿½metros
 parameter DATA_WIDTH = 8;
 //Entradas: reg
 //Salidas: wire
@@ -59,41 +59,41 @@ initial begin
     forever #5 clk = ~clk; // Genera un ciclo de reloj de 10 ns (100 MHz)
 end
 
-// Estímulos de simulación
+// Estï¿½mulos de simulaciï¿½n
 reg [DATA_WIDTH-1:0] tx_muestreado;
 reg [DATA_WIDTH-1:0] rx_esperado;
 integer i;
 integer seed;
 
 initial begin
-    // Inicialización de señales
+    // Inicializaciï¿½n de seï¿½ales
     rst = 1;
     s_axis_tdata = 8'h00;
     s_axis_tvalid = 0;
     m_axis_tready = 0;
     rxd = 1;  // Inactivo (idle) es alto
-    prescale = 16'd1302; // Configuración de prescaler para tasa de baudios
-    seed = 32'hDEADBEEF;
+    prescale = 16'd1302; // Configuraciï¿½n de prescaler para tasa de baudios
+    seed = 32'h6C1322A8;
     
-    //Inicializar señales de verificación///
+    //Inicializar seï¿½ales de verificaciï¿½n///
     tx_muestreado=0;
     rx_esperado=0;
     
     ////////////////////////////////////////
 
-    // Liberación del reset después de un tiempo
+    // Liberaciï¿½n del reset despuï¿½s de un tiempo
     #20;
     rst = 0;
 
     // Espera para estabilizar
     #100;
 
-    // Prueba de transmisión
- // Generación de valores aleatorios
+    // Prueba de transmisiï¿½n
+ // Generaciï¿½n de valores aleatorios
     s_axis_tdata = $random(seed);  // Dato a transmitir esperado aleatorio
     rx_esperado = $random(seed);   // Dato a recibir esperado aleatorio
     
-    //Bits de Activacion de Envío y Recepción
+    //Bits de Activacion de Envï¿½o y Recepciï¿½n
     s_axis_tvalid = 1;  //Activa el envio de datos
     m_axis_tready = 1;  // Aceptar datos recibidos
 
@@ -104,11 +104,11 @@ initial begin
         #104167 tx_muestreado[i]=txd;
         rxd=rx_esperado[i];
     end
-    s_axis_tvalid = 0;  // Finaliza la transmisión de datos
+    s_axis_tvalid = 0;  // Finaliza la transmisiï¿½n de datos
     #104167 rxd = 1;  // Stop bit
     #104167;
 
-    // Espera para observar las señales de salida
+    // Espera para observar las seï¿½ales de salida
     #500;
     
     m_axis_tready = 0;  // Aceptar datos recibidos
