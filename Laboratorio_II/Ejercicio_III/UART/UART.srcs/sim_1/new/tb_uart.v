@@ -61,7 +61,6 @@ end
 
 // Estímulos de simulación
 reg [DATA_WIDTH-1:0] tx_muestreado;
-reg [DATA_WIDTH-1:0] rx_muestreado;
 reg [DATA_WIDTH-1:0] rx_esperado;
 integer i;
 
@@ -76,7 +75,6 @@ initial begin
     
     //Inicializar señales de verificación///
     tx_muestreado=0;
-    rx_muestreado=0;
     rx_esperado=0;
     
     ////////////////////////////////////////
@@ -89,39 +87,23 @@ initial begin
     #100;
 
     // Prueba de transmisión
-    s_axis_tdata = 8'hA5;  // Dato a transmitir
-    s_axis_tvalid = 1;
+    s_axis_tdata=8'hA5;  // Dato a transmitir
+    rx_esperado=8'hDA;
+    
+    //Bits de Activacion de Envío y Recepción
+    s_axis_tvalid = 1;  //Activa el envio de datos
+    m_axis_tready = 1;  // Aceptar datos recibidos
+
+    
+    rxd = 0; // Start bit para receptor
+    
     for(i=0; i<DATA_WIDTH;i=i+1)begin
         #104167 tx_muestreado[i]=txd;
+        rxd=rx_esperado[i];
     end
-    #10;
     s_axis_tvalid = 0;  // Finaliza la transmisión de datos
-
-    // Espera mientras el dato se transmite
-    #200;
-    rx_esperado=8'hDA;
-    // Simula recepción de datos
-    m_axis_tready = 1;  // Aceptar datos recibidos
-    // Simula el envío de bits de datos (0xA5)
-    rxd = 0; // Start bit
-    for(i=0; i<DATA_WIDTH;i=i+1)begin
-        #104167 rxd=rx_esperado[i];
-    end
     #104167 rxd = 1;  // Stop bit
     #104167;
-    
-    
-    //#104167 rxd = 0;  // Start bit
-    //#104167 rxd = 0;  // Bit 0 LSB (Bit mas a la derecha)
-    //#104167 rxd = 1;  // Bit 1
-    //#104167 rxd = 0;  // Bit 2
-    //#104167 rxd = 1;  // Bit 3
-    //#104167 rxd = 1;  // Bit 4
-    //#104167 rxd = 0;  // Bit 5
-    //#104167 rxd = 1;  // Bit 6
-    //#104167 rxd = 1;  // Bit 7 MSB (Bit Mas a la Izquierda)
-    //#104167 rxd = 1;  // Stop bit
-    //#104167;
 
     // Espera para observar las señales de salida
     #500;
@@ -133,6 +115,13 @@ initial begin
     end
     else begin
         $display("Transmision Fallida: Los datos enviados (%b) NO coinciden con los datos que se esperan transmitir(%b)", tx_muestreado, s_axis_tdata);
+    end
+    
+    if(rx_esperado==m_axis_tdata)begin
+        $display("Recepcion Exitosa: Los datos recibidos (%b) coinciden con los datos que se esperan recibir(%b)", m_axis_tdata, rx_esperado);
+    end
+    else begin
+        $display("Recepcion Fallida: Los datos recibidos (%b) NO coinciden con los datos que se esperan recibir(%b)", m_axis_tdata, rx_esperado);
     end
     #500;
     
