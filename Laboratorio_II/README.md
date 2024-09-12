@@ -334,7 +334,7 @@ module SPI_Master(
 ```
 #### 2. Parámetros
 - `SPI_MODE=0`: Configura el modo de funcionamiento del SPI entre 4 modos. 
-- `CLKS_PER_HALF_BIT=2`: Define el npumero de ciclos de reloj de la FPGA necesarios para generar medio ciclo de reloj del SPI
+- `CLKS_PER_HALF_BIT=2`: Define el número de ciclos de reloj de la FPGA necesarios para generar medio ciclo de reloj del SPI
 
 | Modo | Polaridad del Reloj (CPOL/CKP) | Fase del Reloj (CPHA) |
 |------|-------------------------------|-----------------------|
