@@ -123,7 +123,7 @@ Para plantear un diseño compatible tanto con el teclado, la computadora externa
 - m_axis_tready: Controla la recepción de datos enviados desde la computadora a la fpga.
 - RX (rxd): Bit que representa el valor de uno de los bits recibidos en un determinado ciclo de reloj.
 - TX (txd): Pulso que en un tiempo específico muestra el valor de uno de los bits correspondientes al dato a transmitir proveniente del teclado.
-- clk: Pulso de reloj para realizar la transmisión sincrónica.
+- clk: Pulso de reloj para realizar la transmisión.
 
 Es necesario que los datos intruducidos tengan un significado en el codigo hexadecimal para poder ser almacenados en una cadena de bits para que el UART pueda reconocerlos por eso mediante ese codificador, se reciben datos en las teclas que se traducen a un codigo hexadecimal de ancho "DATA_WIDTH-1".
 
