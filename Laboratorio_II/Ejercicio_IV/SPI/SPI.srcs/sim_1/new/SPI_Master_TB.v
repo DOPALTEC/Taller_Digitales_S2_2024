@@ -43,11 +43,11 @@ module SPI_Master_TB ();
    .o_SPI_MOSI(w_SPI_MOSI)
    );
 
-  // Envía un solo byte desde el maestro.
-  task SendSingleByte(input [7:0] data);
+  //Funcion (task) encargada de simular el envio de un solo byte desde el maestro al ser referenciada
+  task SendSingleByte(input [7:0] data); //Recibe como parametro el dato a enviar
     begin
       @(posedge r_Clk);
-      r_Master_TX_Byte <= data;
+      r_Master_TX_Byte <= data; //Le asigna a la transmision el dato que se quiere enviar
       r_Master_TX_DV   <= 1'b1;
       @(posedge r_Clk);
       r_Master_TX_DV <= 1'b0;

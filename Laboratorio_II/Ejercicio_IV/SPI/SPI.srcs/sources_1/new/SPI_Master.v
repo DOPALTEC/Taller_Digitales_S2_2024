@@ -1,5 +1,5 @@
 module SPI_Master
-  #(parameter SPI_MODE = 0,
+  #(parameter SPI_MODE = 0, //Configura el modo de funcionamiento del spi
     parameter CLKS_PER_HALF_BIT = 2)
   (
    // Señales de control de datos
