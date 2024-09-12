@@ -319,17 +319,44 @@ Y a gran escala:
 ### 1.1 Módulo "genérico"
 #### 1. Encabezado del módulo
 ```SystemVerilog
-module mi_modulo(
-    input logic     entrada_i,      
-    output logic    salida_i 
-    );
+module SPI_Master(
+   input        i_Rst_L,  
+   input        i_Clk,  
+   input [7:0]  i_TX_Byte, 
+   input        i_TX_DV,    
+   output reg   o_TX_Ready, 
+   output reg       o_RX_DV,  
+   output reg [7:0] o_RX_Byte,  
+   output reg o_SPI_Clk,
+   input      i_SPI_MISO,
+   output reg o_SPI_MOSI
+   );
 ```
 #### 2. Parámetros
-- Lista de parámetros
+- `SPI_MODE=0`: Configura el modo de funcionamiento del SPI entre 4 modos. 
+- `CLKS_PER_HALF_BIT=2`: Define el npumero de ciclos de reloj de la FPGA necesarios para generar medio ciclo de reloj del SPI
+
+| Modo | Polaridad del Reloj (CPOL/CKP) | Fase del Reloj (CPHA) |
+|------|-------------------------------|-----------------------|
+|   0  |              0                |           0           |
+|   1  |              0                |           1           |
+|   2  |              1                |           0           |
+|   3  |              1                |           1           |
+
+- CPOL=0 significa que el reloj está inactivo en 0, el flanco de subida es el flanco principal.
+- CPOL=1 significa que el reloj está inactivo en 1, el flanco de bajada es el flanco principal.
 
 #### 3. Entradas y salidas:
-- `entrada_i`: descripción de la entrada
-- `salida_i`: descripción de la salida
+- `i_Rst_L`: Señal del reset para reiniciar el módulo. Es activada en bajo, al estar en alto, permite que el módulo opere.
+- `i_Clk`: Reloj principal de la FPGA.
+- `i_TX_Byte`: Byte (8 bits) a transmitir desde el maestro a través de la línea MOSI.  En el testbench es utilizada bajo el nombre "r_Master_TX_Byte"
+- `i_TX_DV`: Pulso que indica si hay un dato válido para transmitir. Llamada en testbench "r_Master_TX_DV".
+- `o_TX_Ready`: Nombrada "w_Master_TX_Ready" en el testbench, indica si el módulo está listo para enviar el siguiente paquete de 8 bits (byte).
+- `o_RX_DV`: Pulso que valida si un byte ha sido recibido. (r_Master_RX_DV en tb)
+- `o_RX_Byte`: Byte que se recibe por medio de la línea MISO.
+- `o_SPI_Clk`: Reloj SPI generado por el maestro.
+- `i_SPI_MISO`: Datos enviados desde el maestro.
+- `o_SPI_MOSI`: Datos recibidos desde el esclavo.
 
 #### 4. Criterios de diseño
 Diagramas, texto explicativo...
