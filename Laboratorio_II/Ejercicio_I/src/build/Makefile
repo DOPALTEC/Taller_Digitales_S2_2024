@@ -3,7 +3,7 @@ FAMILY=GW1N-9C
 DEVICE=GW1NR-LV9QN88PC6/I5
 
 # The path to the source files
-SRC_DIR = /Users/gabrielgonzalez/Taller_Digitales_S2_2024/Laboratorio_II/Ejercicio_I/src/MUX_4_1.v
+SRC_DIR = /Users/gabrielgonzalez/Taller_Digitales_S2_2024/Laboratorio_II/Ejercicio_I/src/top_module.v
 BUILD_DIR = /Users/gabrielgonzalez/Taller_Digitales_S2_2024/Laboratorio_II/Ejercicio_I/src/build
 CST_FILE = /Users/gabrielgonzalez/Taller_Digitales_S2_2024/Laboratorio_II/Ejercicio_I/cst/MUX_4_1.cst
 
