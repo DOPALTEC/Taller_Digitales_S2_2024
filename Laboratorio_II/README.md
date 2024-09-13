@@ -349,17 +349,21 @@ module SPI_Master(
 #### 3. Entradas y salidas:
 - `i_Rst_L`: Señal del reset para reiniciar el módulo. Es activada en bajo, al estar en alto, permite que el módulo opere.
 - `i_Clk`: Reloj principal de la FPGA.
-- `i_TX_Byte`: Byte (8 bits) a transmitir desde el maestro a través de la línea MOSI.  En el testbench es utilizada bajo el nombre "r_Master_TX_Byte"
-- `i_TX_DV`: Pulso que indica si hay un dato válido para transmitir. Llamada en testbench "r_Master_TX_DV".
-- `o_TX_Ready`: Nombrada "w_Master_TX_Ready" en el testbench, indica si el módulo está listo para enviar el siguiente paquete de 8 bits (byte).
-- `o_RX_DV`: Pulso que valida si un byte ha sido recibido. (r_Master_RX_DV en tb)
+Transmisión:
+- `i_TX_Byte`: Byte (8 bits) a transmitir desde el maestro a través de la línea MOSI.
+- `i_TX_DV`: Pulso que indica si hay un dato válido para transmitir.
+- `o_TX_Ready`: Indica si el módulo está listo para enviar un paquete de 8 bits (byte).
+Recepción:
+- `o_RX_DV`: Pulso que valida si un byte ha sido recibido.
 - `o_RX_Byte`: Byte que se recibe por medio de la línea MISO.
 - `o_SPI_Clk`: Reloj SPI generado por el maestro.
 - `i_SPI_MISO`: Datos enviados desde el maestro.
 - `o_SPI_MOSI`: Datos recibidos desde el esclavo.
 
 #### 4. Criterios de diseño
-Diagramas, texto explicativo...
+
+![diagrama_spi](https://github.com/user-attachments/assets/0d02483b-1e15-4f1f-a1b3-1e24915dfa81)
+
 
 #### 5. Testbench
 Descripción y resultados de las pruebas hechas
