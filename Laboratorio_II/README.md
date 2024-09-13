@@ -370,5 +370,7 @@ Descripción y resultados de las pruebas hechas
 
 ## Apendices:
 ### Apendice 1:
-texto, imágen, etc
+- Mapa de Pines Correspondiente a la FPGA TANGNano 9k
+
+![clip_image010](https://github.com/user-attachments/assets/2f39e23e-6954-481f-8ba5-2074c8df109f)
 
