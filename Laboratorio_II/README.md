@@ -361,7 +361,9 @@ Recepción:
 - `o_SPI_MOSI`: Datos recibidos desde el esclavo.
 
 #### 4. Criterios de diseño
-Diagramas, texto explicativo...
+
+![diagrama_spi](https://github.com/user-attachments/assets/0d02483b-1e15-4f1f-a1b3-1e24915dfa81)
+
 
 #### 5. Testbench
 Descripción y resultados de las pruebas hechas
