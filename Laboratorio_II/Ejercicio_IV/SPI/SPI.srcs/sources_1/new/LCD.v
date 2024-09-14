@@ -130,6 +130,7 @@ reg [31:0] clk_cnt;
 reg [ 4:0] bit_loop;
 
 reg [15:0] pixel_cnt; //Contador que muestra el numero de pixeles mostrados en pantalla, cuenta todos los pixeles de la LCD, 240x135=32400 pixeles en total
+reg [15:0] grilla_cnt; //Contador extra, al llegar a 30 pixeles, se reinicia, la suma de filas genera la columna de un color de ancho 30p 
 
 reg lcd_cs_r;
 reg lcd_rs_r;
@@ -145,9 +146,12 @@ assign lcd_data   = spi_data[7]; // MSB
 
 // gen color bar
 
-wire [15:0] pixel = (pixel_cnt >= 21600) ? 16'hF800 : //Si el contador de pixeles es mayor o igual a 21600 se asigna el color rojo (hF800)
-					(pixel_cnt >= 10800) ? 16'h07E0 : 16'h001F; //Si el contador es menor a 21600 pero mayor a 10800 se asigna verde (h07E0)
+//wire [15:0] pixel = (pixel_cnt >= 21600) ? 16'hF800 : //Si el contador de pixeles es mayor o igual a 21600 se asigna el color rojo (hF800)
+					//(pixel_cnt >= 10800) ? 16'h07E0 : 16'h001F; //Si el contador es menor a 21600 pero mayor a 10800 se asigna verde (h07E0)
 					//Si el contador de pixeles es menor a 10800 es azul (h001F)
+//Se debe hacer máquina de estados que revise cada ciclo de reloj si se cambia la configuracion de colores
+//si lo que se recibe en el receptor de la comunicacion spi entre pc y fpga es 1 se aplica la primera config y analogamente con la segunda
+wire [15:0] pixel = (grilla_cnt>30)? 16'hF800 : 16'h001F;
 
 always@(posedge clk or negedge resetn) begin
 	if (~resetn) begin
@@ -162,6 +166,7 @@ always@(posedge clk or negedge resetn) begin
 		bit_loop <= 0;
 
 		pixel_cnt <= 0;
+		grilla_cnt<=0;
 	end else begin
 
 		case (init_state)
@@ -259,7 +264,17 @@ always@(posedge clk or negedge resetn) begin
 						lcd_cs_r <= 1;
 						lcd_rs_r <= 1;
 						bit_loop <= 0;
-						pixel_cnt <= pixel_cnt + 1; // next pixel
+						pixel_cnt <= pixel_cnt + 1; //Pasa al siguiente pixel
+						if(grilla_cnt<=60) begin //Si aun no se ha terminado el patron: primer color, segundo color en una fila de 60 pixeles
+						//continua rellenando
+						  grilla_cnt <= grilla_cnt+1;
+						end
+						else begin
+						  grilla_cnt<=0; //Si ya se termino la pareja de colores en una fila de 60 pixeles, se reinicia
+						  //Cada 4 veces que se rellenen parejas de 30 pixeles de dos colores distintos, pasa a la siguiente fila
+						  //Para ir rellenando poco a poco las columnas
+						end
+					
 					end else begin
 						// loop
 						spi_data <= { spi_data[6:0], 1'b1 };
