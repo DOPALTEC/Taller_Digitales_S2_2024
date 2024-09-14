@@ -377,3 +377,7 @@ Descripción y resultados de las pruebas hechas
 
 ![clip_image010](https://github.com/user-attachments/assets/2f39e23e-6954-481f-8ba5-2074c8df109f)
 
+- Distribución de Caracteres en Teclado
+![Img_19_2](https://github.com/user-attachments/assets/ce748f40-4ed9-414b-881b-ea23739c8359)
+
+
