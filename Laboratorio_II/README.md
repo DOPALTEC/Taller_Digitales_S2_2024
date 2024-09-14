@@ -364,6 +364,9 @@ Recepción:
 
 ![diagrama_spi](https://github.com/user-attachments/assets/0d02483b-1e15-4f1f-a1b3-1e24915dfa81)
 
+De acuerdo con la configuración de pines de la TANGNano 9k se realiza la conexión de pines:
+- Pin 77 (IOT37A) (SPILCD_MO): Corresponde a la línea de datos para la pantalla LCD. Esta señal deberá estar asignada a "i_TX_Byte" ya que se trata de una salida que va a entregarse hacia la pantalla LCD. 
+
 
 #### 5. Testbench
 Descripción y resultados de las pruebas hechas
