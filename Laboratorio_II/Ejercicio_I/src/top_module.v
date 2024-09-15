@@ -1,33 +1,34 @@
-`timescale 1ns / 1ps
-module top(
-    input  clk,
-    input rst_n,  
-    input button, // button input
-    output [7:0] cont
+module top_module(
+    input clk,
+    input reset,
+    input button_in,
+    output [7:0] count_out
 );
-    wire sync_button, debounced_button;
 
-    // Conexion de los modulos
-    sync sync_inst (
-        .clk(clk),
-        .async_in(button),
-        .sync_out(sync_button)
-    );
+    wire debounced_button;
+    wire sync_button;
 
-    
+    // Instanciar el módulo debounce
     debounce debounce_inst (
         .clk(clk),
-        .rst_n(rst_n),
-        .button_in(sync_button),
-        .debounced_out(debounced_button)
+        .reset(reset),
+        .button_in(button_in),
+        .debounced_out(debounced_out)
     );
 
-    
+    // Instanciar el módulo sync
+    sync sync_inst (
+        .clk(clk),
+        .async_in(debounced_out),
+        .sync_out(sync_out)
+    );
+
+    // Instanciar el módulo counter
     contador contador_inst (
         .clk(clk),
-        .rst(rst_n),               
-        .EN(debounced_button),     
-        .cont(cont)
+        .reset(reset),  // Active low reset
+        .en(sync_out),  // Contar solo cuando el botón está sincronizado
+        .q(count_out)
     );
 
 endmodule
