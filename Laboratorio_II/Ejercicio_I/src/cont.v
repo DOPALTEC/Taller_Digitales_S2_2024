@@ -1,16 +1,18 @@
-`timescale 1ns / 1ps
 module contador(
     input clk,
-    input rst,            //  reset
-    input EN,             //  enable
-    output reg [7:0] cont   // 8-bit counter output
+    input reset,
+    input en,           // Señal de habilitación (enable)
+    output reg [7:0] q
 );
-// up counter 
-    always @(posedge clk or negedge rst) 
-    begin
-        if (!rst)
-            cont <= 8'b0;  // Reset 
-        else if (EN)
-            cont <= cont + 1;  // incrementa el contador 
+
+    always @(posedge clk) begin
+        if (!reset) begin
+            q <= 8'd0;     // Resetear el contador a 0
+        end
+        else if (en) begin
+            q <= q + 1'b1; // Incrementar el contador si el enable está activo
+        end
+        // Si 'en' está en bajo, q mantiene su valor actual
     end
+
 endmodule
