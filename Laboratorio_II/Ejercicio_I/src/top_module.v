@@ -1,4 +1,4 @@
-module top_module(
+module top(
     input clk,
     input reset,
     input button_in,
