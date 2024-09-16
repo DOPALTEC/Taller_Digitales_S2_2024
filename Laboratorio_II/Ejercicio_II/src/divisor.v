@@ -4,7 +4,7 @@ module clock_divider (
     output reg clk_out
 );
 
-parameter DIVIDER = 50000; // Adjust this value based on your input clock and desired output frequency
+parameter DIVIDER = 50; // Adjust this value based on your input clock and desired output frequency
 reg [15:0] counter;
 
 always @(posedge clk_in or posedge reset) begin

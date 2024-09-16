@@ -22,7 +22,7 @@ initial begin
     key_cols = 4'b1111;  // No key pressed (default state)
     
     // Hold reset for a longer time
-    #100 reset = 0;
+    #500 reset = 0;
 
     // Simulate key bounce for key '5' (row[1], col[1])
     #500000 key_cols = 4'b1101; // Start key press '5'
