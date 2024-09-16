@@ -1,3 +1,4 @@
+`timescale 1ns / 1ps
 module contador(
     input clk,
     input reset,
@@ -5,13 +6,14 @@ module contador(
     output reg [7:0] q
 );
 
-    always @(posedge clk) begin
+    always @(posedge clk ) begin
         if (!reset) begin
             q <= 8'd0;     // Resetear el contador a 0
         end
         else if (en) begin
             q <= q + 1'b1; // Incrementar el contador si el enable está activo
         end
+        
         // Si 'en' está en bajo, q mantiene su valor actual
     end
 
