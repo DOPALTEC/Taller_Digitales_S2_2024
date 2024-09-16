@@ -13,6 +13,19 @@ wire [3:0] decoded_rows;
 wire [3:0] debounced_cols;
 wire [3:0] hex_internal;
 wire key_pressed_internal;
+wire [3:0] synced_key_cols;
+
+// Synchronizer for key_cols
+genvar i;
+generate
+    for (i = 0; i < 4; i = i + 1) begin : sync_key_cols
+        synchronizer sync (
+            .clk(clk_in),
+            .async_in(key_cols[i]),
+            .sync_out(synced_key_cols[i])
+        );
+    end
+endgenerate
 
 clock_divider div (
     .clk_in(clk_in),
@@ -33,12 +46,11 @@ decoder_2to4 row_decoder (
 
 assign key_rows = ~decoded_rows;  // Active low
 
-genvar i;
 generate
     for (i = 0; i < 4; i = i + 1) begin : debounce_cols
         debouncer deb (
             .clk(clk_divided),
-            .key_in(key_cols[i]),
+            .key_in(synced_key_cols[i]),
             .key_out(debounced_cols[i])
         );
     end
@@ -59,5 +71,20 @@ output_register out_reg (
     .hex_out(hex_out),
     .key_pressed_out(key_pressed)
 );
+
+endmodule
+
+module synchronizer (
+    input wire clk,
+    input wire async_in,
+    output reg sync_out
+);
+
+reg sync_1;
+
+always @(posedge clk) begin
+    sync_1 <= async_in;
+    sync_out <= sync_1;
+end
 
 endmodule
