@@ -1,16 +1,22 @@
-// 4 D Flip-flops
-`timescale 1ns / 1ps
-module d_flip_flop(
-    input clk, rst , enable ,          
-    input [3:0] d,        // valores del teclado y contador 
-    output reg [3:0] q         // salida a los leds de la FPGA
+module output_register (
+    input wire clk,
+    input wire reset,
+    input wire [3:0] hex_in,
+    input wire key_pressed_in,
+    output reg [3:0] hex_out,
+    output reg key_pressed_out
 );
-    always @(posedge clk or posedge rst) begin
-        if (rst) begin
-            q <= 4'b0000;      // Reset output to 0
-        end 
-        else if (enable) begin
-            q <= d;            // output los valores cuando están guardados
-        end
+
+always @(posedge clk or posedge reset) begin
+    if (reset) begin
+        hex_out <= 4'h0;
+        key_pressed_out <= 1'b0;
+    end else if (key_pressed_in) begin
+        hex_out <= hex_in;
+        key_pressed_out <= 1'b1;
+    end else begin
+        key_pressed_out <= 1'b0;
     end
+end
+
 endmodule
