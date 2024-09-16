@@ -265,7 +265,7 @@ always@(posedge clk or negedge resetn) begin
 						lcd_rs_r <= 1;
 						bit_loop <= 0;
 						pixel_cnt <= pixel_cnt + 1; //Pasa al siguiente pixel
-						if(grilla_cnt<8100) begin //Si aun no se ha terminado el patron: primer color, segundo color en una fila de 60 pixeles
+						if(grilla_cnt<=8100) begin //Si aun no se ha terminado el patron: primer color, segundo color en una fila de 60 pixeles
 						//continua rellenando
 						  grilla_cnt <= grilla_cnt+1;
 						end
