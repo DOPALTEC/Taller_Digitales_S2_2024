@@ -34,37 +34,37 @@ wire [8:0] init_cmd[MAX_CMDS:0];
 //
 assign init_cmd[ 0] = 9'h036; //Control de Acceso a la memoria de datos
 assign init_cmd[ 1] = 9'h170;
-assign init_cmd[ 2] = 9'h03A;
+assign init_cmd[ 2] = 9'h03A; //COLMOD interfaz formato de pixel
 assign init_cmd[ 3] = 9'h105;
-assign init_cmd[ 4] = 9'h0B2;
-assign init_cmd[ 5] = 9'h10C;
-assign init_cmd[ 6] = 9'h10C;
+assign init_cmd[ 4] = 9'h0B2; //PORCTRL Porch Setting
+assign init_cmd[ 5] = 9'h10C; //RDDCOLMOD Leer display del formato de pixel
+assign init_cmd[ 6] = 9'h10C; //RDDCOLMOD Leer display del formato de pixel
 assign init_cmd[ 7] = 9'h100; //No operacion (NOP) con RDX en alto
-assign init_cmd[ 8] = 9'h133;
-assign init_cmd[ 9] = 9'h133;
-assign init_cmd[10] = 9'h0B7;
-assign init_cmd[11] = 9'h135;
-assign init_cmd[12] = 9'h0BB;
+assign init_cmd[ 8] = 9'h133; //Definicion de bajada vertical
+assign init_cmd[ 9] = 9'h133; //Definicion de bajada vertical
+assign init_cmd[10] = 9'h0B7; //GCTRL Gate control
+assign init_cmd[11] = 9'h135; //TEON (Tearing Effect Line On)
+assign init_cmd[12] = 9'h0BB; //VCOMS Setting
 assign init_cmd[13] = 9'h119;
-assign init_cmd[14] = 9'h0C0;
+assign init_cmd[14] = 9'h0C0; //LCM Control
 assign init_cmd[15] = 9'h12C;
-assign init_cmd[16] = 9'h0C2;
+assign init_cmd[16] = 9'h0C2; //VDH AND VRH Command Enable
 assign init_cmd[17] = 9'h101; //Software reset, RDX en alto
-assign init_cmd[18] = 9'h0C3;
-assign init_cmd[19] = 9'h112;
-assign init_cmd[20] = 9'h0C4;
-assign init_cmd[21] = 9'h120;
-assign init_cmd[22] = 9'h0C6;
-assign init_cmd[23] = 9'h10F;
-assign init_cmd[24] = 9'h0D0;
+assign init_cmd[18] = 9'h0C3; //VRH Set
+assign init_cmd[19] = 9'h112; //Partial Mode on PTLON
+assign init_cmd[20] = 9'h0C4; //VDV Setting
+assign init_cmd[21] = 9'h120; //Ddisplay Inversion Off INVOFF
+assign init_cmd[22] = 9'h0C6; //FR Control 2
+assign init_cmd[23] = 9'h10F; //
+assign init_cmd[24] = 9'h0D0; //Control de Potencia
 assign init_cmd[25] = 9'h1A4;
 assign init_cmd[26] = 9'h1A1;
-assign init_cmd[27] = 9'h0E0;
-assign init_cmd[28] = 9'h1D0;
+assign init_cmd[27] = 9'h0E0; //Voltaje Positivo
+assign init_cmd[28] = 9'h1D0; //Control de Potencia
 assign init_cmd[29] = 9'h104; //Leer el ID del Display, RDX en alto
 assign init_cmd[30] = 9'h10D; //Leer imagen del display, RDX en alto
-assign init_cmd[31] = 9'h111;
-assign init_cmd[32] = 9'h113;
+assign init_cmd[31] = 9'h111; //Sleep Out SLPOUT
+assign init_cmd[32] = 9'h113; //Partial off (Normal) NORON
 assign init_cmd[33] = 9'h12B;
 assign init_cmd[34] = 9'h13F;
 assign init_cmd[35] = 9'h154;
@@ -74,12 +74,12 @@ assign init_cmd[38] = 9'h10D;
 assign init_cmd[39] = 9'h10B;
 assign init_cmd[40] = 9'h11F;
 assign init_cmd[41] = 9'h123;
-assign init_cmd[42] = 9'h0E1;
+assign init_cmd[42] = 9'h0E1; //Control gamma de voltaje Negativo
 assign init_cmd[43] = 9'h1D0;
 assign init_cmd[44] = 9'h104;
 assign init_cmd[45] = 9'h10C;
-assign init_cmd[46] = 9'h111;
-assign init_cmd[47] = 9'h113;
+assign init_cmd[46] = 9'h111; //Sleep Out SLPOUT
+assign init_cmd[47] = 9'h113; //Partial off (Normal) NORON
 assign init_cmd[48] = 9'h12C;
 assign init_cmd[49] = 9'h13F;
 assign init_cmd[50] = 9'h144;
@@ -87,21 +87,21 @@ assign init_cmd[51] = 9'h151;
 assign init_cmd[52] = 9'h12F;
 assign init_cmd[53] = 9'h11F;
 assign init_cmd[54] = 9'h11F;
-assign init_cmd[55] = 9'h120;
+assign init_cmd[55] = 9'h120; //Display Inversion Off INVOFF
 assign init_cmd[56] = 9'h123;
-assign init_cmd[57] = 9'h021;
-assign init_cmd[58] = 9'h029;
+assign init_cmd[57] = 9'h021; //Display Inversion On INVON
+assign init_cmd[58] = 9'h029; //Display On DISPON
 
 assign init_cmd[59] = 9'h02A; // columna: Se coloca en la primera columna
-assign init_cmd[60] = 9'h100;
-assign init_cmd[61] = 9'h128;
-assign init_cmd[62] = 9'h101;
-assign init_cmd[63] = 9'h117;
+assign init_cmd[60] = 9'h100; //No operacion (NOP) con RDX en alto
+assign init_cmd[61] = 9'h128; //Display OFF DISPOFF
+assign init_cmd[62] = 9'h101; //Software reset, RDX en alto
+assign init_cmd[63] = 9'h117; 
 assign init_cmd[64] = 9'h02B; // fila: Se coloca en la primera fila
-assign init_cmd[65] = 9'h100;
-assign init_cmd[66] = 9'h135;
-assign init_cmd[67] = 9'h100;
-assign init_cmd[68] = 9'h1BB;
+assign init_cmd[65] = 9'h100; //No operacion (NOP) con RDX en alto
+assign init_cmd[66] = 9'h135; //TEON (Tearing Effect Line On)
+assign init_cmd[67] = 9'h100; //No operacion (NOP) con RDX en alto
+assign init_cmd[68] = 9'h1BB; //VCOMS Setting
 assign init_cmd[69] = 9'h02C; // start
 
 localparam INIT_RESET   = 4'b0000; // delay 100ms while reset
@@ -158,7 +158,11 @@ assign lcd_data   = spi_data[7]; // MSB
 					//Si el contador de pixeles es menor a 10800 es azul (h001F)
 //Se debe hacer máquina de estados que revise cada ciclo de reloj si se cambia la configuracion de colores
 //si lo que se recibe en el receptor de la comunicacion spi entre pc y fpga es 1 se aplica la primera config y analogamente con la segunda
-wire [15:0] pixel = ((grilla_cnt >= 0 && grilla_cnt <= 60) || (grilla_cnt > 120 && grilla_cnt <= 180)) ? 16'hF800 : 16'h001F;
+wire [15:0] pixel = ((grilla_cnt >= 0 && grilla_cnt <= 30) || 
+                     (grilla_cnt > 60 && grilla_cnt <= 90) || 
+                     (grilla_cnt > 120 && grilla_cnt <= 150) || 
+                     (grilla_cnt > 180 && grilla_cnt <= 210)) 
+                     ? 16'hF800 : 16'h001F;
 
 
 
