@@ -1,3 +1,5 @@
+`timescale 1ns / 1ps
+
 module SPI_Master_TB ();
   
   parameter SPI_MODE=3; // CPOL = 1, CPHA = 1
@@ -6,21 +8,38 @@ module SPI_Master_TB ();
   
 //reg son Inputs y wire son outputs
 
-
+//SEÑALES PARA RELOJ FPGA
   reg r_Rst_L=1'b0; 
   reg r_Clk=1'b0; 
-  wire w_SPI_Clk;
-  wire w_SPI_MOSI;
-//Señal de transmision de segundo dispositivo
-  wire w_SPI_MOSI_2;
-
-  // Señales específicas del maestro
   
+//BYTE A TRANSMITIR POR DISPOSITIVO #1
   reg [7:0] i_TX_Byte = 0; 
-  reg i_TX_DV = 1'b0;
+//PULSO QUE INDICA QUE SE PUEDE TRANSMITIR UN DATO
   wire o_TX_Ready;
+//PULSO QUE CONTROLA QUE SE REALIZA LA TRANSMISION
+  reg i_TX_DV = 1'b0;
+//PULSO DE RELOJ QUE SE GENERA PARA LA TRANSMISION DEL DISPOSITIVO #1
+  wire w_SPI_Clk;
+//SEÑAL DE PULSOS QUE REPRESENTAN LOS BITS TRANSMITIDOS POR EL DISPOSITIVO #1
+  wire w_SPI_MOSI;
+//PULSO QUE INDICA QUE YA SE RECIBIO UN DATO PROVENIENTE DEL DISPOSITIVO #2
   wire o_RX_DV;
+//BYTE RECUPERADO DE LA TRANSMISION PROVENIENTE DEL DISPOSITIVO #2 Y QUE RECIBE EL #1
   wire [7:0] o_RX_Byte;
+
+//Inicializacion de señales para el segundo dispositivo
+  reg [7:0] i_TX_Byte_2 = 0; 
+  wire o_TX_Ready_2;
+  reg i_TX_DV_2 = 1'b0;
+  wire w_SPI_Clk_2;
+  wire w_SPI_MOSI_2;
+  wire o_RX_DV_2;
+  wire [7:0] o_RX_Byte_2;
+
+
+integer seed; //Semilla para generar valores aleatorios
+reg [7:0] dato_disp1; // Primer valor aleatorio de 8 bits
+reg [7:0] dato_disp2;
 
   // Generador de reloj Principal:
   always #(MAIN_CLK_DELAY) r_Clk = ~r_Clk;
@@ -50,16 +69,6 @@ module SPI_Master_TB ();
    );
    
 /////////////////////////Generacion del Segundo Dispositivo///////////////////////////////////////
-//Inicializacion de señales para el segundo dispositivo
-wire w_SPI_Clk_2;
-
-reg [7:0] i_TX_Byte_2 = 0; 
-reg i_TX_DV_2 = 1'b0;
-wire o_TX_Ready_2;
-wire o_RX_DV_2;
-
-
-wire [7:0] o_RX_Byte_2;
 
   SPI_Master 
   #(.SPI_MODE(SPI_MODE),
@@ -98,7 +107,7 @@ wire [7:0] o_RX_Byte_2;
       @(posedge r_Clk); //Espera a la siguiente subida del ciclo de reloj para....
       i_TX_DV <= 1'b0; //Desactiva la señal ya que la transferencia de datos comenzo
       i_TX_DV_2 <= 1'b0; 
-      @(posedge (o_TX_Ready||o_TX_Ready_2)); //Termina la operacion de la transferencia de datos cuando el indicador de que está listo para 
+      @(posedge (o_TX_Ready && o_TX_Ready_2)); //Termina la operacion de la transferencia de datos cuando el indicador de que está listo para 
       //otra transmision este activo
     end
   endtask // SendSingleByte
@@ -110,20 +119,26 @@ wire [7:0] o_RX_Byte_2;
       $dumpfile("dump.vcd"); // Define el nombre del archivo VCD, para uso de posibles registros visuales (EDA Playground)
       $dumpvars;// Comienza a grabar todas las señales
       
+      seed = 32'h6F38AD21;
+      
+      dato_disp1=$random(seed);
+      dato_disp2=$random(seed);
+      
       repeat(10) @(posedge r_Clk); //En el siguiente ciclo de reloj...
       r_Rst_L  = 1'b0; //Resetear FPGA (Para este caso se resetea en bajo)
       repeat(10) @(posedge r_Clk);
       r_Rst_L  = 1'b1; //Deja la señal de reset desactivada en alto
       
       // Prueba con un solo byte
-      SendSingleByte(8'hDA, 8'hB1);
-      $display("Enviado 0xC1, Recibido 0x%X", o_RX_Byte); 
-      
-      // Prueba con doble byte
-      SendSingleByte(8'hBE,8'h75);
-      $display("Enviado 0xBE, Recibido 0x%X", o_RX_Byte); 
-      SendSingleByte(8'hEF, 8'h91);
-      $display("Enviado 0xEF, Recibido 0x%X", o_RX_Byte); 
+      SendSingleByte(dato_disp1, dato_disp2);
+      #10000; //Espera a que se realicen las transmisiones y recepciones
+      if((i_TX_Byte == o_RX_Byte_2)&&(i_TX_Byte_2 == o_RX_Byte))begin //Si el byte transmitido del dispositivo #1 es igual al recibido del #2 y viceversa...
+        $display("Transmisiones y Recepciones Exitosas:\n|Dispositivo|---TX---|---RX---|\n|-----1-----|---%h---|---%h---|\n|-----2-----|---%h---|---%h---|", i_TX_Byte,o_RX_Byte,i_TX_Byte_2,o_RX_Byte_2); 
+      end
+      else begin
+        $display("Error: Transmisiones y Recepciones Fallidas");
+      end
+
       repeat(10) @(posedge r_Clk);
       $finish();      
     end // initial begin
