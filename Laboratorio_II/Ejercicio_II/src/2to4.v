@@ -5,10 +5,11 @@ module decoder_2to4 (
 
 always @(*) begin
     case (in)
-        2'b00: out = 4'b0001;
-        2'b01: out = 4'b0010;
-        2'b10: out = 4'b0100;
-        2'b11: out = 4'b1000;
+        2'b00: out = 4'b1110;
+        2'b01: out = 4'b1101;
+        2'b10: out = 4'b1011;
+        2'b11: out = 4'b0111;
+        default: out = 4'b1110;
     endcase
 end
 
