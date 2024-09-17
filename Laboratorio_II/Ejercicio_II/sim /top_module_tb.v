@@ -1,55 +1,42 @@
-module hex_keyboard_interface_tb;
+`timescale 1ns / 1ps
 
-reg clk_in;
-reg reset;
-reg [3:0] key_cols;
-wire [3:0] key_rows;
-wire [3:0] hex_out;
-wire key_pressed;
+module top_module_tb;
 
-hex_keyboard_interface uut (
-    .clk_in(clk_in),
-    .reset(reset),
-    .key_cols(key_cols),
-    .key_rows(key_rows),
-    .hex_out(hex_out),
-    .key_pressed(key_pressed)
-);
+    // Señales de prueba
+    reg clk_in_tb;
+    reg reset_tb;
+    reg [3:0] external_in_tb;
+    wire [3:0] hex_out_tb;
 
-initial begin
-    clk_in = 0;
-    reset = 1;
-    key_cols = 4'b1111;  // No key pressed (default state)
-    
-    // Hold reset for a longer time
-    #500 reset = 0;
+    // Instancia del módulo top_module
+    top_module uut (
+        .clk_in(clk_in_tb),
+        .reset(reset_tb),
+        .external_in(external_in_tb),
+        .hex_out(hex_out_tb)
+    );
 
-    // Simulate key bounce for key '5' (row[1], col[1])
-    #500000 key_cols = 4'b1101; // Start key press '5'
-    
-    // Key bounce simulation (rapid toggling)
-    #100000 key_cols = 4'b1111; // Key released briefly
-    #100000 key_cols = 4'b1101; // Key pressed again
-    #100000 key_cols = 4'b1111; // Key released briefly
-    #100000 key_cols = 4'b1101; // Key pressed again
+    // Generador de reloj
+    always #5 clk_in_tb = ~clk_in_tb;  // Reloj con periodo de 10 ns (50 MHz)
 
-    // After bouncing, stabilize the key press
-    #1000000 key_cols = 4'b1111; // Release key '5'
-    
-    // Simulate pressing key 'A' (row[0], col[3]) without bounce
-    #500000 key_cols = 4'b0111; // Key press 'A'
-    #1000000 key_cols = 4'b1111; // Release key 'A'
+    // Proceso de estímulos
+    initial begin
+        // Inicialización de señales
+        clk_in_tb = 0;
+        reset_tb = 0; // Inicialmente activo (para liberar después)
+        external_in_tb = 4'b1111;
 
-    #500000 $finish;
-end
+        // Mantener el reset activo por 20 ns
+        #20 reset_tb = 1;  // Reset desactivado (si es activo en bajo)
 
-// Clock generation (100 MHz example: adjust period if needed)
-always #5 clk_in = ~clk_in;  // 10ns period = 100MHz
+        // Cambiar la entrada externa del codificador
+        #200 external_in_tb = 4'b1110;
+        #200 external_in_tb = 4'b1011;
+        #200 external_in_tb = 4'b1101;
+        #200 external_in_tb = 4'b0111;
 
-// Monitor outputs during the simulation
-initial begin
-    $monitor("Time=%0t reset=%b key_rows=%b key_cols=%b hex_out=%h key_pressed=%b",
-             $time, reset, key_rows, key_cols, hex_out, key_pressed);
-end
+        // Terminar la simulación
+        #500 $finish;
+    end
 
 endmodule
