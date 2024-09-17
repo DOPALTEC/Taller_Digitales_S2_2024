@@ -150,13 +150,15 @@ assign lcd_data   = spi_data[7]; // MSB
 
 
 // gen color bar
-
+//16'hF800: Rojo
+//16'h001F: Azul
+//16'h07E0: Verde
 //wire [15:0] pixel = (pixel_cnt >= 21600) ? 16'hF800 : //Si el contador de pixeles es mayor o igual a 21600 se asigna el color rojo (hF800)
 					//(pixel_cnt >= 10800) ? 16'h07E0 : 16'h001F; //Si el contador es menor a 21600 pero mayor a 10800 se asigna verde (h07E0)
 					//Si el contador de pixeles es menor a 10800 es azul (h001F)
 //Se debe hacer máquina de estados que revise cada ciclo de reloj si se cambia la configuracion de colores
 //si lo que se recibe en el receptor de la comunicacion spi entre pc y fpga es 1 se aplica la primera config y analogamente con la segunda
-wire [15:0] pixel = ((0<=grilla_cnt<=60)||(120<grilla_cnt<=180))? 16'hF800 : 16'h001F; //Por cada par de  grilla de ancho 30 son 4050*2 pixeles
+wire [15:0] pixel = ((grilla_cnt >= 0 && grilla_cnt <= 60) || (grilla_cnt > 120 && grilla_cnt <= 180)) ? 16'hF800 : 16'h001F;
 
 
 
