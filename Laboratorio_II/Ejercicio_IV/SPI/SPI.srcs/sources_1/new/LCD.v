@@ -153,7 +153,7 @@ assign lcd_data   = spi_data[7]; // MSB
 					//Si el contador de pixeles es menor a 10800 es azul (h001F)
 //Se debe hacer máquina de estados que revise cada ciclo de reloj si se cambia la configuracion de colores
 //si lo que se recibe en el receptor de la comunicacion spi entre pc y fpga es 1 se aplica la primera config y analogamente con la segunda
-wire [15:0] pixel = ((grilla_cnt<=30)||(60<grilla_cnt<=90)||(120<grilla_cnt<=150)||(180<grilla_cnt<=210))? 16'hF800 : 16'h001F; //Por cada par de  grilla de ancho 30 son 4050*2 pixeles
+wire [15:0] pixel = (grilla_cnt<=30)? 16'hF800 : 16'h001F; //Por cada par de  grilla de ancho 30 son 4050*2 pixeles
 
 
 
@@ -269,14 +269,14 @@ always@(posedge clk or negedge resetn) begin
 						lcd_rs_r <= 1;
 						bit_loop <= 0;
 						pixel_cnt <= pixel_cnt + 1; //Pasa al siguiente pixel
-						if(grilla_cnt<=240) begin //Si aun no se ha terminado el patron: primer color, segundo color en una fila de 60 pixeles
+						if(grilla_cnt==60) begin //Si aun no se ha terminado el patron: primer color, segundo color en una fila de 60 pixeles
 						//continua rellenando
-						  grilla_cnt <= grilla_cnt+1;
-						end
-						else begin
 						  grilla_cnt<=0; //Si ya se termino la pareja de colores en una fila de 60 pixeles, se reinicia
 						  //Cada 4 veces que se rellenen parejas de 30 pixeles de dos colores distintos, pasa a la siguiente fila
 						  //Para ir rellenando poco a poco las columnas
+						end
+						else begin
+						  grilla_cnt <= grilla_cnt+1;
 						end
 					
 					end else begin
