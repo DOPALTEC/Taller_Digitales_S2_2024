@@ -449,41 +449,38 @@ Transmisiones y Recepciones Exitosas:
 
 Utilizando la semilla:
 ```verilog
-    
+    seed = 32'h8AC639CF;
 ```
  Se obtuvo la grafica de pulsos:
+
+![image](https://github.com/user-attachments/assets/92699508-91f6-4ce5-9722-ad15021975f0)
+
  
 Generando en la terminal el siguiente resultado:
 ```bash
+Optimizing...
+Building models...
+PLI/VPI access: +b
+Simulation time precision is 1ps.
+  [3/4] module SPI_Master_TB#(3,4,2): 32 functions, 226 basic blocks
+Linking image.so...
+Using default typical min/typ/max.
+=S:Begin run-time elaboration and static initialization...
+=N:[dumpMXD] preparing MXD dump to 'waves.mxd'.
+=N:[dump] Dump started at time 0
+=N:Starting event scheduler...
+=W:[dump] sim_1\new\SPI_Master_TB.v:119: $dumpfile() called, but dump already enabled.
+=W:[dump] sim_1\new\SPI_Master_TB.v:120: $dumpvars() called after dumping started.
+Transmisiones y Recepciones Exitosas:
+|Dispositivo|---TX---|---RX---|
+|-----1-----|---d6---|---37---|
+|-----2-----|---37---|---d6---|
+=N:[dumpMXD] closing MXD dump
+=T:Simulation terminated by $finish at time 10382000 (sim_1\new\SPI_Master_TB.v:143);
+  System timescale is 1ps / 1ps
 
 ```
 
-- Lote IV:
-
-Utilizando la semilla:
-```verilog
-    
-```
- Se obtuvo la grafica de pulsos:
- 
-Generando en la terminal el siguiente resultado:
-```bash
-
-```
-
-
-- Lote V:
-
-Utilizando la semilla:
-```verilog
-    
-```
- Se obtuvo la grafica de pulsos:
- 
-Generando en la terminal el siguiente resultado:
-```bash
-
-```
 
 
 ## Apendices:
