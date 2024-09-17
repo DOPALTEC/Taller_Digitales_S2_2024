@@ -69,7 +69,7 @@ Descripción y resultados de las pruebas hechas
 ## 1. Desarrollo
 
 
-### 1.1 Módulo "genérico"
+### 1.1 Módulo de la Transmisión UART
 #### 1. Encabezado del módulo
 ```SystemVerilog
 module uart #(
@@ -200,15 +200,19 @@ Transmision y Recepcion Exitosa:
 
   Utilizando la semilla:
 ```verilog
-    seed = 32'h37FE29A;
+    seed = 32'hE6712FC1;
 ```
 
 A pequeña escala se tienen entonces los pulsos:
 
+![image](https://github.com/user-attachments/assets/2149e655-b46a-40d0-916a-4e19a4aba9de)
 
 
 
 Y a gran escala:
+
+
+![image](https://github.com/user-attachments/assets/ef964aa1-671e-4409-9418-60e2b3172102)
 
 
 ```bash
@@ -239,19 +243,42 @@ Transmision y Recepcion Exitosa:
 
   Utilizando la semilla:
 ```verilog
-    seed = 32'h37FE29A;
+    seed = 32'hA54819CE;
 ```
 
 A pequeña escala se tienen entonces los pulsos:
 
+![image](https://github.com/user-attachments/assets/2eddcbfb-5bca-49b2-8657-c293527aa524)
 
 
 
 Y a gran escala:
 
+![image](https://github.com/user-attachments/assets/132880a9-624a-4ad1-bde2-23db9bcd569c)
+
 
 ```bash
-
+Optimizing...
+Building models...
+PLI/VPI access: +b
+Simulation time precision is 1ps.
+  [3/4] module tb_uart#(8): 34 functions, 203 basic blocks
+Linking image.so...
+Using default typical min/typ/max.
+=S:Begin run-time elaboration and static initialization...
+=N:[dumpMXD] preparing MXD dump to 'waves.mxd'.
+=N:[dump] Dump started at time 0
+=N:Starting event scheduler...
+Transmision y Recepcion Exitosa:
+|Dispositivo|---TX---|---RX---|
+|-----1-----|---3b---|---36---|
+|-----2-----|---36---|---3b---|
+=N:[dumpMXD] closing MXD dump
+=T:Simulation terminated by $finish at time 1876126000 (sim_1\new\tb_uart.v:196);
+Run directory: D:\UNI\Taller_Digitales_S2_2024\Laboratorio_II\Ejercicio_III\UART\UART.srcs
+  System timescale is 1ps / 1ps
+  Metrics DSim version: 20240422.9.0 (b:R #c:0 h:d63c52d5c2 os:msys2_)
+  Random seed: (defaulted to 1
 
 ```
 
