@@ -156,7 +156,7 @@ assign lcd_data   = spi_data[7]; // MSB
 					//Si el contador de pixeles es menor a 10800 es azul (h001F)
 //Se debe hacer máquina de estados que revise cada ciclo de reloj si se cambia la configuracion de colores
 //si lo que se recibe en el receptor de la comunicacion spi entre pc y fpga es 1 se aplica la primera config y analogamente con la segunda
-wire [15:0] pixel = (grilla_cnt<=120)? 16'hF800 : 16'h001F; //Por cada par de  grilla de ancho 30 son 4050*2 pixeles
+wire [15:0] pixel = ((0<=grilla_cnt<=60)||(120<grilla_cnt<=180))? 16'hF800 : 16'h001F; //Por cada par de  grilla de ancho 30 son 4050*2 pixeles
 
 
 
