@@ -369,7 +369,119 @@ De acuerdo con la configuración de pines de la TANGNano 9k se realiza la conexi
 
 
 #### 5. Testbench
-Descripción y resultados de las pruebas hechas
+Realizando el testbench entre dos dispositivos generados a partir del mismo módulo del SPI y generando valores aleatorios mediante una semilla de 32 bits para ambos valores transmitidos por los dos dispositivos se realizaron varias pruebas con diferentes semillas que generaron valores aleatorios distintos.
+
+- Lote I:
+
+Utilizando la semilla:
+```verilog
+    seed = 32'h6F38AD21;
+```
+ Se obtuvo la grafica de pulsos:
+
+![image](https://github.com/user-attachments/assets/7514de86-18a2-445c-916d-f1ab34e0ffe0)
+
+ 
+Generando en la terminal el siguiente resultado:
+```bash
+
+Optimizing...
+Building models...
+PLI/VPI access: +b
+Simulation time precision is 1ps.
+  [3/4] module SPI_Master_TB#(3,4,2): 32 functions, 226 basic blocks
+Linking image.so...
+Using default typical min/typ/max.
+=S:Begin run-time elaboration and static initialization...
+=N:[dumpMXD] preparing MXD dump to 'waves.mxd'.
+=N:[dump] Dump started at time 0
+=N:Starting event scheduler...
+=W:[dump] sim_1\new\SPI_Master_TB.v:119: $dumpfile() called, but dump already enabled.
+=W:[dump] sim_1\new\SPI_Master_TB.v:120: $dumpvars() called after dumping started.
+Transmisiones y Recepciones Exitosas:
+|Dispositivo|---TX---|---RX---|
+|-----1-----|---3c---|---1e---|
+|-----2-----|---1e---|---3c---|
+=N:[dumpMXD] closing MXD dump
+=T:Simulation terminated by $finish at time 10382000 (sim_1\new\SPI_Master_TB.v:143);
+  System timescale is 1ps / 1ps
+  Metrics DSim version: 20240422.9.0 (b:R #c:0 h:d63c52d5c2 os:msys2_)
+  Random seed: (defaulted to 1)
+
+```
+
+- Lote II:
+
+Utilizando la semilla:
+```verilog
+    seed = 32'h885B2C78;
+```
+ Se obtuvo la grafica de pulsos:
+
+![image](https://github.com/user-attachments/assets/1f631a12-a35f-46f8-93cd-98438d698b95)
+
+ 
+Generando en la terminal el siguiente resultado:
+```bash
+    Optimizing...
+Building models...
+PLI/VPI access: +b
+Simulation time precision is 1ps.
+  [3/4] module SPI_Master_TB#(3,4,2): 32 functions, 226 basic blocks
+Linking image.so...
+Using default typical min/typ/max.
+=S:Begin run-time elaboration and static initialization...
+=N:[dumpMXD] preparing MXD dump to 'waves.mxd'.
+=N:[dump] Dump started at time 0
+=N:Starting event scheduler...
+=W:[dump] sim_1\new\SPI_Master_TB.v:119: $dumpfile() called, but dump already enabled.
+=W:[dump] sim_1\new\SPI_Master_TB.v:120: $dumpvars() called after dumping started.
+Transmisiones y Recepciones Exitosas:
+|Dispositivo|---TX---|---RX---|
+|-----1-----|---fd---|---8c---|
+|-----2-----|---8c---|---fd---|
+=N:[dumpMXD] closing MXD dump
+=T:Simulation terminated by $finish at time 10382000 (sim_1\new\SPI_Master_TB.v:143);
+  System timescale is 1ps / 1ps
+```
+
+- Lote III:
+
+Utilizando la semilla:
+```verilog
+    seed = 32'h8AC639CF;
+```
+ Se obtuvo la grafica de pulsos:
+
+![image](https://github.com/user-attachments/assets/92699508-91f6-4ce5-9722-ad15021975f0)
+
+ 
+Generando en la terminal el siguiente resultado:
+```bash
+Optimizing...
+Building models...
+PLI/VPI access: +b
+Simulation time precision is 1ps.
+  [3/4] module SPI_Master_TB#(3,4,2): 32 functions, 226 basic blocks
+Linking image.so...
+Using default typical min/typ/max.
+=S:Begin run-time elaboration and static initialization...
+=N:[dumpMXD] preparing MXD dump to 'waves.mxd'.
+=N:[dump] Dump started at time 0
+=N:Starting event scheduler...
+=W:[dump] sim_1\new\SPI_Master_TB.v:119: $dumpfile() called, but dump already enabled.
+=W:[dump] sim_1\new\SPI_Master_TB.v:120: $dumpvars() called after dumping started.
+Transmisiones y Recepciones Exitosas:
+|Dispositivo|---TX---|---RX---|
+|-----1-----|---d6---|---37---|
+|-----2-----|---37---|---d6---|
+=N:[dumpMXD] closing MXD dump
+=T:Simulation terminated by $finish at time 10382000 (sim_1\new\SPI_Master_TB.v:143);
+  System timescale is 1ps / 1ps
+
+```
+
+
 
 ## Apendices:
 ### Apendice 1:
