@@ -69,7 +69,7 @@ Descripción y resultados de las pruebas hechas
 ## 1. Desarrollo
 
 
-### 1.1 Módulo "genérico"
+### 1.1 Módulo de la Transmisión UART
 #### 1. Encabezado del módulo
 ```SystemVerilog
 module uart #(
@@ -156,215 +156,132 @@ A gran escala, se puede observar la transmisión a 9600 baudios ó 104167ns por 
 ![tb_uart_I](https://github.com/user-attachments/assets/96f5890d-1f85-4e46-b403-c4b417187de6)
 
 - LOTE I Autoverificable
-Al realizar las pruebas de manera autoverificable se le asignó un valor tanto a el dato a transmitir como a una recepción de un dato, con valores de 0xA5 y 0xDA, para el tx y rx respectivamente.
 
-
-Y en la grafica de pulsos se observa a baja escala el funcionamiento de los pulsos de validación e iniciación de transmisión y recpción así como los valores constantes que se esperan transmitir y recibir.
-![tb_I_verificable_bajaescala](https://github.com/user-attachments/assets/0be96591-752b-4eea-ac13-77f5616f7d35)
-
-Mostrando los pulsos de las pruebas en su totalidad se observa que los datos tanto transmitidos como recibidos coinciden con lo esperado.
-
-![tb_I_verificable_completo](https://github.com/user-attachments/assets/f9b799da-c5d8-47f9-bbbb-6465082532b8)
-
-
-
-Dando como resultado en la terminal el display esperado cuando se obtiene una transmisión y recepción exitosa.
-
-```bash
-=N:[dumpMXD] preparing MXD dump to 'waves.mxd'.
-=N:[dump] Dump started at time 0
-=N:Starting event scheduler...
-Transmision Exitosa: Los datos enviados (10100101) coinciden con los datos que se esperan transmitir(10100101)
-Recepcion Exitosa: Los datos recibidos (11011010) coinciden con los datos que se esperan recibir(11011010)
-=N:[dumpMXD] closing MXD dump
-```
-
-
-- LOTE II Autoverificable
-A partir de aqui, se hace uso de una semilla distinta para valores aleatorios en cada una de las muestras.
-
-Utilizando la semilla:
+  Utilizando la semilla:
 ```verilog
-seed = 32'hDEADBEEF;
+    seed = 32'h6C1322A8;
 ```
-Se espera obtener para el receptor:
-
-$$
-    rx=0x0B
-$$
-
-Y para el transmisor:
-
-$$
-    tx=0xC5
-$$
 
 A pequeña escala se tienen entonces los pulsos:
 
+![image](https://github.com/user-attachments/assets/82028687-66a0-4da3-8db5-b95e5cf29072)
 
-![tb_2_baja](https://github.com/user-attachments/assets/92ac613f-d1c2-4bb1-ac91-68b7c2a04687)
 
 
-Y a escala completa:
-
-![tb_2_completo](https://github.com/user-attachments/assets/8378f33e-6d95-410d-a748-55d670e68232)
-
+Y a gran escala:
+![image](https://github.com/user-attachments/assets/39e4cd2d-0e6c-40bc-a6b0-d8df23f6f7f9)
 
 
 ```bash
-    Optimizing...
+Optimizing...
 Building models...
 PLI/VPI access: +b
 Simulation time precision is 1ps.
-  [3/4] module tb_uart#(8): 22 functions, 131 basic blocks
+  [3/4] module tb_uart#(8): 34 functions, 203 basic blocks
 Linking image.so...
 Using default typical min/typ/max.
 =S:Begin run-time elaboration and static initialization...
 =N:[dumpMXD] preparing MXD dump to 'waves.mxd'.
 =N:[dump] Dump started at time 0
 =N:Starting event scheduler...
-Transmision Exitosa: Los datos enviados (11000101) coinciden con los datos que se esperan transmitir(11000101)
-Recepcion Exitosa: Los datos recibidos (00001011) coinciden con los datos que se esperan recibir(00001011)
+Transmision y Recepcion Exitosa:
+|Dispositivo|---TX---|---RX---|
+|-----1-----|---4d---|---d5---|
+|-----2-----|---d5---|---4d---|
 =N:[dumpMXD] closing MXD dump
+=T:Simulation terminated by $finish at time 1876126000 (sim_1\new\tb_uart.v:196);
+  System timescale is 1ps / 1ps
+  Metrics DSim version: 20240422.9.0 (b:R #c:0 h:d63c52d5c2 os:msys2_)
+  Random seed: (defaulted to 1)
+
+```
+
+- LOTE II Autoverificable
+
+  Utilizando la semilla:
+```verilog
+    seed = 32'hE6712FC1;
+```
+
+A pequeña escala se tienen entonces los pulsos:
+
+![image](https://github.com/user-attachments/assets/2149e655-b46a-40d0-916a-4e19a4aba9de)
+
+
+
+Y a gran escala:
+
+
+![image](https://github.com/user-attachments/assets/ef964aa1-671e-4409-9418-60e2b3172102)
+
+
+```bash
+
+Optimizing...
+Building models...
+PLI/VPI access: +b 
+Simulation time precision is 1ps.
+  [3/4] module tb_uart#(8): 34 functions, 203 basic blocks
+Linking image.so...
+Using default typical min/typ/max.
+=S:Begin run-time elaboration and static initialization...
+=N:[dumpMXD] preparing MXD dump to 'waves.mxd'.
+=N:[dump] Dump started at time 0
+=N:Starting event scheduler...
+Transmision y Recepcion Exitosa:
+|Dispositivo|---TX---|---RX---|
+|-----1-----|---ef---|---34---|
+|-----2-----|---34---|---ef---|
+=N:[dumpMXD] closing MXD dump
+=T:Simulation terminated by $finish at time 1876126000 (sim_1\new\tb_uart.v:196);
+  System timescale is 1ps / 1ps
+  Metrics DSim version: 20240422.9.0 (b:R #c:0 h:d63c52d5c2 os:msys2_)
+  Random seed: (defaulted to 1)
 ```
   
 - LOTE III Autoverificable
 
   Utilizando la semilla:
 ```verilog
-    seed = 32'h37FE29A;
+    seed = 32'hA54819CE;
 ```
-Se espera obtener para el receptor:
-
-$$
-    rx=0x7D
-$$
-
-Y para el transmisor:
-
-$$
-    tx=0x5D
-$$
 
 A pequeña escala se tienen entonces los pulsos:
 
-![tb_3_baja](https://github.com/user-attachments/assets/d3aed1eb-116f-4d0e-aedd-b83c28209896)
+![image](https://github.com/user-attachments/assets/2eddcbfb-5bca-49b2-8657-c293527aa524)
+
 
 
 Y a gran escala:
-![tb_3_completo](https://github.com/user-attachments/assets/7733e5b3-9b7d-4638-a7ef-e8194e3c79c8)
+
+![image](https://github.com/user-attachments/assets/132880a9-624a-4ad1-bde2-23db9bcd569c)
+
 
 ```bash
 Optimizing...
 Building models...
 PLI/VPI access: +b
 Simulation time precision is 1ps.
-  [3/4] module tb_uart#(8): 22 functions, 131 basic blocks
+  [3/4] module tb_uart#(8): 34 functions, 203 basic blocks
 Linking image.so...
 Using default typical min/typ/max.
 =S:Begin run-time elaboration and static initialization...
 =N:[dumpMXD] preparing MXD dump to 'waves.mxd'.
 =N:[dump] Dump started at time 0
 =N:Starting event scheduler...
-Transmision Exitosa: Los datos enviados (01011101) coinciden con los datos que se esperan transmitir(01011101)
-Recepcion Exitosa: Los datos recibidos (01111101) coinciden con los datos que se esperan recibir(01111101)
+Transmision y Recepcion Exitosa:
+|Dispositivo|---TX---|---RX---|
+|-----1-----|---3b---|---36---|
+|-----2-----|---36---|---3b---|
 =N:[dumpMXD] closing MXD dump
-=T:Simulation terminated by $finish at time 1042790000 (sim_1\new\tb_uart.v:131);
+=T:Simulation terminated by $finish at time 1876126000 (sim_1\new\tb_uart.v:196);
+Run directory: D:\UNI\Taller_Digitales_S2_2024\Laboratorio_II\Ejercicio_III\UART\UART.srcs
   System timescale is 1ps / 1ps
   Metrics DSim version: 20240422.9.0 (b:R #c:0 h:d63c52d5c2 os:msys2_)
+  Random seed: (defaulted to 1
 
 ```
-- LOTE IV Autoverificable
 
-Utilizando la semilla:
-```verilog
-
-```
-Se espera obtener para el receptor:
-
-$$
-    rx=0x44
-$$
-
-Y para el transmisor:
-
-$$
-    tx=0x1C
-$$
-
-A pequeña escala se tienen entonces los pulsos:
-
-![tb_4_baja](https://github.com/user-attachments/assets/74c8b195-0377-49db-9573-dd58ca78da9c)
-
-
-Y a gran escala:
-![tb_4_completo](https://github.com/user-attachments/assets/f6c2e1c5-b591-453c-8c17-99d8f48f80ab)
-
-```bash
-Optimizing...
-Building models...
-PLI/VPI access: +b
-Simulation time precision is 1ps.
-  [3/4] module tb_uart#(8): 22 functions, 131 basic blocks
-Linking image.so...
-Using default typical min/typ/max.
-=S:Begin run-time elaboration and static initialization...
-=N:[dumpMXD] preparing MXD dump to 'waves.mxd'.
-=N:[dump] Dump started at time 0
-=N:Starting event scheduler...
-Transmision Exitosa: Los datos enviados (00011100) coinciden con los datos que se esperan transmitir(00011100)
-Recepcion Exitosa: Los datos recibidos (01000100) coinciden con los datos que se esperan recibir(01000100)
-=N:[dumpMXD] closing MXD dump
-=T:Simulation terminated by $finish at time 1042790000 (sim_1\new\tb_uart.v:131);
-  System timescale is 1ps / 1ps
-  Metrics DSim version: 20240422.9.0 (b:R #c:0 h:d63c52d5c2 os:msys2_)
-  Random seed: (defaulted to 1)
-```
-- LOTE V Autoverificable
-
-Utilizando la semilla:
-```verilog
-    seed = 32'h6C1322A8;
-```
-Se espera obtener para el receptor:
-
-$$
-    rx=0xD5
-$$
-
-Y para el transmisor:
-
-$$
-    tx=0x4D
-$$
-
-A pequeña escala se tienen entonces los pulsos:
-
-![tb_5_baja](https://github.com/user-attachments/assets/aba227bf-23fa-4ac1-8249-588315889bfa)
-
-Y a gran escala:
-![tb_5_completo](https://github.com/user-attachments/assets/eaad7404-ed98-4735-bc66-18b5e81c368e)
-
-```bash
-Optimizing...
-Building models...
-PLI/VPI access: +b
-Simulation time precision is 1ps.
-  [3/4] module tb_uart#(8): 22 functions, 131 basic blocks
-Linking image.so...
-Using default typical min/typ/max.
-=S:Begin run-time elaboration and static initialization...
-=N:[dumpMXD] preparing MXD dump to 'waves.mxd'.
-=N:[dump] Dump started at time 0
-=N:Starting event scheduler...
-Transmision Exitosa: Los datos enviados (01001101) coinciden con los datos que se esperan transmitir(01001101)
-Recepcion Exitosa: Los datos recibidos (11010101) coinciden con los datos que se esperan recibir(11010101)
-=N:[dumpMXD] closing MXD dump
-=T:Simulation terminated by $finish at time 1042790000 (sim_1\new\tb_uart.v:131);
-  System timescale is 1ps / 1ps
-  Metrics DSim version: 20240422.9.0 (b:R #c:0 h:d63c52d5c2 os:msys2_)
-  Random seed: (defaulted to 1)
-```
 
 # Ejercicio 4
 
