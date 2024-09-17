@@ -119,7 +119,7 @@ reg [7:0] dato_disp2;
       $dumpfile("dump.vcd"); // Define el nombre del archivo VCD, para uso de posibles registros visuales (EDA Playground)
       $dumpvars;// Comienza a grabar todas las señales
       
-      seed = 32'h6F38AD21;
+      seed = 32'h8AC639CF;
       
       dato_disp1=$random(seed);
       dato_disp2=$random(seed);
