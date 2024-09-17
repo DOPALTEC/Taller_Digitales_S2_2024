@@ -144,6 +144,8 @@ assign lcd_cs     = lcd_cs_r;
 assign lcd_rs     = lcd_rs_r;
 assign lcd_data   = spi_data[7]; // MSB
 
+
+
 // gen color bar
 
 //wire [15:0] pixel = (pixel_cnt >= 21600) ? 16'hF800 : //Si el contador de pixeles es mayor o igual a 21600 se asigna el color rojo (hF800)
