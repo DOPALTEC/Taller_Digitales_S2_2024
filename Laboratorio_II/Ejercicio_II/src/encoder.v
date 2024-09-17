@@ -1,30 +1,20 @@
-module encoder (
-    input wire [3:0] row,
-    input wire [3:0] col,
-    output reg [3:0] hex_out,
-    output reg key_pressed
+`timescale 1ns / 1ps
+module encoder_4to2 (
+    input [3:0] in2,    // Entrada de 4 bits
+    output reg [1:0] out2 // Salida de 2 bits
 );
 
 always @(*) begin
-    key_pressed = 1'b0;
-    hex_out = 4'h0;
-    
-    if (row[0] && col[0]) begin hex_out = 4'h1; key_pressed = 1'b1; end
-    else if (row[0] && col[1]) begin hex_out = 4'h2; key_pressed = 1'b1; end
-    else if (row[0] && col[2]) begin hex_out = 4'h3; key_pressed = 1'b1; end
-    else if (row[0] && col[3]) begin hex_out = 4'hA; key_pressed = 1'b1; end
-    else if (row[1] && col[0]) begin hex_out = 4'h4; key_pressed = 1'b1; end
-    else if (row[1] && col[1]) begin hex_out = 4'h5; key_pressed = 1'b1; end
-    else if (row[1] && col[2]) begin hex_out = 4'h6; key_pressed = 1'b1; end
-    else if (row[1] && col[3]) begin hex_out = 4'hB; key_pressed = 1'b1; end
-    else if (row[2] && col[0]) begin hex_out = 4'h7; key_pressed = 1'b1; end
-    else if (row[2] && col[1]) begin hex_out = 4'h8; key_pressed = 1'b1; end
-    else if (row[2] && col[2]) begin hex_out = 4'h9; key_pressed = 1'b1; end
-    else if (row[2] && col[3]) begin hex_out = 4'hC; key_pressed = 1'b1; end
-    else if (row[3] && col[0]) begin hex_out = 4'hE; key_pressed = 1'b1; end
-    else if (row[3] && col[1]) begin hex_out = 4'h0; key_pressed = 1'b1; end
-    else if (row[3] && col[2]) begin hex_out = 4'hF; key_pressed = 1'b1; end
-    else if (row[3] && col[3]) begin hex_out = 4'hD; key_pressed = 1'b1; end
+    case (in2)
+        4'b1110: out2 = 2'b00;
+        4'b1101: out2 = 2'b01;
+        4'b1011: out2 = 2'b10;
+        4'b0111: out2 = 2'b11;
+        4'b1111: out2 = 2'b00;
+        default: out2 = 2'b00;
+    endcase
 end
+
+endmodule
 
 endmodule
