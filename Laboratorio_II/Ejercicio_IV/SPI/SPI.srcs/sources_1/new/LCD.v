@@ -28,15 +28,18 @@ module LCD(
 localparam MAX_CMDS = 69;
 
 wire [8:0] init_cmd[MAX_CMDS:0];
+
 //Configuracion para tener el panel lcd listo para mostrar las lineas
-assign init_cmd[ 0] = 9'h036;
+//Primeros 8 bits se envian por spi
+//
+assign init_cmd[ 0] = 9'h036; //Control de Acceso a la memoria de datos
 assign init_cmd[ 1] = 9'h170;
 assign init_cmd[ 2] = 9'h03A;
 assign init_cmd[ 3] = 9'h105;
 assign init_cmd[ 4] = 9'h0B2;
 assign init_cmd[ 5] = 9'h10C;
 assign init_cmd[ 6] = 9'h10C;
-assign init_cmd[ 7] = 9'h100;
+assign init_cmd[ 7] = 9'h100; //No operacion (NOP) con RDX en alto
 assign init_cmd[ 8] = 9'h133;
 assign init_cmd[ 9] = 9'h133;
 assign init_cmd[10] = 9'h0B7;
@@ -46,7 +49,7 @@ assign init_cmd[13] = 9'h119;
 assign init_cmd[14] = 9'h0C0;
 assign init_cmd[15] = 9'h12C;
 assign init_cmd[16] = 9'h0C2;
-assign init_cmd[17] = 9'h101;
+assign init_cmd[17] = 9'h101; //Software reset, RDX en alto
 assign init_cmd[18] = 9'h0C3;
 assign init_cmd[19] = 9'h112;
 assign init_cmd[20] = 9'h0C4;
@@ -58,8 +61,8 @@ assign init_cmd[25] = 9'h1A4;
 assign init_cmd[26] = 9'h1A1;
 assign init_cmd[27] = 9'h0E0;
 assign init_cmd[28] = 9'h1D0;
-assign init_cmd[29] = 9'h104;
-assign init_cmd[30] = 9'h10D;
+assign init_cmd[29] = 9'h104; //Leer el ID del Display, RDX en alto
+assign init_cmd[30] = 9'h10D; //Leer imagen del display, RDX en alto
 assign init_cmd[31] = 9'h111;
 assign init_cmd[32] = 9'h113;
 assign init_cmd[33] = 9'h12B;
@@ -153,7 +156,7 @@ assign lcd_data   = spi_data[7]; // MSB
 					//Si el contador de pixeles es menor a 10800 es azul (h001F)
 //Se debe hacer máquina de estados que revise cada ciclo de reloj si se cambia la configuracion de colores
 //si lo que se recibe en el receptor de la comunicacion spi entre pc y fpga es 1 se aplica la primera config y analogamente con la segunda
-wire [15:0] pixel = (grilla_cnt<=30)? 16'hF800 : 16'h001F; //Por cada par de  grilla de ancho 30 son 4050*2 pixeles
+wire [15:0] pixel = (grilla_cnt<=120)? 16'hF800 : 16'h001F; //Por cada par de  grilla de ancho 30 son 4050*2 pixeles
 
 
 
@@ -271,7 +274,7 @@ always@(posedge clk or negedge resetn) begin
 						pixel_cnt <= pixel_cnt + 1; //Pasa al siguiente pixel
 						if(grilla_cnt==60) begin //Si aun no se ha terminado el patron: primer color, segundo color en una fila de 60 pixeles
 						//continua rellenando
-						  grilla_cnt<=0; //Si ya se termino la pareja de colores en una fila de 60 pixeles, se reinicia
+						  grilla_cnt<=1; //Si ya se termino la pareja de colores en una fila de 60 pixeles, se reinicia
 						  //Cada 4 veces que se rellenen parejas de 30 pixeles de dos colores distintos, pasa a la siguiente fila
 						  //Para ir rellenando poco a poco las columnas
 						end
