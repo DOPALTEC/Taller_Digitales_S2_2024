@@ -272,7 +272,7 @@ always@(posedge clk or negedge resetn) begin
 						lcd_rs_r <= 1;
 						bit_loop <= 0;
 						pixel_cnt <= pixel_cnt + 1; //Pasa al siguiente pixel
-						if(grilla_cnt==60) begin //Si aun no se ha terminado el patron: primer color, segundo color en una fila de 60 pixeles
+						if(grilla_cnt==240) begin //Si aun no se ha terminado el patron: primer color, segundo color en una fila de 60 pixeles
 						//continua rellenando
 						  grilla_cnt<=1; //Si ya se termino la pareja de colores en una fila de 60 pixeles, se reinicia
 						  //Cada 4 veces que se rellenen parejas de 30 pixeles de dos colores distintos, pasa a la siguiente fila
