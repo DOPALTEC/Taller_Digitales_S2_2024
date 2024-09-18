@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module top_module (
+module top (
     input wire clk_in,           // Reloj de entrada
     input wire reset,            // Señal de reset
     input wire [3:0] external_in, // Entrada externa para el codificador
