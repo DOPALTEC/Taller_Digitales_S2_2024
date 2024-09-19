@@ -129,6 +129,12 @@ Es necesario que los datos intruducidos tengan un significado en el codigo hexad
 
 ![diagrama_uart](https://github.com/user-attachments/assets/1a6ec625-ac0e-490c-a076-4e89cdfb079d)
 
+Para que se trabaje con una Tang Nano 9k se debe aplicar un valor del "prescale" distinto que el que se usó para el test bench ya que para esas pruebas se utilizó un reloj de 100MHz. Para el caso de la TangNano son 27MHz, por ello:
+
+$$
+    prescale=\frac{F_{clock}}{baudios*8}=\frac{F_{27000000}}{9600*8}=351
+$$
+
 
 
 #### 5. Testbench
@@ -144,6 +150,7 @@ Por tanto el tiempo en la escala entre cada bit enviado es de 104167ns. Para la 
 $$
 Prescale=\frac{104167}{8}=1302
 $$
+
 
 Antes de aplicar un testbench autoverificable a manera de una mayor comprensión se muestra una prueba de manera "manual".
 
