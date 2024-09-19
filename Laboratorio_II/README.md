@@ -6,6 +6,8 @@
 ## 2. Referencias
 [0] David Harris y Sarah Harris. *Digital Design and Computer Architecture. RISC-V Edition.* Morgan Kaufmann, 2022. ISBN: 978-0-12-820064-3
 
+https://learn.lushaylabs.com/tang-nano-9k-debugging/
+
 # Ejercicio 1
 
 
