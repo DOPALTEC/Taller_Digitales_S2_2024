@@ -237,18 +237,19 @@ always@(posedge clk or negedge resetn) begin
 
 			INIT_RESET : begin //Estado que genera una espera de 100ms mientras rst del envio 
 			//Para al LCD
-				if ((clk_cnt == CNT_100MS) && rx_listo) begin
+				if ((clk_cnt == CNT_100MS) && rx_listo) begin //Si se ha terminado el ciclo y hay un dato a recibir para al siguiente estado
+				
 					clk_cnt <= 0;
 					init_state <= INIT_PREPARE;
 					lcd_reset_r <= 1;
 				end else begin
-				    if (rx_listo) begin //Aprovecha la espera y recibe datos del PC
+				    if (rx_listo) begin //Si hay un dato a recibir inicia la recepcion
 				        //Si hay datos a recibir
 				        rx_ctrl<=1; //Activa la recepcion de datos
 				        clk_cnt <= clk_cnt + 1; //Va contando ciclos de reloj
 				    end
-				    else begin
-				        clk_cnt <= clk_cnt + 1; //Va contando ciclos de reloj
+				    else begin //Si aun no se recibe un dato, mantiene el contador de reloj igual
+				        clk_cnt <= clk_cnt; //Va contando ciclos de reloj
 				    end
 				end
 			end
