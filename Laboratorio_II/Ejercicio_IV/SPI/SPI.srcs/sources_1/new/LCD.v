@@ -42,6 +42,7 @@ reg [7:0] color_config; //Valor almacenado recibido desde PC. Es un input
 reg rx_ctrl;
 
 wire rx_listo;
+wire rx_busy; //Indica que se está realizando la transmision a la fpga desde pc
 
 uart #(
     .DATA_WIDTH(8)
@@ -227,7 +228,8 @@ always@(posedge clk or negedge resetn) begin
 
 		case (init_state)
 
-			INIT_RESET : begin //Estado que genera una espera de 100ms mientras rst
+			INIT_RESET : begin //Estado que genera una espera de 100ms mientras rst del envio 
+			//Para al LCD
 				if (clk_cnt == CNT_100MS) begin
 					clk_cnt <= 0;
 					init_state <= INIT_PREPARE;
@@ -238,6 +240,7 @@ always@(posedge clk or negedge resetn) begin
 			end
 
 			INIT_PREPARE : begin //Genera una espera de 200ms despues de rst
+			//Aprox la recepción de datos es de 1.04ms
 				if (clk_cnt == CNT_200MS) begin
 					clk_cnt <= 0;
 					init_state <= INIT_WAKEUP;
