@@ -237,7 +237,7 @@ always@(posedge clk or negedge resetn) begin
 
 			INIT_RESET : begin //Estado que genera una espera de 100ms mientras rst del envio 
 			//Para al LCD
-				if (clk_cnt == CNT_100MS) begin
+				if ((clk_cnt == CNT_100MS) && rx_listo) begin
 					clk_cnt <= 0;
 					init_state <= INIT_PREPARE;
 					lcd_reset_r <= 1;
