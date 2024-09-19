@@ -192,19 +192,26 @@ assign lcd_cs     = lcd_cs_r;
 assign lcd_rs     = lcd_rs_r;
 assign lcd_data   = spi_data[7]; // MSB
 
-//16'hF800: Rojo
-//16'h001F: Azul
-//16'h07E0: Verde
+// Definición de colores como wire
+wire [15:0] rojo   = 16'hF800; 
+wire [15:0] azul  = 16'h001F; 
+wire [15:0] verde = 16'h07E0; 
 
 //Se debe hacer máquina de estados que revise cada ciclo de reloj si se cambia la configuracion de colores
 //si lo que se recibe en el receptor de la comunicacion spi entre pc y fpga es 1 se aplica la primera config y analogamente con la segunda
-wire [15:0] pixel = ((grilla_cnt >= 0 && grilla_cnt <= 30) || 
+wire [15:0] pixel_1 = ((grilla_cnt >= 0 && grilla_cnt <= 30) || 
                      (grilla_cnt > 60 && grilla_cnt <= 90) || 
                      (grilla_cnt > 120 && grilla_cnt <= 150) || 
                      (grilla_cnt > 180 && grilla_cnt <= 210)) 
-                     ? 16'hF800 : 16'h001F;
+                     ? rojo : azul;
 
+wire [15:0] pixel_2 = ((grilla_cnt >= 0 && grilla_cnt <= 30) || 
+                     (grilla_cnt > 60 && grilla_cnt <= 90) || 
+                     (grilla_cnt > 120 && grilla_cnt <= 150) || 
+                     (grilla_cnt > 180 && grilla_cnt <= 210)) 
+                     ? rojo : verde;
 
+reg [7:0] config_actual; //Almacena el valor de color_config y lo compara por si cambia
 
 always@(posedge clk or negedge resetn) begin
 	if (~resetn) begin
@@ -235,7 +242,14 @@ always@(posedge clk or negedge resetn) begin
 					init_state <= INIT_PREPARE;
 					lcd_reset_r <= 1;
 				end else begin
-					clk_cnt <= clk_cnt + 1; //Va contando ciclos de reloj
+				    if (rx_listo) begin //Aprovecha la espera y recibe datos del PC
+				        //Si hay datos a recibir
+				        rx_ctrl<=1; //Activa la recepcion de datos
+				        clk_cnt <= clk_cnt + 1; //Va contando ciclos de reloj
+				    end
+				    else begin
+				        clk_cnt <= clk_cnt + 1; //Va contando ciclos de reloj
+				    end
 				end
 			end
 
@@ -244,6 +258,9 @@ always@(posedge clk or negedge resetn) begin
 				if (clk_cnt == CNT_200MS) begin
 					clk_cnt <= 0;
 					init_state <= INIT_WAKEUP;
+					//Almacena el dato recibido en el estado anterior
+					//para comparar posteriormente
+					config_actual<=color_config; 
 				end else begin
 					clk_cnt <= clk_cnt + 1;
 				end
@@ -303,6 +320,9 @@ always@(posedge clk or negedge resetn) begin
 			end
 
 			INIT_DONE : begin 
+			//////////////////////////////AGREGAR DE SER NECESARIO UN REFRESH
+			//QUE CORROBORE QUE si color_config cambio, se devuelva a el
+			//Estado de reinicio//////////
 				if (pixel_cnt == 32400) begin
 					; // stop
 				end else begin
@@ -311,12 +331,25 @@ always@(posedge clk or negedge resetn) begin
 						lcd_cs_r <= 0;
 						lcd_rs_r <= 1;
 //						spi_data <= 8'hF8; // RED
-						spi_data <= pixel[15:8];
+                        if(color_config==1) begin //Si la configuracion de color es 1
+                            //Elige el primer par de colores
+                            spi_data <= pixel_1[15:8];
+                        end
+                        else begin
+                            spi_data <= pixel_2[15:8];
+                        end
+						//spi_data <= pixel_1[15:8];
 						bit_loop <= bit_loop + 1;
 					end else if (bit_loop == 8) begin
 						// next byte
 //						spi_data <= 8'h00; // RED
-						spi_data <= pixel[7:0];
+						//spi_data <= pixel_1[7:0];
+						if (color_config==1) begin
+						  spi_data <= pixel_1[7:0];
+						end
+						else begin
+						  spi_data <= pixel_2[7:0];
+						end
 						bit_loop <= bit_loop + 1;
 					end else if (bit_loop == 16) begin
 						// end
