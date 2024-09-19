@@ -8,6 +8,8 @@
 
 https://learn.lushaylabs.com/tang-nano-9k-debugging/
 
+Añadir referencia del ST7789V
+
 # Ejercicio 1
 
 
