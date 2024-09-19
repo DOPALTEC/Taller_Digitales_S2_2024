@@ -134,11 +134,11 @@ Para que se trabaje con una Tang Nano 9k se debe aplicar un valor del "prescale"
 
 
 $$ 
-prescale = \frac{F_{clock}}{baudios*8} = \frac{F_{27000000}}{9600*8}
+prescale = \frac{F_{clock}}{baudios*8} 
 $$
 
 $$ 
-prescale = \frac{F_{clock}}{baudios*8} = 351
+prescale = \frac{F_{27000000}}{9600*8} = 351
 $$
 
 
