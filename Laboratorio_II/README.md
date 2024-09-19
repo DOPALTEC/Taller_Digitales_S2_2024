@@ -132,12 +132,9 @@ Es necesario que los datos intruducidos tengan un significado en el codigo hexad
 Para que se trabaje con una Tang Nano 9k se debe aplicar un valor del "prescale" distinto que el que se usó para el test bench ya que para esas pruebas se utilizó un reloj de 100MHz. Para el caso de la TangNano son 27MHz, por ello:
 
 
-$$
-prescale = \frac{F_{clock}}{baudios*8} = \frac{F_{27000000}}{9600*8}=351
-$$
 
 $$ 
-prescale = \frac{F_{clock}}{baudios*8} = 351
+prescale = \frac{F_{clock}}{baudios*8} = \frac{F_{27000000}}{9600*8} = 351
 $$
 
 
