@@ -138,7 +138,7 @@ prescale = \frac{F_{clock}}{baudios*8}
 $$
 
 $$ 
-prescale = \frac{F_{27000000}}{9600*8} = 351
+prescale = \frac{27000000}{9600*8} = 351
 $$
 
 
