@@ -5,7 +5,7 @@
         //DCX: Señal de Reloj
         //SDA: Entrada de Datos al Controlador del LCD
         //CSX: Chip Select. Puede ser un parametro que solo valga 1 siempre
-        //SDO: Salida de daos del controlador del LCD
+        //SDO: Salida de datos del controlador del LCD
 //PAG 153 Comandos
     //Muestra unas tablas que indican que si se envía un byte con ese codigo se realiza una determinada operacion
     //Se acceden al activar ciertos valores en 3 señales (D/CX) (WRX) (RDX)
@@ -20,14 +20,19 @@ module LCD(
 
 	output lcd_resetn,
 	output lcd_clk,
-	output lcd_cs,
+	output lcd_cs, //Senial de chip select correspondiente al LCD
 	output lcd_rs,
-	output lcd_data
+	output lcd_data //Transmision de FPGA a LCD
+	
+	//Senial recibida de la computadora
+
 );
 
 localparam MAX_CMDS = 69;
 
 wire [8:0] init_cmd[MAX_CMDS:0];
+
+reg [7:0] color_config; //Valor almacenado recibido desde PC. Es un input
 
 //Configuracion para tener el panel lcd listo para mostrar las lineas
 //Primeros 8 bits se envian por spi
@@ -104,13 +109,16 @@ assign init_cmd[67] = 9'h100; //No operacion (NOP) con RDX en alto
 assign init_cmd[68] = 9'h1BB; //VCOMS Setting
 assign init_cmd[69] = 9'h02C; // start
 
-localparam INIT_RESET   = 4'b0000; // delay 100ms while reset
-localparam INIT_PREPARE = 4'b0001; // delay 200ms after reset
+
+//////////Estados para la FSM//////////////////////////
+localparam INIT_RESET   = 4'b0000; // Estado para delay de 100ms durante reset
+localparam INIT_PREPARE = 4'b0001; // Estado para delay de 200ms despues de reset
 localparam INIT_WAKEUP  = 4'b0010; // write cmd 0x11 MIPI_DCS_EXIT_SLEEP_MODE
 localparam INIT_SNOOZE  = 4'b0011; // delay 120ms after wakeup
 localparam INIT_WORKING = 4'b0100; // write command & data
 localparam INIT_DONE    = 4'b0101; // all done
 
+///////////Parametros para Denotar Ciclos de reloj en ms////////////////////7
 `ifdef MODELTECH
 
 localparam CNT_100MS = 32'd2700000;
@@ -147,15 +155,10 @@ assign lcd_cs     = lcd_cs_r;
 assign lcd_rs     = lcd_rs_r;
 assign lcd_data   = spi_data[7]; // MSB
 
-
-
-// gen color bar
 //16'hF800: Rojo
 //16'h001F: Azul
 //16'h07E0: Verde
-//wire [15:0] pixel = (pixel_cnt >= 21600) ? 16'hF800 : //Si el contador de pixeles es mayor o igual a 21600 se asigna el color rojo (hF800)
-					//(pixel_cnt >= 10800) ? 16'h07E0 : 16'h001F; //Si el contador es menor a 21600 pero mayor a 10800 se asigna verde (h07E0)
-					//Si el contador de pixeles es menor a 10800 es azul (h001F)
+
 //Se debe hacer máquina de estados que revise cada ciclo de reloj si se cambia la configuracion de colores
 //si lo que se recibe en el receptor de la comunicacion spi entre pc y fpga es 1 se aplica la primera config y analogamente con la segunda
 wire [15:0] pixel = ((grilla_cnt >= 0 && grilla_cnt <= 30) || 
@@ -184,17 +187,17 @@ always@(posedge clk or negedge resetn) begin
 
 		case (init_state)
 
-			INIT_RESET : begin
+			INIT_RESET : begin //Estado que genera una espera de 100ms mientras rst
 				if (clk_cnt == CNT_100MS) begin
 					clk_cnt <= 0;
 					init_state <= INIT_PREPARE;
 					lcd_reset_r <= 1;
 				end else begin
-					clk_cnt <= clk_cnt + 1;
+					clk_cnt <= clk_cnt + 1; //Va contando ciclos de reloj
 				end
 			end
 
-			INIT_PREPARE : begin
+			INIT_PREPARE : begin //Genera una espera de 200ms despues de rst
 				if (clk_cnt == CNT_200MS) begin
 					clk_cnt <= 0;
 					init_state <= INIT_WAKEUP;
@@ -256,7 +259,7 @@ always@(posedge clk or negedge resetn) begin
 				end
 			end
 
-			INIT_DONE : begin
+			INIT_DONE : begin 
 				if (pixel_cnt == 32400) begin
 					; // stop
 				end else begin
