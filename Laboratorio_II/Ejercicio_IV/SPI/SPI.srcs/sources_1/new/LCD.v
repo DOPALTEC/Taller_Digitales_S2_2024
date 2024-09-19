@@ -12,7 +12,7 @@
 `timescale 1ps/1ps
 
 module LCD(
-	input clk, // 27M
+	input clk, // Reloj Interno de la FPGA TangNano 9k es de 27MHz
 	input resetn,
 
 	output ser_tx,
@@ -28,11 +28,47 @@ module LCD(
 
 );
 
+
+
+//INSTANCIACION DE MODULOS
+
+
+wire [15:0] prescale;
+assign prescale = 16'd351;  // Configuración de prescaler para tasa de baudios
+//Asumiendo la frecuencia de reloj de 27MHz
+
+reg [7:0] color_config; //Valor almacenado recibido desde PC. Es un input
+
+reg rx_ctrl;
+
+wire rx_listo;
+
+uart #(
+    .DATA_WIDTH(8)
+) uart_pc(
+    .clk(clk), //Pin 52 en la Tang
+    .rst(resetn), //Pin 4 en la Tang
+    .s_axis_tdata(),
+    .s_axis_tvalid(),
+    .s_axis_tready(),
+    .m_axis_tdata(color_config), //Valor recibido desde la PC mediante rx
+    .m_axis_tvalid(rx_listo), //Indica que es valido recibir datos, cuando esta 
+    //senial esta en alto se puede activar m_axis_tready
+    .m_axis_tready(rx_ctrl), //Bit de control para aceptar lo que se recibe de PC
+    //SE DEBE APAGAR CUANDO NO SE QUIEREN RECIBIR
+    .rxd(ser_rx), //pin 18 en la Tang
+    .txd(ser_tx), //pin 17 en la Tang
+    .tx_busy(),
+    .rx_busy(),
+    .rx_overrun_error(),
+    .rx_frame_error(),
+    .prescale(prescale)
+);
+
 localparam MAX_CMDS = 69;
 
 wire [8:0] init_cmd[MAX_CMDS:0];
 
-reg [7:0] color_config; //Valor almacenado recibido desde PC. Es un input
 
 //Configuracion para tener el panel lcd listo para mostrar las lineas
 //Primeros 8 bits se envian por spi
@@ -183,6 +219,10 @@ always@(posedge clk or negedge resetn) begin
 
 		pixel_cnt <= 0;
 		grilla_cnt<=0;
+		
+		//Para UART
+		color_config<=0; //Inicializa el byte proveniente de PC que indica config de color
+		rx_ctrl<=0; //Inicializa el pulso que permite que se reciba desde la PC
 	end else begin
 
 		case (init_state)
