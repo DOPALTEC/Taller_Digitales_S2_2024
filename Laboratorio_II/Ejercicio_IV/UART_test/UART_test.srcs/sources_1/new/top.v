@@ -1,24 +1,4 @@
 `timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 20.09.2024 07:32:58
-// Design Name: 
-// Module Name: top
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
-
 
 module top(
     input clk, // Reloj Interno de la FPGA TangNano 9k es de 27MHz
@@ -44,9 +24,9 @@ assign prescale = 16'd351;
 // Asignación continua o dentro de un bloque always
 always @(posedge clk or negedge resetn) begin
     if (!resetn) begin
-        rx_ctrl <= 1'b0;  // Valor de reset por defecto
+        rx_ctrl <= 1'b1;  // Valor de reset por defecto
     end else begin
-        rx_ctrl <= 1'b1;  // Se activa rx_ctrl en funcionamiento normal
+        rx_ctrl <= 1'b0;  // Se activa rx_ctrl en funcionamiento normal
     end
 end
 
