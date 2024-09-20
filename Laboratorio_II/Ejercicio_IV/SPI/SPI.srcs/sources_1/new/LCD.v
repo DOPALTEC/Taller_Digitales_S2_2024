@@ -22,9 +22,11 @@ module LCD(
 	output lcd_clk,
 	output lcd_cs, //Senial de chip select correspondiente al LCD
 	output lcd_rs,
-	output lcd_data //Transmision de FPGA a LCD
+	output lcd_data, //Transmision de FPGA a LCD
 	
 	//Senial recibida de la computadora
+	//Senial de prueba LED de el numero de colores
+	output [3:0] led
 
 );
 
@@ -38,6 +40,8 @@ assign prescale = 16'd351;  // Configuración de prescaler para tasa de baudios
 //Asumiendo la frecuencia de reloj de 27MHz
 
 reg [7:0] color_config; //Valor almacenado recibido desde PC. Es un input
+
+//led=color_config[3:0];
 
 reg rx_ctrl;
 
@@ -65,6 +69,8 @@ uart #(
     .rx_frame_error(),
     .prescale(prescale)
 );
+
+assign led = color_config[3:0];
 
 localparam MAX_CMDS = 69;
 
@@ -213,6 +219,8 @@ wire [15:0] pixel_2 = ((grilla_cnt >= 0 && grilla_cnt <= 30) ||
 
 reg [7:0] config_actual; //Almacena el valor de color_config y lo compara por si cambia
 
+
+
 always@(posedge clk or negedge resetn) begin
 	if (~resetn) begin
 		clk_cnt <= 0;
@@ -238,6 +246,7 @@ always@(posedge clk or negedge resetn) begin
 			INIT_RESET : begin //Estado que genera una espera de 100ms mientras rst del envio 
 			//Para al LCD
 				//if ((clk_cnt == CNT_100MS) && rx_listo) begin //Si se ha terminado el ciclo y hay un dato a recibir para al siguiente estado
+				rx_ctrl<=1;
 				if ((clk_cnt == CNT_100MS) && rx_listo) begin
 					clk_cnt <= 0;
 					init_state <= INIT_PREPARE;
@@ -245,12 +254,12 @@ always@(posedge clk or negedge resetn) begin
 				end else begin
 				    if (rx_listo) begin //Si hay un dato a recibir inicia la recepcion
 				        //Si hay datos a recibir
-				        rx_ctrl<=1; //Activa la recepcion de datos
+				        //rx_ctrl<=1; //Activa la recepcion de datos
 				        clk_cnt <= clk_cnt + 1; //Va contando ciclos de reloj
 				    end
 				    else begin //Si aun no se recibe un dato, mantiene el contador de reloj igual
 				        clk_cnt <= clk_cnt; //Va contando ciclos de reloj
-				        rx_ctrl<=1; //Linea de activacion para todo momento BORRAR AL IDENTIFICAR ERROR 
+				        //rx_ctrl<=1; //Linea de activacion para todo momento BORRAR AL IDENTIFICAR ERROR 
 				    end
 				end
 			end
