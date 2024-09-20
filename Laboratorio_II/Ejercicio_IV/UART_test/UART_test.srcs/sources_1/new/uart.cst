@@ -1,0 +1,20 @@
+IO_LOC  "resetn" 3;
+
+IO_LOC  "ser_tx" 17;
+IO_PORT "ser_tx" IO_TYPE=LVCMOS33;
+
+IO_LOC  "ser_rx" 18;
+IO_PORT "ser_rx" IO_TYPE=LVCMOS33;
+
+IO_LOC  "rx_listo" 15;
+
+IO_LOC  "led[3]" 14;
+
+IO_LOC  "clk" 52;
+IO_PORT "clk" PULL_MODE=UP;
+
+IO_LOC  "led[0]" 10;
+
+IO_LOC  "led[1]" 11;
+
+IO_LOC  "led[2]" 13;
