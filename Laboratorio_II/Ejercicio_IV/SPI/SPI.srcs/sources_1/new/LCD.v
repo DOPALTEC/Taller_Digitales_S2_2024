@@ -2,13 +2,13 @@
 
 //PAG 53 SERIAL INTERFACE: Hoja de Datos de ST7789
     //Interfaz de 3 lineas es la utilizada para el Controlador ST7789
-        //DCX: Señal de Reloj
+        //DCX: Seï¿½al de Reloj
         //SDA: Entrada de Datos al Controlador del LCD
         //CSX: Chip Select. Puede ser un parametro que solo valga 1 siempre
         //SDO: Salida de datos del controlador del LCD
 //PAG 153 Comandos
-    //Muestra unas tablas que indican que si se envía un byte con ese codigo se realiza una determinada operacion
-    //Se acceden al activar ciertos valores en 3 señales (D/CX) (WRX) (RDX)
+    //Muestra unas tablas que indican que si se envï¿½a un byte con ese codigo se realiza una determinada operacion
+    //Se acceden al activar ciertos valores en 3 seï¿½ales (D/CX) (WRX) (RDX)
 `timescale 1ps/1ps
 
 module LCD(
@@ -36,7 +36,7 @@ module LCD(
 
 
 wire [15:0] prescale;
-assign prescale = 16'd351;  // Configuración de prescaler para tasa de baudios
+assign prescale = 16'd351;  // Configuraciï¿½n de prescaler para tasa de baudios
 //Asumiendo la frecuencia de reloj de 27MHz
 
 reg [7:0] color_config; //Valor almacenado recibido desde PC. Es un input
@@ -46,7 +46,7 @@ reg [7:0] color_config; //Valor almacenado recibido desde PC. Es un input
 reg rx_ctrl;
 
 wire rx_listo;
-wire rx_busy; //Indica que se está realizando la transmision a la fpga desde pc
+wire rx_busy; //Indica que se estï¿½ realizando la transmision a la fpga desde pc
 
 uart #(
     .DATA_WIDTH(8)
@@ -198,12 +198,12 @@ assign lcd_cs     = lcd_cs_r;
 assign lcd_rs     = lcd_rs_r;
 assign lcd_data   = spi_data[7]; // MSB
 
-// Definición de colores como wire
+// Definiciï¿½n de colores como wire
 wire [15:0] rojo   = 16'hF800; 
 wire [15:0] azul  = 16'h001F; 
 wire [15:0] verde = 16'h07E0; 
 
-//Se debe hacer máquina de estados que revise cada ciclo de reloj si se cambia la configuracion de colores
+//Se debe hacer mï¿½quina de estados que revise cada ciclo de reloj si se cambia la configuracion de colores
 //si lo que se recibe en el receptor de la comunicacion spi entre pc y fpga es 1 se aplica la primera config y analogamente con la segunda
 wire [15:0] pixel_1 = ((grilla_cnt >= 0 && grilla_cnt <= 30) || 
                      (grilla_cnt > 60 && grilla_cnt <= 90) || 
@@ -247,25 +247,26 @@ always@(posedge clk or negedge resetn) begin
 			//Para al LCD
 				//if ((clk_cnt == CNT_100MS) && rx_listo) begin //Si se ha terminado el ciclo y hay un dato a recibir para al siguiente estado
 				rx_ctrl<=1;
-				if ((clk_cnt == CNT_100MS) && rx_listo) begin
+				if ((clk_cnt == CNT_100MS)) begin
 					clk_cnt <= 0;
 					init_state <= INIT_PREPARE;
 					lcd_reset_r <= 1;
 				end else begin
-				    if (rx_listo) begin //Si hay un dato a recibir inicia la recepcion
+					clk_cnt <= clk_cnt + 1; //Va contando ciclos de reloj
+				    //if (rx_listo) begin //Si hay un dato a recibir inicia la recepcion
 				        //Si hay datos a recibir
 				        //rx_ctrl<=1; //Activa la recepcion de datos
-				        clk_cnt <= clk_cnt + 1; //Va contando ciclos de reloj
-				    end
-				    else begin //Si aun no se recibe un dato, mantiene el contador de reloj igual
-				        clk_cnt <= clk_cnt; //Va contando ciclos de reloj
+				        //clk_cnt <= clk_cnt + 1; //Va contando ciclos de reloj
+				    //end
+				    //else begin //Si aun no se recibe un dato, mantiene el contador de reloj igual
+				        //clk_cnt <= clk_cnt; //Va contando ciclos de reloj
 				        //rx_ctrl<=1; //Linea de activacion para todo momento BORRAR AL IDENTIFICAR ERROR 
-				    end
+				    //end
 				end
 			end
 
 			INIT_PREPARE : begin //Genera una espera de 200ms despues de rst
-			//Aprox la recepción de datos es de 1.04ms
+			//Aprox la recepciï¿½n de datos es de 1.04ms
 				if (clk_cnt == CNT_200MS) begin
 					clk_cnt <= 0;
 					init_state <= INIT_WAKEUP;
