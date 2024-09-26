@@ -11,7 +11,7 @@ module debounce(
     reg [1:0] button_stable = 2'b00;    // Reg para almacenar el estado estable
     
     // contador 
-    always @(posedge clk or negedge reset) begin
+    always @(posedge clk) begin
         if (!reset) begin
             counter <= 0;
             button_stable <= 2'b00;  // Inicializar en 0
@@ -27,7 +27,7 @@ module debounce(
             end
         end
     end
-    always @(posedge clk or negedge reset) begin
+    always @(posedge clk) begin
         if (!reset) begin
             debounced_out <= 0;
         end else begin
