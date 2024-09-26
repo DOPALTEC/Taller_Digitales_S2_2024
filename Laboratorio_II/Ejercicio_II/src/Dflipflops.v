@@ -15,7 +15,7 @@ module output_register (
     reg ff1, ff2, ff3, ff4;
 
     // Proceso sincronizado con el reloj
-    always @(posedge clk or posedge reset) begin
+    always @(posedge clk) begin
         if (!reset) begin
             // Resetear todos los flip-flops
             ff1 <= 1'b0;
