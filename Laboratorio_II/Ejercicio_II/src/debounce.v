@@ -1,4 +1,3 @@
-
 `timescale 1ns / 1ps
 module debounce(
     input clk,
@@ -7,16 +6,7 @@ module debounce(
     output reg [1:0] debounced_out
 );
 
-reg [7:0] shift_reg;
-    parameter  DEBOUNCE_THRESHOLD = 1;  // debounce delay
-
-always @(posedge clk) begin
-    shift_reg <= {shift_reg[6:0], key_in};
-    if (shift_reg == 8'b11111111)
-        key_out <= 1'b1;
-    else if (shift_reg == 8'b00000000)
-        key_out <= 1'b0;
-end
+    parameter  DEBOUNCE_THRESHOLD = 1000;  // debounce delay
     reg [19:0] counter;  
     reg [1:0] button_stable = 2'b00;    // Reg para almacenar el estado estable
     
