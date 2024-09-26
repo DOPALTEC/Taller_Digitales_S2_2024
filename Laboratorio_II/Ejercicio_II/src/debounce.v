@@ -1,7 +1,4 @@
-module debouncer (
-    input wire clk,
-    input wire key_in,
-    output reg key_out
+
 `timescale 1ns / 1ps
 module debounce(
     input clk,

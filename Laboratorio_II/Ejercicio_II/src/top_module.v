@@ -3,7 +3,6 @@
 module top (
     input wire clk_in,           // Reloj de entrada
     input wire reset,            // Señal de reset
-    input wire [3:0] external_in, // Entrada externa para el codificador
     input wire [1:0] external_in, // Entrada externa para el codificador (salida del codificador)
     output wire hex_out1,    // Salida combinada del registro de salida
     output wire hex_out2,
@@ -23,7 +22,7 @@ module top (
     //wire [1:0] encoder_out;      // Salida del codificador (4 a 2)
 
     // Divisor de reloj
-    clock_divider clk_div_inst (
+   // clock_divider clk_div_inst (
     /*clock_divider clk_div_inst (
         .clk_in(clk_in),
         .reset(reset),
@@ -55,7 +54,7 @@ module top (
     );
 
     // Decodificador (de 2 a 4 bits)
-    decoder_2to4 decoder_inst (
+    //decoder_2to4 decoder_inst (
     /*decoder_2to4 decoder_inst (
         .in(counter_out),
         .out(decoder_out)
@@ -72,7 +71,6 @@ module top (
         .clk(clk_in),
         .reset(reset),
         .counter_input(counter_out),
-        .encoder_output(encoder_out),
         .encoder_output(external_in),
         .hex_out1(hex_out1),
         .hex_out2(hex_out2),
