@@ -5,14 +5,12 @@ module contador(
     input en,           // Señal de habilitación (enable)
     output reg [1:0] q
 );
-
-    always @(posedge clk or negedge reset) begin
+    always @(posedge clk ) begin
         if (!reset) begin
-            q <= 8'd0;     // Resetear el contador a 0
+            q <= 2'b00;     // Resetear el contador a 0
         end
-        else begin if (en) begin
+        else if (en) begin
             q <= q + 1'b1; // Incrementar el contador si el enable está activo
-            end
         end
         
         // Si 'en' está en bajo, q mantiene su valor actual
