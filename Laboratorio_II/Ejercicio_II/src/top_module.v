@@ -12,12 +12,11 @@ module top (
 );
 
     // Señales internas
-    wire clk_div;                // Salida del divisor de reloj
     //wire clk_div;                // Salida del divisor de reloj
     wire [1:0] debounced_signal; // Salida del debouncer
     wire sync_signal;            // Salida del sincronizador
-    wire [3:0] decoder_out;      // Salida del decodificador (2 a 4)
-    wire [1:0] encoder_out;      // Salida del codificador (4 a 2)
+    //wire [3:0] decoder_out;      // Salida del decodificador (2 a 4)
+    //wire [1:0] encoder_out;      // Salida del codificador (4 a 2)
     //wire [3:0] decoder_out;      // Salida del decodificador (2 a 4)
     //wire [1:0] encoder_out;      // Salida del codificador (4 a 2)
 
