@@ -11,7 +11,7 @@ module debounce(
     localparam DEBOUNCE_DELAY = 54000;  // 2 ms a 27 MHz
     
     // Contador para medir la estabilidad de la señal del botón
-    reg [15:0] counter;  
+    reg [1:0] counter;  
     
     // Señal interna que almacena el valor estable del botón
     reg button_stable;
