@@ -1,5 +1,3 @@
-`timescale 1ns / 1ps
-
 module top (
     input wire clk_in,           // Reloj de entrada
     input wire reset,            // Señal de reset
@@ -7,14 +5,10 @@ module top (
     output wire hex_out1,    // Salida combinada del registro de salida
     output wire hex_out2,
     output wire hex_out3,
-    output wire hex_out4,
-    output wire [1:0] counter_out
-);
 
-    // Señales internas
     //wire clk_div;                // Salida del divisor de reloj
-    wire debounced_signal; // Salida del debouncer
-    //wire sync_signal;            // Salida del sincronizador
+    wire [1:0] debounced_signal; // Salida del debouncer
+    wire sync_signal;            // Salida del sincronizador
     //wire [3:0] decoder_out;      // Salida del decodificador (2 a 4)
     //wire [1:0] encoder_out;      // Salida del codificador (4 a 2)
 
@@ -27,25 +21,6 @@ module top (
 
     // Debouncer
     debounce debounce_inst (
-        .clk(clk_in),
-        .reset(reset),
-        .button(encoder_out),
-        .debounced_out(debounced_signal)
-    );
-
-    // Sincronizador
-    /*sync sync_inst (
-        .clk(clk_in),
-        .async_in(debounced_signal),
-        .sync_out(sync_signal)
-    );*/
-
-    // Contador (habilitado por el sincronizador)
-    contador counter_inst (
-        .clk(clk_in),
-        .reset(reset),
-        .en(debounced_signal),
-        .q(counter_out)
     );
 
     // Decodificador (de 2 a 4 bits)
@@ -53,8 +28,6 @@ module top (
         .in(counter_out),
         .out(decoder_out)
     );
-
-    // Codificador (de 4 a 2 bits)
     encoder_4to2 encoder_inst (
         .in2(external_in),
         .out2(encoder_out)
@@ -73,4 +46,3 @@ module top (
     );
 
 endmodule
-
