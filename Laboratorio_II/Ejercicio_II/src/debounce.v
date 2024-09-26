@@ -3,7 +3,7 @@
 module debounce(
     input clk,             // Señal de reloj
     input reset,           // Señal de reset activa en bajo
-    input button_in,       // Señal de entrada del botón
+    input [1:0] button_in,       // Señal de entrada del botón
     output reg debounced_out // Señal de salida sin rebotes
 );
 
@@ -28,7 +28,7 @@ module debounce(
             // Compara la señal de entrada con la señal estable
             if (button_in != button_stable) begin
                 if (counter >= DEBOUNCE_DELAY) begin
-                    button_stable <= button_in;  // Actualiza la señal estable cuando se alcanza el tiempo de debounce
+                    button_stable <= button_in[0] | button_in[1];  // Actualiza la señal estable cuando se alcanza el tiempo de debounce
                     counter <= 16'b0;            // Reinicia el contador
                 end else begin
                     counter <= counter + 1;      // Incrementa el contador
