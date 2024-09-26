@@ -10,8 +10,9 @@ module contador(
         if (!reset) begin
             q <= 8'd0;     // Resetear el contador a 0
         end
-        else if (en) begin
+        else begin if (en) begin
             q <= q + 1'b1; // Incrementar el contador si el enable está activo
+            end
         end
         
         // Si 'en' está en bajo, q mantiene su valor actual
