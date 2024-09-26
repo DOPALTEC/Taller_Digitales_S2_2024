@@ -6,7 +6,7 @@ module contador(
     output reg [7:0] q
 );
 
-    always @(posedge clk ) begin
+    always @(posedge clk or negedge reset) begin
         if (!reset) begin
             q <= 8'd0;     // Resetear el contador a 0
         end
