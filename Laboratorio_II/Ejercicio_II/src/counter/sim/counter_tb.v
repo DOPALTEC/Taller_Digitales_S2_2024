@@ -4,8 +4,8 @@ module counter_tb;
 
     reg clk;
     reg reset;
-    reg enable;  // Señal de habilitación para el contador
-    wire [7:0] count;  // Salida del contador
+    reg enable; 
+    wire [1:0] count;  
 
     // Instancia del módulo counter
     counter uut (
@@ -15,7 +15,6 @@ module counter_tb;
         .count(count)
     );
 
-    // Generador de reloj (clock)
     always begin
         #5 clk = ~clk;  
     end
@@ -26,10 +25,11 @@ module counter_tb;
         clk = 0;
         reset = 0;
         enable = 0; 
+
         #10 reset = 1;  
         #10 enable = 1;  
         #30;  
-        #10 enable = 0;  
+        #10 enable = 0; 
         #80;
         #10 enable = 1; 
         #300;  
