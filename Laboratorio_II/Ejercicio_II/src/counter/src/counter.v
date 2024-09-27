@@ -4,7 +4,7 @@ module counter (
     input clk,
     input reset,
     input enable,  // Enable signal from debounce
-    output reg [7:0] count  // Salida del contador
+    output reg [2:0] count  // Salida del contador
 );
 
     // Registro para almacenar el estado de enable
@@ -12,7 +12,7 @@ module counter (
 
     always @(posedge clk) begin
         if (!reset) begin
-            count <= 8'd0;  // Reinicia el contador
+            count <= 2'b00;  // Reinicia el contador
             enable_latch <= 1'b0;  // Reinicia el latch de enable
         end else if (enable) begin
             enable_latch <= 1'b1;  // Activa el latch cuando enable es 1
@@ -24,7 +24,7 @@ module counter (
     // Incrementar el contador si el latch no está activado
     always @(posedge clk) begin
         if (!reset) begin
-            count <= 8'd0;  // Reinicia el contador
+            count <= 2'b0;  // Reinicia el contador
         end else if (!enable_latch) begin
             count <= count + 1'b1;  // Incrementa el contador
         end
