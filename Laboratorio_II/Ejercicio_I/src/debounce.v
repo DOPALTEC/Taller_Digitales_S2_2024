@@ -1,54 +1,69 @@
 `timescale 1ns / 1ps
 
-module debounce(
-    input clk,             // Señal de reloj
-    input reset,           // Señal de reset activa en bajo
-    input button_in,       // Señal de entrada del botón
-    output reg debounced_out // Señal de salida sin rebotes
+module debounce (
+    input clk,
+    input reset,
+    input key,  
+    output debounced_out         
 );
 
-    // Parámetro para el tiempo de debounce, ajustado para un reloj de 27 MHz
-    localparam DEBOUNCE_DELAY = 54000;  // 2 ms a 27 MHz
+    reg key_rst;
+    reg key_rst_r;
+    reg low_sw;
+    reg low_sw_r;
+    reg [7:0] cnt;  // Usamos 8 bits para contar hasta 200
     
-    // Contador para medir la estabilidad de la señal del botón
-    reg [15:0] counter;  
-    
-    // Señal interna que almacena el valor estable del botón
-    reg button_stable;
-    
-    // Flip-flop de sincronización para la señal de salida
-    reg sync_ff;
-
-    // Proceso para detectar y filtrar los rebotes
-    always @(posedge clk or negedge reset) begin
+    // Flip-flop para almacenar el estado de la tecla
+    always @(posedge clk) begin
         if (!reset) begin
-            counter <= 16'b0;          // Reinicia el contador en caso de reset
-            button_stable <= 1'b0;     // Reinicia la señal estable
+            key_rst <= 1'b1;
         end else begin
-            // Compara la señal de entrada con la señal estable
-            if (button_in != button_stable) begin
-                if (counter >= DEBOUNCE_DELAY) begin
-                    button_stable <= button_in;  // Actualiza la señal estable cuando se alcanza el tiempo de debounce
-                    counter <= 16'b0;            // Reinicia el contador
-                end else begin
-                    counter <= counter + 1;      // Incrementa el contador
-                end
-            end else begin
-                counter <= 16'b0;                // Reinicia el contador si no hay cambio en button_in
-            end
+            key_rst <= key;
         end
     end
-
-    // Sincronización de la señal debounced con el reloj
-    always @(posedge clk or negedge reset) begin
+    
+    always @(posedge clk) begin
         if (!reset) begin
-            sync_ff <= 1'b0;          // Reinicia el flip-flop de sincronización
-            debounced_out <= 1'b0;    // Reinicia la señal de salida
+            key_rst_r <= 1'b1;
         end else begin
-            sync_ff <= button_stable;   // Captura la señal estable en el flip-flop
-            debounced_out <= sync_ff;   // Actualiza la salida con la señal sincronizada
+            key_rst_r <= key_rst;
         end
     end
+    
+    // Señal para reiniciar el contador cuando hay un cambio en el key
+    wire cnt_rst = (~key_rst_r) & key_rst;
+
+    // Contador
+    always @(posedge clk) begin
+        if (!reset) begin
+            cnt <= 8'd0;  // Reinicio del contador
+        end else if (cnt_rst) begin
+            cnt <= 8'd0;  // Reinicia si hay un cambio en la tecla
+        end else if (cnt < 8'd200) begin  // Solo incrementa hasta 200
+            cnt <= cnt + 1'b1;  // Incrementa el contador
+        end
+    end
+    
+    // Lógica para actualizar low_sw cuando el contador alcanza 200
+    always @(posedge clk) begin
+        if (!reset) begin
+            low_sw <= 1'b0;
+        end else if (cnt == 8'd200) begin  // Cuando el contador alcanza 200
+            low_sw <= key;
+        end
+    end
+    
+    // Registro para la salida retrasada de low_sw
+    always @(posedge clk) begin
+        if (!reset) begin
+            low_sw_r <= 1'b0;
+        end else begin
+            low_sw_r <= low_sw;
+        end
+    end
+    
+    // Salida debounced
+    assign debounced_out = (~low_sw_r) & low_sw;  // Activa cuando hay un cambio en low_sw
 
 endmodule
 
