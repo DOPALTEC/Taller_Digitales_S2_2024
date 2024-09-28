@@ -1,80 +1,47 @@
 `timescale 1ns / 1ps
 
-module top (
-    input wire clk_in,           // Reloj de entrada
-    input wire reset,            // Señal de reset
-    input wire [1:0] external_in, // Entrada externa para el codificador (salida del codificador)
-    output wire hex_out1,    // Salida combinada del registro de salida
-    output wire hex_out2,
-    output wire hex_out3,
-    output wire hex_out4,
-    output wire [1:0] counter_out
+module top_module (
+    input clk,                     // Reloj global
+    input reset,                   // Señal de reset
+    input [1:0] fila,              // Entrada de 2 bits (también usada como external_in)
+    output reg [1:0] count,            // Salida del contador
+    output [3:0] Q                 // Salida del sincronizador
 );
 
-    // Señales internas
-    //wire clk_div;                // Salida del divisor de reloj
-    wire [1:0] debounced_signal; // Salida del debouncer
-    wire sync_signal;            // Salida del sincronizador
-    //wire [3:0] decoder_out;      // Salida del decodificador (2 a 4)
-    //wire [1:0] encoder_out;      // Salida del codificador (4 a 2)
-    //wire [3:0] decoder_out;      // Salida del decodificador (2 a 4)
-    //wire [1:0] encoder_out;      // Salida del codificador (4 a 2)
+    wire key_out;                 // Salida del módulo key_detect
+    wire debounced_out;           // Salida del módulo debounce
 
-    // Divisor de reloj
-   // clock_divider clk_div_inst (
-    /*clock_divider clk_div_inst (
-        .clk_in(clk_in),
-        .reset(reset),
-        .clk_out(clk_div)
+    // Instancia del módulo key_detect
+    key_detect key_detect_inst (
+        .clk(clk), 
+        .reset(reset), 
+        .fila(fila), 
+        .key_out(key_out)          // Salida de detección de la tecla
     );
-    );*/
 
-    // Debouncer
+    // Instancia del módulo debounce
     debounce debounce_inst (
-        .clk(clk_in),
-        .reset(reset),
-        .button(encoder_out),
-        .debounced_out(debounced_signal)
+        .clk(clk), 
+        .reset(reset), 
+        .key(key_out),             // La salida de key_detect es la entrada del debounce
+        .debounced_out(debounced_out)  // La salida del debounce
     );
 
-    // Sincronizador
-    sync sync_inst (
-        .clk(clk_in),
-        .async_in(debounced_signal),
-        .sync_out(sync_signal)
+    // Instancia del módulo counter
+    counter counter_inst (
+        .clk(clk), 
+        .reset(reset), 
+        .enable(debounced_out),    // El enable del contador es la salida del debounce
+        .count(count)               // La salida del contador
     );
 
-    // Contador (habilitado por el sincronizador)
-    contador counter_inst (
-        .clk(clk_in),
-        .reset(reset),
-        .en(sync_signal),
-        .q(counter_out)
-    );
-
-    // Decodificador (de 2 a 4 bits)
-    //decoder_2to4 decoder_inst (
-    /*decoder_2to4 decoder_inst (
-        .in(counter_out),
-        .out(decoder_out)
-    );
-    // Codificador (de 4 a 2 bits)
-    encoder_4to2 encoder_inst (
-        .in2(external_in),
-        .out2(encoder_out)
-    );
-    );*/
-
-    // Registro de salida (almacena entradas de decodificador y codificador)
-    output_register output_reg_inst (
-        .clk(clk_in),
-        .reset(reset),
-        .counter_input(counter_out),
-        .encoder_output(external_in),
-        .hex_out1(hex_out1),
-        .hex_out2(hex_out2),
-        .hex_out3(hex_out3),
-        .hex_out4(hex_out4)
+    // Instancia del módulo sincronizador
+    sincronizador sincronizador_inst (
+        .external_in(fila),        // Usa fila como entrada externa
+        .counter_out(count),       // Salida del contador
+        .clk(clk), 
+        .rst(reset), 
+        .Q(Q)                      // Salida del sincronizador
     );
 
 endmodule
