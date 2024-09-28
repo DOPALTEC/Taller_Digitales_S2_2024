@@ -1,32 +1,60 @@
 `timescale 1ns / 1ps
 
-module counter (
+module debounce (
     input clk,
     input reset,
-    input enable,  // Enable signal from debounce
-    output reg [7:0] count  // Salida del contador
+    input key,  
+    output reg debounced_out         
 );
 
-    // Registro para almacenar el estado de enable
-    reg enable_latch;
+    reg key_rst;
 
+    // Registro para capturar el estado de 'key'
     always @(posedge clk) begin
         if (!reset) begin
-            count <= 8'd0;  // Reinicia el contador
-            enable_latch <= 1'b0;  // Reinicia el latch de enable
-        end else if (enable) begin
-            enable_latch <= 1'b1;  // Activa el latch cuando enable es 1
-        end else if (!enable && enable_latch) begin
-            enable_latch <= 1'b0;  // Desactiva el latch cuando enable vuelve a 0
+            key_rst <= 1'b1;
+        end else begin
+            key_rst <= key;
         end
     end
-
-    // Incrementar el contador si el latch no está activado
+        
+    reg key_rst_r;
+    
+    // Registro para capturar el estado anterior de 'key'
     always @(posedge clk) begin
         if (!reset) begin
-            count <= 8'd0;  // Reinicia el contador
-        end else if (!enable_latch) begin
-            count <= count + 1'b1;  // Incrementa el contador
+            key_rst_r <= 1'b1;
+        end else begin
+            key_rst_r <= key_rst;
+        end
+    end
+    
+    // Señal para reiniciar el contador cuando hay un cambio en el estado de 'key'
+    wire cnt_rst = (key_rst_r != key_rst);
+    
+    reg [16:0] cnt; 
+
+    // Contador para medir el tiempo que la señal 'key' ha estado estable
+    always @(posedge clk) begin
+        if (!reset) begin
+            cnt <= 17'd0;
+        end else if (cnt_rst) begin
+            cnt <= 17'd0;  // Reinicia el contador si hay un cambio en 'key'
+        end else if (cnt < 17'd100000 && key_rst == 1'b1) begin  // Tiempo de debounce 
+            cnt <= cnt + 1'b1;
+        end else begin
+            cnt <= 17'd0;
+        end
+    end
+    
+    // Lógica para activar y desactivar 'debounced_out'
+    always @(posedge clk) begin
+        if (!reset) begin
+            debounced_out <= 1'b0;  // Reinicia la salida
+        end else if (cnt == 17'd100000 && key == 1'b1) begin  
+            debounced_out <= 1'b1;  // Activa después de que 'key' esté estable por el tiempo suficiente
+        end else if (key == 1'b0) begin
+            debounced_out <= 1'b0;  // Desactiva cuando 'key' se desactiva
         end
     end
 
