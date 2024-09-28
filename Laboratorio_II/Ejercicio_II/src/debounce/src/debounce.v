@@ -9,7 +9,7 @@ module debounce (
 
     reg key_rst;
     reg key_rst_r;
-    reg [19:0] cnt;  
+    reg [16:0] cnt;  
     
     // Flip-flop para almacenar el estado de la tecla
     always @(posedge clk) begin
@@ -34,19 +34,19 @@ module debounce (
     // Contador
     always @(posedge clk) begin
         if (!reset) begin
-            cnt <= 20'd0;  // Reinicio del contador
+            cnt <= 17'd0;  // Reinicio del contador
         end else if (cnt_rst) begin
-            cnt <= 20'd0;  // Reinicia si hay un cambio en la tecla
-        end else if (cnt < 20'd1000000) begin  
+            cnt <= 17'd0;  // Reinicia si hay un cambio en la tecla
+        end else if (cnt < 17'd100000) begin 
             cnt <= cnt + 1'b1;  // Incrementa el contador
         end    
     // Lógica para activar debounced_out
         if (!reset) begin
             debounced_out <= 1'b0;  // Reinicia la salida
-        end else if (cnt == 20'd1000000) begin  
-            debounced_out <= 1'b1;;  // Se activa después de estabilizarse
+        end else if (cnt == 17'd100000) begin  
+            debounced_out <= 1'b1;  // Activa debounced_out
         end else begin
-            debounced_out <= 1'b0;  // Reinicia debounced_out si hay un cambio
+            debounced_out <= 1'b0;
         end
     end
 
