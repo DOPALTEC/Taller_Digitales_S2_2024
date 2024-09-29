@@ -4,7 +4,7 @@ module counter (
     input clk,
     input reset,
     input enable,  // Enable signal from debounce
-    output reg [2:0] count  // Salida del contador
+    output reg [1:0] count  // Salida del contador
 );
 
     // Registro para almacenar el estado de enable
