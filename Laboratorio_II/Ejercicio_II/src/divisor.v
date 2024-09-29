@@ -1,25 +1,21 @@
 module clock_divider (
-    input wire clk_in,
-    input wire reset,
-    output reg clk_out
+    input clk,
+    input reset,
+    output reg slow_clk
 );
+    reg [24:0] counter; // Aumenta el tamaño del contador para un divisor más lento
 
-parameter DIVIDER = 50; 
-reg [15:0] counter;
-
-always @(posedge clk_in or posedge reset) begin
-    if (!reset) begin
-        counter <= 16'd0;
-        clk_out <= 1'b0;
-    end else if (counter == DIVIDER - 1) begin
-        counter <= 16'd0;
-        clk_out <= ~clk_out;
-    end else begin
-        counter <= counter + 1'b1;
+    always @(posedge clk or posedge reset) begin
+        if (reset) begin
+            counter <= 25'b0;
+            slow_clk <= 1'b0;
+        end else begin
+            counter <= counter + 1;
+            slow_clk <= counter[24]; // Reduce la frecuencia original por un factor de 2^24
+        end
     end
-end
-
 endmodule
+
 
 
 
