@@ -1,63 +1,52 @@
-`timescale 1ns / 1ps
+`timescale 1ms / 100us
 
-module tb_debounce;
+module tb_key_debounce;
 
+    // Entradas
     reg clk;
-    reg reset;
-    reg key;
-    wire debounced_out;
+    reg rst_n;
+    reg key_in;
+    
+    // Salida
+    wire key_pressed;
+    
+    // Parámetro de debounce
+    parameter DEBOUNCE_TIME = 1000000;  
 
-    // Instancia del módulo debounce
-    debounce uut (
+    // Instanciar el módulo a probar
+    key_debounce #(.DEBOUNCE_TIME(DEBOUNCE_TIME)) uut (
         .clk(clk),
-        .reset(reset),
-        .key(key),
-        .debounced_out(debounced_out)
+        .rst_n(rst_n),
+        .key_in(key_in),
+        .key_pressed(key_pressed)
     );
+    
+    // Generar la señal de reloj
+    always #0.5 clk = ~clk; 
 
-    // Generación del reloj
     initial begin
+        // Inicializar las señales
         clk = 0;
-        forever #5 clk = ~clk;  
-    end
+        rst_n = 0;
+        key_in = 1;  
+        
+        // Monitorizar cambios
+        $monitor("Tiempo: %d ms, clk: %b, rst_n: %b, key_in: %b, key_pressed: %b", $time, clk, rst_n, key_in, key_pressed);
+        
+        // Activar reset
+        #1 rst_n = 1;  
+        
+        // Simular el rebote del botón
+        #2 key_in = 0;  // El botón se presiona (primer rebote)
+        #1 key_in = 1;  // Rebote
+        #1 key_in = 0;  // Rebote
+        #1 key_in = 1;  // Rebote
+        #1 key_in = 0;  // Finalmente, el botón está presionado
 
-    initial begin
-        // Inicialización
-        reset = 0;
-        key = 1;
-        #10;
-        reset = 1;  
-
-        // Prueba 1: Mantener key en 1
-        key = 1;
-        #200; 
-        // Prueba 2: Cambiar a 0 y mantener
-        key = 0;
-        #200; 
-        // Prueba 3: Cambiar a 1 y mantener
-        key = 1;
-        #200; 
-        // Prueba 4: Cambiar rápidamente
-        key = 0; 
-        #10;
-        key = 1;
-        #10;
-        key = 0;
-        #10;
-        key = 1;
-        #10;
-        key = 0; 
-        #10;
-        key = 1;
-        #10;
-        key = 0;
-        #10;
-        key = 1;
-        #200;
-
+        // Mantener el botón presionado por más tiempo que el tiempo de debounce
+        #((DEBOUNCE_TIME / 1000) + 2) key_in = 1;  // Después de un tiempo, el botón se suelta
+        
         // Finalizar la simulación
-        #50;
-        $finish;
+        #10 $finish;
     end
-
 endmodule
