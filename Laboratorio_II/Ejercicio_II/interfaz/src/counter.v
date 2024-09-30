@@ -2,8 +2,8 @@
 module counter_2bit (
     input wire clk,
     input wire rst_n,
-    input wire key_pressed,  
-    output reg [1:0] count
+    input wire key_pressed,  //Representa el enable
+    output reg [1:0] count   //Salida 
 );
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
