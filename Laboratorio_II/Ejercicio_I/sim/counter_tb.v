@@ -1,41 +1,45 @@
-`timescale 1ns / 1ps
+`timescale 1ms / 100us
 
-module counter_tb;
+module tb_counter_8bit;
 
+    // Entradas
     reg clk;
-    reg reset;
-    reg enable;  
-    wire [7:0] count;  
-
-    // Instancia del módulo counter
-    counter uut (
+    reg rst_n;
+    reg key_pressed;
+    
+    // Salida
+    wire [7:0] count;
+    
+    // Instanciar el módulo a probar
+    counter_8bit uut (
         .clk(clk),
-        .reset(reset),
-        .enable(enable),
+        .rst_n(rst_n),
+        .key_pressed(key_pressed),
         .count(count)
     );
-
-    // Generador de reloj (clock)
-    always begin
-        #5 clk = ~clk;  
-    end
-
-    // Simulación
+    
+    // Generar señal de reloj
+    always #0.5 clk = ~clk;  
+    
     initial begin
-        // Inicialización
+        // Inicialización de señales
         clk = 0;
-        reset = 0;
-        enable = 0;  
-      
-        #10 reset = 1;  
-        #10 enable = 1;  
-        #30;  
-        #10 enable = 0; 
-        #80;
-        #10 enable = 1; 
-        #300;  
-
+        rst_n = 0;
+        key_pressed = 1;  // Empieza como si el botón estuviera presionado
+        
+        // Monitorizar cambios
+        $monitor("Tiempo: %d ms, clk: %b, rst_n: %b, key_pressed: %b, count: %b", $time, clk, rst_n, key_pressed, count);
+        
+        #1 rst_n = 1; 
+        
+        #1 key_pressed = 0;  // No presionado, empieza el conteo
+        
+        #5 key_pressed = 1;  // Botón presionado, debe detener el conteo
+        
+        #5 key_pressed = 0;  // No presionado, vuelve a contar
+        
         // Finalizar la simulación
-        #10 $stop;
+        #10 $finish;
     end
 endmodule
+
