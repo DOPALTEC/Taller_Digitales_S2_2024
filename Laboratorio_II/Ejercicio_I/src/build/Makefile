@@ -5,26 +5,26 @@ DEVICE=GW1NR-LV9QN88PC6/I5
 # The path to the source files
 SRC_DIR = /Users/gabrielgonzalez/Taller_Digitales_S2_2024/Laboratorio_II/Ejercicio_I/src/top_module.v
 BUILD_DIR = /Users/gabrielgonzalez/Taller_Digitales_S2_2024/Laboratorio_II/Ejercicio_I/src/build
-CST_FILE = /Users/gabrielgonzalez/Taller_Digitales_S2_2024/Laboratorio_II/Ejercicio_I/cst/MUX_4_1.cst
+CST_FILE = /Users/gabrielgonzalez/Taller_Digitales_S2_2024/Laboratorio_II/Ejercicio_I/cst/top.cst
 
-all: $(BUILD_DIR)/TOP_Leds.fs
+all: $(BUILD_DIR)/Ejercicio_I.fs
 
 # Synthesis
 synth: $(SRC_DIR)
 	@mkdir -p $(BUILD_DIR)
-	yosys -p "read_verilog $(SRC_DIR) ; synth_gowin -top top -json $(BUILD_DIR)/MUX_4_1.json"
+	yosys -p "read_verilog $(SRC_DIR) ; synth_gowin -top top -json $(BUILD_DIR)/Ejercicio_I.json"
 
 # Place and Route
-pnr: $(BUILD_DIR)/MUX_4_1.json
-	nextpnr-gowin --json $(BUILD_DIR)/MUX_4_1.json --freq 27 --write $(BUILD_DIR)/TOP_Leds_pnr.json --device ${DEVICE} --family ${FAMILY} --cst ${CST_FILE}
+pnr: $(BUILD_DIR)/Ejercicio_I.json
+	nextpnr-gowin --json $(BUILD_DIR)/Ejercicio_I.json --freq 27 --write $(BUILD_DIR)/Ejercicio_I_pnr.json --device ${DEVICE} --family ${FAMILY} --cst ${CST_FILE}
 
 # Generate Bitstream
-fs: $(BUILD_DIR)/MUX_4_1_pnr.json
-	gowin_pack -d ${FAMILY} -o $(BUILD_DIR)/MUX_4_1.fs $(BUILD_DIR)/MUX_4_1_pnr.json
+fs: $(BUILD_DIR)/Ejercicio_I_pnr.json
+	gowin_pack -d ${FAMILY} -o $(BUILD_DIR)/Ejercicio_I.fs $(BUILD_DIR)/Ejercicio_I_pnr.json
 
 # Program Board
-load: $(BUILD_DIR)/MUX_4_1.fs
-	openFPGALoader -b ${BOARD} $(BUILD_DIR)/MUX_4_1.fs -f
+load: $(BUILD_DIR)/Ejercicio_I.fs
+	openFPGALoader -b ${BOARD} $(BUILD_DIR)/Ejercicio_I.fs -f
 
 .PHONY: load
-.INTERMEDIATE: $(BUILD_DIR)/MUX_4_1_pnr.json $(BUILD_DIR)/MUX_4_1.json
+.INTERMEDIATE: $(BUILD_DIR)/Ejercicio_I_pnr.json $(BUILD_DIR)/Ejercicio_I.json

@@ -1,6 +1,6 @@
 `timescale 1ms / 100us
 
-module top_module (
+module top (
     input wire clk,       // Reloj del sistema
     input wire rst_n,     // Señal de reset
     input wire key_in,    // Entrada del botón sin debouncing
