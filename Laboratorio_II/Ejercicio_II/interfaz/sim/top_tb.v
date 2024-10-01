@@ -11,7 +11,7 @@ module tb_top;
     wire [3:0] output_decoder;
     wire [1:0] count;       // Contador como salida
 
-    // Instantiate the Unit Under Test (UUT)
+    // Instanciar el top module
     top uut (
         .clk(clk),
         .rst_n(rst_n),
