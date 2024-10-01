@@ -28,7 +28,7 @@ module top_module (
 
 #### 4. Criterios de diseño
 Se solicita un diseño antirebotes que sincronice las entradas provenientes de pulsadores.
-[![Ejercicio1.png](https://i.postimg.cc/ZnbKkqnj/Ejercicio1.png)](https://postimg.cc/phStzRDn)
+[![Captura-de-pantalla-2024-09-30-235824.png](https://i.postimg.cc/4yWcqqf7/Captura-de-pantalla-2024-09-30-235824.png)](https://postimg.cc/H87j7S7d)
 
 El parámetro DEBOUNCE_TIME del módulo de debounce debe ajustarse en función de la frecuencia del reloj para asegurar que el tiempo de debounce sea adecuado para el botón físico.
 
@@ -89,7 +89,7 @@ Tabla de Salida
 
 Diagrama de Estados
 
-[![Diagrama-Estados-Contador.png](https://i.postimg.cc/25yKtNCv/Diagrama-Estados-Contador.png)](https://postimg.cc/1gxBgTn5)
+[![Captura-de-pantalla-2024-09-30-235944.png](https://i.postimg.cc/HkyJ9Vy7/Captura-de-pantalla-2024-09-30-235944.png)](https://postimg.cc/87TP1kw1)
 
 ##### Divisor de Reloj
 
