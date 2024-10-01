@@ -79,12 +79,15 @@ Se solicita un sistema compuesto por un contador de 2 bits, antirebote, divisor 
 Se muestran sus respectivas tablas de verdad, diagramas de estados y diagramas temporales.
 ##### Contador 2 bits
 Tabla de Verdad
+
 [![Captura-de-pantalla-2024-09-30-235330.png](https://i.postimg.cc/Kv5pv8zB/Captura-de-pantalla-2024-09-30-235330.png)](https://postimg.cc/rKKNfc5w)
 
 Tabla de Transición de Estados
+
 [![Captura-de-pantalla-2024-09-30-235409.png](https://i.postimg.cc/W1HnhFPF/Captura-de-pantalla-2024-09-30-235409.png)](https://postimg.cc/75S7RLhw)
 
 Tabla de Salida
+
 [![Captura-de-pantalla-2024-09-30-235330.png](https://i.postimg.cc/Kv5pv8zB/Captura-de-pantalla-2024-09-30-235330.png)](https://postimg.cc/rKKNfc5w)
 
 Diagrama de Estados
