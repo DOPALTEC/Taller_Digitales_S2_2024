@@ -1,54 +1,55 @@
-`timescale 1ns / 1ps
+`timescale 1ms / 100us
 
-module top_module_tb;
+module tb_top_module;
 
-  // Definimos las señales
-  reg clk;
-  reg reset;
-  reg key;
-  wire [7:0] count;  // Salida del contador
+    // Entradas
+    reg clk;
+    reg rst_n;
+    reg key_in;
 
-  // Instancia del top module
-  top_module uut (
-    .clk(clk),
-    .reset(reset),
-    .key(key),
-    .count(count)
-  );
+    // Salidas
+    wire [7:0] count;
 
-  // Generador de reloj con periodo de 20ns (frecuencia de 50MHz)
-  initial begin
-    clk = 0;
-    forever #5 clk = ~clk;  
-  end
+    // Instanciar el módulo superior (top_module)
+    top_module uut (
+        .clk(clk),
+        .rst_n(rst_n),
+        .key_in(key_in),
+        .count(count)
+    );
 
-  // Bloque de estímulos para probar el comportamiento del top module
-  initial begin
-    // Inicialización
-    reset = 0;    // Activamos el reset
-    key = 0;      // Key inicialmente inactivo
-    #100;         // Esperamos 100ns
+    // Generar el reloj (clk)
+    always #5 clk = ~clk;  
 
-    // Desactivamos el reset
-    reset = 1;
-    #100;         // Esperamos 100ns
+    initial begin
+        // Inicializar las señales
+        clk = 0;
+        rst_n = 0;
+        key_in = 0; 
 
-    // Simulamos la activación del botón key (debouncing)
-    key = 1;      // Presionamos el botón
-    #500;       // Esperamos 50us (suficiente para debounce)
-    key = 0;      // Soltamos el botón
-    #100;       // Esperamos 50us más
+        // Monitorear los cambios en las señales
+        $monitor("Tiempo: %0t | key_in = %b | key_pressed = %b | count = %b", $time, key_in, uut.debounce_inst.key_pressed, count);
+        
+        #5 rst_n = 1;  
 
-    // Nuevamente presionamos el botón después de un tiempo
-    key = 1;      // Presionamos el botón otra vez
-    #20;       // Esperamos 50us
-    key = 0;      // Soltamos el botón de nuevo
-    #20;       // Esperamos 50us más
-    key = 1;    // Desactivamos el reset
-    #500;      // Esperamos 500us para observar el contador
+        // Simular la presión del botón con rebotes
+        #10 key_in = 1;  // Simular que el botón se presiona
+        #20 key_in = 0;   // Rebote
+        #20 key_in = 1;   // Rebote
+        #20 key_in = 0;   // Soltar el botón
+        #100 key_in = 1; 
 
-    // Terminamos la simulación
-    $stop;
-  end
+        // Mantener el botón suelto durante un tiempo
+        #800;
 
+        // Simular otra presión del botón
+        #10 key_in = 1;  
+        #10 key_in = 0;  
+
+        // Simulación continua por unos ciclos más
+        #50;
+
+        // Finalizar la simulación
+        $finish;
+    end
 endmodule
