@@ -157,8 +157,8 @@ Descripción y resultados de las pruebas hechas
 
 #### 6. Implementación Física
 
-"Laboratorio_II/Ejercicio_II/README.md"
-
+["Laboratorio_II/Ejercicio_II/README.md"
+](https://github.com/DOPALTEC/Taller_Digitales_S2_2024/blob/main/Laboratorio_II/Ejercicio_II/README.md)
 # Ejercicio 3
 
 
