@@ -28,6 +28,7 @@ module top_module (
 
 #### 4. Criterios de diseño
 Se solicita un diseño antirebotes que sincronice las entradas provenientes de pulsadores.
+
 [![Captura-de-pantalla-2024-09-30-235824.png](https://i.postimg.cc/4yWcqqf7/Captura-de-pantalla-2024-09-30-235824.png)](https://postimg.cc/H87j7S7d)
 
 El parámetro DEBOUNCE_TIME del módulo de debounce debe ajustarse en función de la frecuencia del reloj para asegurar que el tiempo de debounce sea adecuado para el botón físico.
@@ -37,6 +38,7 @@ El reset debe ser activo en bajo (cuando está en cero), y el enable (key_presse
 Si no hay ninguna tecla presionada, el contador (count) suma un bit en cada ciclo del reloj, y si se presiona, se mantiene su valor actual.
 
 #### 5. Testbench
+
 [![Top1.png](https://i.postimg.cc/CLdSbXqZ/Top1.png)](https://postimg.cc/HVGqgS3H)
 
 Análisis de la Señal count
