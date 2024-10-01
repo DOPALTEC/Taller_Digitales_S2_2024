@@ -96,9 +96,57 @@ Diagrama de Estados
 
 [![Captura-de-pantalla-2024-09-30-235944.png](https://i.postimg.cc/HkyJ9Vy7/Captura-de-pantalla-2024-09-30-235944.png)](https://postimg.cc/87TP1kw1)
 
+Diagrama Temporal
+
+[![Captura-de-pantalla-2024-10-01-094022.png](https://i.postimg.cc/Xvx30mH4/Captura-de-pantalla-2024-10-01-094022.png)](https://postimg.cc/VSS2qGPV)
+
 ##### Divisor de Reloj
 
+Tabla de Verdad
+
+[![Captura-de-pantalla-2024-10-01-100927.png](https://i.postimg.cc/FHqGK5GN/Captura-de-pantalla-2024-10-01-100927.png)](https://postimg.cc/9Ddyxkvn)
+
+Tabla de Transición de Estados
+
+[![Captura-de-pantalla-2024-10-01-103455.png](https://i.postimg.cc/HLjMVBBm/Captura-de-pantalla-2024-10-01-103455.png)](https://postimg.cc/2qRytds9)
+
+Tabla de Salida
+
+[![Captura-de-pantalla-2024-10-01-103948.png](https://i.postimg.cc/k5HFvB5k/Captura-de-pantalla-2024-10-01-103948.png)](https://postimg.cc/QBpTXN1b)
+
+Diagrama de Transición de Estados
+
+[![Captura-de-pantalla-2024-10-01-105134.png](https://i.postimg.cc/GtHWSBPG/Captura-de-pantalla-2024-10-01-105134.png)](https://postimg.cc/0K1XzyBy)
+
+Diagrama Temporal
+
+[![Captura-de-pantalla-2024-10-01-094835.png](https://i.postimg.cc/yd1vRryQ/Captura-de-pantalla-2024-10-01-094835.png)](https://postimg.cc/cKzRyhjw)
+
 ##### Antirebote
+
+Tabla de Verdad
+
+[![Captura-de-pantalla-2024-10-01-110108.png](https://i.postimg.cc/1RgKWch4/Captura-de-pantalla-2024-10-01-110108.png)](https://postimg.cc/V58MvtNc)
+
+Tabla de Transición de Estados
+
+[![Captura-de-pantalla-2024-10-01-110242.png](https://i.postimg.cc/J4Z58rhL/Captura-de-pantalla-2024-10-01-110242.png)](https://postimg.cc/RNCHQzfs)
+
+Tabla de Salida
+
+[![Captura-de-pantalla-2024-10-01-110334.png](https://i.postimg.cc/2SYF8sqB/Captura-de-pantalla-2024-10-01-110334.png)](https://postimg.cc/hfC7231S)
+
+Diagrama de Transición de Estados
+
+[![Captura-de-pantalla-2024-10-01-105902.png](https://i.postimg.cc/J0dch0kr/Captura-de-pantalla-2024-10-01-105902.png)](https://postimg.cc/8fMrK149)
+
+Diagrama Temporal
+
+[![Captura-de-pantalla-2024-10-01-110537.png](https://i.postimg.cc/HLswbb9Y/Captura-de-pantalla-2024-10-01-110537.png)](https://postimg.cc/G4VTC8fV)
+
+##### Codificador de Tecla
+
+[![Captura-de-pantalla-2024-10-01-110820.png](https://i.postimg.cc/gkF3NCHB/Captura-de-pantalla-2024-10-01-110820.png)](https://postimg.cc/0rn6NH3p)
 
 #### 5. Testbench
 Descripción y resultados de las pruebas hechas
