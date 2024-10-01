@@ -1,7 +1,7 @@
 module top (
     input clk,
     input rst_n,
-    input [1:0] enable,  // Key inputs
+    input [1:0] enable,  
     output [1:0] count,
     output reg count_bit1_reg,
     output reg count_bit0_reg,
@@ -14,14 +14,14 @@ module top (
     reg [1:0] count_internal;
     reg key_pressed_prev;
 
-    // Clock divider instantiation
+    // Instaciar el módulo clk divider
     clock_divider clk_div_inst (
         .clk(clk),
         .rst_n(rst_n),
         .slow_clk(slow_clk)
     );
 
-    // Instantiate key_debounce for each enable input
+    // Instaciar el módulo key debounce
     key_debounce key_debounce_0 (
         .clk(clk),
         .rst_n(rst_n),
@@ -38,7 +38,7 @@ module top (
 
     assign any_key_pressed = key_pressed[0] | key_pressed[1];
 
-    // Instantiate the 2-bit counter
+    // // Instaciar el módulo contador de 2 bits
     counter_2bit counter_inst (
         .clk(slow_clk),
         .rst_n(rst_n),
@@ -48,7 +48,7 @@ module top (
 
     assign count = count_internal;
 
-    // Logic for storing values in individual bit registers
+   // Almacenar los datos de la tecla presionada en los registros
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             count_bit1_reg <= 1'b0;
