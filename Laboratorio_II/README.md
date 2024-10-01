@@ -157,8 +157,7 @@ Descripción y resultados de las pruebas hechas
 
 #### 6. Implementación Física
 
-Laboratorio_II/Ejercicio_II/README.md
-
+"Laboratorio_II/Ejercicio_II/README.md"
 
 # Ejercicio 3
 
