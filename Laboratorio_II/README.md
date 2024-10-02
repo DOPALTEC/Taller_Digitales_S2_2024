@@ -153,12 +153,32 @@ Diagrama Temporal
 [![Captura-de-pantalla-2024-10-01-110820.png](https://i.postimg.cc/gkF3NCHB/Captura-de-pantalla-2024-10-01-110820.png)](https://postimg.cc/0rn6NH3p)
 
 #### 5. Testbench
-Descripción y resultados de las pruebas hechas
+
+Decodificador de 2 a 4
+
+[![Captura-de-pantalla-2024-10-01-194949.png](https://i.postimg.cc/CLvK790y/Captura-de-pantalla-2024-10-01-194949.png)](https://postimg.cc/nCDZcRMT)
+
+Contador de 2 bits
+
+[![Captura-de-pantalla-2024-10-01-200113.png](https://i.postimg.cc/CMCK9zGV/Captura-de-pantalla-2024-10-01-200113.png)](https://postimg.cc/V561CsZ7)
+
+Antirebote
+
+[![Captura-de-pantalla-2024-10-01-204245.png](https://i.postimg.cc/LXHWXCbD/Captura-de-pantalla-2024-10-01-204245.png)](https://postimg.cc/Jy2xYqmH)
+
+Divisor de Reloj
+
+[![Captura-de-pantalla-2024-10-01-211424.png](https://i.postimg.cc/Pr21s6Wh/Captura-de-pantalla-2024-10-01-211424.png)](https://postimg.cc/BXPj2B7w)
+
+Codificador de 4 a 2 
+
+[![Captura-de-pantalla-2024-10-01-213640.png](https://i.postimg.cc/rmP7PGf9/Captura-de-pantalla-2024-10-01-213640.png)](https://postimg.cc/qh2mtKVt)
 
 #### 6. Implementación Física
 
 ["Laboratorio_II/Ejercicio_II/README.md"
 ](https://github.com/DOPALTEC/Taller_Digitales_S2_2024/blob/main/Laboratorio_II/Ejercicio_II/README.md)
+
 # Ejercicio 3
 
 
