@@ -205,13 +205,13 @@ wire [15:0] verde = 16'h07E0;
 
 //Se debe hacer máquina de estados que revise cada ciclo de reloj si se cambia la configuracion de colores
 //si lo que se recibe en el receptor de la comunicacion spi entre pc y fpga es 1 se aplica la primera config y analogamente con la segunda
-wire [15:0] pixel_1 = ((grilla_cnt >= 0 && grilla_cnt <= 30) || 
+wire [15:0] pixel_2 = ((grilla_cnt >= 0 && grilla_cnt <= 30) || 
                      (grilla_cnt > 60 && grilla_cnt <= 90) || 
                      (grilla_cnt > 120 && grilla_cnt <= 150) || 
                      (grilla_cnt > 180 && grilla_cnt <= 210)) 
                      ? rojo : azul;
 
-wire [15:0] pixel_2 = ((grilla_cnt >= 0 && grilla_cnt <= 30) || 
+wire [15:0] pixel_1 = ((grilla_cnt >= 0 && grilla_cnt <= 30) || 
                      (grilla_cnt > 60 && grilla_cnt <= 90) || 
                      (grilla_cnt > 120 && grilla_cnt <= 150) || 
                      (grilla_cnt > 180 && grilla_cnt <= 210)) 
