@@ -345,7 +345,7 @@ always@(posedge clk or negedge resetn) begin
 //						spi_data <= 8'hF8; // RED
                         //if(color_config==1) begin //Si la configuracion de color es 1
                             //Elige el primer par de colores
-                            spi_data <= pixel_1[15:8];
+                            spi_data <= pixel_2[15:8];
                         //end
                         //else begin
                         //    spi_data <= pixel_2[15:8];
@@ -357,7 +357,7 @@ always@(posedge clk or negedge resetn) begin
 //						spi_data <= 8'h00; // RED
 						//spi_data <= pixel_1[7:0];
 						//if (color_config==1) begin
-						  spi_data <= pixel_1[7:0];
+						  spi_data <= pixel_2[7:0];
 						//end
 						//else begin
 						//  spi_data <= pixel_2[7:0];
