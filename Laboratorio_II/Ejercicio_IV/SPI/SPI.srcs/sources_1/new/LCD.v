@@ -343,25 +343,25 @@ always@(posedge clk or negedge resetn) begin
 						lcd_cs_r <= 0;
 						lcd_rs_r <= 1;
 //						spi_data <= 8'hF8; // RED
-                        if(color_config==1) begin //Si la configuracion de color es 1
+                        //if(color_config==1) begin //Si la configuracion de color es 1
                             //Elige el primer par de colores
                             spi_data <= pixel_1[15:8];
-                        end
-                        else begin
-                            spi_data <= pixel_2[15:8];
-                        end
+                        //end
+                        //else begin
+                        //    spi_data <= pixel_2[15:8];
+                        //end
 						//spi_data <= pixel_1[15:8];
 						bit_loop <= bit_loop + 1;
 					end else if (bit_loop == 8) begin
 						// next byte
 //						spi_data <= 8'h00; // RED
 						//spi_data <= pixel_1[7:0];
-						if (color_config==1) begin
+						//if (color_config==1) begin
 						  spi_data <= pixel_1[7:0];
-						end
-						else begin
-						  spi_data <= pixel_2[7:0];
-						end
+						//end
+						//else begin
+						//  spi_data <= pixel_2[7:0];
+						//end
 						bit_loop <= bit_loop + 1;
 					end else if (bit_loop == 16) begin
 						// end
