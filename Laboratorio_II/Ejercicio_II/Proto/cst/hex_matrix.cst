@@ -1,0 +1,19 @@
+IO_LOC  "count_bit1_reg" 13;
+
+IO_LOC  "count_bit0_reg" 14;
+
+IO_LOC  "enable_bit1_reg" 10;
+
+IO_LOC  "enable_bit0_reg" 11;
+
+IO_LOC  "enable[0]" 55;
+
+IO_LOC  "enable[1]" 54;
+
+IO_LOC  "clk" 52;
+
+IO_LOC  "rst_n" 3;
+
+IO_LOC  "count[1]" 39;
+
+IO_LOC  "count[0]" 26;
