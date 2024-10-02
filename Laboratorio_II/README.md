@@ -6,11 +6,12 @@
 ## 2. Referencias
 [0] David Harris y Sarah Harris. *Digital Design and Computer Architecture. RISC-V Edition.* Morgan Kaufmann, 2022. ISBN: 978-0-12-820064-3
 
-https://wiki.sipeed.com/hardware/zh/tang/Tang-Nano-9K/examples/lushaylabs/2_debugging_uart/debugging_uart.html
+[1] Sipeed Wiki. Debugging UART with Tang Nano 9K. Disponible en: https://wiki.sipeed.com/hardware/zh/tang/Tang-Nano-9K/examples/lushaylabs/2_debugging_uart/debugging_uart.html
 
-https://learn.lushaylabs.com/tang-nano-9k-debugging/
+[2] Lushay Labs. Tang Nano 9K Debugging. Disponible en: https://learn.lushaylabs.com/tang-nano-9k-debugging/
 
-Añadir referencia del ST7789V
+[3] Sitronix. ST7789V Datasheet. Disponible en: https://www.alldatasheet.com/datasheet-pdf/pdf/1132511/SITRONIX/ST7789V.html
+
 
 # Ejercicio 1
 
