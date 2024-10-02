@@ -12,7 +12,6 @@
 
 [3] Sitronix. ST7789V Datasheet. Disponible en: https://www.alldatasheet.com/datasheet-pdf/pdf/1132511/SITRONIX/ST7789V.html
 
-Añadir referencia del ST7789V
 
 # Ejercicio 1
 
