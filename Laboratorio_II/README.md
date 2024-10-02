@@ -6,6 +6,8 @@
 ## 2. Referencias
 [0] David Harris y Sarah Harris. *Digital Design and Computer Architecture. RISC-V Edition.* Morgan Kaufmann, 2022. ISBN: 978-0-12-820064-3
 
+https://wiki.sipeed.com/hardware/zh/tang/Tang-Nano-9K/examples/lushaylabs/2_debugging_uart/debugging_uart.html
+
 https://learn.lushaylabs.com/tang-nano-9k-debugging/
 
 Añadir referencia del ST7789V
@@ -421,25 +423,178 @@ Run directory: D:\UNI\Taller_Digitales_S2_2024\Laboratorio_II\Ejercicio_III\UART
 ### 1.1 Módulo "genérico"
 #### 1. Encabezado del módulo
 ```SystemVerilog
-module mi_modulo(
-    input logic     entrada_i,      
-    output logic    salida_i 
-    );
+module SPI_Master(
+   input        i_Rst_L,  
+   input        i_Clk,  
+   input [7:0]  i_TX_Byte, 
+   input        i_TX_DV,    
+   output reg   o_TX_Ready, 
+   output reg       o_RX_DV,  
+   output reg [7:0] o_RX_Byte,  
+   output reg o_SPI_Clk,
+   input      i_SPI_MISO,
+   output reg o_SPI_MOSI
+   );
 ```
 #### 2. Parámetros
-- Lista de parámetros
+- `SPI_MODE=0`: Configura el modo de funcionamiento del SPI entre 4 modos. 
+- `CLKS_PER_HALF_BIT=2`: Define el número de ciclos de reloj de la FPGA necesarios para generar medio ciclo de reloj del SPI
+
+| Modo | Polaridad del Reloj (CPOL/CKP) | Fase del Reloj (CPHA) |
+|------|-------------------------------|-----------------------|
+|   0  |              0                |           0           |
+|   1  |              0                |           1           |
+|   2  |              1                |           0           |
+|   3  |              1                |           1           |
+
+- CPOL=0 significa que el reloj está inactivo en 0, el flanco de subida es el flanco principal.
+- CPOL=1 significa que el reloj está inactivo en 1, el flanco de bajada es el flanco principal.
 
 #### 3. Entradas y salidas:
-- `entrada_i`: descripción de la entrada
-- `salida_i`: descripción de la salida
+- `i_Rst_L`: Señal del reset para reiniciar el módulo. Es activada en bajo, al estar en alto, permite que el módulo opere.
+- `i_Clk`: Reloj principal de la FPGA.
+Transmisión:
+- `i_TX_Byte`: Byte (8 bits) a transmitir desde el maestro a través de la línea MOSI.
+- `i_TX_DV`: Pulso que indica si hay un dato válido para transmitir.
+- `o_TX_Ready`: Indica si el módulo está listo para enviar un paquete de 8 bits (byte).
+Recepción:
+- `o_RX_DV`: Pulso que valida si un byte ha sido recibido.
+- `o_RX_Byte`: Byte que se recibe por medio de la línea MISO.
+- `o_SPI_Clk`: Reloj SPI generado por el maestro.
+- `i_SPI_MISO`: Datos enviados desde el maestro.
+- `o_SPI_MOSI`: Datos recibidos desde el esclavo.
 
 #### 4. Criterios de diseño
-Diagramas, texto explicativo...
+
+![diagrama_spi](https://github.com/user-attachments/assets/0d02483b-1e15-4f1f-a1b3-1e24915dfa81)
+
+De acuerdo con la configuración de pines de la TANGNano 9k se realiza la conexión de pines:
+- Pin 77 (IOT37A) (SPILCD_MO): Corresponde a la línea de datos para la pantalla LCD. Esta señal deberá estar asignada a "i_TX_Byte" ya que se trata de una salida que va a entregarse hacia la pantalla LCD. 
+
 
 #### 5. Testbench
-Descripción y resultados de las pruebas hechas
+Realizando el testbench entre dos dispositivos generados a partir del mismo módulo del SPI y generando valores aleatorios mediante una semilla de 32 bits para ambos valores transmitidos por los dos dispositivos se realizaron varias pruebas con diferentes semillas que generaron valores aleatorios distintos.
+
+- Lote I:
+
+Utilizando la semilla:
+```verilog
+    seed = 32'h6F38AD21;
+```
+ Se obtuvo la grafica de pulsos:
+
+![image](https://github.com/user-attachments/assets/7514de86-18a2-445c-916d-f1ab34e0ffe0)
+
+ 
+Generando en la terminal el siguiente resultado:
+```bash
+
+Optimizing...
+Building models...
+PLI/VPI access: +b
+Simulation time precision is 1ps.
+  [3/4] module SPI_Master_TB#(3,4,2): 32 functions, 226 basic blocks
+Linking image.so...
+Using default typical min/typ/max.
+=S:Begin run-time elaboration and static initialization...
+=N:[dumpMXD] preparing MXD dump to 'waves.mxd'.
+=N:[dump] Dump started at time 0
+=N:Starting event scheduler...
+=W:[dump] sim_1\new\SPI_Master_TB.v:119: $dumpfile() called, but dump already enabled.
+=W:[dump] sim_1\new\SPI_Master_TB.v:120: $dumpvars() called after dumping started.
+Transmisiones y Recepciones Exitosas:
+|Dispositivo|---TX---|---RX---|
+|-----1-----|---3c---|---1e---|
+|-----2-----|---1e---|---3c---|
+=N:[dumpMXD] closing MXD dump
+=T:Simulation terminated by $finish at time 10382000 (sim_1\new\SPI_Master_TB.v:143);
+  System timescale is 1ps / 1ps
+  Metrics DSim version: 20240422.9.0 (b:R #c:0 h:d63c52d5c2 os:msys2_)
+  Random seed: (defaulted to 1)
+
+```
+
+- Lote II:
+
+Utilizando la semilla:
+```verilog
+    seed = 32'h885B2C78;
+```
+ Se obtuvo la grafica de pulsos:
+
+![image](https://github.com/user-attachments/assets/1f631a12-a35f-46f8-93cd-98438d698b95)
+
+ 
+Generando en la terminal el siguiente resultado:
+```bash
+    Optimizing...
+Building models...
+PLI/VPI access: +b
+Simulation time precision is 1ps.
+  [3/4] module SPI_Master_TB#(3,4,2): 32 functions, 226 basic blocks
+Linking image.so...
+Using default typical min/typ/max.
+=S:Begin run-time elaboration and static initialization...
+=N:[dumpMXD] preparing MXD dump to 'waves.mxd'.
+=N:[dump] Dump started at time 0
+=N:Starting event scheduler...
+=W:[dump] sim_1\new\SPI_Master_TB.v:119: $dumpfile() called, but dump already enabled.
+=W:[dump] sim_1\new\SPI_Master_TB.v:120: $dumpvars() called after dumping started.
+Transmisiones y Recepciones Exitosas:
+|Dispositivo|---TX---|---RX---|
+|-----1-----|---fd---|---8c---|
+|-----2-----|---8c---|---fd---|
+=N:[dumpMXD] closing MXD dump
+=T:Simulation terminated by $finish at time 10382000 (sim_1\new\SPI_Master_TB.v:143);
+  System timescale is 1ps / 1ps
+```
+
+- Lote III:
+
+Utilizando la semilla:
+```verilog
+    seed = 32'h8AC639CF;
+```
+ Se obtuvo la grafica de pulsos:
+
+![image](https://github.com/user-attachments/assets/92699508-91f6-4ce5-9722-ad15021975f0)
+
+ 
+Generando en la terminal el siguiente resultado:
+```bash
+Optimizing...
+Building models...
+PLI/VPI access: +b
+Simulation time precision is 1ps.
+  [3/4] module SPI_Master_TB#(3,4,2): 32 functions, 226 basic blocks
+Linking image.so...
+Using default typical min/typ/max.
+=S:Begin run-time elaboration and static initialization...
+=N:[dumpMXD] preparing MXD dump to 'waves.mxd'.
+=N:[dump] Dump started at time 0
+=N:Starting event scheduler...
+=W:[dump] sim_1\new\SPI_Master_TB.v:119: $dumpfile() called, but dump already enabled.
+=W:[dump] sim_1\new\SPI_Master_TB.v:120: $dumpvars() called after dumping started.
+Transmisiones y Recepciones Exitosas:
+|Dispositivo|---TX---|---RX---|
+|-----1-----|---d6---|---37---|
+|-----2-----|---37---|---d6---|
+=N:[dumpMXD] closing MXD dump
+=T:Simulation terminated by $finish at time 10382000 (sim_1\new\SPI_Master_TB.v:143);
+  System timescale is 1ps / 1ps
+
+```
+
+
 
 ## Apendices:
 ### Apendice 1:
-texto, imágen, etc
+- Mapa de Pines Correspondiente a la FPGA TANGNano 9k
+
+![clip_image010](https://github.com/user-attachments/assets/2f39e23e-6954-481f-8ba5-2074c8df109f)
+
+- Distribución de Caracteres en Teclado
+
+![Img_19_2](https://github.com/user-attachments/assets/ce748f40-4ed9-414b-881b-ea23739c8359)
+
 
