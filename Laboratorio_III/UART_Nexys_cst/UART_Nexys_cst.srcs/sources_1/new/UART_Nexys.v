@@ -3,7 +3,7 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 08.10.2024 16:40:35
+// Create Date: 08.10.2024 16:44:33
 // Design Name: 
 // Module Name: UART_Nexys
 // Project Name: 
