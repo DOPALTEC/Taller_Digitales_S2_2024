@@ -1,4 +1,4 @@
-# Nombre del proyecto / ejercicio
+# LABORATORIO 3: MICROCONTROLADOR
 
 ## 1. Abreviaturas y definiciones
 - **FPGA**: Field Programmable Gate Arrays
