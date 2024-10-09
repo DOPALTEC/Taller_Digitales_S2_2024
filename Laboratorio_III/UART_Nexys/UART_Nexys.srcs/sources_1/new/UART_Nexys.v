@@ -36,11 +36,24 @@ module UART_Nexys #(parameter DATA_WIDTH = 8, parameter prescale=1303)(
     //input  wire [15:0] prescale
     );
     
+    
+    wire locked;
+    wire CLK200MHZ;
+  CLK_GEN_200MHz instance_name
+   (
+    // Clock out ports
+    .CLK200MHZ(CLK200MHZ),     // output CLK200MHZ
+    // Status and control signals
+    .reset(rst), // input reset
+    .locked(locked),       // output locked
+   // Clock in ports
+    .CLK100MHZ(CLK100MHZ));      // input CLK100MHZ
+    
     uart_tx #(
     .DATA_WIDTH(DATA_WIDTH), .prescale(prescale)
 )
 uart_tx_inst (
-    .clk(CLK100MHZ),
+    .clk(CLK200MHZ),
     .rst(rst),
     // axi input
     .dato_tx(dato_tx),
@@ -58,7 +71,7 @@ uart_rx #(
     .DATA_WIDTH(DATA_WIDTH), .prescale(prescale)
 )
 uart_rx_inst (
-    .clk(CLK100MHZ),
+    .clk(CLK200MHZ),
     .rst(rst),
     // axi output
     .dato_rx(dato_rx),

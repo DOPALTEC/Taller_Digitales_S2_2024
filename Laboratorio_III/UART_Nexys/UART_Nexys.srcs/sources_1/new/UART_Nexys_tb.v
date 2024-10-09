@@ -4,7 +4,8 @@ module tb_UART_Nexys;
 
 // Parámetros del diseño
 parameter DATA_WIDTH = 8;
-parameter prescale = 1303;
+//parameter prescale = 1303; //Para 100Mhz y Generar 9600 baudios
+parameter prescale = 651; //Para 200Mhz y Generar 9600 baudios
 
 // Señales
 reg clk;
