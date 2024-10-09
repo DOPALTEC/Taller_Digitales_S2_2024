@@ -9,16 +9,16 @@ parameter prescale = 1303;
 // Señales
 reg clk;
 reg rst;
-reg [DATA_WIDTH-1:0] s_axis_tdata;
-reg s_axis_tvalid;
-wire s_axis_tready;
-wire [DATA_WIDTH-1:0] m_axis_tdata;
-wire m_axis_tvalid;
-reg m_axis_tready;
-reg rxd;
+reg [DATA_WIDTH-1:0] dato_tx;
+wire hay_dato_tx;
+reg transmitir;
 wire txd;
 wire tx_busy;
+reg recibir;
+reg rxd;
 wire rx_busy;
+wire [DATA_WIDTH-1:0] dato_rx;
+wire m_axis_tvalid;
 wire rx_overrun_error;
 wire rx_frame_error;
 //reg [15:0] prescale;
@@ -27,14 +27,14 @@ wire rx_frame_error;
 UART_Nexys #(
     .DATA_WIDTH(DATA_WIDTH), .prescale(prescale)
 ) uut (
-    .clk(clk),
+    .CLK100MHZ(clk),
     .rst(rst),
-    .s_axis_tdata(s_axis_tdata),
-    .s_axis_tvalid(s_axis_tvalid),
-    .s_axis_tready(s_axis_tready),
-    .m_axis_tdata(m_axis_tdata),
+    .dato_tx(dato_tx),
+    .transmitir(transmitir),
+    .hay_dato_tx(hay_dato_tx),
+    .dato_rx(dato_rx),
     .m_axis_tvalid(m_axis_tvalid),
-    .m_axis_tready(m_axis_tready),
+    .recibir(recibir),
     .rxd(rxd),
     .txd(txd),
     .tx_busy(tx_busy),
@@ -54,9 +54,9 @@ initial begin
     // Inicialización de señales
     clk = 0;
     rst = 1;
-    s_axis_tdata = 0;
-    s_axis_tvalid = 0;
-    m_axis_tready = 0;
+    dato_tx = 0;
+    transmitir = 0;
+    recibir = 0;
     rxd = 1;  // UART inactivo por defecto
     //prescale=16'd1303;
     //o
@@ -68,20 +68,18 @@ initial begin
     
     // Envío de datos a través de la UART
     #10000;
-    s_axis_tdata = 8'hA5;  // Datos a enviar
-    s_axis_tvalid = 1;
+    dato_tx = 8'hA5;  // Datos a enviar
+    #100000;
+    transmitir = 1;
     #937503;
     //wait (s_axis_tready);  // Espera hasta que UART esté lista
-    m_axis_tready=1;
-    s_axis_tvalid=0;
+    recibir=1;
+    transmitir=0;
    
-    
-    
-    //s_axis_tvalid = 0;     // Desactiva el tvalid después de que se acepte
+
     
     // Simulación de recepción de datos en UART
     #500;  // Tiempo para que el transmisor complete el envío
-    //m_axis_tready = 0;
     rxd = 0;  // Start bit
     #104167    // Tiempo para cada bit (ajustado según baudrate)
 
@@ -100,7 +98,7 @@ initial begin
 
     // Simulación de recepción
     #500;
-    m_axis_tready = 0;  // El receptor está listo para recibir datos
+    recibir = 0;  // El receptor está listo para recibir datos
 
     #1000;
     $stop;  // Deten la simulación

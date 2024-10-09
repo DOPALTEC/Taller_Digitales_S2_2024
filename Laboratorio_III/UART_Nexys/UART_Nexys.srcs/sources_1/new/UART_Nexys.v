@@ -2,20 +2,22 @@
 
 
 module UART_Nexys #(parameter DATA_WIDTH = 8, parameter prescale=1303)(
-    input  wire clk,
+    input  wire CLK100MHZ,
     input  wire rst,
     /*
      * AXI input
      */
-    input  wire [DATA_WIDTH-1:0] s_axis_tdata,
-    input  wire s_axis_tvalid,
-    output wire s_axis_tready,
+    input  wire [DATA_WIDTH-1:0] dato_tx,
+    output wire hay_dato_tx, //Se activa cuando hay un dato ingresado para enviar
+    //Para pruebas usar un led
+    input  wire transmitir, //En alto transmite el dato, para pruebas un boton
+
     /*
      * AXI output
      */
-    output wire [DATA_WIDTH-1:0] m_axis_tdata,
+    output wire [DATA_WIDTH-1:0] dato_rx,
     output wire m_axis_tvalid,
-    input  wire m_axis_tready,
+    input  wire recibir,
     /*
      * UART interface
      */
@@ -38,12 +40,12 @@ module UART_Nexys #(parameter DATA_WIDTH = 8, parameter prescale=1303)(
     .DATA_WIDTH(DATA_WIDTH), .prescale(prescale)
 )
 uart_tx_inst (
-    .clk(clk),
+    .clk(CLK100MHZ),
     .rst(rst),
     // axi input
-    .s_axis_tdata(s_axis_tdata),
-    .s_axis_tvalid(s_axis_tvalid),
-    .s_axis_tready(s_axis_tready),
+    .dato_tx(dato_tx),
+    .transmitir(transmitir),
+    .hay_dato_tx(hay_dato_tx),
     // output
     .txd(txd),
     // status
@@ -56,12 +58,12 @@ uart_rx #(
     .DATA_WIDTH(DATA_WIDTH), .prescale(prescale)
 )
 uart_rx_inst (
-    .clk(clk),
+    .clk(CLK100MHZ),
     .rst(rst),
     // axi output
-    .m_axis_tdata(m_axis_tdata),
+    .dato_rx(dato_rx),
     .m_axis_tvalid(m_axis_tvalid),
-    .m_axis_tready(m_axis_tready),
+    .recibir(recibir),
     // input
     .rxd(rxd),
     // status

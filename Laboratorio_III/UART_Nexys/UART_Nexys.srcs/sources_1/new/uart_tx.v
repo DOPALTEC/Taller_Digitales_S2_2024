@@ -9,25 +9,25 @@ module uart_tx #(
     parameter DATA_WIDTH=8, parameter prescale=1303
 )
 (
-    input  wire                   clk,
-    input  wire                   rst,
+    input wire clk,
+    input wire rst,
 
     /*
      * AXI input
      */
-    input  wire [DATA_WIDTH-1:0]  s_axis_tdata,
-    input  wire                   s_axis_tvalid,
-    output wire                   s_axis_tready,
+    input wire [DATA_WIDTH-1:0] dato_tx,
+    input wire transmitir,
+    output wire hay_dato_tx,
 
     /*
      * UART interface
      */
-    output wire                   txd,
+    output wire txd,
 
     /*
      * Status
      */
-    output wire                   busy
+    output wire busy
 
     /*
      * Configuration
@@ -45,7 +45,7 @@ reg [DATA_WIDTH:0] data_reg = 0;
 reg [18:0] prescale_reg = 0;
 reg [3:0] bit_cnt = 0;
 
-assign s_axis_tready = s_axis_tready_reg;
+assign hay_dato_tx = s_axis_tready_reg;
 assign txd = txd_reg;
 
 assign busy = busy_reg;
@@ -65,11 +65,11 @@ always @(posedge clk) begin
             s_axis_tready_reg <= 1;
             busy_reg <= 0;
 
-            if (s_axis_tvalid) begin
+            if (transmitir) begin
                 s_axis_tready_reg <= !s_axis_tready_reg;
                 prescale_reg <= (prescale << 3)-1;
                 bit_cnt <= DATA_WIDTH+1;
-                data_reg <= {1'b1, s_axis_tdata};
+                data_reg <= {1'b1, dato_tx};
                 txd_reg <= 0;
                 busy_reg <= 1;
             end

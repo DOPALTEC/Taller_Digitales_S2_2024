@@ -13,9 +13,9 @@ module uart_rx #(parameter DATA_WIDTH = 8, parameter prescale=1303)
     /*
      * AXI output
      */
-    output wire [DATA_WIDTH-1:0]  m_axis_tdata,
+    output wire [DATA_WIDTH-1:0]  dato_rx,
     output wire                   m_axis_tvalid,
-    input  wire                   m_axis_tready,
+    input  wire                   recibir,
 
     /*
      * UART interface
@@ -49,7 +49,7 @@ reg [DATA_WIDTH-1:0] data_reg = 0;
 reg [18:0] prescale_reg = 0;
 reg [3:0] bit_cnt = 0;
 
-assign m_axis_tdata = m_axis_tdata_reg;
+assign dato_rx = m_axis_tdata_reg;
 assign m_axis_tvalid = m_axis_tvalid_reg;
 
 assign busy = busy_reg;
@@ -71,7 +71,7 @@ always @(posedge clk) begin
         overrun_error_reg <= 0;
         frame_error_reg <= 0;
 
-        if (m_axis_tvalid && m_axis_tready) begin
+        if (m_axis_tvalid && recibir) begin
             m_axis_tvalid_reg <= 0;
         end
 
