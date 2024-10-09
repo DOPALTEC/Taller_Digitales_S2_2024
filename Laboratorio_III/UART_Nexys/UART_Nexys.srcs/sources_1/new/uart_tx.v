@@ -5,9 +5,8 @@
 /*
  * AXI4-Stream UART
  */
-module uart_tx #
-(
-    parameter DATA_WIDTH = 8
+module uart_tx #(
+    parameter DATA_WIDTH=8, parameter prescale=1303
 )
 (
     input  wire                   clk,
@@ -28,12 +27,12 @@ module uart_tx #
     /*
      * Status
      */
-    output wire                   busy,
+    output wire                   busy
 
     /*
      * Configuration
      */
-    input  wire [15:0]            prescale
+   // input  wire [15:0]            prescale
 );
 
 reg s_axis_tready_reg = 0;

@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 
 
-module UART_Nexys #(parameter DATA_WIDTH = 8)(
+module UART_Nexys #(parameter DATA_WIDTH = 8, parameter prescale=1303)(
     input  wire clk,
     input  wire rst,
     /*
@@ -27,15 +27,15 @@ module UART_Nexys #(parameter DATA_WIDTH = 8)(
     output wire tx_busy,
     output wire rx_busy,
     output wire rx_overrun_error,
-    output wire rx_frame_error,
+    output wire rx_frame_error
     /*
      * Configuration
      */
-    input  wire [15:0] prescale
+    //input  wire [15:0] prescale
     );
     
     uart_tx #(
-    .DATA_WIDTH(DATA_WIDTH)
+    .DATA_WIDTH(DATA_WIDTH), .prescale(prescale)
 )
 uart_tx_inst (
     .clk(clk),
@@ -47,13 +47,13 @@ uart_tx_inst (
     // output
     .txd(txd),
     // status
-    .busy(tx_busy),
+    .busy(tx_busy)
     // configuration
-    .prescale(prescale)
+    //.prescale(prescale)
 );
 
 uart_rx #(
-    .DATA_WIDTH(DATA_WIDTH)
+    .DATA_WIDTH(DATA_WIDTH), .prescale(prescale)
 )
 uart_rx_inst (
     .clk(clk),
@@ -67,9 +67,9 @@ uart_rx_inst (
     // status
     .busy(rx_busy),
     .overrun_error(rx_overrun_error),
-    .frame_error(rx_frame_error),
+    .frame_error(rx_frame_error)
     // configuration
-    .prescale(prescale)
+    //.prescale(prescale)
 );
     
 endmodule

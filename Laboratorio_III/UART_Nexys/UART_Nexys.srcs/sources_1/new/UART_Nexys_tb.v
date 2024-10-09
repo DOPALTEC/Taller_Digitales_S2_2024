@@ -4,6 +4,7 @@ module tb_UART_Nexys;
 
 // Parámetros del diseño
 parameter DATA_WIDTH = 8;
+parameter prescale = 1303;
 
 // Señales
 reg clk;
@@ -20,11 +21,11 @@ wire tx_busy;
 wire rx_busy;
 wire rx_overrun_error;
 wire rx_frame_error;
-reg [15:0] prescale;
+//reg [15:0] prescale;
 
 // Instancia del módulo UART_Nexys
 UART_Nexys #(
-    .DATA_WIDTH(DATA_WIDTH)
+    .DATA_WIDTH(DATA_WIDTH), .prescale(prescale)
 ) uut (
     .clk(clk),
     .rst(rst),
@@ -39,8 +40,8 @@ UART_Nexys #(
     .tx_busy(tx_busy),
     .rx_busy(rx_busy),
     .rx_overrun_error(rx_overrun_error),
-    .rx_frame_error(rx_frame_error),
-    .prescale(prescale)
+    .rx_frame_error(rx_frame_error)
+    //.prescale(prescale)
 );
 
 
@@ -57,7 +58,7 @@ initial begin
     s_axis_tvalid = 0;
     m_axis_tready = 0;
     rxd = 1;  // UART inactivo por defecto
-    prescale=16'd1303;
+    //prescale=16'd1303;
     //o
     //prescale = 16'd651;  // Prescaler para baudrate (ajústalo según la frecuencia de reloj)
 

@@ -5,10 +5,7 @@
 /*
  * AXI4-Stream UART
  */
-module uart_rx #
-(
-    parameter DATA_WIDTH = 8
-)
+module uart_rx #(parameter DATA_WIDTH = 8, parameter prescale=1303)
 (
     input  wire                   clk,
     input  wire                   rst,
@@ -30,12 +27,12 @@ module uart_rx #
      */
     output wire                   busy,
     output wire                   overrun_error,
-    output wire                   frame_error,
+    output wire                   frame_error
 
     /*
      * Configuration
      */
-    input  wire [15:0]            prescale
+    //input  wire [15:0]            prescale
 
 );
 
