@@ -1,8 +1,8 @@
 `timescale 1ns / 1ps
 
 
-module UART_Nexys #(parameter DATA_WIDTH = 8, parameter prescale=1303)(
-    input  wire CLK100MHZ,
+module UART #(parameter DATA_WIDTH = 8, parameter prescale=1303)(
+    input  wire clk,
     input  wire rst,
     /*
      * AXI input
@@ -40,7 +40,7 @@ module UART_Nexys #(parameter DATA_WIDTH = 8, parameter prescale=1303)(
     .DATA_WIDTH(DATA_WIDTH), .prescale(prescale)
 )
 uart_tx_inst (
-    .clk(CLK100MHZ),
+    .clk(clk),
     .rst(rst),
     // axi input
     .dato_tx(dato_tx),
@@ -58,7 +58,7 @@ uart_rx #(
     .DATA_WIDTH(DATA_WIDTH), .prescale(prescale)
 )
 uart_rx_inst (
-    .clk(CLK100MHZ),
+    .clk(clk),
     .rst(rst),
     // axi output
     .dato_rx(dato_rx),
