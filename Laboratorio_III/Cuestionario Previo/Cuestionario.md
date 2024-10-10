@@ -24,6 +24,29 @@ El conjunto básico de instrucciones de RISC-V para enteros de 32 bits, llamado 
 
 ## 2. Investigue que es un toolchain para desarrollo de software empotrado (embedded)
 
+Un toolchain en el enfoque de embebidos, cumple la función de diseñar aplicaciones que se ejecutan en dispositivos que poseen recursos limitados. Por ejemplo, los microcontroladores, sensores o sistemas electrónicos dedicados. Estos sistemas deben ser altamente optimizados debido a sus restricciones en memoria, procesamiento y energía. Como se debe trabajar directamente con el hardware del dispositivo, deben utilizarse herramientas especializadas para compilar el código y permitir la ejecución con arquitecturas específicas. Las partes clave de un toolchain se dividen en:
+
+- Editor de Código (IDE): Facilita la escritura del código, ya que es un editor de entorno de desarrollo integrado especializado para el sistema específico.
+  
+- Compilador Cruzado (Cross-Compiler): Debido a que el código no se ejecuta en la misma arquitectura en el que se desarrolla, el compilador genera el código binario que se puede ejecutar en el procesador o microcontrolador.
+
+- Enlazador (Linker): Mapea el código generado a áreas de memoria específicas del hardware, tal como la memoria flash o RAM del dispositivo. Asegura que los archivos objeto generados por el compilador estén correctamente organizados y optimizados para el hardware objetivo.
+
+- Depurador para Hardware (Debugger): Se comunica directamente con el hardware a través de alguna interfaz. Pausa la ejecución del código en el dispositvio, inspecciona los estados de los registros del procesador, las variables y las áreas de memoria para así seguir paso a paso la ejecución del programa
+
+- Monitor de Puerto Serie/Consola de Salida: Debido a que muchos sistemas embebidos no tienen una pantalla o sistema de interfaz gráfico, se usa un monitor de puerto serie lo cual permite ver la salida del dispositivo en tiempo real. El dispositivo se conecta a la computadora para mostrar información sobre el funcionamiento del sistema o el estado de las variables en tiempo de ejecución
+
+- Control de Versiones: Fundamnetal para manejar cambios en el código y colaborar en equipos.
+
+- Herramientas de Construcción (Build Tools): Organizan y automatizan el proceso de compilación, enlace y generación del firmware. Configuran el entorno del hardware, incluyendo configuraciones del procesador, memoria y periféricos
+
+- Herramientas de Simulación y Emulación: Permite probar código en un entorno simulado sin necesidad del hardware físico. Depurando el comportamiento de algunos módulos o aplicaciones antes de cargarlos en el dispositivo real.
+
+- Flasher/Programador: Al tener el código listo, debe ser flasheado en la memoria del microcontrolador. Transfiere el archivo binario generado al dispositivo embebido. 
+  
+
+
+
 ## 3. Investigue como se elabora un mapa de memoria de un procesador.
 
 ## 4. Investigue sobre el uso de memorias RAM y ROM en FPGA. Tanto memorias internas como externas en la FPGA.
