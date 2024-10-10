@@ -4,8 +4,8 @@ module tb_UART_Nexys;
 
 // Parámetros del diseño
 parameter DATA_WIDTH = 8;
-//parameter prescale = 1303; //Para 100Mhz y Generar 9600 baudios
-parameter prescale = 651; //Para 200Mhz y Generar 9600 baudios
+parameter prescale = 1303; //Para 100Mhz y Generar 9600 baudios
+//parameter prescale = 2604; //Para 200Mhz y Generar 9600 baudios (104,167us)
 
 // Señales
 reg clk;
@@ -74,7 +74,7 @@ initial begin
     transmitir = 1;
     #937503;
     //wait (s_axis_tready);  // Espera hasta que UART esté lista
-    recibir=1;
+    //recibir=1;
     transmitir=0;
    
 
@@ -84,15 +84,17 @@ initial begin
     rxd = 0;  // Start bit
     #104167    // Tiempo para cada bit (ajustado según baudrate)
 
-    // Simulación de bits de datos (envía 8'hA5)
+    // Simulación de bits de datos (del bit menos significativo al mas, de derecha a izquierda)
+    //Segundo Termino
+    rxd = 1;  #104167;
+    rxd = 1;  #104167;
+    rxd = 1;  #104167;
+    rxd = 0;  #104167;
+    //Primer termino
+    rxd = 1;  #104167;
     rxd = 1;  #104167;
     rxd = 0;  #104167;
     rxd = 1;  #104167;
-    rxd = 0;  #104167;
-    rxd = 1;  #104167;
-    rxd = 0;  #104167;
-    rxd = 1;  #104167;
-    rxd = 0;  #104167;
 
     // Stop bit
     rxd = 1;  #104167;
