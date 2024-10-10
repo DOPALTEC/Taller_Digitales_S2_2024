@@ -30,10 +30,6 @@ module UART_Nexys #(parameter DATA_WIDTH = 8, parameter prescale=1303)(
     output wire rx_busy,
     output wire rx_overrun_error,
     output wire rx_frame_error
-    /*
-     * Configuration
-     */
-    //input  wire [15:0] prescale
     );
     
     
@@ -63,8 +59,6 @@ uart_tx_inst (
     .txd(txd),
     // status
     .busy(tx_busy)
-    // configuration
-    //.prescale(prescale)
 );
 
 uart_rx #(
@@ -83,8 +77,6 @@ uart_rx_inst (
     .busy(rx_busy),
     .overrun_error(rx_overrun_error),
     .frame_error(rx_frame_error)
-    // configuration
-    //.prescale(prescale)
 );
     
 endmodule
