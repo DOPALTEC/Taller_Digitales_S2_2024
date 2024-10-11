@@ -47,8 +47,6 @@ wire [7:0] dato_rx;     // Dato recibido desde el módulo UART
 wire m_axis_tvalid;     // Señal que indica que un byte ha sido recibido
 reg recibir;            // Señal de control para indicar que estamos listos para recibir
 
-wire clk_uart;
-
 UART_Nexys #(.DATA_WIDTH(8), .prescale(1303)) UART_Nexys_inst(
     .CLK100MHZ(CLK100MHZ),
     .rst(rst),
@@ -71,55 +69,76 @@ UART_Nexys #(.DATA_WIDTH(8), .prescale(1303)) UART_Nexys_inst(
     .rx_frame_error()
 );
 
+reg [15:0] timeout_counter;  // Un contador para el tiempo de espera
+
+localparam TIMEOUT_LIMIT = 1000;  // Define un límite para el timeout (ajústalo según el reloj)
+
+reg byte_rx_valido;
+
+// Modificar la lógica del always @(posedge)
 always @(posedge UART_Nexys_inst.CLK200MHZ or posedge rst) begin
-        if (rst) begin
-            state <= IDLE;
-            byte_count <= 0;
-            IN2_data <= 0;
-            WR2_data <= 0;
-            hold_ctrl<=0;
-            recibir <= 0;
+    if (rst) begin
+        state <= IDLE;
+        byte_count <= 0;
+        IN2_data <= 0;
+        WR2_data <= 0;
+        hold_ctrl <= 0;
+        recibir <= 0;
+        timeout_counter <= 0;  // Inicializa el contador de timeout
+        byte_rx_valido<=0;
+    end else begin
+        byte_rx_valido<=m_axis_tvalid;
+        state <= next_state;
+        
+        // Actualiza el contador de timeout
+        if (state == RECEIVE_BYTE && !m_axis_tvalid) begin
+            timeout_counter <= timeout_counter + 1;
         end else begin
-            state <= next_state;
+            timeout_counter <= 0;  // Resetea el contador si está recibiendo un byte
         end
     end
+end
 
-    // Lógica de transición de estados
-    always @(*) begin
-        // Estado por defecto
-        next_state = state;
-        WR2_data = 0; // Inicializar WR2_data en 0
-        hold_ctrl=0;
-        recibir = 0;   // Inicializar recibir en 0
+// Modificar la lógica de los estados
+always @(*) begin
+    // Estado por defecto
+    next_state = state;
+    WR2_data = 0;  // Inicializar WR2_data en 0
+    hold_ctrl = 0;
+    recibir = 0;  // Inicializar recibir en 0
 
-        case (state)
-            IDLE: begin
-                if (m_axis_tvalid && !rx_busy && reg_sel_i) begin
-                    // Solo recibe si hay un dato válido y la UART no está ocupada
-                    next_state = RECEIVE_BYTE; // Cambia a recibir byte completo
-                    recibir = 1;  // Activa la recepción
-                end
+    case (state)
+        IDLE: begin
+            if (m_axis_tvalid && !rx_busy && reg_sel_i) begin
+                next_state = RECEIVE_BYTE;
+                recibir = 1;  // Activa la recepción
             end
+        end
 
-            RECEIVE_BYTE: begin
-                // Almacena el byte recibido en IN2_data
-                IN2_data[(byte_count + 1) * 8 - 1 -: 8] = dato_rx; // Almacena en la posición correcta, de rango de un byte
+        RECEIVE_BYTE: begin
+            // Almacena el byte recibido en IN2_data
+            IN2_data[(byte_count + 1) * 8 - 1 -: 8] = dato_rx;
+            if(byte_rx_valido)begin //////////////////////////Debe ser el m_axis_tvalid del ciclo anterior
                 byte_count = byte_count + 1;
-
-                // Cambia de estado si se han recibido 4 bytes
-                if (byte_count == 2'b11) begin
-                    next_state = COMPLETE;
-                end else begin
-                    next_state = IDLE; // Regresa a IDLE si aún no se han recibido 4 bytes
-                end
             end
-
-            COMPLETE: begin
-                WR2_data = 1;   // Activa la escritura de datos
-                hold_ctrl=1;       //AVERIGUAR FORMA DE DESACTIVAR 
-                byte_count = 0; // Resetea el contador para la próxima recepción
-                next_state = IDLE;  // Vuelve al estado inicial
+            // Cambia a COMPLETE si se han recibido 4 bytes o si hay un timeout
+            if (byte_count == 2'b11 || timeout_counter >= TIMEOUT_LIMIT) begin
+                next_state = COMPLETE;
             end
-        endcase
-    end
+            //end else if (timeout_counter >= TIMEOUT_LIMIT) begin
+            //    next_state = COMPLETE;  // Fuerza el paso a COMPLETE si hay timeout
+            //end else begin
+            //    next_state = IDLE;
+            //end
+        end
+
+        COMPLETE: begin
+            WR2_data = 1;  // Activa la escritura de datos
+            hold_ctrl = 1;  // Averiguar la forma de desactivar si es necesario
+            byte_count = 0;  // Resetea el contador de bytes
+            next_state = IDLE;
+            byte_rx_valido=0;
+        end
+    endcase
+end
 endmodule
