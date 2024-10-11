@@ -3,7 +3,7 @@
 
 //module Interfaz_UART_Nexys #(parameter Palabra = 32) (
 //------------AL FINALIZAR PRUEBAS CAMBIAR A 32-------------------//
-module Interfaz_UART_Nexys #(parameter Palabra = 32, parameter addr2=1) (
+module Interfaz_UART_Nexys #(parameter Palabra = 32) (
     input  wire CLK100MHZ,
     input  wire rst,
     
@@ -20,6 +20,7 @@ module Interfaz_UART_Nexys #(parameter Palabra = 32, parameter addr2=1) (
     );
     
 /////////////////////DE-MULTIPLEXOR PARA ESCRITURA EN REGISTROS////////////////////////////////////
+localparam addr2=1;
     
 wire WR1_reg_ctrl;
 wire WR1_reg_data;
@@ -34,9 +35,9 @@ DeMUX DeMUX_inst(
 ////////////////////////////////////REGISTRO DE DATOS//////////////////////////////////////////
 
 wire [Palabra-1:0] OUT_data;
-reg hold_ctrl;
-reg WR2_reg_data;
-reg [Palabra-1:0] IN2_data;
+wire hold_ctrl;
+wire WR2_reg_data;
+wire [Palabra-1:0] IN2_data;
 
 Reg_Data #(.Palabra(Palabra)) 
 Reg_Data_inst(
@@ -52,7 +53,7 @@ Reg_Data_inst(
 
 //////////////////////////////////////REGISTRO DE CONTROL/////////////////////////////////////////////////
 
-reg [Palabra-1:0] OUT_ctrl;
+wire [Palabra-1:0] OUT_ctrl;
 
 Reg_ctrl #(.palabra(Palabra)) Reg_ctrl_inst(
     .IN1(entrada_i),       // Entrada 1 de 32 bits
@@ -90,7 +91,7 @@ ctrl_UART #(.palabra(Palabra)) ctrl_UART_inst(
     .IN2_ctrl(),    // Salida de control IN2
     .WR2_ctrl(),                  // Señal de escritura para control
     // Dirección de salida
-    .addr2(addr2),
+    //.addr2(1'b1),
     
     .rxd(rxd), //Para el constraint
     .txd(txd), //Para el constraint

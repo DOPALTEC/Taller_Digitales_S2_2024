@@ -3,7 +3,7 @@
 module tb_UART_Nexys;
 
 parameter Palabra = 32;
-parameter addr2 = 1;
+
 //parameter prescale = 2604; //Para 200Mhz y Generar 9600 baudios (104,167us)
 
 // Señales
@@ -22,8 +22,7 @@ wire txd;
 
 // Instancia del módulo UART_Nexys
 Interfaz_UART_Nexys #(
-    .Palabra(Palabra), .addr2(addr2)
-) uut (
+    .Palabra(Palabra)) uut (
     .CLK100MHZ(clk),
     .rst(rst),
     .wr_i(wr_i), //usar switch

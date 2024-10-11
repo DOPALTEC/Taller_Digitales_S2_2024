@@ -3,6 +3,7 @@
 module ctrl_UART #(
     parameter palabra = 32  // Tamaño por defecto de la palabra
     //parameter N = 2         // Tamaño por defecto de addr2
+   
 )(
     input  wire CLK100MHZ,
     input  wire rst,
@@ -16,12 +17,13 @@ module ctrl_UART #(
     output reg WR2_data,                  // Señal de escritura para datos
     output reg hold_ctrl,
     output reg [palabra-1:0] IN2_ctrl,    // Salida de control IN2
-    output reg WR2_ctrl,                  // Señal de escritura para control
+    output reg WR2_ctrl,  
+    //output reg add2,                // Señal de escritura para control
     
 
     // Dirección de salida
     //output reg [N-1:0] addr2,             // Salida de dirección
-    output reg addr2, //Esta direccion no cambia, corresponde a la direccion donde
+    //output reg addr2, //Esta direccion no cambia, corresponde a la direccion donde
     //se guarda lo que se recibe en el registro de datos
     
     input  wire rxd, //Para el constraint
