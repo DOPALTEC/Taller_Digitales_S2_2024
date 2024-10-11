@@ -42,7 +42,7 @@ wire [Palabra-1:0] IN2_data;
 Reg_Data #(.Palabra(Palabra)) 
 Reg_Data_inst(
     .IN1(entrada_i),       // Entrada 1 de 32 bits
-    .IN2(),       // Entrada 2 de 32 bits Proveniente de UART
+    .IN2(IN2_data),       // Entrada 2 de 32 bits Proveniente de UART
     .addr1(addr_i),            // Línea de dirección para IN1
     .addr2(addr2),            // Línea de dirección para IN2 Proveniente de UART
     .WR1(WR1_reg_data),              // Bit de escritura para IN1

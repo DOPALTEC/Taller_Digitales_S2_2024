@@ -71,17 +71,22 @@ UART_Nexys #(.DATA_WIDTH(8), .prescale(1303)) UART_Nexys_inst(
 
 reg [15:0] timeout_counter;  // Un contador para el tiempo de espera
 
-localparam TIMEOUT_LIMIT = 1000;  // Define un límite para el timeout (ajústalo según el reloj)
+localparam TIMEOUT_LIMIT = 1000;  // Define un límite para el timeout (ajústalo según el reloj) 
+/*
+
+DAR ALMENOS 3 BITS EN RX QUE NO SE RECIBE NADA, IR PROBRANDO AL TENER LA RECPCION EN PC REAL
+
+*/
 
 reg byte_rx_valido;
 
-// Modificar la lógica del always @(posedge)
+
 always @(posedge UART_Nexys_inst.CLK200MHZ or posedge rst) begin
     if (rst) begin
         state <= IDLE;
         byte_count <= 0;
-        IN2_data <= 0;
         WR2_data <= 0;
+        IN2_data <= 0;
         hold_ctrl <= 0;
         recibir <= 0;
         timeout_counter <= 0;  // Inicializa el contador de timeout
@@ -96,6 +101,13 @@ always @(posedge UART_Nexys_inst.CLK200MHZ or posedge rst) begin
         end else begin
             timeout_counter <= 0;  // Resetea el contador si está recibiendo un byte
         end
+        
+        // Almacena el byte recibido solo si byte_rx_valido (m_axis_tvalid del ciclo anterior) es alto
+        if (state == RECEIVE_BYTE && byte_rx_valido) begin
+            IN2_data[(byte_count + 1) * 8 - 1 -: 8] <= dato_rx;  // Almacena el byte en la posición correcta
+            byte_count <= byte_count + 1;  // Incrementa el contador después de almacenar el byte
+        end
+        
     end
 end
 
@@ -103,8 +115,11 @@ end
 always @(*) begin
     // Estado por defecto
     next_state = state;
+    
+    //////////////////VALORES SE REINICIAN CADA CICLO EVITAN LA ESCRITURA COMPLETA EN REGDATA////////////////////
     WR2_data = 0;  // Inicializar WR2_data en 0
     hold_ctrl = 0;
+    /////////////////////////////////////////////////////////////////////
     recibir = 0;  // Inicializar recibir en 0
 
     case (state)
@@ -116,28 +131,30 @@ always @(*) begin
         end
 
         RECEIVE_BYTE: begin
+            /*
             // Almacena el byte recibido en IN2_data
             IN2_data[(byte_count + 1) * 8 - 1 -: 8] = dato_rx;
-            if(byte_rx_valido)begin //////////////////////////Debe ser el m_axis_tvalid del ciclo anterior
+            if(byte_rx_valido)begin //Debe ser el m_axis_tvalid del ciclo anterior
                 byte_count = byte_count + 1;
             end
             // Cambia a COMPLETE si se han recibido 4 bytes o si hay un timeout
             if (byte_count == 2'b11 || timeout_counter >= TIMEOUT_LIMIT) begin
                 next_state = COMPLETE;
+                //dato_rx<=0;
             end
-            //end else if (timeout_counter >= TIMEOUT_LIMIT) begin
-            //    next_state = COMPLETE;  // Fuerza el paso a COMPLETE si hay timeout
-            //end else begin
-            //    next_state = IDLE;
-            //end
+            */
+            if (byte_count == 2'b11 || timeout_counter >= TIMEOUT_LIMIT) begin
+                next_state = COMPLETE;
+            end
         end
 
         COMPLETE: begin
             WR2_data = 1;  // Activa la escritura de datos
             hold_ctrl = 1;  // Averiguar la forma de desactivar si es necesario
             byte_count = 0;  // Resetea el contador de bytes
-            next_state = IDLE;
+            //next_state = IDLE;///////////////////////////////////////////////////////////////////////////////////////////////////
             byte_rx_valido=0;
+            timeout_counter=0;
         end
     endcase
 end

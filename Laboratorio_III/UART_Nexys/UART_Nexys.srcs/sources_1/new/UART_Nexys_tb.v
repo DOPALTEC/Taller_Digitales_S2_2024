@@ -67,7 +67,7 @@ initial begin
     #10000;
     wr_i=1;
     reg_sel_i=1;
-    entrada_i=32'h32AAFF00;
+    entrada_i=32'h00AAFF32;
     addr_i=0;
     
     // Simulación de recepción de datos en UART

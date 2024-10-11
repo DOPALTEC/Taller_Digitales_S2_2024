@@ -26,7 +26,7 @@ module Reg_Data #(parameter Palabra=32) (
             OUT = register2; // Proporcionamos la salida del registro 2
         end else begin
             // Cuando hold_ctrl es 0, utilizamos IN1
-            if (addr1 && WR1) begin
+            if (!addr1 && WR1) begin
                 register1[7:0] = IN1[7:0]; // Solo almacenamos los bits 0-7
             end
             OUT = register1; // Proporcionamos la salida del registro 1
