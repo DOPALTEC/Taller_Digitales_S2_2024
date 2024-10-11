@@ -21,7 +21,7 @@ module ctrl_UART #(
 
     // Dirección de salida
     //output reg [N-1:0] addr2,             // Salida de dirección
-    output reg addr2=1, //Esta direccion no cambia, corresponde a la direccion donde
+    output reg addr2, //Esta direccion no cambia, corresponde a la direccion donde
     //se guarda lo que se recibe en el registro de datos
     
     input  wire rxd, //Para el constraint
@@ -47,7 +47,7 @@ reg recibir;            // Señal de control para indicar que estamos listos para
 
 wire clk_uart;
 
-UART_Nexys #(.DATA_WIDTH(8), .prescale(1303))(
+UART_Nexys #(.DATA_WIDTH(8), .prescale(1303)) UART_Nexys_inst(
     .CLK100MHZ(CLK100MHZ),
     .rst(rst),
 
@@ -69,7 +69,7 @@ UART_Nexys #(.DATA_WIDTH(8), .prescale(1303))(
     .rx_frame_error()
 );
 
-always @(posedge uart_inst.CLK200MHZ or posedge rst) begin
+always @(posedge UART_Nexys_inst.CLK200MHZ or posedge rst) begin
         if (rst) begin
             state <= IDLE;
             byte_count <= 0;

@@ -2,47 +2,40 @@
 
 module tb_UART_Nexys;
 
-// Parámetros del diseño
-parameter DATA_WIDTH = 8;
-parameter prescale = 1303; //Para 100Mhz y Generar 9600 baudios
+parameter Palabra = 32;
+parameter addr2 = 1;
 //parameter prescale = 2604; //Para 200Mhz y Generar 9600 baudios (104,167us)
 
 // Señales
 reg clk;
 reg rst;
-reg [DATA_WIDTH-1:0] dato_tx;
-wire hay_dato_tx;
-reg transmitir;
-wire txd;
-wire tx_busy;
-reg recibir;
+reg wr_i;
+reg reg_sel_i;
+
+reg [Palabra-1:0] entrada_i;
+reg addr_i;
+
+wire [Palabra-1:0] salida_o;
+
 reg rxd;
-wire rx_busy;
-wire [DATA_WIDTH-1:0] dato_rx;
-wire m_axis_tvalid;
-wire rx_overrun_error;
-wire rx_frame_error;
-//reg [15:0] prescale;
+wire txd;
 
 // Instancia del módulo UART_Nexys
-UART_Nexys #(
-    .DATA_WIDTH(DATA_WIDTH), .prescale(prescale)
+Interfaz_UART_Nexys #(
+    .Palabra(Palabra), .addr2(addr2)
 ) uut (
     .CLK100MHZ(clk),
     .rst(rst),
-    .dato_tx(dato_tx),
-    .transmitir(transmitir),
-    .hay_dato_tx(hay_dato_tx),
-    .dato_rx(dato_rx),
-    .m_axis_tvalid(m_axis_tvalid),
-    .recibir(recibir),
-    .rxd(rxd),
-    .txd(txd),
-    .tx_busy(tx_busy),
-    .rx_busy(rx_busy),
-    .rx_overrun_error(rx_overrun_error),
-    .rx_frame_error(rx_frame_error)
-    //.prescale(prescale)
+    .wr_i(wr_i), //usar switch
+    .reg_sel_i(reg_sel_i), //usar switch, controla a los dos registros, dice cual de los dos opera
+    
+    .entrada_i(entrada_i), //USAR SWITCHES
+    .addr_i(addr_i), //usar switch
+    
+    .salida_o(salida_o), //Usar LEDS 
+    
+    .rxd(rxd), //Para el constraint
+    .txd(txd) //Para el constraint
 );
 
 
@@ -55,9 +48,13 @@ initial begin
     // Inicialización de señales
     clk = 0;
     rst = 1;
-    dato_tx = 0;
-    transmitir = 0;
-    recibir = 0;
+    
+    wr_i=0;
+    reg_sel_i=1;
+    
+    entrada_i=0;
+    addr_i=0;
+
     rxd = 1;  // UART inactivo por defecto
     //prescale=16'd1303;
     //o
@@ -69,15 +66,10 @@ initial begin
     
     // Envío de datos a través de la UART
     #10000;
-    dato_tx = 8'hA5;  // Datos a enviar
-    #100000;
-    transmitir = 1;
-    #937503;
-    //wait (s_axis_tready);  // Espera hasta que UART esté lista
-    //recibir=1;
-    transmitir=0;
-   
-
+    wr_i=1;
+    reg_sel_i=1;
+    entrada_i=32'h32AAFF00;
+    addr_i=0;
     
     // Simulación de recepción de datos en UART
     #500;  // Tiempo para que el transmisor complete el envío
@@ -101,7 +93,7 @@ initial begin
 
     // Simulación de recepción
     #500;
-    recibir = 0;  // El receptor está listo para recibir datos
+
 
     #1000;
     $stop;  // Deten la simulación

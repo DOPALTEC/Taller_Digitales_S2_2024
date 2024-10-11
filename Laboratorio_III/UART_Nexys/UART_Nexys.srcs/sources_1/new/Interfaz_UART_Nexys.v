@@ -21,8 +21,8 @@ module Interfaz_UART_Nexys #(parameter Palabra = 32, parameter addr2=1) (
     
 /////////////////////DE-MULTIPLEXOR PARA ESCRITURA EN REGISTROS////////////////////////////////////
     
-reg WR1_reg_ctrl;
-reg WR1_reg_data;
+wire WR1_reg_ctrl;
+wire WR1_reg_data;
     
 DeMUX DeMUX_inst(
     .wr_i(wr_i),        // Bit de entrada
@@ -33,7 +33,7 @@ DeMUX DeMUX_inst(
 
 ////////////////////////////////////REGISTRO DE DATOS//////////////////////////////////////////
 
-reg [Palabra-1:0] OUT_data;
+wire [Palabra-1:0] OUT_data;
 reg hold_ctrl;
 reg WR2_reg_data;
 reg [Palabra-1:0] IN2_data;
@@ -54,7 +54,7 @@ Reg_Data_inst(
 
 reg [Palabra-1:0] OUT_ctrl;
 
-Reg_ctrl #(.Palabra(Palabra)) Reg_ctrl_inst(
+Reg_ctrl #(.palabra(Palabra)) Reg_ctrl_inst(
     .IN1(entrada_i),       // Entrada 1 de 32 bits
     .IN2(),       // Entrada 2 de 32 bits
     .WR1(WR1_reg_ctrl),              // Señal de escritura 1
@@ -73,7 +73,7 @@ MUX_UI_UART MUX_UI_UART_inst(
 
 ///////////////CONTROL DE LA UART/////////////////////////////////
 
-ctrl_UART #(.palabra(Palabra))(
+ctrl_UART #(.palabra(Palabra)) ctrl_UART_inst(
     .CLK100MHZ(CLK100MHZ),
     .rst(rst),
     
