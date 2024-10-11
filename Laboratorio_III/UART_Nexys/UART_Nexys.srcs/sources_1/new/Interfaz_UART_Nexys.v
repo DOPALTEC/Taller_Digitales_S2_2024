@@ -3,17 +3,20 @@
 
 //module Interfaz_UART_Nexys #(parameter Palabra = 32) (
 //------------AL FINALIZAR PRUEBAS CAMBIAR A 32-------------------//
-module Interfaz_UART_Nexys #(parameter Palabra = 32) (
+module Interfaz_UART_Nexys #(parameter Palabra = 32, parameter addr2=1) (
     input  wire CLK100MHZ,
     input  wire rst,
     
     input wire wr_i, //usar switch
-    input wire reg_sel_i, //usar switch
+    input wire reg_sel_i, //usar switch, controla a los dos registros, dice cual de los dos opera
     
     input wire [Palabra-1:0]  entrada_i, //USAR SWITCHES
     input wire addr_i, //usar switch
     
-    output wire [Palabra-1:0]  salida_o //Usar LEDS 
+    output wire [Palabra-1:0]  salida_o, //Usar LEDS 
+    
+    input  wire rxd, //Para el constraint
+    output wire txd //Para el constraint
     );
     
 /////////////////////DE-MULTIPLEXOR PARA ESCRITURA EN REGISTROS////////////////////////////////////
@@ -32,15 +35,17 @@ DeMUX DeMUX_inst(
 
 reg [Palabra-1:0] OUT_data;
 reg hold_ctrl;
+reg WR2_reg_data;
+reg [Palabra-1:0] IN2_data;
 
 Reg_Data #(.Palabra(Palabra)) 
 Reg_Data_inst(
     .IN1(entrada_i),       // Entrada 1 de 32 bits
     .IN2(),       // Entrada 2 de 32 bits Proveniente de UART
     .addr1(addr_i),            // Línea de dirección para IN1
-    .addr2(),            // Línea de dirección para IN2 Proveniente de UART
+    .addr2(addr2),            // Línea de dirección para IN2 Proveniente de UART
     .WR1(WR1_reg_data),              // Bit de escritura para IN1
-    .WR2(),              // Bit de escritura para IN2 Proveniente de UART
+    .WR2(WR2_reg_data),              // Bit de escritura para IN2 Proveniente de UART
     .hold_ctrl(hold_ctrl),        // Control para seleccionar el registro Proveniente de UART
     .OUT(OUT_data)  
 );
@@ -71,22 +76,24 @@ MUX_UI_UART MUX_UI_UART_inst(
 ctrl_UART #(.palabra(Palabra))(
     .CLK100MHZ(CLK100MHZ),
     .rst(rst),
+    
     // Entradas
-    .ctrl(),    // Entrada de control
+    .reg_sel_i(reg_sel_i),
+    
+    .ctrl(OUT_ctrl),    // Entrada de control
     .data(OUT_data),    // Entrada de datos
 
     // Salidas
-    .IN2_data(),    // Salida de datos IN2
-    .WR2_data(),                  // Señal de escritura para datos
+    .IN2_data(IN2_data),    // Salida de datos IN2
+    .WR2_data(WR2_reg_data), 
+    .hold_ctrl(hold_ctrl),                 // Señal de escritura para datos
     .IN2_ctrl(),    // Salida de control IN2
     .WR2_ctrl(),                  // Señal de escritura para control
-
     // Dirección de salida
-    //output reg [N-1:0] addr2,             // Salida de dirección
-    .addr2(),
+    .addr2(addr2),
     
-    .rxd(), //Para el constraint
-    .txd(), //Para el constraint
+    .rxd(rxd), //Para el constraint
+    .txd(txd), //Para el constraint
     .rx_busy()
 );
 

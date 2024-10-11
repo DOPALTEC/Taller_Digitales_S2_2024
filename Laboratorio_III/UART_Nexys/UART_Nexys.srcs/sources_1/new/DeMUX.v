@@ -8,17 +8,15 @@ module DeMUX(
     );
     
 always @(*) begin
-    // Inicializamos ambas salidas a 0
-    WR1_reg_ctrl = 0;
-    WR1_reg_data = 0;
-    
-    // Demux en función de reg_sel_i
     if (reg_sel_i == 0) begin
         WR1_reg_ctrl = wr_i;  // Paso de wr_i cuando reg_sel_i es 0
+        WR1_reg_data = 0;
     end else begin
         WR1_reg_data = wr_i;  // Paso de wr_i cuando reg_sel_i es 1
+        WR1_reg_ctrl = 0;
     end
 end
+
 
 endmodule
 

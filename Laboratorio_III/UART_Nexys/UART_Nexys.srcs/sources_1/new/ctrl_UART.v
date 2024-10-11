@@ -6,6 +6,7 @@ module ctrl_UART #(
 )(
     input  wire CLK100MHZ,
     input  wire rst,
+    input wire reg_sel_i,
     // Entradas
     input wire [palabra-1:0] ctrl,    // Entrada de control
     input wire [palabra-1:0] data,    // Entrada de datos
@@ -91,7 +92,7 @@ always @(posedge uart_inst.CLK200MHZ or posedge rst) begin
 
         case (state)
             IDLE: begin
-                if (m_axis_tvalid && !rx_busy) begin
+                if (m_axis_tvalid && !rx_busy && reg_sel_i) begin
                     // Solo recibe si hay un dato válido y la UART no está ocupada
                     next_state = RECEIVE_BYTE; // Cambia a recibir byte completo
                     recibir = 1;  // Activa la recepción
