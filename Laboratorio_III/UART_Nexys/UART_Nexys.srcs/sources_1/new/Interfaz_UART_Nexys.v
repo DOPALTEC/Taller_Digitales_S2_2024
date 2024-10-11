@@ -56,5 +56,6 @@ MUX_UI_UART MUX_UI_UART_inst(
     .reg_sel_i(reg_sel_i),              // Línea de selección
     .salida_o(salida_o)
 );
-    
+
+
 endmodule

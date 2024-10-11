@@ -1,9 +1,11 @@
 `timescale 1ns / 1ps
 
 module ctrl_UART #(
-    parameter palabra = 32,  // Tamaño por defecto de la palabra
-    parameter N = 16         // Tamaño por defecto de addr2
+    parameter palabra = 32  // Tamaño por defecto de la palabra
+    //parameter N = 2         // Tamaño por defecto de addr2
 )(
+    input  wire CLK100MHZ,
+    input  wire rst,
     // Entradas
     input wire [palabra-1:0] ctrl,    // Entrada de control
     input wire [palabra-1:0] data,    // Entrada de datos
@@ -15,19 +17,40 @@ module ctrl_UART #(
     output reg WR2_ctrl,                  // Señal de escritura para control
 
     // Dirección de salida
-    output reg [N-1:0] addr2              // Salida de dirección
+    //output reg [N-1:0] addr2,             // Salida de dirección
+    output reg addr2,
+    
+    input  wire rxd, //Para el constraint
+    output wire txd //Para el constraint
 );
 
-    //Añadir Lógica de control 
-    always @(*) begin
+//GENERACION DE ESTADOS
+localparam IDLE=2'B00;
 
-        IN2_data <= data;              // Pasar los datos directamente a IN2_data
-        WR2_data <= ctrl[0];           // Control de escritura desde el bit 0 de ctrl
 
-        IN2_ctrl <= ctrl;              // Pasar el valor de ctrl a IN2_ctrl
-        WR2_ctrl <= ctrl[1];           // Control de escritura basado en el bit 1 de ctrl
+UART_Nexys #(.DATA_WIDTH(8), .prescale(1303))(
+    .CLK100MHZ(CLK100MHZ),
+    .rst(rst),
 
-        addr2 <= data[N-1:0];          // La dirección se obtiene de los N bits inferiores de data
-    end
+    .dato_tx(), //Es de 8 bits por tanto se debe empaquetar el envío de la palabra
+    .hay_dato_tx(), //Se activa cuando hay un dato ingresado para enviar
+    //Para pruebas usar un led
+    .transmitir(), //En alto transmite el dato, para pruebas un boton
+
+    .dato_rx(), 
+    .m_axis_tvalid(),
+    .recibir(), //NO afecta
+
+    .rxd(rxd),
+    .txd(txd),
+
+    .tx_busy(),
+    .rx_busy(),
+    .rx_overrun_error(),
+    .rx_frame_error()
+);
+
+
+
 
 endmodule

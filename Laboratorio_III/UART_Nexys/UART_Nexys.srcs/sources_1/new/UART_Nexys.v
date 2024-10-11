@@ -4,28 +4,19 @@
 module UART_Nexys #(parameter DATA_WIDTH = 8, parameter prescale=1303)(
     input  wire CLK100MHZ,
     input  wire rst,
-    /*
-     * AXI input
-     */
+
     input  wire [DATA_WIDTH-1:0] dato_tx,
     output wire hay_dato_tx, //Se activa cuando hay un dato ingresado para enviar
     //Para pruebas usar un led
     input  wire transmitir, //En alto transmite el dato, para pruebas un boton
 
-    /*
-     * AXI output
-     */
     output wire [DATA_WIDTH-1:0] dato_rx,
     output wire m_axis_tvalid,
     input  wire recibir,
-    /*
-     * UART interface
-     */
+
     input  wire rxd,
     output wire txd,
-    /*
-     * Status
-     */
+
     output wire tx_busy,
     output wire rx_busy,
     output wire rx_overrun_error,
