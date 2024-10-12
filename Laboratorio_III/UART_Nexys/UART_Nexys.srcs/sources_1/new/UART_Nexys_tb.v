@@ -98,37 +98,27 @@ initial begin
     //entrada_i=32'h00000001;
     //wr_i=1;
     //reg_sel_i=0;
+    //#50000;
+    //entrada_i=32'h00000000;
+    //wr_i=1;
+    //reg_sel_i=0;
+    
+    #100000;
+    reg_sel_i=1;
+    
+    #100000;
+    entrada_i[0]=1;
+    wr_i=1;
+    reg_sel_i=0;
+    
+    #100000;
+    wr_i=0;
+    reg_sel_i=1;
+    
     #50000;
-    entrada_i=32'h00000000;
-    wr_i=1;
-    reg_sel_i=0;
-    
-    #100000;
-    wr_i=0;
-    reg_sel_i=1;
-    
-    #100000;
-    entrada_i=32'h00000001;
-    wr_i=1;
-    reg_sel_i=0;
-    
-    #100000;
-    wr_i=0;
-    reg_sel_i=1;
-    
-    #50000;
-    entrada_i=32'h00000000;
-    wr_i=1;
-    reg_sel_i=0;
-    #100000;
-    
-    reg_sel_i=1;
-    wr_i=0;
-    
-    
 
-
-    #1000;
+    
+ 
     $stop;  // Deten la simulación
 end
 

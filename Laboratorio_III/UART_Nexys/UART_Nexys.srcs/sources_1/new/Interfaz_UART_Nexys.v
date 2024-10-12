@@ -81,6 +81,7 @@ ctrl_UART #(.palabra(Palabra)) ctrl_UART_inst(
     
     // Entradas
     .reg_sel_i(reg_sel_i),
+    .wr_i(wr_i),
     
     .ctrl(OUT_ctrl),    // Entrada de control
     .data(OUT_data),    // Entrada de datos
