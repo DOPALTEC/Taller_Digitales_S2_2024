@@ -85,6 +85,7 @@ DAR ALMENOS 3 BITS EN RX QUE NO SE RECIBE NADA, IR PROBRANDO AL TENER LA RECPCIO
 
 reg byte_rx_valido;
 
+
 /*
 Si rx se mantiene en alto, osea que no se recibe nada, que esté pendiente de si se quiere realizar una transmision
 despues de una recepcion se transmite, la prioridad será la recepcion. El cual se escribira en control o datos 
@@ -95,10 +96,14 @@ always @(posedge UART_Nexys_inst.CLK200MHZ or posedge rst) begin
     if (rst) begin
         state <= IDLE;
         byte_count <= 0;
+        hold_ctrl <= 0;
+        //////Reinicia Bits para Recepcion////
         WR2_data <= 0;
         IN2_data <= 0;
-        hold_ctrl <= 0;
         recibir <= 0;
+        //////Reinicia Bits para Transmisuin////
+        WR2_ctrl=0;
+        IN2_ctrl<=0;
         transmitir<=0;
         timeout_counter <= 0;  // Inicializa el contador de timeout
         byte_rx_valido<=0;
@@ -130,8 +135,9 @@ always @(*) begin
     //////////////////VALORES SE REINICIAN CADA CICLO EVITAN LA ESCRITURA COMPLETA EN REGDATA////////////////////
     WR2_data = 0;  // Inicializar WR2_data en 0
     hold_ctrl = 0;
-    /////////////////////////////////////////////////////////////////////
     recibir = 0;  // Inicializar recibir en 0
+    //Transmision
+    WR2_ctrl=0;
     transmitir=0;
 
     case (state)
@@ -141,12 +147,13 @@ always @(*) begin
                 next_state = RECEIVE_BYTE;
                 recibir = 1;  // Activa la recepción
             end
-            else if (!m_axis_tvalid && !rx_busy && !tx_busy && hay_dato_tx && ctrl[0]) begin
+            else if (!m_axis_tvalid && !rx_busy && !tx_busy && hay_dato_tx && ctrl[0]==1) begin
                 dato_tx<=data[7:0];
-                hold_ctrl=0;
+                //hold_ctrl=0;
 
-                transmitir=1;
-                next_state = IDLE;
+                //transmitir=1;
+                //next_state = IDLE;
+                next_state = TRANSMIT;
             end
         end
 
@@ -160,11 +167,19 @@ always @(*) begin
             WR2_data = 1;  // Activa la escritura de datos
             hold_ctrl = 1;  // Averiguar la forma de desactivar si es necesario
             byte_count = 0;  // Resetea el contador de bytes
-            ///////////////////////////////////////////////////////////////////////////////////////////////////
-            byte_rx_valido=0;
-            timeout_counter=0;
             next_state = IDLE;
         end
+        
+        TRANSMIT: begin
+            transmitir=1;
+            WR2_ctrl=1;
+            IN2_ctrl=0;
+            //ctrl[0]=0; //Limpia el bit send
+            if (!tx_busy) begin  // Espera hasta que la transmisión termine (tx_busy = 0)
+                next_state = IDLE;  // Vuelve al estado IDLE cuando la transmisión se completa
+            end
+        end
+            
     endcase
 end
 endmodule

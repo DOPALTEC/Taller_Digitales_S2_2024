@@ -57,9 +57,10 @@ wire [Palabra-1:0] OUT_ctrl;
 
 Reg_ctrl #(.palabra(Palabra)) Reg_ctrl_inst(
     .IN1(entrada_i),       // Entrada 1 de 32 bits
-    .IN2(),       // Entrada 2 de 32 bits
+    .IN2(0),       // Entrada 2 de 32 bits
     .WR1(WR1_reg_ctrl),              // Señal de escritura 1
-    .WR2(),              // Señal de escritura 2
+    .WR2(0),  
+    .rst(rst),            // Señal de escritura 2
     .out(OUT_ctrl) 
 );
 
