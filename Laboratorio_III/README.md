@@ -11,16 +11,13 @@ https://cs.uns.edu.ar/materias/se/2019/descargas/teoria/clase01-introduccion-han
 ## 3. Desarrollo
 
 
-### 3.1 Módulo "genérico"
+### 3.N INTERFAZ DE USUARIO PARA UART
 #### 1. Encabezado del módulo
 ```SystemVerilog
-module mi_modulo(
-    input logic     entrada_i,      
-    output logic    salida_i 
-    );
+
 ```
 #### 2. Parámetros
-- Lista de parámetros
+- Palabra: Denota el tamaño de bits de las entradas y salidas de los registros.
 
 #### 3. Entradas y salidas:
 - `entrada_i`: descripción de la entrada
