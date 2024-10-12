@@ -11,7 +11,7 @@ https://cs.uns.edu.ar/materias/se/2019/descargas/teoria/clase01-introduccion-han
 ## 3. Desarrollo
 
 
-### 3.N INTERFAZ DE USUARIO PARA UART
+### 3.N Iterfaz de Usuario para Protocolo UART
 #### 1. Encabezado del módulo
 ```SystemVerilog
 
