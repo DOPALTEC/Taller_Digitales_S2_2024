@@ -33,6 +33,7 @@ module ctrl_UART #(
     
 );
 
+
 //GENERACION DE ESTADOS
 localparam IDLE=2'b00;
 localparam RECEIVE_BYTE = 2'b01;
@@ -42,19 +43,22 @@ reg [1:0] state, next_state;
     
 // Contador de bytes recibidos
 reg [1:0] byte_count;   // 2 bits para contar hasta 4 bytes
-
+reg [7:0] dato_tx;
 wire [7:0] dato_rx;     // Dato recibido desde el módulo UART
 wire m_axis_tvalid;     // Señal que indica que un byte ha sido recibido
 reg recibir;            // Señal de control para indicar que estamos listos para recibir
+reg transmitir;
+wire tx_busy;
+wire hay_dato_tx;
 
 UART_Nexys #(.DATA_WIDTH(8), .prescale(1303)) UART_Nexys_inst(
     .CLK100MHZ(CLK100MHZ),
     .rst(rst),
 
-    .dato_tx(8'b0), //Es de 8 bits por tanto se debe empaquetar el envío de la palabra
-    .hay_dato_tx(), //Se activa cuando hay un dato ingresado para enviar
+    .dato_tx(dato_tx), //Es de 8 bits por tanto se debe empaquetar el envío de la palabra
+    .hay_dato_tx(hay_dato_tx), //Se activa cuando hay un dato ingresado para enviar
     //Para pruebas usar un led
-    .transmitir(1'b0), //En alto transmite el dato, para pruebas un boton
+    .transmitir(transmitir), //En alto transmite el dato, para pruebas un boton
 
     .dato_rx(dato_rx), 
     .m_axis_tvalid(m_axis_tvalid),
@@ -63,7 +67,7 @@ UART_Nexys #(.DATA_WIDTH(8), .prescale(1303)) UART_Nexys_inst(
     .rxd(rxd),
     .txd(txd),
 
-    .tx_busy(),
+    .tx_busy(tx_busy),
     .rx_busy(rx_busy),
     .rx_overrun_error(),
     .rx_frame_error()
@@ -80,7 +84,12 @@ DAR ALMENOS 3 BITS EN RX QUE NO SE RECIBE NADA, IR PROBRANDO AL TENER LA RECPCIO
 
 reg byte_rx_valido;
 
+/*
+Si rx se mantiene en alto, osea que no se recibe nada, que esté pendiente de si se quiere realizar una transmision
+despues de una recepcion se transmite, la prioridad será la recepcion. El cual se escribira en control o datos 
+dependiendo de reg_sel_i y si rx baja se mantiene el hold_ctrl en 1 hasta que byte_rx_valido
 
+*/
 always @(posedge UART_Nexys_inst.CLK200MHZ or posedge rst) begin
     if (rst) begin
         state <= IDLE;
@@ -89,6 +98,7 @@ always @(posedge UART_Nexys_inst.CLK200MHZ or posedge rst) begin
         IN2_data <= 0;
         hold_ctrl <= 0;
         recibir <= 0;
+        transmitir<=0;
         timeout_counter <= 0;  // Inicializa el contador de timeout
         byte_rx_valido<=0;
     end else begin
@@ -121,28 +131,29 @@ always @(*) begin
     hold_ctrl = 0;
     /////////////////////////////////////////////////////////////////////
     recibir = 0;  // Inicializar recibir en 0
+    transmitir=0;
 
     case (state)
         IDLE: begin
-            if (m_axis_tvalid && !rx_busy && reg_sel_i) begin
+            //if (m_axis_tvalid && !rx_busy && reg_sel_i) begin
+            if (m_axis_tvalid && !rx_busy && !tx_busy) begin //Si no se esta transmitiendo ni recibiendo y hay un byte ya recibido
                 next_state = RECEIVE_BYTE;
                 recibir = 1;  // Activa la recepción
+            end
+            else if (!m_axis_tvalid && !rx_busy && !tx_busy && hay_dato_tx && ctrl[0]) begin
+                //if(reg_sel_i)begin
+                    dato_tx<=data[7:0];
+                    hold_ctrl=0;
+                //end
+                //else begin 
+                //    dato_tx<=ctrl[7:0];
+                //end
+                transmitir=1;
+                next_state = IDLE;
             end
         end
 
         RECEIVE_BYTE: begin
-            /*
-            // Almacena el byte recibido en IN2_data
-            IN2_data[(byte_count + 1) * 8 - 1 -: 8] = dato_rx;
-            if(byte_rx_valido)begin //Debe ser el m_axis_tvalid del ciclo anterior
-                byte_count = byte_count + 1;
-            end
-            // Cambia a COMPLETE si se han recibido 4 bytes o si hay un timeout
-            if (byte_count == 2'b11 || timeout_counter >= TIMEOUT_LIMIT) begin
-                next_state = COMPLETE;
-                //dato_rx<=0;
-            end
-            */
             if (byte_count == 2'b11 || timeout_counter >= TIMEOUT_LIMIT) begin
                 next_state = COMPLETE;
             end
@@ -152,9 +163,10 @@ always @(*) begin
             WR2_data = 1;  // Activa la escritura de datos
             hold_ctrl = 1;  // Averiguar la forma de desactivar si es necesario
             byte_count = 0;  // Resetea el contador de bytes
-            //next_state = IDLE;///////////////////////////////////////////////////////////////////////////////////////////////////
+            ///////////////////////////////////////////////////////////////////////////////////////////////////
             byte_rx_valido=0;
             timeout_counter=0;
+            next_state = IDLE;
         end
     endcase
 end

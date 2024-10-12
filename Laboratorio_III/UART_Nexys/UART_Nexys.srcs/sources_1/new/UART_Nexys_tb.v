@@ -69,8 +69,10 @@ initial begin
     reg_sel_i=1;
     entrada_i=32'h00AAFF32;
     addr_i=0;
-    
+    #500;
+    wr_i=0;
     // Simulación de recepción de datos en UART
+    
     #500;  // Tiempo para que el transmisor complete el envío
     rxd = 0;  // Start bit
     #104167    // Tiempo para cada bit (ajustado según baudrate)
@@ -91,7 +93,13 @@ initial begin
     rxd = 1;  #104167;
 
     // Simulación de recepción
-    #500;
+
+    #100000;
+    entrada_i=32'h00000001;
+     wr_i=1;
+     reg_sel_i=0;
+    #100000;
+    
 
 
     #1000;
