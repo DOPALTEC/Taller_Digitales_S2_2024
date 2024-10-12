@@ -13,6 +13,7 @@ module Reg_ctrl #(parameter palabra=32) (
     wire new_rx = out[1];        // Bit 1 se llama 'new_rx'
 
     always @(posedge WR1 or posedge WR2) begin
+        out=0;
         if (WR1) begin
             out <= IN1;          // Escribe IN1 en el registro si WR1 está activa
         end else if (WR2) begin

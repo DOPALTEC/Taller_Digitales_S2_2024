@@ -37,7 +37,8 @@ module ctrl_UART #(
 //GENERACION DE ESTADOS
 localparam IDLE=2'b00;
 localparam RECEIVE_BYTE = 2'b01;
-localparam COMPLETE     = 2'b10;
+localparam COMPLETE = 2'b10;
+localparam TRANSMIT = 2'b11;
 
 reg [1:0] state, next_state;
     
@@ -141,13 +142,9 @@ always @(*) begin
                 recibir = 1;  // Activa la recepción
             end
             else if (!m_axis_tvalid && !rx_busy && !tx_busy && hay_dato_tx && ctrl[0]) begin
-                //if(reg_sel_i)begin
-                    dato_tx<=data[7:0];
-                    hold_ctrl=0;
-                //end
-                //else begin 
-                //    dato_tx<=ctrl[7:0];
-                //end
+                dato_tx<=data[7:0];
+                hold_ctrl=0;
+
                 transmitir=1;
                 next_state = IDLE;
             end

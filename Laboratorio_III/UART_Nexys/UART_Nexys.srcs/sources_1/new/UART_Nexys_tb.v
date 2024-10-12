@@ -96,8 +96,12 @@ initial begin
 
     #100000;
     entrada_i=32'h00000001;
-     wr_i=1;
-     reg_sel_i=0;
+    wr_i=1;
+    reg_sel_i=0;
+    #100000;
+    entrada_i=32'h00000000;
+    wr_i=0;
+    reg_sel_i=1;
     #100000;
     
 
