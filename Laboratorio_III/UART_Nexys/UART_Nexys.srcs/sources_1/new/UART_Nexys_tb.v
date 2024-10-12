@@ -123,6 +123,7 @@ initial begin
     #100000;
     
     reg_sel_i=1;
+    wr_i=0;
     
     
 
