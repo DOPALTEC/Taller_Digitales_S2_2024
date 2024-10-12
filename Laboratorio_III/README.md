@@ -30,6 +30,9 @@ Diagramas, texto explicativo...
 Descripción y resultados de las pruebas hechas
 
 ## Apendices:
-### Apendice 1:
-texto, imágen, etc
+### Apendice 1: Tabla de Valores Decimal/Binario/Hexadecimal
+
+![Tabla](https://github.com/user-attachments/assets/bcae3896-0cbf-4c12-9fab-c2c38cd8a7da)
+
+
 
