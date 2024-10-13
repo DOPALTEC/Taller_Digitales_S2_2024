@@ -153,7 +153,7 @@ always @(*) begin
     hold_ctrl = 0;
     recibir = 0;  // Inicializar recibir en 0
     //Transmision
-    WR2_ctrl=0;
+    //WR2_ctrl=0;
     transmitir=0;
 
 

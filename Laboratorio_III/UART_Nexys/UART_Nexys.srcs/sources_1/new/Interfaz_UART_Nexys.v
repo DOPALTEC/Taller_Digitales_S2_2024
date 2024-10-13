@@ -54,12 +54,14 @@ Reg_Data_inst(
 //////////////////////////////////////REGISTRO DE CONTROL/////////////////////////////////////////////////
 
 wire [Palabra-1:0] OUT_ctrl;
+wire WR2_ctrl;
+wire [Palabra-1:0] IN2_ctrl;
 
 Reg_ctrl #(.palabra(Palabra)) Reg_ctrl_inst(
     .IN1(entrada_i),       // Entrada 1 de 32 bits
-    .IN2(0),       // Entrada 2 de 32 bits
+    .IN2(IN2_ctrl),       // Entrada 2 de 32 bits
     .WR1(WR1_reg_ctrl),              // Señal de escritura 1
-    .WR2(0),  
+    .WR2(WR2_ctrl),  
     .rst(rst),            // Señal de escritura 2
     .out(OUT_ctrl) 
 );
@@ -90,8 +92,8 @@ ctrl_UART #(.palabra(Palabra)) ctrl_UART_inst(
     .IN2_data(IN2_data),    // Salida de datos IN2
     .WR2_data(WR2_reg_data), 
     .hold_ctrl(hold_ctrl),                 // Señal de escritura para datos
-    .IN2_ctrl(),    // Salida de control IN2
-    .WR2_ctrl(),                  // Señal de escritura para control
+    .IN2_ctrl(IN2_ctrl),    // Salida de control IN2
+    .WR2_ctrl(WR2_ctrl),                  // Señal de escritura para control
     // Dirección de salida
     //.addr2(1'b1),
     

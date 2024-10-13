@@ -9,26 +9,24 @@ module Reg_ctrl #(parameter palabra=32) (
     output reg [palabra-1:0] out        // Salida de 32 bits
 );
 
-    // Definición de los bits especiales de la salida
-    wire send = out[0];          // Bit 0 se llama 'send'
-    wire new_rx = out[1];        // Bit 1 se llama 'new_rx'
-
     // Inicialización del registro en 0
     always @(posedge WR1 or posedge WR2 or posedge rst) begin
         if (rst) begin
             out <= 0;            // Inicializa 'out' en 0 si rst está activa
         end else begin
-            if (WR1 && WR2==0) begin
+            if (WR1) begin
                 out <= IN1;       // Escribe IN1 en el registro si WR1 está activa
-            end else if (WR2 && WR1==0) begin
+            end 
+            if (WR2) begin
+                out <= IN2;       // Escribe IN1 en el registro si WR1 está activa
+            end 
+            else if (WR2 && WR1==0) begin
+                out <= IN1;       // Escribe IN2 en el registro si WR2 está activa
+            end
+            else if (WR2 && WR1==1) begin
                 out <= IN2;       // Escribe IN2 en el registro si WR2 está activa
             end
-            else if(WR2) begin //Prioriza que se limpien los valores del control
-                out <= IN2; 
-            end
-            else begin
-                out<=0;
-            end
+
         end
     end
 
