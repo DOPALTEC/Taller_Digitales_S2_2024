@@ -96,9 +96,7 @@ $$
 Por tanto,
 
 $$
-
 Profundidad=25600[palabras]
-
 $$
 
 Dando entonces como resultado, la siguiente configuración de la memoria RAM.
