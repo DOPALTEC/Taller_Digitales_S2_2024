@@ -142,9 +142,11 @@ always @(*) begin
     if(new_rx && reg_sel_i && hold_ctrl && !wr_i)begin
         WR2_ctrl=1;
         new_rx=0;
-        IN2_ctrl[1]=new_rx;
-        
     end
+    else begin 
+        WR2_ctrl=0;
+    end
+    IN2_ctrl[1]=new_rx;
     // Estado por defecto
     next_state = state;
     

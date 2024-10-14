@@ -13,21 +13,17 @@ module Reg_ctrl #(parameter palabra=32) (
     always @(posedge WR1 or posedge WR2 or posedge rst) begin
         if (rst) begin
             out <= 0;            // Inicializa 'out' en 0 si rst está activa
-        end else begin
+        end
+        else begin
             if (WR1) begin
                 out <= IN1;       // Escribe IN1 en el registro si WR1 está activa
             end 
-            if (WR2) begin
+            else if (WR2) begin
                 out <= IN2;       // Escribe IN1 en el registro si WR1 está activa
             end 
-            else if (WR2 && WR1==0) begin
+            else if ((WR2==0 && WR1==0)|| WR2 && WR1) begin
                 out <= IN1;       // Escribe IN2 en el registro si WR2 está activa
             end
-            else if (WR2 && WR1==1) begin
-                out <= IN2;       // Escribe IN2 en el registro si WR2 está activa
-            end
-
         end
     end
-
 endmodule

@@ -64,7 +64,7 @@ initial begin
     reg_sel_i=0;
     entrada_i = 32'h00000001; //bit send =1
     wr_i=1;
-    #100000;
+    #100;
     wr_i=0;
     
     
@@ -83,7 +83,7 @@ initial begin
     rxd = 1;  #104167; // Stop bit
     
     // Pausa para observar la recepcion
-    #100000;
+    #100;
     wr_i = 1;
     reg_sel_i = 1;
     #100;
