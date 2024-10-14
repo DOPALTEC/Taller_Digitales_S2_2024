@@ -72,3 +72,38 @@ Es una representación gráfica que organiza y asigna de forma estructural la me
 
 
 ## 4. Investigue sobre el uso de memorias RAM y ROM en FPGA. Tanto memorias internas como externas en la FPGA.
+
+Para el uso de meorias RAM y ROM se hace uso del catálogo de IP´s.
+
+- ROM: La memoria del programa se le asigna un tamaño de 512 palabras (1 palabra son 32 bits), la cual va asignada en el espacio 0x0000 hasta 0x0fff dentro del mapa de memoria. Esto con el motivo de que sea lo primero que el procesador lea. Las instrucciones le darán la orden al procesador de ejecutarse y seguir el protocolo indicado de acuerdo a lo solicitado.
+
+- RAM: En cuanto a la memoria de datos, se solicita que se tenga un tamaño de 100kiB, la cual se ingresa en la región del rango 0x40000 hasta 0x7ffff. En este espacio de memoria es donde se van a almacenar las imagenes enviadas desde la computadora.
+
+Para configurar entonces este RAM en el IP core, se le asigna al ancho de datos un valor de 32 bits, y se sabe que el tamaño total de la memoria es de 100KiB, por tanto se puede calcular la cantidad de profundidad en base a estos números en funcion de una palabra.
+
+Sabemos que:
+
+$$
+100KiB=100*1024[bytes]=102400[bytes]
+$$
+
+Con lo que es posible calcular el numero de posiciones de memoria, su profundidad. Osea, el número de palabras de 32 bits (4bytes) que se pueden almacenar.
+
+$$
+Profundidad(Depth)=frac{102400[bytes]}{4[frac{bytes}{palabra}]}
+$$
+
+Por tanto,
+$$
+
+Profundidad=25600[palabras]
+
+$$
+
+Dando entonces como resultado, la siguiente configuración de la memoria RAM.
+
+![image](https://github.com/user-attachments/assets/01683b6b-3771-4419-99d3-2aa19caee155)
+
+
+
+
