@@ -90,10 +90,11 @@ $$
 Con lo que es posible calcular el numero de posiciones de memoria, su profundidad. Osea, el número de palabras de 32 bits (4bytes) que se pueden almacenar.
 
 $$
-Profundidad(Depth)=frac{102400[bytes]}{4[frac{bytes}{palabra}]}
+Profundidad(Depth)=\frac{102400[bytes]}{4[\frac{bytes}{palabra}]}
 $$
 
 Por tanto,
+
 $$
 
 Profundidad=25600[palabras]
