@@ -1,3 +1,4 @@
+
 # Cuestionario Previo Laboratorio II
 
 ##  1.  Investigue sobre la arquitectura RISC-V. Preste especial atención a las instrucciones que forman parte del conjunto básico de instrucciones para números enteros de 32 bits, RV32I
@@ -48,5 +49,26 @@ Un toolchain en el enfoque de embebidos, cumple la función de diseñar aplicaci
 
 
 ## 3. Investigue como se elabora un mapa de memoria de un procesador.
+
+Es una representación gráfica que organiza y asigna de forma estructural la memoria disponible en el sistema, que indica las direcciones de memoria a las que corresponden dispositivos, memorias RAM, ROM ó caché así como regiones de uso. Es recomendable utilizar pasos como los siguientes:
+
+### Identificar el tamaño en memoria: Depende de la cantidad de bits en el bus de direcciones del procesador.
+
+### Categorizar los tipos de la memoria: 
+
+- ROM (Read Only Memory): Almacena rutinas básicas del controlador así como su firmware. Para el caso del proyecto se hace uso de los módulos preestablecidos en el catálogo de IP´s
+  
+-  RAM (Random Access Memory): Almcena los datos ejecutados en el programa. Para el caso del proyecto se hace uso de los módulos preestablecidos en el catálogo de IP´s
+
+- Periféricos de E/S (Entadas/Salidas): Aqui se le asigna las direcciones en memoria que van a corresponder a dispositivos externos tales como tarjetas de red, puertos u otros dispositivos secundarios.
+  
+-  Memoria caché (No aplica para el laboratorio): Identifica las memocia chacé que el procesador usa para acelerar el acceso a los datos
+
+-  Zonas Reservadas o Especializadas: Memoria que corresponde a los controladores de dispositivos o buffers.
+
+### Asignar los Rangos de Direcciones: Se deben generar bloques de direcciones a cada sección o rango de memoria dependiendo del diseño del procesador así como su arquitectura. Se deben tomar en cuenta además zonas de memoria protegidas, reservadas u ignoradas para evitar intervenir en sus procesos. 
+
+### Organizar y Representar Gráficamente: La representación gráfica, esquemática o tabular deberá mostrar direcciones iniciales y finales, el rango de tamaño en ya sea bits o hexadecimal de cada una de las regiones de memoria. Por último, el tipo de memoria del que se conforma cada uno de los bloques.
+
 
 ## 4. Investigue sobre el uso de memorias RAM y ROM en FPGA. Tanto memorias internas como externas en la FPGA.
