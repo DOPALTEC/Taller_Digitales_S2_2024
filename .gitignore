@@ -644,3 +644,12 @@ Laboratorio_III/UART_Nexys/UART_Nexys.srcs/sources_1/ip/Program_Memory/hdl/dist_
 Laboratorio_III/UART_Nexys/UART_Nexys.srcs/sources_1/ip/Program_Memory/sim/Program_Memory.v
 Laboratorio_III/UART_Nexys/UART_Nexys.srcs/sources_1/ip/Program_Memory/simulation/dist_mem_gen_v8_0.v
 Laboratorio_III/UART_Nexys/UART_Nexys.srcs/sources_1/ip/Program_Memory/synth/Program_Memory.vhd
+Laboratorio_III/UART_Nexys/UART_Nexys.runs/synth_1/__synthesis_is_running__
+Laboratorio_III/UART_Nexys/UART_Nexys.runs/synth_1/Interfaz_UART_Nexys.vds
+Laboratorio_III/UART_Nexys/UART_Nexys.runs/synth_1/.Xil/Interfaz_UART_Nexys_propImpl.xdc
+Laboratorio_III/UART_Nexys/UART_Nexys.runs/synth_1/.Xil/Vivado-5480-DOPAL/elab.rtd
+Laboratorio_III/UART_Nexys/UART_Nexys.runs/impl_1/Interfaz_UART_Nexys.vdi
+Laboratorio_III/UART_Nexys/UART_Nexys.runs/synth_1/Interfaz_UART_Nexys_utilization_synth.rpt
+Laboratorio_III/UART_Nexys/UART_Nexys.runs/synth_1/Interfaz_UART_Nexys.dcp
+Laboratorio_III/UART_Nexys/UART_Nexys.runs/impl_1/.opt_design.error.rst
+Laboratorio_III/UART_Nexys/UART_Nexys.runs/impl_1/.vivado.error.rst

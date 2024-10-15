@@ -3,7 +3,7 @@
 
 //module Interfaz_UART_Nexys #(parameter Palabra = 32) (
 //------------AL FINALIZAR PRUEBAS CAMBIAR A 32-------------------//
-module Interfaz_UART_Nexys #(parameter Palabra = 32) (
+module Interfaz_UART_Nexys #(parameter Palabra = 8) (
     input  wire CLK100MHZ,
     input  wire rst,
     
@@ -68,7 +68,7 @@ Reg_ctrl #(.palabra(Palabra)) Reg_ctrl_inst(
 
 ////////////MULTIPLEXOR QUE CONTROLA SI LA SALIDA ES EL REGISTRO DE DATOS O EL DE CONTROL////////////////////////
 
-MUX_UI_UART MUX_UI_UART_inst(
+MUX_UI_UART #(.Palabra(Palabra)) MUX_UI_UART_inst (
     .OUT_ctrl(OUT_ctrl),  // Entrada 1
     .OUT_data(OUT_data),  // Entrada 2
     .reg_sel_i(reg_sel_i),              // Línea de selección

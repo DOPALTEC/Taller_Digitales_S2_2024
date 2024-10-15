@@ -1,10 +1,10 @@
 `timescale 1ns / 1ps
 
-module MUX_UI_UART (
-    input wire [31:0] OUT_ctrl,  // Entrada 1
-    input wire [31:0] OUT_data,  // Entrada 2
+module MUX_UI_UART #(parameter Palabra=32)(
+    input wire [Palabra:0] OUT_ctrl,  // Entrada 1
+    input wire [Palabra:0] OUT_data,  // Entrada 2
     input wire reg_sel_i,              // Línea de selección
-    output wire [31:0] salida_o  // Salida
+    output wire [Palabra:0] salida_o  // Salida
 );
 
     // Selección entre las dos entradas
