@@ -20,10 +20,24 @@ module Interfaz_UART_Nexys #(parameter Palabra = 8) (
     );
     
 /////////////////////DE-MULTIPLEXOR PARA ESCRITURA EN REGISTROS////////////////////////////////////
-localparam addr2=1;
+wire addr2;
     
 wire WR1_reg_ctrl;
 wire WR1_reg_data;
+
+wire locked;
+wire CLK200MHZ;
+
+CLK_GEN_200MHz instance_name
+   (
+    // Clock out ports
+    .CLK200MHZ(CLK200MHZ),     // output CLK200MHZ
+    // Status and control signals
+    .reset(rst), // input reset
+    .locked(locked),       // output locked
+   // Clock in ports
+    .CLK100MHZ(CLK100MHZ)
+);      // input CLK100MHZ
     
 DeMUX DeMUX_inst(
     .wr_i(wr_i),        // Bit de entrada
@@ -41,6 +55,8 @@ wire [Palabra-1:0] IN2_data;
 
 Reg_Data #(.Palabra(Palabra)) 
 Reg_Data_inst(
+    .clk(CLK200MHZ),
+    .rst(rst),
     .IN1(entrada_i),       // Entrada 1 de 32 bits
     .IN2(IN2_data),       // Entrada 2 de 32 bits Proveniente de UART
     .addr1(addr_i),            // Línea de dirección para IN1
@@ -58,11 +74,12 @@ wire WR2_ctrl;
 wire [Palabra-1:0] IN2_ctrl;
 
 Reg_ctrl #(.palabra(Palabra)) Reg_ctrl_inst(
+    .clk(CLK200MHZ),
+    .rst(rst),
     .IN1(entrada_i),       // Entrada 1 de 32 bits
     .IN2(IN2_ctrl),       // Entrada 2 de 32 bits
     .WR1(WR1_reg_ctrl),              // Señal de escritura 1
     .WR2(WR2_ctrl),  
-    .rst(rst),            // Señal de escritura 2
     .out(OUT_ctrl) 
 );
 
@@ -78,12 +95,14 @@ MUX_UI_UART #(.Palabra(Palabra)) MUX_UI_UART_inst (
 ///////////////CONTROL DE LA UART/////////////////////////////////
 
 ctrl_UART #(.palabra(Palabra)) ctrl_UART_inst(
-    .CLK100MHZ(CLK100MHZ),
+    .clk(CLK200MHZ),
     .rst(rst),
+    .locked(locked),
     
     // Entradas
     .reg_sel_i(reg_sel_i),
     .wr_i(wr_i),
+    .addr_i(addr_i),
     
     .ctrl(OUT_ctrl),    // Entrada de control
     .data(OUT_data),    // Entrada de datos
@@ -95,7 +114,7 @@ ctrl_UART #(.palabra(Palabra)) ctrl_UART_inst(
     .IN2_ctrl(IN2_ctrl),    // Salida de control IN2
     .WR2_ctrl(WR2_ctrl),                  // Señal de escritura para control
     // Dirección de salida
-    //.addr2(1'b1),
+    .addr2(addr2),
     
     .rxd(rxd), //Para el constraint
     .txd(txd), //Para el constraint

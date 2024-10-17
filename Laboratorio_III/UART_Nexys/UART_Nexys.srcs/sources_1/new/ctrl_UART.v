@@ -1,30 +1,27 @@
 `timescale 1ns / 1ps
-
+//byte_count
 module ctrl_UART #(
-    parameter palabra = 32  // Tamaño por defecto de la palabra
-    //parameter N = 2         // Tamaño por defecto de addr2
-   
+    parameter palabra = 8  // Tamaño por defecto de la palabra
 )(
-    input  wire CLK100MHZ,
+    input  wire clk,
     input  wire rst,
     input wire reg_sel_i,
     input wire wr_i,
+    input wire addr_i,
+    input wire locked,
     // Entradas
     input wire [palabra-1:0] ctrl,    // Entrada de control
     input wire [palabra-1:0] data,    // Entrada de datos
 
     // Salidas
+    
     output reg [palabra-1:0] IN2_data,    // Salida de datos IN2
     output reg WR2_data,                  // Señal de escritura para datos
     output reg hold_ctrl,
     output reg [palabra-1:0] IN2_ctrl,    // Salida de control IN2
     output reg WR2_ctrl,  
-    //output reg add2,                // Señal de escritura para control
-    
 
-    // Dirección de salida
-    //output reg [N-1:0] addr2,             // Salida de dirección
-    //output reg addr2, //Esta direccion no cambia, corresponde a la direccion donde
+    output reg addr2, //Esta direccion no cambia, corresponde a la direccion donde
     //se guarda lo que se recibe en el registro de datos
     
     input  wire rxd, //Para el constraint
@@ -42,7 +39,6 @@ localparam COMPLETE = 2'b10;
 localparam TRANSMIT = 2'b11;
 
 reg [1:0] state, next_state;
-    
 // Contador de bytes recibidos
 reg [1:0] byte_count;   // 2 bits para contar hasta 4 bytes
 reg [7:0] dato_tx;
@@ -54,7 +50,7 @@ wire tx_busy;
 wire hay_dato_tx;
 
 UART_Nexys #(.DATA_WIDTH(8), .prescale(1303)) UART_Nexys_inst(
-    .CLK100MHZ(CLK100MHZ),
+    .clk(clk),
     .rst(rst),
 
     .dato_tx(dato_tx), //Es de 8 bits por tanto se debe empaquetar el envío de la palabra
@@ -78,26 +74,14 @@ UART_Nexys #(.DATA_WIDTH(8), .prescale(1303)) UART_Nexys_inst(
 reg [15:0] timeout_counter;  // Un contador para el tiempo de espera
 
 localparam TIMEOUT_LIMIT = 1000;  // Define un límite para el timeout (ajústalo según el reloj) 
-/*
-
-DAR ALMENOS 3 BITS EN RX QUE NO SE RECIBE NADA, IR PROBRANDO AL TENER LA RECPCION EN PC REAL
-
-*/
 
 reg byte_rx_valido;
 
-
-/*
-Si rx se mantiene en alto, osea que no se recibe nada, que esté pendiente de si se quiere realizar una transmision
-despues de una recepcion se transmite, la prioridad será la recepcion. El cual se escribira en control o datos 
-dependiendo de reg_sel_i y si rx baja se mantiene el hold_ctrl en 1 hasta que byte_rx_valido
-
-*/
 reg send;
 reg new_rx;
 
-always @(posedge UART_Nexys_inst.CLK200MHZ or posedge rst) begin
-    if (rst) begin
+always @(posedge clk or posedge rst) begin
+    if (rst || !locked) begin
         state <= IDLE;
         byte_count <= 0;
         hold_ctrl <= 0;
@@ -106,6 +90,7 @@ always @(posedge UART_Nexys_inst.CLK200MHZ or posedge rst) begin
         WR2_data <= 0;
         IN2_data <= 0;
         recibir <= 0;
+        addr2<=0;
         //////Reinicia Bits para Transmisuin////
         WR2_ctrl=0;
         IN2_ctrl<=0;
@@ -131,31 +116,40 @@ always @(posedge UART_Nexys_inst.CLK200MHZ or posedge rst) begin
             IN2_data[(byte_count + 1) * 8 - 1 -: 8] <= dato_rx;  // Almacena el byte en la posición correcta
             byte_count <= byte_count + 1;  // Incrementa el contador después de almacenar el byte
         end
+        if (state == COMPLETE) begin
+            byte_count <= 0;
+        end
         
     end
 end
 
 // Modificar la lógica de los estados
 always @(*) begin
+    next_state = state;
     ///limpia el valor new_rx si hay un dato y si se solicita
     send=ctrl[0];
-    if(new_rx && reg_sel_i && hold_ctrl && !wr_i)begin
-        WR2_ctrl=1;
+    IN2_ctrl[1]=new_rx;
+    WR2_ctrl = 0;
+    WR2_data = 0;  // Inicializar WR2_data en 0
+    recibir = 0;   // Inicializar recibir en 0
+    transmitir = 0;
+    //if(new_rx && reg_sel_i && hold_ctrl && !wr_i && !addr_i)begin
+    if(!addr_i)begin
         new_rx=0;
+        WR2_ctrl=1;
+    end
+
+    //////////////////VALORES SE REINICIAN CADA CICLO EVITAN LA ESCRITURA COMPLETA EN REGDATA////////////////////
+
+    if(addr_i)begin
+        hold_ctrl = 0;
+        addr2=0;
     end
     else begin 
-        WR2_ctrl=0;
+        hold_ctrl = 1;
+        addr2=1;
     end
-    IN2_ctrl[1]=new_rx;
-    // Estado por defecto
-    next_state = state;
-    
-    //////////////////VALORES SE REINICIAN CADA CICLO EVITAN LA ESCRITURA COMPLETA EN REGDATA////////////////////
-    WR2_data = 0;  // Inicializar WR2_data en 0
-    hold_ctrl = 0;
     recibir = 0;  // Inicializar recibir en 0
-    //Transmision
-    //WR2_ctrl=0;
     transmitir=0;
 
 
@@ -175,10 +169,10 @@ always @(*) begin
 
         RECEIVE_BYTE: begin
             if (byte_count == 2'b11 || timeout_counter >= TIMEOUT_LIMIT) begin
+                addr2=1;
                 WR2_ctrl=1;
                 new_rx=1;
                 IN2_ctrl[1]=new_rx;
-                
                 next_state = COMPLETE;
             end
         end
@@ -186,7 +180,7 @@ always @(*) begin
         COMPLETE: begin
             WR2_data = 1;  // Activa la escritura de datos
             hold_ctrl = 1;  // Averiguar la forma de desactivar si es necesario
-            byte_count = 0;  // Resetea el contador de bytes
+            //byte_count = 0;  // Resetea el contador de bytes
             next_state = IDLE;
         end
         

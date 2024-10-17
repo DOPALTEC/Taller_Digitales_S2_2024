@@ -41,35 +41,36 @@ initial begin
     clk = 0;
     rst = 1;
     wr_i = 0;
-    reg_sel_i = 1;
+    reg_sel_i = 0;
     entrada_i = 32'h00000000;
     addr_i = 0;
     rxd = 1;  // UART inactivo por defecto
 
     // Reinicio del sistema
-    #5000;
+    #50000;
     rst = 0;
     
-    // Escenario 1: Escritura de un valor en el registro de datos
-    #10000;
-    wr_i = 1;
+    #50000;
     reg_sel_i = 1;
-    entrada_i = 32'hAA55FFA5;  // Valor de prueba para transmisión
-    addr_i = 0;
-    #100;
-    wr_i = 0;  // Finaliza la escritura
-    
-    //Cambia al registro de control para transmitir el dato
-    #10000;
-    reg_sel_i=0;
-    entrada_i = 32'h00000001; //bit send =1
+    entrada_i = 32'hFCA54323;
+    addr_i=1;
     wr_i=1;
-    #100;
+    
+    #50000;
+    addr_i=0;
+    
+    #50000;
+    addr_i=1;
+    
+    #50000;
     wr_i=0;
+    entrada_i = 32'h00000000;
+    #50000;
+    addr_i=0;
     
+    #50000;
+    addr_i=1;
     
-    
-    // Escenario 2: Simulación de recepción de datos en UART (RX)
     #500; 
     rxd = 0;  // Start bit
     #104167; // Tiempo entre bits para 9600 baudios
@@ -83,16 +84,38 @@ initial begin
     rxd = 1;  #104167; // Stop bit
     
     // Pausa para observar la recepcion
-    #100;
+    #150000;
+    addr_i=0;  
+    #50000;
+/*  
+
+    // Escenario 1: Escritura de un valor en el registro de datos
+    #100000;
     wr_i = 1;
     reg_sel_i = 1;
+    entrada_i = 32'hAA55FFA5;  // Valor de prueba para transmisión
+    addr_i = 1;
     #100;
-    // Escenario 3: Cambia el dato de entrada y prueba otro valor de transmisión
-    entrada_i = 32'h11223344;
+    wr_i = 0;  // Finaliza la escritura
+    //addr_i = 0;
+    #100000;
+    //addr_i=0;
+    #100000;
+    reg_sel_i=0;
+    entrada_i = 32'h00000001; //bit send =1
+    wr_i=1;
+    #100;
+    wr_i=0;
+    //addr_i = 0;
+    
+    
 
-    #500;
-    wr_i = 0;
-
+    addr_i=1;
+    reg_sel_i=1;
+ 
+    #50000;
+    addr_i=0;
+*/   
     // Detenemos la simulación
     #200000;
     $stop;
