@@ -27,7 +27,7 @@ https://cs.uns.edu.ar/materias/se/2019/descargas/teoria/clase01-introduccion-han
 
   $$
 
-      prescale=\frac{clk}{8*baudios} \rightarrow
+      prescale=\frac{clk}{8*baudios}
      
   $$
 
