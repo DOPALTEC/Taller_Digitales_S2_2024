@@ -26,6 +26,14 @@ https://cs.uns.edu.ar/materias/se/2019/descargas/teoria/clase01-introduccion-han
 #### 4. Criterios de diseño
 - Consideraciones de Diseño:
   1. En el constraint se aplica rxd y txd con respecto a la computadora, por tanto los valores de transmisión y recepción se invierten ya que los módulos están escritos con respecto a la FPGA.
+  2. Para la asignación del baudrate en el módulo se realiza el cálculo del valor que va a tomar "prescale" de la siguiente manera:
+     $$
+
+      prescale=\frac{clk}{baudios} \rightarrow
+     
+     $$
+
+  4. 
 
 #### 5. Testbench
 Descripción y resultados de las pruebas hechas
