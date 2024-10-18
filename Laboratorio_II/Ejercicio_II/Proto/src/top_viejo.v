@@ -1,4 +1,5 @@
-module top (
+module top_viejo
+    (
     input clk,
     input rst_n,
     input [1:0] enable,  
