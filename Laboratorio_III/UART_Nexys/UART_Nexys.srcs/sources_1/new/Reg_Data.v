@@ -25,20 +25,27 @@ module Reg_Data #(parameter Palabra=8) (
             OUT <= 0;
         end else begin
             // Almacenamos DATO en el registro correspondiente
-            if (hold_ctrl && !addr1) begin
-            //if (hold_ctrl || !addr1) begin
-                // Cuando hold_ctrl es 1, utilizamos IN2
+            if (hold_ctrl) begin //
                 if (addr2 && WR2) begin
                     register2[7:0] <= IN2[7:0]; // Solo almacenamos los bits 0-7
+                end
+                else if (!addr2 && WR2)begin
+                    register1[7:0] <= IN2[7:0];
                 end
                 OUT <= register2; // Proporcionamos la salida del registro 2
             end 
             else begin
                 // Cuando hold_ctrl es 0, utilizamos IN1
-                if (addr1 && WR1) begin
+                if (!addr1 && WR1) begin
                     register1[7:0] <= IN1[7:0]; // Solo almacenamos los bits 0-7
                 end
+                else if(addr1 && WR1)begin
+                    register2[7:0] <= IN1[7:0];
+                end
                 OUT <= register1; // Proporcionamos la salida del registro 1
+            end
+            if (hold_ctrl && addr1) begin
+                register2[7:0] <= 8'b00000000; // Se escribe un 0 en el registro 2
             end
         end
     end

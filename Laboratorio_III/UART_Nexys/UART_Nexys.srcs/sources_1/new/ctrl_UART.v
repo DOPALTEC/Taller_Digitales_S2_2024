@@ -6,9 +6,9 @@ module ctrl_UART #(parameter palabra = 8, parameter prescale = 2604)
     input  wire rst,
     
     input wire locked,
-    //input wire reg_sel_i,
-    //input wire wr_i,
-    //input wire addr_i,
+    input wire reg_sel_i,
+    input wire wr_i,
+    input wire addr_i,
     // Entradas
     input wire [palabra-1:0] ctrl,    // Entrada de control
     input wire [palabra-1:0] data,    // Entrada de datos
@@ -63,12 +63,7 @@ module ctrl_UART #(parameter palabra = 8, parameter prescale = 2604)
         .rx_frame_error()
     );
     
-    localparam IDLE=2'b00;
-    localparam RECEIVE_BYTE = 2'b01;
-    localparam TRANSMIT = 2'b11;
-    
     reg send;
-    
     reg new_rx;
     
     ////Detecta Cambio de Flanco en m_axis_tvalid
@@ -97,6 +92,7 @@ module ctrl_UART #(parameter palabra = 8, parameter prescale = 2604)
             send<=0;
             m_axis_tvalid_d<=0;
             hay_dato_tx_d <= 0; 
+            hold_ctrl<=0;
         end else begin
             m_axis_tvalid_d <= m_axis_tvalid; //Almacena el estado anterior de m_axis_tvalid
             send_d<=send; //Almacena el Estado anterior de send
@@ -123,10 +119,41 @@ module ctrl_UART #(parameter palabra = 8, parameter prescale = 2604)
 
                 
             if (m_axis_tvalid) begin
-                new_rx<=1; 
-                IN2_ctrl[1] <= new_rx; 
-                WR2_ctrl <= 1; //Genera solo un pulso de un ciclo para escribir       
-            end 
+                hold_ctrl<=1; 
+                if(reg_sel_i && addr_i)begin //Se solicita el dato rx
+                    new_rx<=0;
+                    IN2_ctrl[1] <= new_rx;
+                    WR2_ctrl <= 1;
+                    /*
+                    //IN2_data<=0;
+                    
+                    
+                    
+                    FALTA PONER EN CERO EL REGISTRO CUANDO SE SOLICITE EL DATO,
+                    HACER AQUÍ O EN REGISTRO DE DATOS?
+                    */
+                    WR2_data<=1;
+                    addr2<=1;
+                    
+                    
+                    
+                end
+                else begin 
+                    new_rx<=1; 
+                    IN2_ctrl[1] <= new_rx; 
+                    WR2_ctrl <= 1; //Genera solo un pulso de un ciclo para escribir
+                    WR2_data<=1;
+                    addr2<=1; 
+                end 
+            /*Añadir logica */
+            end
+            else begin
+                WR2_data<=0;
+                addr2<=0;
+                if(reg_sel_i && !addr_i && wr_i)begin
+                    hold_ctrl<=0;
+                end
+            end
         end
     end
 endmodule   

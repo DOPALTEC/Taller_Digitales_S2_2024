@@ -8,23 +8,24 @@ module Interfaz_UART_Nexys #(parameter palabra = 8, parameter prescale = 2604)(
     
     input wire wr_i, //usar switch
     input wire reg_sel_i, //usar switch, controla a los dos registros, dice cual de los dos opera
-    //input wire addr_i, //usar switch
+    input wire addr_i, //usar switch
     //output wire [Palabra-1:0]  salida_o, //Usar LEDS 
     //////BORRAR AL PROBAR///////////////////////////////////
     input wire [palabra-1:0] entrada_i,    // Entrada de control
-    input wire [palabra-1:0] data,    // Entrada de datos
+    input wire [palabra-1:0] entrada_i_data,    // Entrada de datos
 
     // Salidas
     ///////Al Registro de Datos///////////////
-    output wire [palabra-1:0] IN2_data,    // Salida de datos IN2
-    output wire WR2_data,      
-    output wire addr2,
+    //output wire [palabra-1:0] IN2_data,    // Salida de datos IN2
+    ///output wire WR2_data,      
+    //output wire addr2,
     
     ///////Al Registro de Control///////////////
     output wire [palabra-1:0] ctrl,    // Salida de control IN2
-    output wire WR2_ctrl,  
+    output wire [palabra-1:0] data,    // Salida de control IN2
+    //output wire WR2_ctrl,  
     
-    output wire hold_ctrl,
+    //output wire hold_ctrl,
     
     input  wire rxd, //Para el constraint
     output wire txd //Para el constraint
@@ -56,6 +57,7 @@ module Interfaz_UART_Nexys #(parameter palabra = 8, parameter prescale = 2604)(
 
     
     wire [palabra-1:0] IN2_ctrl;
+    wire WR2_ctrl;
     Reg_ctrl #(.palabra(palabra)) Reg_ctrl_inst(
         .clk(CLK_200MHZ),                     // Señal de reloj
         .rst(rst),                     // Señal de reset 
@@ -67,12 +69,36 @@ module Interfaz_UART_Nexys #(parameter palabra = 8, parameter prescale = 2604)(
         .out(ctrl) 
     );
     
+    wire hold_ctrl;
+    wire [palabra-1:0] IN2_data;
+    wire WR2_data;
+    wire addr2;
+    //wire data;
+    
+    // Instanciación del módulo Reg_Data
+Reg_Data #(.Palabra(palabra)) reg_data_inst (
+    .clk(clk),                 // Señal de reloj
+    .rst(rst),                 // Señal de reset
+    .locked(locked),           // Señal de locked
+    .IN1(entrada_i_data),                 // Entrada 1 de 8 bits
+    .IN2(IN2_data),                 // Entrada 2 de 8 bits
+    .addr1(addr_i),             // Línea de dirección para IN1
+    .addr2(addr2),             // Línea de dirección para IN2
+    .WR1(WR1_reg_data),                 // Bit de escritura para IN1
+    .WR2(WR2_data),                 // Bit de escritura para IN2
+    .hold_ctrl(hold_ctrl),     // Control para seleccionar el registro
+    .OUT(data)                  // Salida de 8 bits
+);
+
     
     ctrl_UART #(.palabra(palabra), .prescale(prescale)) ctrl_UART_inst
     (
         .clk(CLK_200MHZ),
         .rst(rst),
         .locked(locked),
+        .reg_sel_i(reg_sel_i),
+        .wr_i(wr_i),
+        .addr_i(addr_i),
         .ctrl(ctrl),
         .data(data),
         .IN2_data(IN2_data),

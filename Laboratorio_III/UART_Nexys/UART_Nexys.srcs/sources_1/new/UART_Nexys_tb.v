@@ -11,11 +11,14 @@ module Interfaz_UART_Nexys_tb;
     reg rst;
     reg wr_i;
     reg reg_sel_i;
-    reg [palabra-1:0] entrada_i;    
-    reg [palabra-1:0] data;    
-    wire [palabra-1:0] IN2_data;    
-    wire WR2_data;      
-    wire addr2;
+    reg addr_i;
+    reg [palabra-1:0] entrada_i; 
+    reg [palabra-1:0] entrada_i_data;   
+    wire [palabra-1:0] data; 
+    wire [palabra-1:0] ctrl;   
+    //wire [palabra-1:0] IN2_data;    
+    //wire WR2_data;      
+    //wire addr2;
     reg rxd; // Señal de recepción
     wire txd; // Señal de transmisión
 
@@ -28,11 +31,11 @@ module Interfaz_UART_Nexys_tb;
         .rst(rst),
         .wr_i(wr_i),
         .reg_sel_i(reg_sel_i),
+        .addr_i(addr_i),
         .entrada_i(entrada_i),
+        .entrada_i_data(entrada_i_data),
         .data(data),
-        .IN2_data(IN2_data),
-        .WR2_data(WR2_data),
-        .addr2(addr2),
+        .ctrl(ctrl),
         .rxd(rxd),
         .txd(txd)
     );
@@ -48,21 +51,27 @@ module Interfaz_UART_Nexys_tb;
         // Inicializar señales
         rst = 1;
         entrada_i = 0;
-        data = 0;
+        entrada_i_data = 0;
         rxd = 1; // Inicialmente inactivo
         wr_i=0;
         reg_sel_i=0;
+        addr_i=0;
 
         // Desactivar el reset
         #100000 
         rst = 0;
-        data = 8'hAA; // Ejemplo de datos a transmitir
-
+        
+        entrada_i_data = 8'hAA; // Ejemplo de datos a transmitir
+        addr_i=0;
+        reg_sel_i=1;
+        wr_i=1;
         // Esperar un tiempo y activar ctrl[0] para iniciar la transmisión
-        #100000 
-        //entrada_i = 8'h01;
-        //wr_i=1;
-    
+        #200000 
+        
+        entrada_i = 8'h01;
+        reg_sel_i=0;
+        wr_i=1;
+    #700000;
     rxd = 0;  // Start bit
     #104167; // Tiempo entre bits para 9600 baudios
     rxd = 1;  #104167;
@@ -77,6 +86,9 @@ module Interfaz_UART_Nexys_tb;
 
         // Esperar el tiempo necesario para la transmisión
     #50000;
+    rst=1;
+    #200000;
+     /* 
     entrada_i = 8'h01;
     wr_i=1;
     reg_sel_i=0;
@@ -97,13 +109,8 @@ module Interfaz_UART_Nexys_tb;
         #1000;
         wr_i=0;
         #50000;
-        //wr_i=1;
-        //reg_sel_i=0;
-        // Dejar de transmitir
-        //ctrl[0] = 0;
 
-        // Verificar el comportamiento después de la transmisión
-        #5000000;
+        #5000000; */
 
         // Realizar más pruebas aquí si es necesario...
 
@@ -112,9 +119,9 @@ module Interfaz_UART_Nexys_tb;
     end
 
     // Monitor para ver las señales
-    initial begin
+   /* initial begin
         $monitor("Time: %0t | RST: %b | ENTRADA_i: %b | DATA: %h | WR2_DATA: %b | ADDR2: %b | IN2_DATA: %h | TXD: %b", 
                  $time, rst, entrada_i, data, WR2_data, addr2, IN2_data, txd);
-    end
+    end*/
 
 endmodule

@@ -688,3 +688,6 @@ Laboratorio_III/UART_Nexys/UART_Nexys.runs/impl_1/Interfaz_UART_Nexys_13884.back
 Laboratorio_III/UART_Nexys/UART_Nexys.runs/impl_1/Interfaz_UART_Nexys_1272.backup.vdi
 Laboratorio_III/UART_Nexys/UART_Nexys.runs/impl_1/Interfaz_UART_Nexys_3992.backup.vdi
 Laboratorio_III/UART_Nexys/UART_Nexys.runs/impl_1/Interfaz_UART_Nexys_8328.backup.vdi
+Laboratorio_III/UART_Nexys/UART_Nexys.runs/impl_1/tight_setup_hold_pins.txt
+Laboratorio_III/UART_Nexys/UART_Nexys.sim/sim_1/behav/xsim/xsim.dir/Interfaz_UART_Nexys_tb_behav/Compile_Options.txt
+Laboratorio_III/UART_Nexys/UART_Nexys.sim/sim_1/behav/xsim/xsim.dir/Interfaz_UART_Nexys_tb_behav/TempBreakPointFile.txt
