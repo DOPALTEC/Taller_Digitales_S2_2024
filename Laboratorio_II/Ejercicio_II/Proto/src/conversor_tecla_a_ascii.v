@@ -16,6 +16,12 @@ module conversor_tecla_a_ascii(
             4'b0111: ascii_8bits = 8'h37; // '7'
             4'b1000: ascii_8bits = 8'h38; // '8'
             4'b1001: ascii_8bits = 8'h39; // '9'
+            4'b1010: ascii_8bits = 8'h41; // 'A'
+            4'b1011: ascii_8bits = 8'h42; // 'B'
+            4'b1100: ascii_8bits = 8'h43; // 'C'
+            4'b1101: ascii_8bits = 8'h44; // 'D'
+            4'b1110: ascii_8bits = 8'h45; // 'E'
+            4'b1111: ascii_8bits = 8'h46; // 'F'
             default: ascii_8bits = 8'h3F; // '?' para teclas no reconocidas
         endcase
     end
