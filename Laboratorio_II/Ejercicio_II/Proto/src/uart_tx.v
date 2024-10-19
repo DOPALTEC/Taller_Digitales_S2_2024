@@ -1,5 +1,3 @@
-`timescale 1ns / 1ps
-
 module uart_tx #(
     parameter DATA_WIDTH = 8, 
     parameter prescale = 1303
@@ -9,9 +7,9 @@ module uart_tx #(
     input wire rst,
 
     /*
-     * AXI input
+     * Entrada externa de 8 bits
      */
-    input wire [DATA_WIDTH-1:0] dato_tx,  // Ahora recibe el código ASCII
+    input wire [DATA_WIDTH-1:0] dato_tx,  // Recibe los 8 bits externos
     input wire transmitir,                 // Señal para iniciar la transmisión
     output wire hay_dato_tx,               // Señal de "dato listo para transmitir"
 
@@ -75,3 +73,4 @@ always @(posedge clk) begin
 end
 
 endmodule
+
