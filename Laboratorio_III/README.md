@@ -34,8 +34,10 @@ https://cs.uns.edu.ar/materias/se/2019/descargas/teoria/clase01-introduccion-han
   2. Para la asignación del baudrate en el módulo se realiza el cálculo del valor que va a tomar "prescale" de la siguiente manera:
 
   $$
-      prescale=\frac{clk}{8*baudios}
+      prescale=\frac{clk}{8*baudios} \rightarrow
   $$
+
+
 
   3. El registro de control no reconoce si el dato cambia, toma la desición de enviar solamente si en el registro de control send está activo. Le es indiferente si ya se transmitió o no, ya que es obligación del RISCV tomar esto en cuenta.
 
