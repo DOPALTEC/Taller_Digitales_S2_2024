@@ -37,6 +37,14 @@ https://cs.uns.edu.ar/materias/se/2019/descargas/teoria/clase01-introduccion-han
       prescale=\frac{clk}{8*baudios} \rightarrow
   $$
 
+$$
+      prescale=\frac{200x10^6}{8*9600} \rightarrow
+  $$
+
+  $$
+      prescale=2604
+  $$
+
 
 
   3. El registro de control no reconoce si el dato cambia, toma la desición de enviar solamente si en el registro de control send está activo. Le es indiferente si ya se transmitió o no, ya que es obligación del RISCV tomar esto en cuenta.
