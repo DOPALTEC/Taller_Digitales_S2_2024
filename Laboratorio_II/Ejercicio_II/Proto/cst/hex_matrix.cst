@@ -1,3 +1,5 @@
+IO_LOC  "txd" 18;
+
 IO_LOC  "count_bit1_reg" 13;
 
 IO_LOC  "count_bit0_reg" 14;
