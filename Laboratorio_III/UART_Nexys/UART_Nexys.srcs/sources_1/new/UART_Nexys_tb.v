@@ -1,77 +1,68 @@
 `timescale 1ns / 1ps
 
-module tb_UART_Nexys;
+module Interfaz_UART_Nexys_tb;
 
-parameter Palabra = 32;
+    // Parámetros
+    parameter palabra = 8;
+    parameter prescale = 2604; 
 
-// Señales
-reg clk;
-reg rst;
-reg wr_i;
-reg reg_sel_i;
-reg [Palabra-1:0] entrada_i;
-reg addr_i;
-wire [Palabra-1:0] salida_o;
-reg rxd;
-wire txd;
+    // Señales de prueba
+    reg clk;
+    reg rst;
+    reg wr_i;
+    reg reg_sel_i;
+    reg [palabra-1:0] entrada_i;    
+    reg [palabra-1:0] data;    
+    wire [palabra-1:0] IN2_data;    
+    wire WR2_data;      
+    wire addr2;
+    reg rxd; // Señal de recepción
+    wire txd; // Señal de transmisión
 
-// Instancia del módulo Interfaz_UART_Nexys
-Interfaz_UART_Nexys #(
-    .Palabra(Palabra)
-) uut (
-    .CLK100MHZ(clk),
-    .rst(rst),
-    .wr_i(wr_i), 
-    .reg_sel_i(reg_sel_i), 
-    .entrada_i(entrada_i), 
-    .addr_i(addr_i), 
-    .salida_o(salida_o), 
-    .rxd(rxd), 
-    .txd(txd)
-);
+    // Instanciar el módulo ctrl_UART
+    Interfaz_UART_Nexys #(
+        .palabra(palabra),
+        .prescale(prescale)
+    ) Interfaz_UART_Nexys_inst (
+        .clk(clk),
+        .rst(rst),
+        .wr_i(wr_i),
+        .reg_sel_i(reg_sel_i),
+        .entrada_i(entrada_i),
+        .data(data),
+        .IN2_data(IN2_data),
+        .WR2_data(WR2_data),
+        .addr2(addr2),
+        .rxd(rxd),
+        .txd(txd)
+    );
 
-// Generación del reloj de 100 MHz
-always begin
-    #5 clk = ~clk; // 100 MHz, 10ns por ciclo
-end
+    // Generar la señal de reloj
+    initial begin
+        clk = 0;
+        forever #5 clk = ~clk; // 100 MHz
+    end
 
-// Procedimiento inicial para la simulación
-initial begin
-    // Inicialización de señales
-    clk = 0;
-    rst = 1;
-    wr_i = 0;
-    reg_sel_i = 0;
-    entrada_i = 32'h00000000;
-    addr_i = 0;
-    rxd = 1;  // UART inactivo por defecto
+    // Proceso de inicialización y prueba
+    initial begin
+        // Inicializar señales
+        rst = 1;
+        entrada_i = 0;
+        data = 0;
+        rxd = 1; // Inicialmente inactivo
+        wr_i=0;
+        reg_sel_i=0;
 
-    // Reinicio del sistema
-    #50000;
-    rst = 0;
+        // Desactivar el reset
+        #100000 
+        rst = 0;
+        data = 8'hAA; // Ejemplo de datos a transmitir
+
+        // Esperar un tiempo y activar ctrl[0] para iniciar la transmisión
+        #100000 
+        //entrada_i = 8'h01;
+        //wr_i=1;
     
-    #50000;
-    reg_sel_i = 1;
-    entrada_i = 32'hFCA54323;
-    addr_i=1;
-    wr_i=1;
-    
-    #50000;
-    addr_i=0;
-    
-    #50000;
-    addr_i=1;
-    
-    #50000;
-    wr_i=0;
-    entrada_i = 32'h00000000;
-    #50000;
-    addr_i=0;
-    
-    #50000;
-    addr_i=1;
-    
-    #500; 
     rxd = 0;  // Start bit
     #104167; // Tiempo entre bits para 9600 baudios
     rxd = 1;  #104167;
@@ -81,44 +72,49 @@ initial begin
     rxd = 0;  #104167;  // Envío de 8 bits simulados
     rxd = 1;  #104167;
     rxd = 0;  #104167;
-    rxd = 1;  #104167; // Stop bit
-    
-    // Pausa para observar la recepcion
-    #150000;
-    addr_i=0;  
-    #50000;
-/*  
+    rxd = 1;  #104167; 
+    rxd= 1; #104167; //Stop Bit
 
-    // Escenario 1: Escritura de un valor en el registro de datos
-    #100000;
-    wr_i = 1;
-    reg_sel_i = 1;
-    entrada_i = 32'hAA55FFA5;  // Valor de prueba para transmisión
-    addr_i = 1;
-    #100;
-    wr_i = 0;  // Finaliza la escritura
-    //addr_i = 0;
-    #100000;
-    //addr_i=0;
-    #100000;
-    reg_sel_i=0;
-    entrada_i = 32'h00000001; //bit send =1
+        // Esperar el tiempo necesario para la transmisión
+    #50000;
+    entrada_i = 8'h01;
     wr_i=1;
-    #100;
-    wr_i=0;
-    //addr_i = 0;
+    reg_sel_i=0;
     
+    rxd = 0;  // Start bit
+    #104167; // Tiempo entre bits para 9600 baudios
+    rxd = 1;  #104167;
+    rxd = 0;  #104167;
+    rxd = 1;  #104167;
+    rxd = 0;  #104167;
+    rxd = 1;  #104167;  // Envío de 8 bits simulados
+    rxd = 0;  #104167;
+    rxd = 1;  #104167;
+    rxd = 0;  #104167;
+    rxd= 1; #104167; //Stop Bit
     
+        entrada_i = 8'h00;
+        #1000;
+        wr_i=0;
+        #50000;
+        //wr_i=1;
+        //reg_sel_i=0;
+        // Dejar de transmitir
+        //ctrl[0] = 0;
 
-    addr_i=1;
-    reg_sel_i=1;
- 
-    #50000;
-    addr_i=0;
-*/   
-    // Detenemos la simulación
-    #200000;
-    $stop;
-end
+        // Verificar el comportamiento después de la transmisión
+        #5000000;
+
+        // Realizar más pruebas aquí si es necesario...
+
+        // Finalizar simulación
+        #100 $finish;
+    end
+
+    // Monitor para ver las señales
+    initial begin
+        $monitor("Time: %0t | RST: %b | ENTRADA_i: %b | DATA: %h | WR2_DATA: %b | ADDR2: %b | IN2_DATA: %h | TXD: %b", 
+                 $time, rst, entrada_i, data, WR2_data, addr2, IN2_data, txd);
+    end
 
 endmodule

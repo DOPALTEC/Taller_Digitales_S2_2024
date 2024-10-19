@@ -1,9 +1,10 @@
 `timescale 1ns / 1ps
 
 
-module UART_Nexys #(parameter DATA_WIDTH = 8, parameter prescale=1303)(
+module UART_Nexys #(parameter DATA_WIDTH = 8, parameter prescale=1302)(
     input  wire clk,
     input  wire rst,
+    input wire locked,
 
     input  wire [DATA_WIDTH-1:0] dato_tx,
     output wire hay_dato_tx, //Se activa cuando hay un dato ingresado para enviar
@@ -31,6 +32,7 @@ uart_tx #(
 uart_tx_inst (
     .clk(clk),
     .rst(rst),
+    .locked(locked),
     // axi input
     .dato_tx(dato_tx),
     .transmitir(transmitir),
@@ -47,6 +49,7 @@ uart_rx #(
 uart_rx_inst (
     .clk(clk),
     .rst(rst),
+    .locked(locked),
     // axi output
     .dato_rx(dato_rx),
     .m_axis_tvalid(m_axis_tvalid),

@@ -2,6 +2,7 @@
 module Reg_Data #(parameter Palabra=8) (
     input wire clk,                     // Señal de reloj
     input wire rst,                     // Señal de reset
+    input wire locked,
     input wire [Palabra-1:0] IN1,       // Entrada 1 de 32 bits
     input wire [Palabra-1:0] IN2,       // Entrada 2 de 32 bits
     input wire addr1,                   // Línea de dirección para IN1
@@ -17,7 +18,7 @@ module Reg_Data #(parameter Palabra=8) (
     reg [Palabra-1:0] register2 = 0;    // Registro 2
 
     always @(posedge clk or posedge rst) begin
-        if (rst) begin
+        if (rst || !locked) begin
             // Si rst está activo, reiniciamos los registros y la salida
             register1 <= 0;
             register2 <= 0;
@@ -25,6 +26,7 @@ module Reg_Data #(parameter Palabra=8) (
         end else begin
             // Almacenamos DATO en el registro correspondiente
             if (hold_ctrl && !addr1) begin
+            //if (hold_ctrl || !addr1) begin
                 // Cuando hold_ctrl es 1, utilizamos IN2
                 if (addr2 && WR2) begin
                     register2[7:0] <= IN2[7:0]; // Solo almacenamos los bits 0-7

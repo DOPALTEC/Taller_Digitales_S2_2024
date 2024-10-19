@@ -5,12 +5,11 @@
 /*
  * AXI4-Stream UART
  */
-module uart_tx #(
-    parameter DATA_WIDTH=8, parameter prescale=1303
-)
+module uart_tx #(parameter DATA_WIDTH=8, parameter prescale=1302)
 (
     input wire clk,
     input wire rst,
+    input wire locked,
 
     /*
      * AXI input
@@ -28,35 +27,28 @@ module uart_tx #(
      * Status
      */
     output wire busy
-
-    /*
-     * Configuration
-     */
-   // input  wire [15:0]            prescale
 );
 
 reg s_axis_tready_reg = 0;
-
 reg txd_reg = 1;
-
 reg busy_reg = 0;
-
 reg [DATA_WIDTH:0] data_reg = 0;
 reg [18:0] prescale_reg = 0;
 reg [3:0] bit_cnt = 0;
+reg [DATA_WIDTH-1:0] dato_tx_reg = 0;
 
 assign hay_dato_tx = s_axis_tready_reg;
 assign txd = txd_reg;
-
 assign busy = busy_reg;
 
 always @(posedge clk) begin
-    if (rst) begin
+    if (rst || !locked) begin
         s_axis_tready_reg <= 0;
         txd_reg <= 1;
         prescale_reg <= 0;
         bit_cnt <= 0;
         busy_reg <= 0;
+        dato_tx_reg<=0;
     end else begin
         if (prescale_reg > 0) begin
             s_axis_tready_reg <= 0;
@@ -66,6 +58,7 @@ always @(posedge clk) begin
             busy_reg <= 0;
 
             if (transmitir) begin
+                dato_tx_reg <= dato_tx; 
                 s_axis_tready_reg <= !s_axis_tready_reg;
                 prescale_reg <= (prescale << 3)-1;
                 bit_cnt <= DATA_WIDTH+1;
