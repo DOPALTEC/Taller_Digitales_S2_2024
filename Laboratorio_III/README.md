@@ -47,7 +47,7 @@ $$
 
 
 
-  3. El registro de control no reconoce si el dato cambia, toma la desición de enviar solamente si en el registro de control send está activo. Le es indiferente si ya se transmitió o no, ya que es obligación del RISCV tomar esto en cuenta.
+  3. El registro de control no reconoce si el dato cambia y si se está transmitiendo un dato repetidas veces, toma la desición de enviar solamente si en el registro de control send está activo. Le es indiferente si ya se transmitió o no, ya que es obligación del RISCV tomar esto en cuenta.
 
 #### 5. Testbench
 Descripción y resultados de las pruebas hechas
