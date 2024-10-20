@@ -49,7 +49,7 @@ module top
     );
 
     assign count = count_internal;
-  uart uart_inst (
+ uart uart_inst (
         .clk(clk),
         .rst_n(rst_n),
         .uart_tx(uart_tx),
@@ -59,6 +59,7 @@ module top
         .enable_bit0_reg(enable_bit0_reg),
         .any_key_pressed(any_key_pressed)
     );
+
    // Almacenar los datos de la tecla presionada en los registros
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
