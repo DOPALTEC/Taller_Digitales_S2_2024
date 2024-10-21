@@ -8,6 +8,8 @@
 
 https://cs.uns.edu.ar/materias/se/2019/descargas/teoria/clase01-introduccion-handouts.pdf
 
+https://shadowcode.io/how-to-package-picorv32-vivado-ip-integrator/
+
 ## 3. Desarrollo
 
 ### 3.N PLANTILLA PARA MODULOS (COPIAR Y PEGAR)
