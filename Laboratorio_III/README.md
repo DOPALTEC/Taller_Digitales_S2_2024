@@ -105,8 +105,6 @@ module picorv32 #(
 	parameter [31:0] STACKADDR = 32'h ffff_ffff
 ) (
 	input clk, resetn,
-	output reg trap,
-
 	output reg        mem_valid,
 	output reg        mem_instr,
 	input             mem_ready,
@@ -116,15 +114,6 @@ module picorv32 #(
 	output reg [ 3:0] mem_wstrb,
 	input      [31:0] mem_rdata,
 
-	// Pico Co-Processor Interface (PCPI)
-	output reg        pcpi_valid,
-	output reg [31:0] pcpi_insn,
-	output     [31:0] pcpi_rs1,
-	output     [31:0] pcpi_rs2,
-	input             pcpi_wr,
-	input      [31:0] pcpi_rd,
-	input             pcpi_wait,
-	input             pcpi_ready,
 
 `ifdef RISCV_FORMAL
 	output reg        rvfi_valid,
