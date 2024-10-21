@@ -1,5 +1,7 @@
 IO_LOC  "uart_tx" 17;
 
+IO_LOC  "uart_rx" 18;
+
 IO_LOC  "count_bit1_reg" 13;
 
 IO_LOC  "count_bit0_reg" 14;
@@ -19,3 +21,15 @@ IO_LOC  "rst_n" 3;
 IO_LOC  "count[1]" 39;
 
 IO_LOC  "count[0]" 26;
+
+IO_LOC "lcd_data" 77;
+
+IO_LOC  "lcd_resetn" 47; 
+
+IO_LOC  "received_color" 5; 
+
+IO_LOC  "lcd_clk" 76; 
+
+IO_LOC  "lcd_cs" 48; 
+
+IO_LOC  "lcd_rs" 49; 
