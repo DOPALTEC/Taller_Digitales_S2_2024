@@ -32,7 +32,7 @@ module tb_Primario;
         // Inicializar señales
         rst = 1; // Activar reset
         mem_ready = 0;
-        #200000 rst = 0; // Desactivar reset después de 20 ns
+        #20000 rst = 0; // Desactivar reset después de 20 ns
         mem_ready = 1;
         #100;
         mem_ready = 0;
