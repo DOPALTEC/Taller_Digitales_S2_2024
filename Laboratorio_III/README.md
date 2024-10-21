@@ -165,7 +165,7 @@ module picorv32 #(
 	output reg [35:0] trace_data
 );
 ```
-- Solo se puede correr una de las memorias a la vez. 
+
 
 #### 2. Parámetros
 - `STACKADDR=32'h0007_FFFF`: Denota el tamaño que va a tener el mapa de memoria.
@@ -198,6 +198,7 @@ module picorv32 #(
 
 #### 4. Criterios de diseño
 
+- Solo se puede correr una de las memorias a la vez. 
 
 
 #### 5. Testbench
