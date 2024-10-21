@@ -520,7 +520,6 @@ Laboratorio_III/UART_Nexys/UART_Nexys.srcs/sources_1/ip/CLK_GEN_200MHz/doc/clk_w
 Laboratorio_III/picorv32/picorv32.sim/sim_1/behav/xsim/glbl.v
 Laboratorio_III/picorv32/picorv32.sim/sim_1/behav/xsim/xsim.dir/picorv32_axi_behav/Compile_Options.txt
 Laboratorio_III/picorv32/picorv32.sim/sim_1/behav/xsim/xsim.dir/picorv32_axi_behav/TempBreakPointFile.txt
-Laboratorio_III/picorv32/picorv32.srcs/sim_1/new/testbench.v
 Laboratorio_III/UART_Nexys/UART_Nexys.cache/ip/2019.1/2808085daa0eb873/2808085daa0eb873.xci
 Laboratorio_III/UART_Nexys/UART_Nexys.cache/ip/2019.1/2808085daa0eb873/Program_Memory_sim_netlist.v
 Laboratorio_III/UART_Nexys/UART_Nexys.cache/ip/2019.1/2808085daa0eb873/Program_Memory_sim_netlist.vhdl
@@ -1023,3 +1022,6 @@ Laboratorio_III/picorv32/picorv32.srcs/sources_1/ip/CLK_Gen/mmcm_pll_drp_func_us
 Laboratorio_III/picorv32/picorv32.srcs/sources_1/ip/CLK_Gen/mmcm_pll_drp_func_us_plus_mmcm.vh
 Laboratorio_III/picorv32/picorv32.srcs/sources_1/ip/CLK_Gen/mmcm_pll_drp_func_us_plus_pll.vh
 Laboratorio_III/picorv32/picorv32.srcs/sources_1/ip/CLK_Gen/doc/clk_wiz_v6_0_changelog.txt
+Laboratorio_III/picorv32/picorv32.sim/sim_1/behav/xsim/xsim.ini.bak
+Laboratorio_III/picorv32/picorv32.sim/sim_1/behav/xsim/xsim.dir/Primario_behav/Compile_Options.txt
+Laboratorio_III/picorv32/picorv32.sim/sim_1/behav/xsim/xsim.dir/Primario_behav/TempBreakPointFile.txt
