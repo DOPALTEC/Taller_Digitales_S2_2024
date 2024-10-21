@@ -1,5 +1,5 @@
 
-# Cuestionario Previo Laboratorio II
+# Cuestionario Previo Laboratorio III
 
 ##  1.  Investigue sobre la arquitectura RISC-V. Preste especial atención a las instrucciones que forman parte del conjunto básico de instrucciones para números enteros de 32 bits, RV32I
 
