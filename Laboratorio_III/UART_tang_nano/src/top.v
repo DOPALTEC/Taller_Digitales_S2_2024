@@ -85,7 +85,7 @@ module top_viejo (
         .clk(clk), // Utiliza el reloj de entrada
         .resetn(rst_n),
         .key_value(received_color), // Enviar el color recibido al LCD
-        .ser_tx(ser_tx), // Salida para el transmisor UART
+        .ser_tx(uart_tx), // Salida para el transmisor UART
         .ser_rx(uart_rx), // Recepción UART (opcional)
         .lcd_resetn(lcd_resetn),
         .lcd_clk(lcd_clk),
