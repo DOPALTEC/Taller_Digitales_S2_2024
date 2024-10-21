@@ -57,5 +57,8 @@ Descripción y resultados de las pruebas hechas
 
 ![Tabla](https://github.com/user-attachments/assets/bcae3896-0cbf-4c12-9fab-c2c38cd8a7da)
 
+### Apendice 2: Mapa de Memoria del Microprocesador
+
+![image](https://github.com/user-attachments/assets/a50e704a-0a38-4c01-b78f-749326d4bb6a)
 
 
