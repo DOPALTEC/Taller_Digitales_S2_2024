@@ -76,19 +76,97 @@ Descripción y resultados de las pruebas hechas
 ### 3.N Microprocesador RV32 
 #### 1. Encabezado del módulo
 ```SystemVerilog
-picorv32 (
-		.clk(CLK_200MHZ),
-		.resetn(rst),
-		.mem_valid   (mem_valid  ),
-		.mem_instr   (mem_instr  ),
-		.mem_ready   (mem_ready  ),
-		.mem_addr    (mem_addr   ),
-		.mem_wdata   (mem_wdata  ),
-		.mem_wstrb   (mem_wstrb  ),
-		.mem_rdata   (mem_rdata  ),
-		.irq         (irq        )
+module picorv32 #(
+	parameter [ 0:0] ENABLE_COUNTERS = 1,
+	parameter [ 0:0] ENABLE_COUNTERS64 = 1,
+	parameter [ 0:0] ENABLE_REGS_16_31 = 1,
+	parameter [ 0:0] ENABLE_REGS_DUALPORT = 1,
+	parameter [ 0:0] LATCHED_MEM_RDATA = 0,
+	parameter [ 0:0] TWO_STAGE_SHIFT = 1,
+	parameter [ 0:0] BARREL_SHIFTER = 0,
+	parameter [ 0:0] TWO_CYCLE_COMPARE = 0,
+	parameter [ 0:0] TWO_CYCLE_ALU = 0,
+	parameter [ 0:0] COMPRESSED_ISA = 0,
+	parameter [ 0:0] CATCH_MISALIGN = 1,
+	parameter [ 0:0] CATCH_ILLINSN = 1,
+	parameter [ 0:0] ENABLE_PCPI = 0,
+	parameter [ 0:0] ENABLE_MUL = 0,
+	parameter [ 0:0] ENABLE_FAST_MUL = 0,
+	parameter [ 0:0] ENABLE_DIV = 0,
+	parameter [ 0:0] ENABLE_IRQ = 0,
+	parameter [ 0:0] ENABLE_IRQ_QREGS = 1,
+	parameter [ 0:0] ENABLE_IRQ_TIMER = 1,
+	parameter [ 0:0] ENABLE_TRACE = 0,
+	parameter [ 0:0] REGS_INIT_ZERO = 0,
+	parameter [31:0] MASKED_IRQ = 32'h 0000_0000,
+	parameter [31:0] LATCHED_IRQ = 32'h ffff_ffff,
+	parameter [31:0] PROGADDR_RESET = 32'h 0000_0000,
+	parameter [31:0] PROGADDR_IRQ = 32'h 0000_0010,
+	parameter [31:0] STACKADDR = 32'h ffff_ffff
+) (
+	input clk, resetn,
+	output reg trap,
+
+	output reg        mem_valid,
+	output reg        mem_instr,
+	input             mem_ready,
+
+	output reg [31:0] mem_addr,
+	output reg [31:0] mem_wdata,
+	output reg [ 3:0] mem_wstrb,
+	input      [31:0] mem_rdata,
+
+	// Pico Co-Processor Interface (PCPI)
+	output reg        pcpi_valid,
+	output reg [31:0] pcpi_insn,
+	output     [31:0] pcpi_rs1,
+	output     [31:0] pcpi_rs2,
+	input             pcpi_wr,
+	input      [31:0] pcpi_rd,
+	input             pcpi_wait,
+	input             pcpi_ready,
+
+`ifdef RISCV_FORMAL
+	output reg        rvfi_valid,
+	output reg [63:0] rvfi_order,
+	output reg [31:0] rvfi_insn,
+	output reg        rvfi_trap,
+	output reg        rvfi_halt,
+	output reg        rvfi_intr,
+	output reg [ 1:0] rvfi_mode,
+	output reg [ 1:0] rvfi_ixl,
+	output reg [ 4:0] rvfi_rs1_addr,
+	output reg [ 4:0] rvfi_rs2_addr,
+	output reg [31:0] rvfi_rs1_rdata,
+	output reg [31:0] rvfi_rs2_rdata,
+	output reg [ 4:0] rvfi_rd_addr,
+	output reg [31:0] rvfi_rd_wdata,
+	output reg [31:0] rvfi_pc_rdata,
+	output reg [31:0] rvfi_pc_wdata,
+	output reg [31:0] rvfi_mem_addr,
+	output reg [ 3:0] rvfi_mem_rmask,
+	output reg [ 3:0] rvfi_mem_wmask,
+	output reg [31:0] rvfi_mem_rdata,
+	output reg [31:0] rvfi_mem_wdata,
+
+	output reg [63:0] rvfi_csr_mcycle_rmask,
+	output reg [63:0] rvfi_csr_mcycle_wmask,
+	output reg [63:0] rvfi_csr_mcycle_rdata,
+	output reg [63:0] rvfi_csr_mcycle_wdata,
+
+	output reg [63:0] rvfi_csr_minstret_rmask,
+	output reg [63:0] rvfi_csr_minstret_wmask,
+	output reg [63:0] rvfi_csr_minstret_rdata,
+	output reg [63:0] rvfi_csr_minstret_wdata,
+`endif
+
+	// Trace Interface
+	output reg        trace_valid,
+	output reg [35:0] trace_data
 );
 ```
+- Solo se puede correr una de las memorias a la vez. 
+
 #### 2. Parámetros
 - `STACKADDR=32'h0007_FFFF`: Denota el tamaño que va a tener el mapa de memoria.
 - `PROGADDR_RESET=32'h 0000_0000`: Indica el valor de la posición inicial de lectura de las instrucciones, ubicadas en la memoria de instrucciones ROM.
@@ -103,9 +181,20 @@ picorv32 (
 - `ENABLE_IRQ_QREGS=0`: Descarta la interrupción en los registros.
 
 #### 3. Entradas y salidas:
+**ENTRADAS**
 - `clk`: Pulsos de Reloj Generado con el PLL
 - `resetn`: Señal de reset para reiniciar el sistema
-- 
+- `mem_ready`: Señal que indica que la operación de memoria ha finalizado y que los datos están disponibles o que se ha completado la escritura. El núcleo utiliza esta señal para saber cuándo puede proceder después de haber iniciado una transferencia de memoria.
+- `mem_rdata`: Contiene los datos leídos de la memoria en una operación de lectura. El valor en esta señal es accesible para el núcleo cuando mem_ready está activo tras una solicitud de lectura.
+
+
+**SALIDAS**
+- `trap`: Señal que indica si se ha producido un evento de trampa (trap) en el núcleo. Un evento de trampa es una condición especial que puede ser causada por excepciones o interrupciones. Si se activa, puede requerir que el sistema maneje esta condición de manera especial.
+- `mem_valid`: Señal que indica que el núcleo está realizando una transferencia de memoria. Esta señal se activa cuando el núcleo desea leer o escribir en la memoria, permaneciendo activa mientras el núcleo espera que mem_ready se active.
+- `mem_instr`: Indica si la transferencia de memoria es una operación de lectura de instrucción. Se utiliza para distinguir entre las operaciones de lectura de datos y de instrucciones, permitiendo que el controlador de memoria maneje cada tipo de operación adecuadamente. La transferencia de memoria se está llevando a cabo, es una solicitud para obtener una instrucción. Cuando está activa, el núcleo señala que se intenta acceder a la memoria para obtener instrucciones en vez de datos.
+- `mem_addr`: Representa la dirección de memoria en la que se realizará la operación de lectura o escritura. Esta señal debe ser válida y estable durante la operación de transferencia de memoria.
+- `mem_wdata`: Datos que se desean escribir en la memoria durante una operación de escritura. Este valor se utiliza solo cuando mem_valid está activo y mem_wstrb no es cero.
+- `mem_wstrb`: Señal de habilitación de escritura que indica qué bytes del dato en mem_wdata deben ser escritos en la memoria. Cada uno de los 4 bits de esta señal corresponde a un byte en la dirección especificada por mem_addr.
 
 #### 4. Criterios de diseño
 
