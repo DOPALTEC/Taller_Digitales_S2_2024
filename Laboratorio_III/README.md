@@ -125,4 +125,6 @@ Descripción y resultados de las pruebas hechas
 
 ![image](https://github.com/user-attachments/assets/a50e704a-0a38-4c01-b78f-749326d4bb6a)
 
+### Apendice 3: Configuraciónes para despliegue de imagenes del procesador del LCD ST7789V
 
+![image](https://github.com/user-attachments/assets/5030179a-0007-42cb-a36e-270d80de65de)
