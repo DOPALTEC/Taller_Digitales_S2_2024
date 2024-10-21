@@ -1,4 +1,5 @@
-module top (
+module top
+    (
     input clk,
     input rst_n,
     input [1:0] enable,  
@@ -6,7 +7,8 @@ module top (
     output reg count_bit1_reg,
     output reg count_bit0_reg,
     output reg enable_bit1_reg,
-    output reg enable_bit0_reg
+    output reg enable_bit0_reg,
+    output uart_tx
 );
     wire slow_clk;
     wire [1:0] key_pressed;
@@ -47,6 +49,16 @@ module top (
     );
 
     assign count = count_internal;
+ uart uart_inst (
+        .clk(clk),
+        .rst_n(rst_n),
+        .uart_tx(uart_tx),
+        .count_bit1_reg(count_bit1_reg),
+        .count_bit0_reg(count_bit0_reg),
+        .enable_bit1_reg(enable_bit1_reg),
+        .enable_bit0_reg(enable_bit0_reg),
+        .any_key_pressed(any_key_pressed)
+    );
 
    // Almacenar los datos de la tecla presionada en los registros
     always @(posedge clk or negedge rst_n) begin
