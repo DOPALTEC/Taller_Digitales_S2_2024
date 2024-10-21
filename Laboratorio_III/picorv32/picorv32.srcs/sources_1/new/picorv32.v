@@ -1,3 +1,26 @@
+/*
+ *  PicoRV32 -- A Small RISC-V (RV32I) Processor Core
+ *
+ *  Copyright (C) 2015  Claire Xenia Wolf <claire@yosyshq.com>
+ *
+ *  Permission to use, copy, modify, and/or distribute this software for any
+ *  purpose with or without fee is hereby granted, provided that the above
+ *  copyright notice and this permission notice appear in all copies.
+ *
+ *  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+ *  WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+ *  MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ *  ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+ *  WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ *  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+ *  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ *
+ */
+
+/* verilator lint_off WIDTH */
+/* verilator lint_off PINMISSING */
+/* verilator lint_off CASEOVERLAP */
+/* verilator lint_off CASEINCOMPLETE */
 
 `timescale 1 ns / 1 ps
 // `default_nettype none
@@ -66,7 +89,7 @@ module picorv32 #(
 ) (
 	input clk, resetn,
 	output reg trap,
-///////////////////////////////////////////////////////
+
 	output reg        mem_valid,
 	output reg        mem_instr,
 	input             mem_ready,
@@ -75,7 +98,7 @@ module picorv32 #(
 	output reg [31:0] mem_wdata,
 	output reg [ 3:0] mem_wstrb,
 	input      [31:0] mem_rdata,
-//////////////////////////////////////////////////////
+
 	// Look-Ahead Interface
 	output            mem_la_read,
 	output            mem_la_write,
