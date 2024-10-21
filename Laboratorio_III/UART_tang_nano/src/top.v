@@ -1,5 +1,4 @@
-module top
-(
+module top_viejo (
     input clk,
     input rst_n,
     input [1:0] enable,  
@@ -9,13 +8,20 @@ module top
     output reg enable_bit1_reg,
     output reg enable_bit0_reg,
     output uart_tx,
-    input uart_rx, // Pin de recepción UART
-    output [23:0] pixel_color,
-    output write_enable
+    input uart_rx,  // Entrada para UART RX
+    output ser_tx,   // Salida para UART TX
+    output lcd_resetn,
+    output lcd_clk,
+    output lcd_cs,
+    output lcd_rs,
+    output lcd_data
 );
+
     wire slow_clk;
     wire [1:0] key_pressed;
     wire any_key_pressed;
+    wire [2:0] received_color; // Color recibido del módulo uart_rx
+    wire data_ready; // Señal de que hay datos listos
     reg [1:0] count_internal;
     reg key_pressed_prev;
 
@@ -53,8 +59,8 @@ module top
 
     assign count = count_internal;
 
-    // Instanciar el módulo UART para enviar datos
-    uart uart_inst (
+    // Instanciar el módulo uart_tx
+    uart_tx uart_tx_inst (
         .clk(clk),
         .rst_n(rst_n),
         .uart_tx(uart_tx),
@@ -63,6 +69,29 @@ module top
         .enable_bit1_reg(enable_bit1_reg),
         .enable_bit0_reg(enable_bit0_reg),
         .any_key_pressed(any_key_pressed)
+    );
+
+    // Instanciar el módulo uart_rx
+    uart_rx uart_rx_inst (
+        .clk(clk),
+        .rst_n(rst_n),
+        .uart_rx(uart_rx),
+        .received_color(received_color),
+        .data_ready(data_ready)
+    );
+
+    // Instanciar el módulo lcd114_test
+    lcd114_test lcd_inst (
+        .clk(clk), // Utiliza el reloj de entrada
+        .resetn(rst_n),
+        .key_value(received_color), // Enviar el color recibido al LCD
+        .ser_tx(ser_tx), // Salida para el transmisor UART
+        .ser_rx(uart_rx), // Recepción UART (opcional)
+        .lcd_resetn(lcd_resetn),
+        .lcd_clk(lcd_clk),
+        .lcd_cs(lcd_cs),
+        .lcd_rs(lcd_rs),
+        .lcd_data(lcd_data)
     );
 
     // Almacenar los datos de la tecla presionada en los registros
@@ -84,25 +113,5 @@ module top
         end
     end
 
-    // Instanciar el módulo UART para recibir datos
-    wire [2:0] received_color;
-    wire data_ready;
-
-    uart_rx rx_inst (
-        .clk(clk),
-        .rst_n(rst_n),
-        .uart_rx(uart_rx),
-        .received_color(received_color),
-        .data_ready(data_ready)
-    );
-
-    // Instanciar el módulo de visualización de la pantalla LCD
-    lcd_display lcd_inst (
-        .clk(clk),
-        .rst_n(rst_n),
-        .color_code(received_color),
-        .pixel_color(pixel_color),
-        .write_enable(write_enable)
-    );
-
 endmodule
+
