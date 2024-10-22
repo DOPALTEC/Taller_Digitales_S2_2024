@@ -36,8 +36,8 @@
  ***************************************************************/
 
 module picorv32 #(
-	parameter [ 0:0] ENABLE_COUNTERS = 1,
-	parameter [ 0:0] ENABLE_COUNTERS64 = 1,
+    parameter [ 0:0] ENABLE_COUNTERS = 1, //predeterminado
+	parameter [ 0:0] ENABLE_COUNTERS64 = 1, //predeterminado
 	parameter [ 0:0] ENABLE_REGS_16_31 = 1,
 	parameter [ 0:0] ENABLE_REGS_DUALPORT = 1,
 	parameter [ 0:0] LATCHED_MEM_RDATA = 0,
@@ -53,7 +53,7 @@ module picorv32 #(
 	parameter [ 0:0] ENABLE_FAST_MUL = 0,
 	parameter [ 0:0] ENABLE_DIV = 0,
 	parameter [ 0:0] ENABLE_IRQ = 0,
-	parameter [ 0:0] ENABLE_IRQ_QREGS = 1,
+	parameter [ 0:0] ENABLE_IRQ_QREGS = 0,
 	parameter [ 0:0] ENABLE_IRQ_TIMER = 1,
 	parameter [ 0:0] ENABLE_TRACE = 0,
 	parameter [ 0:0] REGS_INIT_ZERO = 0,
@@ -61,7 +61,7 @@ module picorv32 #(
 	parameter [31:0] LATCHED_IRQ = 32'h ffff_ffff,
 	parameter [31:0] PROGADDR_RESET = 32'h 0000_0000,
 	parameter [31:0] PROGADDR_IRQ = 32'h 0000_0010,
-	parameter [31:0] STACKADDR = 32'h ffff_ffff
+	parameter [31:0] STACKADDR = 32'h 0007_ffff
 ) (
 	input clk, resetn,
 	output reg trap,

@@ -1,114 +1,62 @@
-`timescale 1ns / 1ps 
+`timescale 1ns / 1ps
 
 module Primario #(parameter 
     STACKADDR=32'h0007_FFFF, // Posición especificada en el mapa de memoria para la RAM
-    PROGADDR_RESET=32'h 0000_0000,// Posición inicial de la memoria de programa
+    PROGADDR_RESET=32'h 0000_0000, // Posición inicial de la memoria de programa
     PROGADDR_IRQ=0,
-    //BARREL_SHIFTER=1,
     BARREL_SHIFTER=0,
     ENABLE_COMPRESSED=0, 
-    //ENABLE_COUNTERS=1,
     ENABLE_COUNTERS=0,
     ENABLE_MUL=0, 
     ENABLE_DIV=0,
     ENABLE_FAST_MUL=0, 
     ENABLE_IRQ=0, 
-    ENABLE_IRQ_QREGS=0)(
+    ENABLE_IRQ_QREGS=0)
+(
     input  wire clk,
-    input  wire rst,
-    input wire mem_ready
-    
+    input  wire rst
 );
-    
-wire locked;
-wire CLK_200MHZ;
-    
-// Instanciación de CLK 200 MHZ
 
-  CLK_Gen CLK_Gen_inst
-   (
-    // Clock out ports
-    .CLK_200MHZ(CLK_200MHZ),     // output CLK_200MHZ
-    // Status and control signals
-    .reset(rst), // input reset
-    .locked(locked),       // output locked
-   // Clock in ports
-    .CLK_100MHZ(clk));      // input CLK_100MHZ
+wire [31:0] mem_addr; //Direccion de memoria que lee 
+wire  [31:0] mem_rdata; //Lee la instruccion
 
-// Instanciación de RV32
-wire mem_valid;            
-wire mem_instr;           
-//wire mem_ready;           
-wire [31:0] mem_addr; 
-wire [31:0] mem_wdata; 
+ROM ROM_inst (
+  .a(mem_addr),      // input wire [8 : 0] a
+  .spo(mem_rdata)  // output wire [31 : 0] spo
+);
+
+
+
+/////////////////////INSTANCIACION DE RV32////////////////////////////
+//INPUTS
+reg mem_ready; //Habilita que la memoria esta lista
+//OUTPUTS
+wire mem_valid; //Indica que la memoria que esta leyendo es valida
+wire mem_instr;
+    //Escritura
 wire [3:0] mem_wstrb; 
-wire [31:0] mem_rdata;     
-
-picorv32 #(
-    .STACKADDR(STACKADDR),
-    .PROGADDR_RESET(PROGADDR_RESET),
-    .PROGADDR_IRQ(PROGADDR_IRQ),
-    .BARREL_SHIFTER(BARREL_SHIFTER),
-    .COMPRESSED_ISA(ENABLE_COMPRESSED),
-    .ENABLE_COUNTERS(ENABLE_COUNTERS),
-    .ENABLE_MUL(ENABLE_MUL),
-    .ENABLE_DIV(ENABLE_DIV),
-    .ENABLE_FAST_MUL(ENABLE_FAST_MUL),
-    .ENABLE_IRQ(ENABLE_IRQ),
-    .ENABLE_IRQ_QREGS(ENABLE_IRQ_QREGS)
-) cpu (
-    .clk(CLK_200MHZ),
-    .resetn(rst), // Inversión si es necesario
+wire [31:0] mem_wdata;
+wire trap;
+picorv32 #() cpu (
+    .clk(clk),
+    .resetn(!rst),// Reset activo en bajo
+    .trap(trap),
     .mem_valid(mem_valid), 
     .mem_instr(mem_instr),
     .mem_ready(mem_ready),
-    .mem_addr(mem_addr),
-    .mem_wdata(mem_wdata),
-    .mem_wstrb(mem_wstrb),
-    .mem_rdata(mem_rdata),
-    .irq()
-);
-	
-// Instanciación de ROM
-reg [8:0] rom_a;              
-wire [31:0] rom_spo;           
-
-ROM ROM_inst (
-    .a(rom_a),      
-    .spo(rom_spo)
+    .mem_addr(mem_addr),//Direccion de la memoria que va a leer
+    .mem_wdata(mem_wdata),// Datos a escribir (si es escritura)
+    .mem_wstrb(mem_wstrb),// Señales de escritura
+    .mem_rdata(mem_rdata)//Lee lo que hay en la memoria
 );
 
-// Instanciación de RAM
-reg [14:0] ram_a;         
-reg [31:0] ram_d;         
-reg ram_we;               
-
-RAM RAM_inst (
-    .a(ram_a),
-    .d(ram_d),      
-    .clk(CLK_200MHZ), 
-    .we(ram_we),    
-    .spo(mem_rdata)  
-);
-
-always @(*) begin
-    // Inicializar las señales
-    ram_we = 0; // Inicialmente no se escribe en RAM
-    rom_a = 0;  // Inicializar la dirección de ROM
-    ram_a = 0;  // Inicializar la dirección de RAM
-    ram_d = 0;  // Inicializar los datos a escribir en RAM
-
-    if (locked) begin
+always @(posedge clk or posedge rst) begin
+    if (rst) begin
+        mem_ready <= 0; // Inicializa mem_ready en 0 al reset
+    end else begin
+        mem_ready <= 0; // Por defecto, mem_ready es 0
         if (mem_valid) begin
-            if (mem_instr) begin
-                // Si es un fetch de instrucción, se lee de la ROM
-                rom_a = mem_addr[8:0]; // Asumiendo que la ROM tiene un rango adecuado
-            end else begin
-                // Si no es un fetch, se trata de una operación de escritura
-                ram_a = mem_addr[14:0]; // Ajustar según el tamaño de tu RAM
-                ram_d = mem_wdata; // Datos a escribir
-                ram_we = |mem_wstrb; // Habilitar escritura si alguna línea de escritura está activa
-            end
+            mem_ready <= 1; // Habilita mem_ready si hay operación válida
         end
     end
 end
