@@ -25,7 +25,13 @@ ROM ROM_inst (
   .spo(mem_rdata)  // output wire [31 : 0] spo
 );
 
-
+RAM RAM_inst (
+  .a(a),      // input wire [14 : 0] a
+  .d(d),      // input wire [31 : 0] d
+  .clk(clk),  // input wire clk
+  .we(we),    // input wire we
+  .spo(spo)  // output wire [31 : 0] spo
+);
 
 /////////////////////INSTANCIACION DE RV32////////////////////////////
 //INPUTS
@@ -46,7 +52,7 @@ picorv32 #() cpu (
     .mem_ready(mem_ready),
     .mem_addr(mem_addr),//Direccion de la memoria que va a leer
     .mem_wdata(mem_wdata),// Datos a escribir (si es escritura)
-    .mem_wstrb(mem_wstrb),// Señales de escritura
+    .mem_wstrb(mem_wstrb),// Indica que hay un acceso de escritura valido
     .mem_rdata(mem_rdata)//Lee lo que hay en la memoria
 );
 
@@ -55,7 +61,7 @@ always @(posedge clk or posedge rst) begin
         mem_ready <= 0; // Inicializa mem_ready en 0 al reset
     end else begin
         mem_ready <= 0; // Por defecto, mem_ready es 0
-        if (mem_valid) begin
+        if (mem_valid && !mem_ready) begin
             mem_ready <= 1; // Habilita mem_ready si hay operación válida
         end
     end
