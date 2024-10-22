@@ -190,6 +190,7 @@ module picorv32 #(
 #### 4. Criterios de diseño
 
 - Solo se puede correr una de las memorias a la vez.
+- La memoria ROM va de address en address, mientras que el Contador de Programa de RV32 va de 4 bytes en 4 bytes, se debe por tanto, dividir el archivo de instrucciones en 4 partes por instrucción, para que así la dirección ingresada corresponda a un formato de bytes. 
 
 
 #### 5. Testbench
