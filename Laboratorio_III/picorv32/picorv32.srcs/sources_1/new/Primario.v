@@ -26,6 +26,7 @@ ROM ROM_inst (
   .spo(mem_rdata)  // output wire [31 : 0] spo
 );
 
+
 RAM RAM_inst (
   .a(a),      // input wire [14 : 0] a
   .d(d),      // input wire [31 : 0] d
