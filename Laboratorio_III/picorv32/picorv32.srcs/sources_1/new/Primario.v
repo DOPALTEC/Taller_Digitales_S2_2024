@@ -20,8 +20,9 @@ module Primario #(parameter
 wire [31:0] mem_addr; //Direccion de memoria que lee 
 wire  [31:0] mem_rdata; //Lee la instruccion
 
+//Como la ROM termina en 0x0fff se puede acotar
 ROM ROM_inst (
-  .a(mem_addr),      // input wire [8 : 0] a
+  .a(mem_addr[11:0]),      // input wire [8 : 0] 
   .spo(mem_rdata)  // output wire [31 : 0] spo
 );
 
@@ -64,6 +65,9 @@ always @(posedge clk or posedge rst) begin
         if (mem_valid && !mem_ready) begin
             mem_ready <= 1; // Habilita mem_ready si hay operación válida
         end
+        //else begin
+        //    mem_ready <= 0;
+        //end
     end
 end
 
