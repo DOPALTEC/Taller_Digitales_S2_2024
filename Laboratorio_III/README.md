@@ -190,7 +190,7 @@ module picorv32 #(
 #### 4. Criterios de diseño
 
 - Solo se puede correr una de las memorias a la vez.
-- Debido a que la ROM solamente permite de radix 16bits se deben seccionar las instrucciones en el archivo coe a la mitad para que así se lean los 32 bits. Por ejemplo:
+- Debido a que el archivo .coe solamente permite de radix 16bits se deben seccionar las instrucciones en el archivo coe a la mitad para que así se lean los 32 bits. Por ejemplo:
 
 	```
 	memory_initialization_radix=16;
