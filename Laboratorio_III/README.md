@@ -190,19 +190,6 @@ module picorv32 #(
 #### 4. Criterios de diseño
 
 - Solo se puede correr una de las memorias a la vez.
-- Debido a que el archivo .coe solamente permite de radix 16bits se deben seccionar las instrucciones en el archivo coe a la mitad para que así se lean los 32 bits. Por ejemplo:
-
-	```
-	memory_initialization_radix=16;
-	memory_initialization_vector=
-	3fc0, 0093,  // li      x1, 1020
-	0000, a023,  // sw      x0, 0(x1)
-	0020, 81b3,  // add     x3, x1, x2
-	0000, a103,  // lw      x2, 0(x1)
-	0011, 0113,  // addi    x2, x2, 1
-	0020, a023,  // sw      x2, 0(x1)
-	ff5f, f06f;  // j       <loop>
-	```
 
 
 #### 5. Testbench
