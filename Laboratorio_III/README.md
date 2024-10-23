@@ -10,6 +10,8 @@ https://cs.uns.edu.ar/materias/se/2019/descargas/teoria/clase01-introduccion-han
 
 https://shadowcode.io/how-to-package-picorv32-vivado-ip-integrator/
 
+https://riscv.org/wp-content/uploads/2017/05/riscv-spec-v2.2.pdf
+
 ## 3. Desarrollo
 
 ### 3.N PLANTILLA PARA MODULOS (COPIAR Y PEGAR)
