@@ -197,21 +197,14 @@ module picorv32 #(
 ```
 memory_initialization_radix=16;
 memory_initialization_vector=
-00000013,  // nop
-00000013,  // nop
-00000000,  // lui x0, 0
-00000001,  // addi x1, x0, 1   (x1 = 1)
-00000002,  // addi x2, x0, 2   (x2 = 2)
-00000003,  // add x3, x1, x2    (x3 = x1 + x2; x3 = 3)
-00000004,  // sw x3, 0(x0)      // Store x3 at address 0
-00000005,  // lw x4, 0(x0)      // Load from address 0 to x4
-00000006,  // beq x4, x3, 12    // Branch if x4 == x3 (jump to instruction at address 12)
-00000007,  // addi x5, x0, 0    // addi x5, x0, 0; no-op if branch is taken
-00000008,  // addi x6, x0, 10   // x6 = 10
-00000009,  // add x7, x5, x6    // x7 = x5 + x6; x7 = 10
-0000000A,  // jal x0, 20        // Jump to address 20 (relative jump)
-0000000B,  // nop                // nop
-0000000C,  // addi x8, x0, 15   // x8 = 15
+00600093  // li x1, 6
+00C00113  // li x2, 12
+01200193  // li x3, 18
+002081b3  // add x3, x1, x2 -> x3 = x1 + x2
+00000213  // li x4, 0x40000 (Esto se traducirá en dos instrucciones)
+00000313  // lui x4, 0x40000
+0000a023  // sw x1, 0(x4) -> almacenar x1 en la dirección 0x40000
+
 ```
 
 
