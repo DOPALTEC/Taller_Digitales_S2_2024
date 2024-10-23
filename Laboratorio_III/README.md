@@ -202,13 +202,13 @@ module picorv32 #(
 ```
 memory_initialization_radix=16;
 memory_initialization_vector=
-00600093  // li x1, 6 (ADDI x1, x0, 6)
-00C00113  // li x2, 12 (ADDI x2, x0, 12)
-01200193  // li x3, 18 (ADDI x3, x0, 18)
+00600093  // li x1, 6
+00C00113  // li x2, 12
+01200193  // li x3, 18
 002081b3  // add x3, x1, x2 -> x3 = x1 + x2
-00000213  // li t0, 3 (ADDI t0, x0, 3)
-004003B7  // LUI t1, 0x40 (Carga 0x40000 en t1)
-00532023  // SW t0, 0(t1) (Guarda el valor de t0 en la dirección 0x40000)
+00000213  // li t0, 3 (Cargar 3 en t0)
+000403B7  // LUI t1, 0x00040 (Cargar 0x00040000 en t1)
+00532023  // SW t0, 0(t1) (Almacenar valor de t0 en la dirección 0x00040000)
 ;
 ```
 
