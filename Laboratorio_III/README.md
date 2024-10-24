@@ -207,8 +207,8 @@ memory_initialization_vector=
 00A00093, //addi x1,x0, 10
 001020A3, //sw x1, 1(x0)
 00B00113, //addi x2,x0, 11
-00202123 //sw x2, 2(x0)
-
+00202123, //sw x2, 2(x0)
+00C00193, //ADDI x3, x0, 12
 ;
 
 
