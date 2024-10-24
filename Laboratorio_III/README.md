@@ -203,12 +203,10 @@ module picorv32 #(
 ```
 memory_initialization_radix=16;
 memory_initialization_vector=
-00600093  // li x1, 6          // Cargar 6 en x1
-00000113  // li x2, 7          // Cargar 7 en x2 (valor de un solo dígito)
-01200193  // li x3, 18         // Cargar 18 en x3
-002081b3  // add x3, x1, x2    // x3 = x1 + x2 -> x3 = 6 + 7 = 13
-3fc00093  // li x1, 1020       // Cargar 1020 en x1
-00a0a023  // sw x2, 0(x1)      // Guardar el valor de x2 en la dirección 1020 (0x000003FC)
+00100093, //li x1,1 "Guarda en el registro 1 1"
+00400113, //li x2, 4 "Guarda en el registro x2 0x4"
+005001A3, //li x3, 5
+0020a023, //sw x2,0(x1)
 
 ```
 
