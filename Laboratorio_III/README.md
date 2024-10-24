@@ -196,7 +196,8 @@ module picorv32 #(
 - Solo se puede correr una de las memorias a la vez.
 - La memoria ROM va de address en address, mientras que el Contador de Programa de RV32 va de 4 bytes en 4 bytes, se debe por tanto, dividir el archivo de instrucciones en 4 partes por instrucción, para que así la dirección ingresada corresponda a un formato de bytes. 
 - Para los accesos a memorias como RAM debido a que estan en direcciones de valor alto en el mapa de memoria se debe accesar a ellas cargando parte de ellas en un registro base con una instrucción `lui` y luego aplicar el desplazamiento necesario ya que un inmediato solo llega hasta 12 bits.
-- La RV32 no reconoce direcciones de memoria de 0x40000. Se debe hacer un tratamiento a una señal de escritura basada en sus limites. La limitación interna de memoria del RV32 es de menor a 1024 bytes (0x400).  
+- La RV32 no reconoce direcciones de memoria de 0x40000. Se debe hacer un tratamiento a una señal de escritura basada en sus limites. La limitación interna de memoria del RV32 es de menor a 1024 bytes (0x400).
+- La direccion cero inicial de sw corresponde a x1 ya que x0 no puede ser sobreescrito.
 
 #### 5. Testbench
 
@@ -206,7 +207,12 @@ memory_initialization_vector=
 00100093, //li x1,1 "Guarda en el registro 1 1"
 00400113, //li x2, 4 "Guarda en el registro x2 0x4"
 005001A3, //li x3, 5
-0020a023, //sw x2,0(x1)
+00D00523 //li x5, D
+00202523 //sw x5, 2(x0) //Almacena un D (x5) en la direccion 2 (restandole 1)
+00800223 //li x4, 8
+;
+
+
 
 ```
 
@@ -227,35 +233,10 @@ memory_initialization_vector=
 
 ### Apendice 4: Tabla de Códigos de Operación de Distintas Instrucciones
 
-| Opcode   | Instrucción | Descripción                                             |
-|----------|-------------|---------------------------------------------------------|
-| 0000011  | LUI         | Carga un valor inmediato en los 20 bits superiores de un registro. |
-| 0000011  | AUIPC       | Suma el valor inmediato a la dirección de PC y lo carga en un registro. |
-| 0000111  | JALR        | Salta a la dirección especificada en un registro y almacena la dirección siguiente en otro registro. |
-| 1100011  | BEQ         | Salta si dos registros son iguales.                    |
-| 1100011  | BNE         | Salta si dos registros no son iguales.                 |
-| 1100011  | BLT         | Salta si un registro es menor que otro.                |
-| 1100011  | BGE         | Salta si un registro es mayor o igual que otro.        |
-| 1100011  | BLTU        | Salta si un registro sin signo es menor que otro.      |
-| 1100011  | BGEU        | Salta si un registro sin signo es mayor o igual que otro. |
-| 0110011  | ADD         | Suma dos registros.                                     |
-| 0110011  | SUB         | Resta un registro de otro.                              |
-| 0110011  | SLL         | Desplazamiento lógico a la izquierda.                   |
-| 0110011  | SLT         | Establece a 1 si el primer registro es menor que el segundo. |
-| 0110011  | SLTU        | Establece a 1 si el primer registro sin signo es menor que el segundo sin signo. |
-| 0110011  | XOR         | Realiza una operación XOR entre dos registros.          |
-| 0110011  | SRL         | Desplazamiento lógico a la derecha.                     |
-| 0110011  | SRA         | Desplazamiento aritmético a la derecha.                |
-| 0110011  | OR          | Realiza una operación OR entre dos registros.           |
-| 0110011  | AND         | Realiza una operación AND entre dos registros.          |
-| 0000011  | LB          | Carga un byte de memoria en un registro.               |
-| 0000011  | LH          | Carga medio palabra de memoria en un registro.         |
-| 0000011  | LW          | Carga una palabra de memoria en un registro.           |
-| 0000011  | LBU         | Carga un byte sin signo de memoria en un registro.     |
-| 0000011  | LHU         | Carga medio palabra sin signo de memoria en un registro. |
-| 0100011  | SB          | Almacena un byte en memoria.                           |
-| 0100011  | SH          | Almacena medio palabra en memoria.                     |
-| 0100011  | SW          | Almacena una palabra en memoria.                       |
-| 1110011  | EBREAK      | Genera una interrupción para depuración.               |
-| 1110011  | ECALL       | Genera una llamada al sistema.                         |
+| Opcode   | Instrucción | funct 3 |
+|----------|-------------|---------|
+| 0100011  | sw          |   010   |
+| 0100011  | li          |   000   |
+
+
 
