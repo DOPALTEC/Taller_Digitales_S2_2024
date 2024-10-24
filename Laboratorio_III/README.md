@@ -195,21 +195,21 @@ module picorv32 #(
 
 - Solo se puede correr una de las memorias a la vez.
 - La memoria ROM va de address en address, mientras que el Contador de Programa de RV32 va de 4 bytes en 4 bytes, se debe por tanto, dividir el archivo de instrucciones en 4 partes por instrucción, para que así la dirección ingresada corresponda a un formato de bytes. 
-- Para los accesos a memorias como RAM debido a que estan en direcciones de valor alto en el mapa de memoria se debe accesar a ellas cargando parte de ellas en un registro base con una instrucción `lui` y luego aplicar el desplazamiento necesario ya que un inmediato solo llega hasta 12 bits. 
+- Para los accesos a memorias como RAM debido a que estan en direcciones de valor alto en el mapa de memoria se debe accesar a ellas cargando parte de ellas en un registro base con una instrucción `lui` y luego aplicar el desplazamiento necesario ya que un inmediato solo llega hasta 12 bits.
+- La RV32 no reconoce direcciones de memoria de 0x40000. Se debe hacer un tratamiento a una señal de escritura basada en sus limites. La limitación interna de memoria del RV32 es de menor a 1024 bytes (0x400).  
 
 #### 5. Testbench
 
 ```
 memory_initialization_radix=16;
 memory_initialization_vector=
-00600093  // li x1, 6
-00C00113  // li x2, 12
-01200193  // li x3, 18
-002081b3  // add x3, x1, x2 -> x3 = x1 + x2
-00000213  // li t0, 3 (Cargar 3 en t0)
-000403B7  // LUI t1, 0x00040 (Cargar 0x00040000 en t1)
-00532023  // SW t0, 0(t1) (Almacenar valor de t0 en la dirección 0x00040000)
-;
+00600093  // li x1, 6          // Cargar 6 en x1
+00000113  // li x2, 7          // Cargar 7 en x2 (valor de un solo dígito)
+01200193  // li x3, 18         // Cargar 18 en x3
+002081b3  // add x3, x1, x2    // x3 = x1 + x2 -> x3 = 6 + 7 = 13
+3fc00093  // li x1, 1020       // Cargar 1020 en x1
+00a0a023  // sw x2, 0(x1)      // Guardar el valor de x2 en la dirección 1020 (0x000003FC)
+
 ```
 
 
