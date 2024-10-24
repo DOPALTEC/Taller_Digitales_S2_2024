@@ -1,8 +1,8 @@
 `timescale 1ns / 1ps
 
 module Primario #(parameter 
-    STACKADDR=32'h0007_FFFF, // Posición especificada en el mapa de memoria para la RAM
-    PROGADDR_RESET=32'h 0000_0000, // Posición inicial de la memoria de programa
+    STACKADDR=32'h0007_FFFF, // Posiciï¿½n especificada en el mapa de memoria para la RAM
+    PROGADDR_RESET=32'h 0000_0000, // Posiciï¿½n inicial de la memoria de programa
     PROGADDR_IRQ=0,
     BARREL_SHIFTER=0,
     ENABLE_COMPRESSED=0, 
@@ -90,7 +90,7 @@ always @(posedge clk or posedge rst) begin
         mem_ready <= 0; // Por defecto, mem_ready es 0
         ram_we<=0;
         if (mem_valid && !mem_ready) begin
-            mem_ready <= 1; // Habilita mem_ready si hay operación válida
+            mem_ready <= 1; // Habilita mem_ready si hay operaciï¿½n vï¿½lida
             if(!mem_instr && (mem_wstrb[0] || mem_wstrb[1]) || mem_wstrb[2] || mem_wstrb[3])begin
                 ram_wdata <= mem_wdata; // Asigna los datos a escribir en RAM
                 ram_we <= 1; // Habilita escritura en RAM
