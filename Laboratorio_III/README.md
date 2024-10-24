@@ -224,3 +224,38 @@ memory_initialization_vector=
 ### Apendice 3: Configuraciónes para despliegue de imagenes del procesador del LCD ST7789V
 
 ![image](https://github.com/user-attachments/assets/5030179a-0007-42cb-a36e-270d80de65de)
+
+### Apendice 4: Tabla de Códigos de Operación de Distintas Instrucciones
+
+| Opcode   | Instrucción | Descripción                                             |
+|----------|-------------|---------------------------------------------------------|
+| 0000011  | LUI         | Carga un valor inmediato en los 20 bits superiores de un registro. |
+| 0000011  | AUIPC       | Suma el valor inmediato a la dirección de PC y lo carga en un registro. |
+| 0000111  | JALR        | Salta a la dirección especificada en un registro y almacena la dirección siguiente en otro registro. |
+| 1100011  | BEQ         | Salta si dos registros son iguales.                    |
+| 1100011  | BNE         | Salta si dos registros no son iguales.                 |
+| 1100011  | BLT         | Salta si un registro es menor que otro.                |
+| 1100011  | BGE         | Salta si un registro es mayor o igual que otro.        |
+| 1100011  | BLTU        | Salta si un registro sin signo es menor que otro.      |
+| 1100011  | BGEU        | Salta si un registro sin signo es mayor o igual que otro. |
+| 0110011  | ADD         | Suma dos registros.                                     |
+| 0110011  | SUB         | Resta un registro de otro.                              |
+| 0110011  | SLL         | Desplazamiento lógico a la izquierda.                   |
+| 0110011  | SLT         | Establece a 1 si el primer registro es menor que el segundo. |
+| 0110011  | SLTU        | Establece a 1 si el primer registro sin signo es menor que el segundo sin signo. |
+| 0110011  | XOR         | Realiza una operación XOR entre dos registros.          |
+| 0110011  | SRL         | Desplazamiento lógico a la derecha.                     |
+| 0110011  | SRA         | Desplazamiento aritmético a la derecha.                |
+| 0110011  | OR          | Realiza una operación OR entre dos registros.           |
+| 0110011  | AND         | Realiza una operación AND entre dos registros.          |
+| 0000011  | LB          | Carga un byte de memoria en un registro.               |
+| 0000011  | LH          | Carga medio palabra de memoria en un registro.         |
+| 0000011  | LW          | Carga una palabra de memoria en un registro.           |
+| 0000011  | LBU         | Carga un byte sin signo de memoria en un registro.     |
+| 0000011  | LHU         | Carga medio palabra sin signo de memoria en un registro. |
+| 0100011  | SB          | Almacena un byte en memoria.                           |
+| 0100011  | SH          | Almacena medio palabra en memoria.                     |
+| 0100011  | SW          | Almacena una palabra en memoria.                       |
+| 1110011  | EBREAK      | Genera una interrupción para depuración.               |
+| 1110011  | ECALL       | Genera una llamada al sistema.                         |
+
