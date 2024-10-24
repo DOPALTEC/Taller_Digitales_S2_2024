@@ -197,19 +197,18 @@ module picorv32 #(
 - La memoria ROM va de address en address, mientras que el Contador de Programa de RV32 va de 4 bytes en 4 bytes, se debe por tanto, dividir el archivo de instrucciones en 4 partes por instrucción, para que así la dirección ingresada corresponda a un formato de bytes. 
 - Para los accesos a memorias como RAM debido a que estan en direcciones de valor alto en el mapa de memoria se debe accesar a ellas cargando parte de ellas en un registro base con una instrucción `lui` y luego aplicar el desplazamiento necesario ya que un inmediato solo llega hasta 12 bits.
 - La RV32 no reconoce direcciones de memoria de 0x40000. Se debe hacer un tratamiento a una señal de escritura basada en sus limites. La limitación interna de memoria del RV32 es de menor a 1024 bytes (0x400).
-- La direccion cero inicial de sw corresponde a x1 ya que x0 no puede ser sobreescrito.
+- Al hacer un sw se debe hacer al menos obligatoriamente un desplazamiento de dirección de 1 ya que en x0 no se puede escribir.
 
 #### 5. Testbench
 
 ```
 memory_initialization_radix=16;
 memory_initialization_vector=
-00100093, //li x1,1 "Guarda en el registro 1 1"
-00400113, //li x2, 4 "Guarda en el registro x2 0x4"
-005001A3, //li x3, 5
-00D00523 //li x5, D
-00202523 //sw x5, 2(x0) //Almacena un D (x5) en la direccion 2 (restandole 1)
-00800223 //li x4, 8
+00A00093, //addi x1,x0, 10
+001020A3, //sw x1, 1(x0)
+00B00113, //addi x2,x0, 11
+00202123 //sw x2, 2(x0)
+
 ;
 
 
@@ -236,7 +235,7 @@ memory_initialization_vector=
 | Opcode   | Instrucción | funct 3 |
 |----------|-------------|---------|
 | 0100011  | sw          |   010   |
-| 0100011  | li          |   000   |
+| 0010011  | addi        |   000   |
 
 
 
