@@ -119,45 +119,6 @@ module picorv32 #(
 	output reg [31:0] mem_wdata,
 	output reg [ 3:0] mem_wstrb,
 	input      [31:0] mem_rdata,
-
-
-`ifdef RISCV_FORMAL
-	output reg        rvfi_valid,
-	output reg [63:0] rvfi_order,
-	output reg [31:0] rvfi_insn,
-	output reg        rvfi_trap,
-	output reg        rvfi_halt,
-	output reg        rvfi_intr,
-	output reg [ 1:0] rvfi_mode,
-	output reg [ 1:0] rvfi_ixl,
-	output reg [ 4:0] rvfi_rs1_addr,
-	output reg [ 4:0] rvfi_rs2_addr,
-	output reg [31:0] rvfi_rs1_rdata,
-	output reg [31:0] rvfi_rs2_rdata,
-	output reg [ 4:0] rvfi_rd_addr,
-	output reg [31:0] rvfi_rd_wdata,
-	output reg [31:0] rvfi_pc_rdata,
-	output reg [31:0] rvfi_pc_wdata,
-	output reg [31:0] rvfi_mem_addr,
-	output reg [ 3:0] rvfi_mem_rmask,
-	output reg [ 3:0] rvfi_mem_wmask,
-	output reg [31:0] rvfi_mem_rdata,
-	output reg [31:0] rvfi_mem_wdata,
-
-	output reg [63:0] rvfi_csr_mcycle_rmask,
-	output reg [63:0] rvfi_csr_mcycle_wmask,
-	output reg [63:0] rvfi_csr_mcycle_rdata,
-	output reg [63:0] rvfi_csr_mcycle_wdata,
-
-	output reg [63:0] rvfi_csr_minstret_rmask,
-	output reg [63:0] rvfi_csr_minstret_wmask,
-	output reg [63:0] rvfi_csr_minstret_rdata,
-	output reg [63:0] rvfi_csr_minstret_wdata,
-`endif
-
-	// Trace Interface
-	output reg        trace_valid,
-	output reg [35:0] trace_data
 );
 ```
 
@@ -193,10 +154,8 @@ module picorv32 #(
 
 #### 4. Criterios de diseño
 
-- Solo se puede correr una de las memorias a la vez.
 - La memoria ROM va de address en address, mientras que el Contador de Programa de RV32 va de 4 bytes en 4 bytes, se debe por tanto, dividir el archivo de instrucciones en 4 partes por instrucción, para que así la dirección ingresada corresponda a un formato de bytes. 
-- Para los accesos a memorias como RAM debido a que estan en direcciones de valor alto en el mapa de memoria se debe accesar a ellas cargando parte de ellas en un registro base con una instrucción `lui` y luego aplicar el desplazamiento necesario ya que un inmediato solo llega hasta 12 bits.
-- La RV32 no reconoce direcciones de memoria de 0x40000. Se debe hacer un tratamiento a una señal de escritura basada en sus limites. `FFF`.
+- Para los accesos a memorias como RAM debido a que estan en direcciones de valor alto en el mapa de memoria se debe accesar a ellas cargando parte de ellas en un registro base con una instrucción `lui` y luego aplicar el desplazamiento necesario ya que un inmediato solo llega hasta 12 bits. La RV32 no reconoce direcciones de memoria de 0x40000. Se debe hacer un tratamiento a una señal de escritura basada en sus limites. `FFF`.
 - La salida del sw propiamente ocurre después de que la instrucción que le procede se haya ejecutado. Para el inmediato los primeros 5 bits van al final de la instrucción, y los últimos 7 bits al principio.
 - El IP core de memoria RAM es de un máximo de 65.536 direcciones de memoria, esto significa, un tamaño de:
   $$
