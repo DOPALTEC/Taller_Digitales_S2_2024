@@ -197,7 +197,7 @@ module picorv32 #(
 - La memoria ROM va de address en address, mientras que el Contador de Programa de RV32 va de 4 bytes en 4 bytes, se debe por tanto, dividir el archivo de instrucciones en 4 partes por instrucción, para que así la dirección ingresada corresponda a un formato de bytes. 
 - Para los accesos a memorias como RAM debido a que estan en direcciones de valor alto en el mapa de memoria se debe accesar a ellas cargando parte de ellas en un registro base con una instrucción `lui` y luego aplicar el desplazamiento necesario ya que un inmediato solo llega hasta 12 bits.
 - La RV32 no reconoce direcciones de memoria de 0x40000. Se debe hacer un tratamiento a una señal de escritura basada en sus limites. `FFF`.
-- La salida del sw propiamente ocurre después de que la instrucción que le procede se haya ejecutado.
+- La salida del sw propiamente ocurre después de que la instrucción que le procede se haya ejecutado. Para el inmediato los primeros 5 bits van al final de la instrucción, y los últimos 7 bits al principio.
 - El IP core de memoria RAM es de un máximo de 65.536 direcciones de memoria, esto significa, un tamaño de:
   $$
   65536[bytes]*\frac{1[KiB]}{1024[bytes]}=64KiB
@@ -222,18 +222,13 @@ $$
 
 #### 5. Testbench
 
+**Instrucciones para Carga de Datos en RAM**
 ```
 memory_initialization_radix=16;
 memory_initialization_vector=
-00A00093, //addi x1,x0, 10
-3fc00093; //li x1,1020
-0000a023; //sw x0,0(x1)
-00B00113, //addi x2,x0, 11
-00202123, //sw x2, 2(x0)
-00C00193, //ADDI x3, x0, 12
-;
-
-
+000400B7 //lui x1, 0x4000  
+00A00113 //addi x2,x0, 10 
+0020A023; //sw x2, 0(x1)
 
 ```
 
@@ -258,9 +253,8 @@ memory_initialization_vector=
 |----------|-------------|---------|
 | 0100011  | sw          |   010   |
 | 0010011  | addi        |   000   |
-| 0110111  | lui         |      |
+| 0110111  | lui         | na      |
 
-![image](https://github.com/user-attachments/assets/1b55adfe-022f-4b66-9be1-24e82b8ee7e2)
 
 
 
