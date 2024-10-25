@@ -198,14 +198,19 @@ module picorv32 #(
 - Para los accesos a memorias como RAM debido a que estan en direcciones de valor alto en el mapa de memoria se debe accesar a ellas cargando parte de ellas en un registro base con una instrucción `lui` y luego aplicar el desplazamiento necesario ya que un inmediato solo llega hasta 12 bits.
 - La RV32 no reconoce direcciones de memoria de 0x40000. Se debe hacer un tratamiento a una señal de escritura basada en sus limites. La limitación interna de memoria del RV32 es de menor a 1024 bytes (0x400).
 - Al hacer un sw se debe hacer al menos obligatoriamente un desplazamiento de dirección de 1 ya que en x0 no se puede escribir.
-
+- El IP core de memoria RAM es de un máximo de 65.536 direcciones de memoria, esto significa, un tamaño de:
+  $$
+  65536[bytes]*\frac{1[KiB]}{1024[bytes]}=64KiB
+  $$
+-Es necesario utilizar 4 memorias RAM para cumplir con los 256KiB solicitados para la memoria RAM denotada en el mapa de memoria.
 #### 5. Testbench
 
 ```
 memory_initialization_radix=16;
 memory_initialization_vector=
 00A00093, //addi x1,x0, 10
-001020A3, //sw x1, 1(x0)
+3fc00093; //li x1,1020
+0000a023; //sw x0,0(x1)
 00B00113, //addi x2,x0, 11
 00202123, //sw x2, 2(x0)
 00C00193, //ADDI x3, x0, 12
