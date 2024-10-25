@@ -202,7 +202,24 @@ module picorv32 #(
   $$
   65536[bytes]*\frac{1[KiB]}{1024[bytes]}=64KiB
   $$
--Es necesario utilizar 4 memorias RAM para cumplir con los 256KiB solicitados para la memoria RAM denotada en el mapa de memoria.
+-Es necesario utilizar 4 memorias RAM para cumplir con los 256KiB solicitados para la memoria RAM denotada en el mapa de memoria. Quedando entonces:
+
+$$
+RAM_1(0-64KiB): Ox40000 \rightarrow 0x400FF
+$$
+
+$$
+RAM_2(64-128KiB): Ox40100 \rightarrow 0x401FF
+$$
+
+$$
+RAM_3(128-192KiB): Ox40200 \rightarrow 0x402FF
+$$
+
+$$
+RAM_4(192-256KiB): Ox40300 \rightarrow 0x403FF
+$$
+
 #### 5. Testbench
 
 ```
