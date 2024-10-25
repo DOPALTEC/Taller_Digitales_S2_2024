@@ -1,8 +1,8 @@
 `timescale 1ns / 1ps
 
 module Primario #(parameter 
-    STACKADDR=32'h0007_FFFF, // Posiciï¿½n especificada en el mapa de memoria para la RAM
-    PROGADDR_RESET=32'h 0000_0000, // Posiciï¿½n inicial de la memoria de programa
+    STACKADDR=32'h0007_FFFF, // Posicion especificada en el mapa de memoria para la RAM
+    PROGADDR_RESET=32'h 0000_0000, // Posicion inicial de la memoria de programa
     PROGADDR_IRQ=0,
     BARREL_SHIFTER=0,
     ENABLE_COMPRESSED=0, 
@@ -19,6 +19,7 @@ module Primario #(parameter
 
 wire [31:0] mem_addr; //Direccion de memoria que lee 
 wire  [31:0] mem_rdata; //Lee la instruccion
+
 /*
 Genera un desplazamiento a la derecha que dimensiona los saltos en 32 bits y no por bytes
 Divide entre 4 el valor de las direcciones
@@ -31,11 +32,8 @@ ROM ROM_inst (
   .spo(rom_rdata)  // output wire [31 : 0] spo
 );
 
-
-//wire  [31:0] ram_rdata;
 reg ram_we;
 reg [31:0] ram_wdata;
-//wire [14:0] ram_addr = mem_addr[15:2]; //Escala de bytes a 1 palabra
 wire [31:0] ram_addr; // Dirección ajustada para la RAM
 wire [1:0] ram_select; // Señal para seleccionar el módulo de RAM
 assign ram_addr = (mem_addr >= 32'h40000) ? (mem_addr - 32'h40000) : 32'h0; // Ajusta la dirección
