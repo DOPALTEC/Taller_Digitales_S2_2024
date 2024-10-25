@@ -241,6 +241,7 @@ memory_initialization_vector=
 |----------|-------------|---------|
 | 0100011  | sw          |   010   |
 | 0010011  | addi        |   000   |
+| 0110111  | lui         |      |
 
 ![image](https://github.com/user-attachments/assets/1b55adfe-022f-4b66-9be1-24e82b8ee7e2)
 
