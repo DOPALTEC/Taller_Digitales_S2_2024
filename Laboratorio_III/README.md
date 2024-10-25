@@ -220,7 +220,8 @@ memory_initialization_vector=
 ### Apendice 5: Desglose Posicionamiendo de bits en las Instrucciones
 
 **sw:**
-| 31-29  |   |  |  | |  | 6 - 0  |
-|-----|----------|---------|---------|---------|--------|--------|
-| Imm[11:9] |       | rs1     |   |  | | opcode |
+|31| 30-28  |   |  |  | |  | 6 - 0  |
+|--|-----|----------|---------|---------|---------|--------|--------|
+|X|XXX| | | | | | | XXXXXXX |
+|  | Imm[10:8] |       | rs1     |   |  | | opcode |
 
