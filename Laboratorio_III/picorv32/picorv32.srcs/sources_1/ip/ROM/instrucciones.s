@@ -8,3 +8,7 @@
 lui x1, 0x4000        // Cargar 0x4000 en los bits altos de x4 (x4 = 0x40000)
 addi x2,x0, 10 
 sw x2, 0(x1)          // Almacenar el valor de x1 en la dirección 0x40000
+
+//Equivalente:
+memory_initialization_radix=16;
+memory_initialization_vector=000400B7 00A00113 0020A023;
