@@ -30,11 +30,11 @@ module tb_Primario;
     initial begin
         // Inicializar señales
         rst = 1;   // Activar reset
-        #200;      // Esperar 200 ns para estabilizar
+        #10;      // Esperar 200 ns para estabilizar
         rst = 0;   // Desactivar reset
 
         // Ejecutar simulación
-        #1;    // Simulación de 10,000 ns (10 µs)
+        #400;    // Simulación de 10,000 ns (10 µs)
 
         // Terminar la simulación
         $finish;
