@@ -224,5 +224,5 @@ memory_initialization_vector=
 | -- |---------|----------|---------|---------|---------|--------|--------|-|-----------|
 | X  |   XXX   |    XX    |    X    |    X    |         |        |        | |  0100011  |
 |    |Imm[10:8]|          | Imm[5]  |         |   rs1   |        |        | |  opcode   |
-|    byte 8    |              byte 7          |                                  |byte1 |
+|    4bits     |             4bits            |                           |4bits |4bits |
 
