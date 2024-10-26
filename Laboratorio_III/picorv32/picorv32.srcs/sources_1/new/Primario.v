@@ -37,50 +37,18 @@ reg [31:0] ram_wdata;
 wire [31:0] ram_addr; // Dirección ajustada para la RAM
 wire [1:0] ram_select; // Señal para seleccionar el módulo de RAM
 assign ram_addr = (mem_addr >= 32'h40000) ? (mem_addr - 32'h40000) : 32'h0; // Ajusta la dirección
-assign ram_select = ram_addr[18:17];
-
-wire [31:0] ram1_rdata; // Datos leídos desde RAM 1
-wire [31:0] ram2_rdata; // Datos leídos desde RAM 2
-wire [31:0] ram3_rdata; // Datos leídos desde RAM 3
-wire [31:0] ram4_rdata; // Datos leídos desde RAM 4
 
 
-RAM RAM_1_0_to_64 (
+wire [31:0] ram_rdata;
+RAM RAM_inst (
   .a(ram_addr[16:0]),      // input wire [14 : 0] a
   .d(ram_wdata),      // input wire [31 : 0] d
   .clk(clk),  // input wire clk
-  .we(ram_we && (ram_select==2'b00)),    // input wire we
-  .spo(ram1_rdata)  // output wire [31 : 0] spo
-);
-
-RAM RAM_2_64_to_128 (
-  .a(ram_addr[16:0]),      // input wire [14 : 0] a
-  .d(ram_wdata),      // input wire [31 : 0] d
-  .clk(clk),  // input wire clk
-  .we(ram_we && (ram_select==2'b01)),    // input wire we
-  .spo(ram2_rdata)  // output wire [31 : 0] spo
-);
-
-RAM RAM_3_128_to_192 (
-  .a(ram_addr[16:0]),      // input wire [14 : 0] a
-  .d(ram_wdata),      // input wire [31 : 0] d
-  .clk(clk),  // input wire clk
-  .we(ram_we && (ram_select==2'b10)),    // input wire we
-  .spo(ram3_rdata)  // output wire [31 : 0] spo
-);
-RAM RAM_4_192_to_256 (
-  .a(ram_addr[16:0]),      // input wire [14 : 0] a
-  .d(ram_wdata),      // input wire [31 : 0] d
-  .clk(clk),  // input wire clk
-  .we(ram_we && (ram_select==2'b11)),    // input wire we
-  .spo(ram4_rdata)  // output wire [31 : 0] spo
+  .we(ram_we),    // input wire we
+  .spo(ram_rdata)  // output wire [31 : 0] spo
 );
 
 
-wire [31:0] ram_rdata = (ram_select == 2'b00) ? ram1_rdata :
-                         (ram_select == 2'b01) ? ram2_rdata :
-                         (ram_select == 2'b10) ? ram3_rdata :
-                         ram4_rdata; // Leer de la RAM correspondiente
 
 /////////////////////INSTANCIACION DE RV32////////////////////////////
 //INPUTS
