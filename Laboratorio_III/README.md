@@ -157,28 +157,9 @@ module picorv32 #(
 - La memoria ROM va de address en address, mientras que el Contador de Programa de RV32 va de 4 bytes en 4 bytes, se debe por tanto, dividir el archivo de instrucciones en 4 partes por instrucción, para que así la dirección ingresada corresponda a un formato de bytes. 
 - Para los accesos a memorias como RAM debido a que estan en direcciones de valor alto en el mapa de memoria se debe accesar a ellas cargando parte de ellas en un registro base con una instrucción `lui` y luego aplicar el desplazamiento necesario ya que un inmediato solo llega hasta 12 bits. La RV32 no reconoce direcciones de memoria de 0x40000. Se debe hacer un tratamiento a una señal de escritura basada en sus limites. `FFF`.
 - La salida del sw propiamente ocurre después de que la instrucción que le procede se haya ejecutado. Para el inmediato los primeros 5 bits van al final de la instrucción, y los últimos 7 bits al principio.
-- El IP core de memoria RAM es de un máximo de 65.536 direcciones de memoria, esto significa, un tamaño de:
+- En el mapa de memoria la RAM se encuentra entre 0x40000 y 0x80000 dando como resultado que se el tamaño que abarcan las direcciones de memoria es 0x40000. Esta cantidad de direcciones tiene un valor de 262144 bytes. Por cada instruccion se requieren 4 bytes dando como resultado entonces que se pueden almacenar 65536 direcciones, por ende esa misma cantidad de palabras. El IP core posee exactamente este límite por lo cual solo es necesario utilizar una RAM.
 
-  $$
-  64KiB=65536[bytes]*\frac{1[KiB]}{1024[bytes]}
-  $$
--Es necesario utilizar 4 memorias RAM para cumplir con los 256KiB solicitados para la memoria RAM denotada en el mapa de memoria. Quedando entonces:
 
-$$
-RAM_1(0-64KiB): Ox40000 \rightarrow 0x400FF
-$$
-
-$$
-RAM_2(64-128KiB): Ox40100 \rightarrow 0x401FF
-$$
-
-$$
-RAM_3(128-192KiB): Ox40200 \rightarrow 0x402FF
-$$
-
-$$
-RAM_4(192-256KiB): Ox40300 \rightarrow 0x403FF
-$$
 
 #### 5. Testbench
 
