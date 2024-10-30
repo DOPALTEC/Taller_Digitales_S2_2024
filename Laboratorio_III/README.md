@@ -159,6 +159,7 @@ module picorv32 #(
 - La salida del sw propiamente ocurre después de que la instrucción que le procede se haya ejecutado. Para el inmediato los primeros 5 bits van al final de la instrucción, y los últimos 7 bits al principio.
 - En el mapa de memoria la RAM se encuentra entre 0x40000 y 0x80000 dando como resultado que se el tamaño que abarcan las direcciones de memoria es 0x40000. Esta cantidad de direcciones tiene un valor de 262144 bytes. Por cada instruccion se requieren 4 bytes dando como resultado entonces que se pueden almacenar 65536 direcciones, por ende esa misma cantidad de palabras. El IP core posee exactamente este límite por lo cual solo es necesario utilizar una RAM.
 - El último bit del inmediato representa la extensión de signo por tanto el inmediato solo puede llegar hasta 0x7FF = 2047.
+- Para las instrucciones sw, solamente se obtienen direcciones de escritura de múltiplos de 4 por lo tanto debe haber una traducción para la RAM.
 
 
 
