@@ -158,6 +158,7 @@ module picorv32 #(
 - Para los accesos a memorias como RAM debido a que estan en direcciones de valor alto en el mapa de memoria se debe accesar a ellas cargando parte de ellas en un registro base con una instrucción `lui` y luego aplicar el desplazamiento necesario ya que un inmediato solo llega hasta 12 bits. La RV32 no reconoce direcciones de memoria de 0x40000. Se debe hacer un tratamiento a una señal de escritura basada en sus limites. `FFF`.
 - La salida del sw propiamente ocurre después de que la instrucción que le procede se haya ejecutado. Para el inmediato los primeros 5 bits van al final de la instrucción, y los últimos 7 bits al principio.
 - En el mapa de memoria la RAM se encuentra entre 0x40000 y 0x80000 dando como resultado que se el tamaño que abarcan las direcciones de memoria es 0x40000. Esta cantidad de direcciones tiene un valor de 262144 bytes. Por cada instruccion se requieren 4 bytes dando como resultado entonces que se pueden almacenar 65536 direcciones, por ende esa misma cantidad de palabras. El IP core posee exactamente este límite por lo cual solo es necesario utilizar una RAM.
+- El último bit del inmediato representa la extensión de signo por tanto el inmediato solo puede llegar hasta 0x7FF = 2047.
 
 
 
