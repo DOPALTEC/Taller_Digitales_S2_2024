@@ -1,107 +1,127 @@
 `timescale 1ns / 1ps
 
-module tb_UART_Nexys;
+module Interfaz_UART_Nexys_tb;
 
-// Parámetros del diseño
-parameter DATA_WIDTH = 8;
-parameter prescale = 1303;
+    // Parámetros
+    parameter palabra = 8;
+    parameter prescale = 2604; 
 
-// Señales
-reg clk;
-reg rst;
-reg [DATA_WIDTH-1:0] dato_tx;
-wire hay_dato_tx;
-reg transmitir;
-wire txd;
-wire tx_busy;
-reg recibir;
-reg rxd;
-wire rx_busy;
-wire [DATA_WIDTH-1:0] dato_rx;
-wire m_axis_tvalid;
-wire rx_overrun_error;
-wire rx_frame_error;
-//reg [15:0] prescale;
+    // Señales de prueba
+    reg clk;
+    reg rst;
+    reg wr_i;
+    reg reg_sel_i;
+    reg addr_i;
+    reg [palabra-1:0] entrada_i; 
+    reg [palabra-1:0] entrada_i_data;   
+    wire [palabra-1:0] data; 
+    wire [palabra-1:0] ctrl;   
+    //wire [palabra-1:0] IN2_data;    
+    //wire WR2_data;      
+    //wire addr2;
+    reg rxd; // Señal de recepción
+    wire txd; // Señal de transmisión
 
-// Instancia del módulo UART_Nexys
-UART_Nexys #(
-    .DATA_WIDTH(DATA_WIDTH), .prescale(prescale)
-) uut (
-    .CLK100MHZ(clk),
-    .rst(rst),
-    .dato_tx(dato_tx),
-    .transmitir(transmitir),
-    .hay_dato_tx(hay_dato_tx),
-    .dato_rx(dato_rx),
-    .m_axis_tvalid(m_axis_tvalid),
-    .recibir(recibir),
-    .rxd(rxd),
-    .txd(txd),
-    .tx_busy(tx_busy),
-    .rx_busy(rx_busy),
-    .rx_overrun_error(rx_overrun_error),
-    .rx_frame_error(rx_frame_error)
-    //.prescale(prescale)
-);
+    // Instanciar el módulo ctrl_UART
+    Interfaz_UART_Nexys #(
+        .palabra(palabra),
+        .prescale(prescale)
+    ) Interfaz_UART_Nexys_inst (
+        .clk(clk),
+        .rst(rst),
+        .wr_i(wr_i),
+        .reg_sel_i(reg_sel_i),
+        .addr_i(addr_i),
+        .entrada_i(entrada_i),
+        .entrada_i_data(entrada_i_data),
+        .data(data),
+        .ctrl(ctrl),
+        .rxd(rxd),
+        .txd(txd)
+    );
 
+    // Generar la señal de reloj
+    initial begin
+        clk = 0;
+        forever #5 clk = ~clk; // 100 MHz
+    end
 
-always begin
-    #5 clk = ~clk; // Genera un ciclo de reloj de 10 ns (100 MHz)
-end
+    // Proceso de inicialización y prueba
+    initial begin
+        // Inicializar señales
+        rst = 1;
+        entrada_i = 0;
+        entrada_i_data = 0;
+        rxd = 1; // Inicialmente inactivo
+        wr_i=0;
+        reg_sel_i=0;
+        addr_i=0;
 
-// Procedimiento inicial para la simulación
-initial begin
-    // Inicialización de señales
-    clk = 0;
-    rst = 1;
-    dato_tx = 0;
-    transmitir = 0;
-    recibir = 0;
-    rxd = 1;  // UART inactivo por defecto
-    //prescale=16'd1303;
-    //o
-    //prescale = 16'd651;  // Prescaler para baudrate (ajústalo según la frecuencia de reloj)
-
-    // Reinicio del sistema
-    #5000;
-    rst = 0;
-    
-    // Envío de datos a través de la UART
-    #10000;
-    dato_tx = 8'hA5;  // Datos a enviar
-    #100000;
-    transmitir = 1;
-    #937503;
-    //wait (s_axis_tready);  // Espera hasta que UART esté lista
-    recibir=1;
-    transmitir=0;
-   
-
-    
-    // Simulación de recepción de datos en UART
-    #500;  // Tiempo para que el transmisor complete el envío
+        // Desactivar el reset
+        #100000 
+        rst = 0;
+        
+        entrada_i_data = 8'hAA; // Ejemplo de datos a transmitir
+        addr_i=0;
+        reg_sel_i=1;
+        wr_i=1;
+        // Esperar un tiempo y activar ctrl[0] para iniciar la transmisión
+        #200000 
+        
+        entrada_i = 8'h01;
+        reg_sel_i=0;
+        wr_i=1;
+    #700000;
     rxd = 0;  // Start bit
-    #104167    // Tiempo para cada bit (ajustado según baudrate)
+    #104167; // Tiempo entre bits para 9600 baudios
+    rxd = 1;  #104167;
+    rxd = 0;  #104167;
+    rxd = 1;  #104167;
+    rxd = 1;  #104167;
+    rxd = 0;  #104167;  // Envío de 8 bits simulados
+    rxd = 1;  #104167;
+    rxd = 0;  #104167;
+    rxd = 1;  #104167; 
+    rxd= 1; #104167; //Stop Bit
 
-    // Simulación de bits de datos (envía 8'hA5)
+        // Esperar el tiempo necesario para la transmisión
+    #50000;
+    rst=1;
+    #200000;
+     /* 
+    entrada_i = 8'h01;
+    wr_i=1;
+    reg_sel_i=0;
+    
+    rxd = 0;  // Start bit
+    #104167; // Tiempo entre bits para 9600 baudios
     rxd = 1;  #104167;
     rxd = 0;  #104167;
     rxd = 1;  #104167;
     rxd = 0;  #104167;
-    rxd = 1;  #104167;
+    rxd = 1;  #104167;  // Envío de 8 bits simulados
     rxd = 0;  #104167;
     rxd = 1;  #104167;
     rxd = 0;  #104167;
+    rxd= 1; #104167; //Stop Bit
+    
+        entrada_i = 8'h00;
+        #1000;
+        wr_i=0;
+        #50000;
 
-    // Stop bit
-    rxd = 1;  #104167;
+        #5000000; */
 
-    // Simulación de recepción
-    #500;
-    recibir = 0;  // El receptor está listo para recibir datos
+        // Realizar más pruebas aquí si es necesario...
 
-    #1000;
-    $stop;  // Deten la simulación
-end
+        // Finalizar simulación
+        #100 $finish;
+    end
+
+    // Monitor para ver las señales
+   /* initial begin
+        $monitor("Time: %0t | RST: %b | ENTRADA_i: %b | DATA: %h | WR2_DATA: %b | ADDR2: %b | IN2_DATA: %h | TXD: %b", 
+                 $time, rst, entrada_i, data, WR2_data, addr2, IN2_data, txd);
+    end*/
 
 endmodule
