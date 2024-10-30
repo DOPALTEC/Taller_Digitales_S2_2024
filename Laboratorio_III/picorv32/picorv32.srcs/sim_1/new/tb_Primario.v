@@ -34,7 +34,7 @@ module tb_Primario;
         rst = 0;   // Desactivar reset
 
         // Ejecutar simulación
-        #3000;    // Simulación de 10,000 ns (10 µs)
+        #500;    // Simulación de 10,000 ns (10 µs)
 
         // Terminar la simulación
         $finish;

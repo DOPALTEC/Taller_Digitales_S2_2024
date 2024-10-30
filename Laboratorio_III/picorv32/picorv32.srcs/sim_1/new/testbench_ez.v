@@ -62,6 +62,7 @@ module testbench;
 
 	initial begin
 		memory[0] = 32'h 3fc00093; //       li      x1,1020
+		//memory[0] = 32'h 00100093; //       li      x1,1
 		memory[1] = 32'h 0000a023; //       sw      x0,0(x1)
 		memory[2] = 32'h 002081b3; //// add x3, x1, x2
 		memory[3] = 32'h 0000a103; // loop: lw      x2,0(x1)

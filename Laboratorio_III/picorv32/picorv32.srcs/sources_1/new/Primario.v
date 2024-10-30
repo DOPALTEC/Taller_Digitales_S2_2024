@@ -1,20 +1,24 @@
 `timescale 1ns / 1ps
 
-module Primario #(parameter 
-    STACKADDR=32'h0007_FFFF, // Posicion especificada en el mapa de memoria para la RAM
-    PROGADDR_RESET=32'h 0000_0000, // Posicion inicial de la memoria de programa
-    PROGADDR_IRQ=0,
-    BARREL_SHIFTER=0,
-    ENABLE_COMPRESSED=0, 
-    ENABLE_COUNTERS=0,
-    ENABLE_MUL=0, 
-    ENABLE_DIV=0,
-    ENABLE_FAST_MUL=0, 
-    ENABLE_IRQ=0, 
-    ENABLE_IRQ_QREGS=0)
+module Primario //#(parameter 
+    //STACKADDR=32'h0007_FFFF, // Posicion especificada en el mapa de memoria para la RAM
+    //PROGADDR_RESET=32'h 0000_0000, // Posicion inicial de la memoria de programa
+    //PROGADDR_IRQ=0,
+    //BARREL_SHIFTER=0,
+    //ENABLE_COMPRESSED=0, 
+    //ENABLE_COUNTERS=0,
+    //ENABLE_MUL=0, 
+    //ENABLE_DIV=0,
+    //ENABLE_FAST_MUL=0, 
+    //ENABLE_IRQ=0, 
+    //ENABLE_IRQ_QREGS=0)
 (
     input  wire clk,
-    input  wire rst
+    input  wire rst,
+    
+    //UART
+    input  wire rxd, //Para el constraint
+    output wire txd //Para el constraint
 );
 
 wire [31:0] mem_addr; //Direccion de memoria que lee 
@@ -37,11 +41,12 @@ reg [31:0] ram_wdata;
 wire [31:0] ram_addr; // Dirección ajustada para la RAM
 wire [1:0] ram_select; // Señal para seleccionar el módulo de RAM
 assign ram_addr = (mem_addr >= 32'h40000) ? (mem_addr - 32'h40000) : 32'h0; // Ajusta la dirección
-
+wire [31:0] ram_addr_adj = ram_addr >> 2; //Escala para que la direccion en RAM sea de 1 en 1
 
 wire [31:0] ram_rdata;
 RAM RAM_inst (
-  .a(ram_addr[16:0]),      // input wire [14 : 0] a
+  //.a(ram_addr[16:0]),      // input wire [14 : 0] a
+  .a(ram_addr_adj[16:0]),
   .d(ram_wdata),      // input wire [31 : 0] d
   .clk(clk),  // input wire clk
   .we(ram_we),    // input wire we
@@ -60,7 +65,7 @@ wire mem_instr;
 wire [3:0] mem_wstrb; 
 wire [31:0] mem_wdata;
 wire trap;
-picorv32 #() cpu (
+picorv32 cpu (
     .clk(clk),
     .resetn(!rst),// Reset activo en bajo
     .trap(trap),
@@ -73,6 +78,33 @@ picorv32 #() cpu (
     .mem_rdata(mem_rdata)//Lee lo que hay en la memoria
 );
 
+
+
+
+// Instancia del módulo Interfaz_UART_Nexys
+reg wr_i;
+reg reg_sel_i;
+wire [31:0] ctrl;
+reg [31:0] entrada_i;
+
+Interfaz_UART_Nexys #(
+    .palabra(8),
+    .prescale(2604)
+) interfaz_uart_inst (
+    .clk(clk),                // Reloj de entrada
+    .rst(rst),                // Reset
+    .wr_i(wr_i),              // Señal de escritura
+    .reg_sel_i(reg_sel_i),    // Señal de selección de registro
+    .addr_i(),          // Dirección
+    .entrada_i(entrada_i[7:0]),    // Entrada de control
+    .entrada_i_data(), // Entrada de datos
+    .ctrl(ctrl),              // Salida de control
+    .data(),              // Salida de datos
+    .rxd(rxd),                // RX de entrada
+    .txd(txd)                 // TX de salida
+);
+
+
 /*
 Si se trata de un acceso a memoria de instruccion (mem_instr=1) 
 lee la salida de la ROM caso contrario lee los datos de la RAM
@@ -81,7 +113,7 @@ assign mem_rdata = (mem_instr) ? rom_rdata : ram_rdata; // Selecciona entre ROM 
 
 
 
-
+//RAM
 always @(posedge clk or posedge rst) begin
     if (rst) begin
         mem_ready <= 0; // Inicializa mem_ready en 0 al reset
@@ -95,6 +127,23 @@ always @(posedge clk or posedge rst) begin
                 ram_wdata <= mem_wdata; // Asigna los datos a escribir en RAM
                 ram_we <= 1; // Habilita escritura en RAM
             end
+        end
+    end
+end
+//UART
+
+always @(posedge clk or posedge rst) begin
+    if (rst) begin
+        wr_i <= 0;
+        reg_sel_i <= 0;
+        entrada_i <= 0;
+    end else begin
+        if (mem_valid && mem_addr == 32'h2010) begin
+            entrada_i <= mem_wdata; // Asigna el dato de memoria a entrada_i
+            wr_i <= 1;              // Señal de escritura en 1
+            reg_sel_i <= 0;         // Señal de selección en 0
+        end else begin
+            wr_i <= 0;              // Señal de escritura en 0 si no es la dirección 0x2010
         end
     end
 end

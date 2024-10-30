@@ -18,19 +18,19 @@ memory_initialization_vector=000400B7 00A00113 0020A023;
 lui x1, 0x4000   //000400B7
 addi x2,x0, 10   //00A00113
 addi x3, x0, 11  //00B00193
-addi x4, x0, 12  //00C00213
-addi x5, x0, 13  //00D00293
+addi x4, x0, 12  //00C00213 Guarda 0xC_16 = 12_10 en x4
+addi x5, x0, 13  //00D00293 
 addi x6, x0, 14  //00E00313
 addi x7, x0, 15  //00F00393
-addi x8, x0, 16  //01000413
-addi x9, x0, 17  //01100493
+addi x8, x0, 16  //01000413 Guarda 0x10_16 = 16_10 en x8
+addi x9, x0, 17  //01100493 
 addi x10, x0, 18 //01200513
 addi x11, x0, 19 //01300593
 addi x12, x0, 20 //01400613
 addi x13, x0, 21 //01500693
 addi x14, x0, 22 //01600713
 addi x15, x0, 23 //01700793
-addi x16, x0, 24 //01800813
+addi x16, x0, 24 //01800813 Guarda 0x18_16 = 24_10 en x16 
 
 addi x17, x0, 25 //01900893
 addi x18, x0, 26 //01A00913
@@ -121,3 +121,67 @@ memory_initialization_vector=
 0071A023 //sw x7, 0(x3)???
 
 ;
+
+//////2D0 TEST
+memory_initialization_radix=16;
+memory_initialization_vector=
+
+01E00093 //addi x1, x0, 30
+00100113 //addi x2, x0, 1
+00200193 //addi x3, x0, 2
+00300213 //addi x4, x0, 3
+00400293 //addi x5, x0, 4
+00500313 //addi x6, x0, 5
+00600393 //addi x7, x0, 6
+00700413 // addi x8, x0, 7
+00800493 // addi x9, x0, 8
+00900513 // addi x10, x0, 9
+00A00593 // addi x11, x0, 10
+00B00613 // addi x12, x0, 11
+00C00693 // addi x13, x0, 12
+00D00713 // addi x14, x0, 13
+00E00793 // addi x15, x0, 14
+00F00813 // addi x16, x0, 15
+01000893 // addi x17, x0, 16
+01100913 // addi x18, x0, 17
+01200993 // addi x19, x0, 18
+01300A13 // addi x20, x0, 19
+01400A93 // addi x21, x0, 20
+01500B13 // addi x22, x0, 21
+
+//Registro de resultados
+//sw´s de x2=1=wdata
+00212023 //addr=0, wdata=1
+00222023 //addr=0, wdata=1
+00232023 //addr=4, wdata=1
+00242023 //addr=4, wdata=1
+00252023 //addr=8, wdata=1
+00262023 //addr=8, wdata=1
+00272023 //addr=12, wdata=1
+00282023 //addr=12, wdata=1
+00292023 //addr=16(0x10), wdata=1
+002A2023 //addr=16(0x10), wdata=1
+
+;
+
+//////////////Escritura en RAM////////////////////////////////
+//Se escribe a partir de 0x40000. Debe ser de 4 en 4, la RAM lo traduce como de 1 en 1
+lui x1, 0x4000  //000400B7
+addi x1,x1,4 //00408093
+
+addi x2,x0, 10 //00A00113 
+addi x3,x0, 11 //00B00193
+
+sw x2, 0(x1) //0020A023
+sw x3, 0(x0) //00302023
+
+memory_initialization_radix=16;
+memory_initialization_vector=
+000400B7 
+
+00408093
+
+00A00113 
+
+0020A023;
+
