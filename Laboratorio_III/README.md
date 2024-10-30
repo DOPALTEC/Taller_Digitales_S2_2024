@@ -252,6 +252,7 @@ memory_initialization_vector=
 | Opcode   | Instrucción | funct 3 |
 |----------|-------------|---------|
 | 0100011  | sw          |   010   |
+| 0000011  | lw          |   010   |
 | 0010011  | addi        |   000   |
 | 0110111  | lui         | na      |
 
