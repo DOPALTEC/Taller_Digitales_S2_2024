@@ -49,6 +49,8 @@ addi x1,x1,16  //01008093 (Actualiza el valor en x1 a 0x2010)
 addi x3,x0, 1 //00100193 (Guarda en x3 un 1 que representa el bit send de la UI de UART)
 sw x3, 0(x1)  //0030A023 (Envía la direccion que desgina al control de UART y el valor de control)
 
+sw x0, 0(x1) //0000A023 Desactiva la transmisión de datos
+//Corroborar que ya implementado no genera problemas como en ocasiones anteriores
 memory_initialization_radix=16;
 memory_initialization_vector=
 000020B7 
@@ -57,7 +59,10 @@ memory_initialization_vector=
 
 00100193 
 
-0030A023;
+0030A023
+
+0000A023
+;
 
 
 
