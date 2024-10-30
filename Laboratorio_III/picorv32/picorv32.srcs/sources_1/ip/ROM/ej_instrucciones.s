@@ -25,6 +25,9 @@ memory_initialization_vector=
 
 0020A023;
 
+//RECEPCION DE DATOS DE INTERFAZ UART////////////
+
+
 ////////ENVIO DE DATOS PARA TRANSMITIR A INTERFAZ UART////////////////
 lui x1, 0x200  //000020B7 (Guarda en addr un 0x2000)
 addi x1,x1,24  //01808093 (Actualiza el valor en x1 a 0x2018)

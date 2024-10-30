@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module Primario //#(parameter 
+module Primario #(parameter prescale=1303
     //STACKADDR=32'h0007_FFFF, // Posicion especificada en el mapa de memoria para la RAM
     //PROGADDR_RESET=32'h 0000_0000, // Posicion inicial de la memoria de programa
     //PROGADDR_IRQ=0,
@@ -11,7 +11,8 @@ module Primario //#(parameter
     //ENABLE_DIV=0,
     //ENABLE_FAST_MUL=0, 
     //ENABLE_IRQ=0, 
-    //ENABLE_IRQ_QREGS=0)
+    //ENABLE_IRQ_QREGS=0
+    )
 (
     input  wire clk,
     input  wire rst,
@@ -84,13 +85,14 @@ picorv32 cpu (
 reg wr_i;
 reg reg_sel_i;
 wire [31:0] ctrl;
+wire [31:0] data;
 reg [31:0] entrada_i;
 reg addr_i;
 reg [31:0] entrada_i_data;
 
 Interfaz_UART_Nexys #(
     .palabra(8),
-    .prescale(2604)
+    .prescale(prescale)
 ) interfaz_uart_inst (
     .clk(clk),                // Reloj de entrada
     .rst(rst),                // Reset
@@ -152,8 +154,15 @@ always @(posedge clk or posedge rst) begin
             reg_sel_i <= 1;         // Señal de selección en 1
             addr_i <= 0;
         end
+        else if (mem_valid && mem_addr == 32'h201C && ctrl[1] == 1) begin
+            addr_i <= 1;           // Asigna addr_i a 1 si se cumple la condición
+            wr_i <= 1;             // Señal de escritura en 1
+            reg_sel_i <= 1;        // Señal de selección en 1
+        end
         else begin
-            wr_i <= 0;              // Señal de escritura en 0 si no es la dirección 0x2010
+            wr_i <= 0; 
+            reg_sel_i<=0;
+            addr_i<=0;    
         end
     end
 end
