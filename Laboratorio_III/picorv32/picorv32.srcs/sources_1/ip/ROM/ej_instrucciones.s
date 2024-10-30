@@ -25,7 +25,21 @@ memory_initialization_vector=
 
 0020A023;
 
-////////////ENVIO DATOS A CONTROL DE INTERFAZ UART///////////////////
+////////ENVIO DE DATOS PARA TRANSMITIR A INTERFAZ UART////////////////
+lui x1, 0x200  //000020B7 (Guarda en addr un 0x2000)
+addi x1,x1,24  //01808093 (Actualiza el valor en x1 a 0x2018)
+
+addi x3,x0, 170 //0A500193 (Guarda en un registro el dato a enviar AA(10100101))
+sw x3, 0(x1) //Envia la direccion correspodiente a datos para tx y envia el dato
+
+memory_initialization_radix=16;
+memory_initialization_vector=
+000020B7
+01808093
+0A500193
+0030A023;
+
+////////////ENVIO SEÑAL A CONTROL DE INTERFAZ UART///////////////////
 lui x1, 0x200  //000020B7 (Guarda en addr un 0x2000)
 addi x1,x1,16  //01008093 (Actualiza el valor en x1 a 0x2010)
 
@@ -41,4 +55,6 @@ memory_initialization_vector=
 00100193 
 
 0030A023;
+
+
 

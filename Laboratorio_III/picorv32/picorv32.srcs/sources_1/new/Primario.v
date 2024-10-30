@@ -85,6 +85,8 @@ reg wr_i;
 reg reg_sel_i;
 wire [31:0] ctrl;
 reg [31:0] entrada_i;
+reg addr_i;
+reg [31:0] entrada_i_data;
 
 Interfaz_UART_Nexys #(
     .palabra(8),
@@ -94,9 +96,9 @@ Interfaz_UART_Nexys #(
     .rst(rst),                // Reset
     .wr_i(wr_i),              // Señal de escritura
     .reg_sel_i(reg_sel_i),    // Señal de selección de registro
-    .addr_i(),          // Dirección
+    .addr_i(addr_i),          // Dirección
     .entrada_i(entrada_i[7:0]),    // Entrada de control
-    .entrada_i_data(), // Entrada de datos
+    .entrada_i_data(entrada_i_data[7:0]), // Entrada de datos
     .ctrl(ctrl),              // Salida de control
     .data(),              // Salida de datos
     .rxd(rxd),                // RX de entrada
@@ -129,19 +131,28 @@ always @(posedge clk or posedge rst) begin
         end
     end
 end
-//UART
+
+//Designa perifericos
 
 always @(posedge clk or posedge rst) begin
     if (rst) begin
         wr_i <= 0;
         reg_sel_i <= 0;
         entrada_i <= 0;
+        addr_i <= 0;
     end else begin
         if (mem_valid && mem_addr == 32'h2010) begin
             entrada_i <= mem_wdata; // Asigna el dato de memoria a entrada_i
             wr_i <= 1;              // Señal de escritura en 1
             reg_sel_i <= 0;         // Señal de selección en 0
-        end else begin
+        end 
+        else if (mem_valid && mem_addr == 32'h2018)begin
+            entrada_i_data <= mem_wdata; // Asigna el dato de memoria a entrada_i
+            wr_i <= 1;              // Señal de escritura en 1
+            reg_sel_i <= 1;         // Señal de selección en 1
+            addr_i <= 0;
+        end
+        else begin
             wr_i <= 0;              // Señal de escritura en 0 si no es la dirección 0x2010
         end
     end
