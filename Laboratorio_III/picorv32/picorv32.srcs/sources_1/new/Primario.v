@@ -39,7 +39,6 @@ ROM ROM_inst (
 reg ram_we;
 reg [31:0] ram_wdata;
 wire [31:0] ram_addr; // Dirección ajustada para la RAM
-wire [1:0] ram_select; // Señal para seleccionar el módulo de RAM
 assign ram_addr = (mem_addr >= 32'h40000) ? (mem_addr - 32'h40000) : 32'h0; // Ajusta la dirección
 wire [31:0] ram_addr_adj = ram_addr >> 2; //Escala para que la direccion en RAM sea de 1 en 1
 

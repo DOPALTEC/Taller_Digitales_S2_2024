@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 //byte_count
-module ctrl_UART #(parameter palabra = 8, parameter prescale = 2604)
+module ctrl_UART #(parameter palabra = 8, parameter prescale = 1302)
 (
     input  wire clk,
     input  wire rst,
@@ -80,7 +80,8 @@ module ctrl_UART #(parameter palabra = 8, parameter prescale = 2604)
     assign hay_dato_tx_edge = !hay_dato_tx_d & hay_dato_tx;
     // Logica secuencial para transmisión y control de UART
     always @(posedge clk or posedge rst) begin
-        if (rst || !locked) begin
+        //if (rst || !locked) begin
+        if (rst) begin
             send_d<=0;
             transmitir <= 0;
             recibir <= 0;

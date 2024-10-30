@@ -42,7 +42,8 @@ assign txd = txd_reg;
 assign busy = busy_reg;
 
 always @(posedge clk) begin
-    if (rst || !locked) begin
+    //if (rst || !locked) begin
+    if (rst) begin
         s_axis_tready_reg <= 0;
         txd_reg <= 1;
         prescale_reg <= 0;

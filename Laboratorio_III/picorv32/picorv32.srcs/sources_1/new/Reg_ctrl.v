@@ -12,7 +12,8 @@ module Reg_ctrl #(parameter palabra = 8) (
 
     // Bloque secuencial controlado por el reloj y el reset
     always @(posedge clk or posedge rst) begin
-        if (rst || !locked) begin
+        //if (rst || !locked) begin
+        if (rst) begin
             out <= 0;                   // Inicializa 'out' en 0 si rst está activo
         end
         else begin

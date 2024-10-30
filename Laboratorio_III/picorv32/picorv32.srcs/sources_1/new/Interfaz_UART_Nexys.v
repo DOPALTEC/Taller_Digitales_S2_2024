@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module Interfaz_UART_Nexys #(parameter palabra = 8, parameter prescale = 2604)(
+module Interfaz_UART_Nexys #(parameter palabra = 8, parameter prescale = 1302)(
     input  wire clk,
     input  wire rst,
     
@@ -57,7 +57,7 @@ module Interfaz_UART_Nexys #(parameter palabra = 8, parameter prescale = 2604)(
     wire [palabra-1:0] IN2_ctrl;
     wire WR2_ctrl;
     Reg_ctrl #(.palabra(palabra)) Reg_ctrl_inst(
-        .clk(CLK_200MHZ),                     // Señal de reloj
+        .clk(clk),                     // Señal de reloj
         .rst(rst),                     // Señal de reset 
         .locked(locked),
         .IN1(entrada_i),       // Entrada 1 de 32 bits
@@ -91,7 +91,7 @@ Reg_Data #(.Palabra(palabra)) reg_data_inst (
     
     ctrl_UART #(.palabra(palabra), .prescale(prescale)) ctrl_UART_inst
     (
-        .clk(CLK_200MHZ),
+        .clk(clk),
         .rst(rst),
         .locked(locked),
         .reg_sel_i(reg_sel_i),

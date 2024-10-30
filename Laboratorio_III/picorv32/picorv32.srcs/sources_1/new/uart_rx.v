@@ -52,7 +52,8 @@ assign overrun_error = overrun_error_reg;
 assign frame_error = frame_error_reg;
 
 always @(posedge clk) begin
-    if (rst || !locked) begin
+    //if (rst || !locked) begin
+    if (rst) begin
         m_axis_tdata_reg <= 0;
         m_axis_tvalid_reg <= 0;
         rxd_reg <= 1;

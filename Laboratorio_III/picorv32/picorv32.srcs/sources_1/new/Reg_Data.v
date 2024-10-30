@@ -18,7 +18,8 @@ module Reg_Data #(parameter Palabra=8) (
     reg [Palabra-1:0] register2 = 0;    // Registro 2
 
     always @(posedge clk or posedge rst) begin
-        if (rst || !locked) begin
+        //if (rst || !locked) begin
+        if (rst) begin
             // Si rst está activo, reiniciamos los registros y la salida
             register1 <= 0;
             register2 <= 0;
