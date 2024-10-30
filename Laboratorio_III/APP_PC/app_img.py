@@ -1,14 +1,14 @@
-from PIL import Image
+import cv2
 
-def rgb_of_pixel(img_path, x, y):
-    # Abre la imagen y asegúrate de que esté en modo RGB
-    im = Image.open(img_path).convert('RGB')
-    # Obtiene el valor RGB del píxel en las coordenadas (x, y)
-    r, g, b = im.getpixel((x, y))
-    # Retorna los valores como una tupla
-    return (r, g, b)
+# Cargar la imagen y obtener su tamaño con cv2
+img_path = "CHARMANDER.png"
+img_cv2 = cv2.imread(img_path)
 
-# Especifica el nombre de la imagen
-img = "MEWTWO.jpg"
-# Llama a la función e imprime el resultado
-print(rgb_of_pixel(img, 5, 5))
+# Coordenadas fijas
+x, y = 150, 150
+
+# Obtener el valor RGB del píxel en (150, 150)
+b, g, r = img_cv2[y, x]
+
+# Imprimir el resultado
+print(f"Pixel at ({x}, {y}): (R={r}, G={g}, B={b})")
