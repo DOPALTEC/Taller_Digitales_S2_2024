@@ -2,7 +2,7 @@
 
 module tb_Primario;
     parameter prescale = 1303;
-    // Señales del testbench
+    // Seï¿½ales del testbench
     reg clk;
     reg rst;
     reg rxd;
@@ -12,7 +12,7 @@ module tb_Primario;
     //wire mem_instr_o;
     //wire [31:0] mem_rdata_i;
 
-    // Instanciación de la unidad bajo prueba
+    // Instanciaciï¿½n de la unidad bajo prueba
     Primario #(.prescale(prescale)) uut (
         .clk(clk),
         .rst(rst),
@@ -24,22 +24,22 @@ module tb_Primario;
         //.mem_rdata_i(mem_rdata_i)
     );
 
-    // Generación de reloj
+    // Generaciï¿½n de reloj
     initial begin
         clk = 0;
         forever #5 clk = ~clk;  // Periodo de reloj de 10 ns (100 MHz)
     end
 
-    // Inicialización y simulación
+    // Inicializaciï¿½n y simulaciï¿½n
     initial begin
-        // Inicializar señales
+        // Inicializar seï¿½ales
         rst = 1;   // Activar reset
         rxd=1;
         #10;      // Esperar 200 ns para estabilizar
         rst = 0;   // Desactivar reset
 
-        // Ejecutar simulación
-        #800;    // Simulación de 10,000 ns (10 µs)
+        // Ejecutar simulaciï¿½n
+        #800;    // Simulaciï¿½n de 10,000 ns (10 ï¿½s)
         
    #500;  // Tiempo para que el transmisor complete el env?o
     rxd = 0;  // Start bit
@@ -58,7 +58,7 @@ module tb_Primario;
     // Stop bit
     rxd = 1;  #104167;
 
-        // Terminar la simulación
+        // Terminar la simulaciï¿½n
         $finish;
     end
 

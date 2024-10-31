@@ -27,6 +27,31 @@ memory_initialization_vector=
 
 //RECEPCION DE DATOS DE INTERFAZ UART////////////
 
+//loop que revisa el valor de ctrl[1]
+lui x1, 0x200  //000020B7 (Guarda en addr un 0x2000)
+//addi x1,x1,16  //01008093 (Actualiza el valor en x1 a 0x2010)
+addi x1,x1,12  //00C08093 (Actualiza el valor en x1 a 0x200C)
+
+//inicializar ctrl en 0
+sw x0, 0(x1) //0000A023
+
+//loop: label
+
+lw x5, 0(x1) //0050A003 (Carga en x5 el dato recibido)
+jal x0, loop  //0000006F   Salta de nuevo a "loop" incondicionalmente
+
+
+//if (ctrl): Al tener ctrl[1]=1
+lui x1, 0x200  //000020B7 (Guarda en addr un 0x2000)
+addi x1,x1,28  //01808093 (Actualiza el valor en x1 a 0x2018)
+lw x4, 0(x1) //0040A003 (Carga en x4 el dato recibido)
+
+memory_initialization_radix=16;
+memory_initialization_vector=
+000020B7
+01C08093
+0040A003;
+;
 
 ////////ENVIO DE DATOS PARA TRANSMITIR A INTERFAZ UART////////////////
 lui x1, 0x200  //000020B7 (Guarda en addr un 0x2000)
@@ -43,6 +68,7 @@ memory_initialization_vector=
 0030A023;
 
 ////////////ENVIO SEÑAL A CONTROL DE INTERFAZ UART///////////////////
+//Siempre inicializar el ctrl en 0
 lui x1, 0x200  //000020B7 (Guarda en addr un 0x2000)
 addi x1,x1,16  //01008093 (Actualiza el valor en x1 a 0x2010)
 

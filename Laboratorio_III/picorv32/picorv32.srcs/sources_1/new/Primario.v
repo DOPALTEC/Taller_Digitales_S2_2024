@@ -1,5 +1,6 @@
 `timescale 1ns / 1ps
 
+
 module Primario #(parameter prescale=1303
     //STACKADDR=32'h0007_FFFF, // Posicion especificada en el mapa de memoria para la RAM
     //PROGADDR_RESET=32'h 0000_0000, // Posicion inicial de la memoria de programa
@@ -101,8 +102,8 @@ Interfaz_UART_Nexys #(
     .addr_i(addr_i),          // Dirección
     .entrada_i(entrada_i[7:0]),    // Entrada de control
     .entrada_i_data(entrada_i_data[7:0]), // Entrada de datos
-    .ctrl(ctrl),              // Salida de control
-    .data(),              // Salida de datos
+    .ctrl(ctrl[7:0]),              // Salida de control
+    .data(data[7:0]),              // Salida de datos
     .rxd(rxd),                // RX de entrada
     .txd(txd)                 // TX de salida
 );
@@ -112,10 +113,12 @@ Interfaz_UART_Nexys #(
 Si se trata de un acceso a memoria de instruccion (mem_instr=1) 
 lee la salida de la ROM caso contrario lee los datos de la RAM
 */
-assign mem_rdata = (mem_instr) ? rom_rdata : ram_rdata; // Selecciona entre ROM o RAM para lecturas
+//assign mem_rdata = (mem_instr) ? rom_rdata : ram_rdata; // Selecciona entre ROM o RAM para lecturas
 
-
-
+// Asignación de mem_rdata
+assign mem_rdata = (mem_addr == 32'h201C && ctrl[1]) ? {24'b0, data} :
+                   (mem_addr == 32'h2010) ? {24'b0, ctrl} :
+                   (mem_instr ? rom_rdata : ram_rdata);
 //RAM
 always @(posedge clk or posedge rst) begin
     if (rst) begin
@@ -158,6 +161,7 @@ always @(posedge clk or posedge rst) begin
             addr_i <= 1;           // Asigna addr_i a 1 si se cumple la condición
             wr_i <= 1;             // Señal de escritura en 1
             reg_sel_i <= 1;        // Señal de selección en 1
+            //mem_rdata <= {24'b0, data}; // Asigna 'data' a mem_rdata (8 bits) con 24 bits de ceros
         end
         else begin
             wr_i <= 0; 
