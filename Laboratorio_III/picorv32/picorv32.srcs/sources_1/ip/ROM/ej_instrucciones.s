@@ -4,6 +4,13 @@
 //asi preparar el valor dentro del registro para establecer un address grande
 //y posteriormente enviarlo mediante sw
 
+///////////////////////////////7/////////////////LEDS///////////////////////////////////////////////////
+lui x1, 0x200  //000020B7 (Guarda en addr un 0x2000)
+addi x1,x1,4  //00408093 (Actualiza el valor en x1 a 0x2004)
+addi x2,x0, 10 //00A00113
+sw x2, 0(x1) //0020A023
+
+
 ///////////////////////////////7/////////////////Escritura en RAM/////////////////////////////////////////////////////
 //Se escribe a partir de 0x40000. Debe ser de 4 en 4, la RAM lo traduce como de 1 en 1
 lui x1, 0x4000  //000400B7

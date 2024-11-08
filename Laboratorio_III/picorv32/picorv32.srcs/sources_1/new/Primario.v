@@ -58,7 +58,7 @@ wire [31:0] ram_rdata;
 //  .spo(ram_rdata)  // output wire [31 : 0] spo
 //);
 reg ena;
-RAM_block your_instance_name (
+RAM_block RAM_inst (
   .clka(clk),    // input wire clka
   .ena(ena),      // input wire ena
   .wea(ram_we),      // input wire [0 : 0] wea
