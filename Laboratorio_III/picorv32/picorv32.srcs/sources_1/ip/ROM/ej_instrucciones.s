@@ -4,11 +4,15 @@
 //asi preparar el valor dentro del registro para establecer un address grande
 //y posteriormente enviarlo mediante sw
 
-///////////////////////////////7/////////////////LEDS///////////////////////////////////////////////////
+////////////////////////////////////////////////LEDS///////////////////////////////////////////////////
 lui x1, 0x200  //000020B7 (Guarda en addr un 0x2000)
 addi x1,x1,4  //00408093 (Actualiza el valor en x1 a 0x2004)
 addi x2,x0, 10 //00A00113
 sw x2, 0(x1) //0020A023
+
+////////////////////////////////////////////////SWITCHES///////////////////////////////////////////////////
+lui x1, 0x200  //000020B7 (Guarda en addr un 0x2000)
+lw x5, 0(x1) //0050A003 (Carga en x5 el dato recibido)
 
 
 ///////////////////////////////7/////////////////Escritura en RAM/////////////////////////////////////////////////////
@@ -66,7 +70,7 @@ lui x1, 0x200  //000020B7 (Guarda en addr un 0x2000)
 addi x1,x1,24  //01808093 (Actualiza el valor en x1 a 0x2018)
 
 addi x3,x0, 170 //0A500193 (Guarda en un registro el dato a enviar AA(10100101))
-sw x3, 0(x1) //Envia la direccion correspodiente a datos para tx y envia el dato
+sw x3, 0(x1) //0030A023  Envia la direccion correspodiente a datos para tx y envia el dato
 
 memory_initialization_radix=16;
 memory_initialization_vector=
