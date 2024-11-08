@@ -17,6 +17,9 @@ module Primario #(parameter prescale=1303
 (
     input  wire clk,
     input  wire rst,
+    //Switches x2000
+    input wire [15:0] SW,
+    output reg [15:0] LED,
     
     //UART
     input  wire rxd, //Para el constraint
@@ -45,13 +48,23 @@ assign ram_addr = (mem_addr >= 32'h40000) ? (mem_addr - 32'h40000) : 32'h0; // A
 wire [31:0] ram_addr_adj = ram_addr >> 2; //Escala para que la direccion en RAM sea de 1 en 1
 
 wire [31:0] ram_rdata;
-RAM RAM_inst (
+//CAMBIAR A BLOCK
+//RAM RAM_inst (
   //.a(ram_addr[16:0]),      // input wire [14 : 0] a
-  .a(ram_addr_adj[16:0]),
-  .d(ram_wdata),      // input wire [31 : 0] d
-  .clk(clk),  // input wire clk
-  .we(ram_we),    // input wire we
-  .spo(ram_rdata)  // output wire [31 : 0] spo
+//  .a(ram_addr_adj[16:0]),
+//  .d(ram_wdata),      // input wire [31 : 0] d
+//  .clk(clk),  // input wire clk
+//  .we(ram_we),    // input wire we
+//  .spo(ram_rdata)  // output wire [31 : 0] spo
+//);
+reg ena;
+RAM_block your_instance_name (
+  .clka(clk),    // input wire clka
+  .ena(ena),      // input wire ena
+  .wea(ram_we),      // input wire [0 : 0] wea
+  .addra(ram_addr_adj[15:0]),  // input wire [15 : 0] addra
+  .dina(ram_wdata),    // input wire [31 : 0] dina
+  .douta(ram_rdata)  // output wire [31 : 0] douta
 );
 
 
@@ -116,20 +129,27 @@ lee la salida de la ROM caso contrario lee los datos de la RAM
 //assign mem_rdata = (mem_instr) ? rom_rdata : ram_rdata; // Selecciona entre ROM o RAM para lecturas
 
 // Asignación de mem_rdata
-assign mem_rdata = (mem_addr == 32'h201C && ctrl[1]) ? {24'b0, data} :
+assign mem_rdata = 
+                   (mem_addr == 32'h2000) ? {16'b0, SW} :
                    (mem_addr == 32'h2010) ? {24'b0, ctrl} :
+                   (mem_addr == 32'h201C && ctrl[1]) ? {24'b0, data} :
                    (mem_instr ? rom_rdata : ram_rdata);
+/*En base a mem_valid para cada uno de los perifericos debe haber un mem_ready, multiplexar 
+tambien quien envia esto
+*/
 //RAM
 always @(posedge clk or posedge rst) begin
     if (rst) begin
         mem_ready <= 0; // Inicializa mem_ready en 0 al reset
         ram_we<=0;
+        ena<=0;
     end else begin
         mem_ready <= 0; // Por defecto, mem_ready es 0
         ram_we<=0;
         if (mem_valid && !mem_ready) begin
             mem_ready <= 1; // Habilita mem_ready si hay operaciï¿½n vï¿½lida
             if(!mem_instr && (mem_wstrb[0] || mem_wstrb[1]) || mem_wstrb[2] || mem_wstrb[3])begin
+                ena<=1;
                 ram_wdata <= mem_wdata; // Asigna los datos a escribir en RAM
                 ram_we <= 1; // Habilita escritura en RAM
             end
@@ -145,6 +165,7 @@ always @(posedge clk or posedge rst) begin
         reg_sel_i <= 0;
         entrada_i <= 0;
         addr_i <= 0;
+        ena<=0;
     end else begin
         if (mem_valid && mem_addr == 32'h2010) begin
             entrada_i <= mem_wdata; // Asigna el dato de memoria a entrada_i
@@ -162,6 +183,9 @@ always @(posedge clk or posedge rst) begin
             wr_i <= 1;             // Señal de escritura en 1
             reg_sel_i <= 1;        // Señal de selección en 1
             //mem_rdata <= {24'b0, data}; // Asigna 'data' a mem_rdata (8 bits) con 24 bits de ceros
+        end
+        else if (mem_valid && mem_addr == 32'h2004)begin
+            LED<=mem_wdata[15:0];
         end
         else begin
             wr_i <= 0; 
