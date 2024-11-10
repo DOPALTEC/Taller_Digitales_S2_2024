@@ -14,6 +14,8 @@ https://riscv.org/wp-content/uploads/2017/05/riscv-spec-v2.2.pdf
 
 http://www.riscvbook.com/greencard-20181213.pdf
 
+http://riscvbook.com/spanish/guia-practica-de-risc-v-1.0.5.pdf
+
 ## 3. Desarrollo
 
 ### 3.N PLANTILLA PARA MODULOS (COPIAR Y PEGAR)
