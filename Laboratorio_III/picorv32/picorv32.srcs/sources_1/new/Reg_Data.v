@@ -1,5 +1,5 @@
 `timescale 1ns / 1ps
-module Reg_Data #(parameter Palabra=8) (
+module Reg_Data #(parameter Palabra=32) (
     input wire clk,                     // Señal de reloj
     input wire rst,                     // Señal de reset
     input wire locked,

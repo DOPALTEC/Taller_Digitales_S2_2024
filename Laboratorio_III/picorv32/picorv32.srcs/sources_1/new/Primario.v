@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 
 
-module Primario #(parameter prescale=1303
+module Primario #(parameter palabra=32, parameter prescale=1303
     //STACKADDR=32'h0007_FFFF, // Posicion especificada en el mapa de memoria para la RAM
     //PROGADDR_RESET=32'h 0000_0000, // Posicion inicial de la memoria de programa
     //PROGADDR_IRQ=0,
@@ -105,7 +105,7 @@ reg addr_i;
 reg [31:0] entrada_i_data;
 
 Interfaz_UART_Nexys #(
-    .palabra(8),
+    .palabra(palabra),
     .prescale(prescale)
 ) interfaz_uart_inst (
     .clk(clk),                // Reloj de entrada
@@ -113,10 +113,10 @@ Interfaz_UART_Nexys #(
     .wr_i(wr_i),              // Señal de escritura
     .reg_sel_i(reg_sel_i),    // Señal de selección de registro
     .addr_i(addr_i),          // Dirección
-    .entrada_i(entrada_i[7:0]),    // Entrada de control
-    .entrada_i_data(entrada_i_data[7:0]), // Entrada de datos
-    .ctrl(ctrl[7:0]),              // Salida de control
-    .data(data[7:0]),              // Salida de datos
+    .entrada_i(entrada_i),    // Entrada de control
+    .entrada_i_data(entrada_i_data), // Entrada de datos
+    .ctrl(ctrl),              // Salida de control
+    .data(data),              // Salida de datos
     .rxd(rxd),                // RX de entrada
     .txd(txd)                 // TX de salida
 );

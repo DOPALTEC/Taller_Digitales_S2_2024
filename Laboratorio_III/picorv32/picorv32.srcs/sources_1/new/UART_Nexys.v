@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 
 
-module UART_Nexys #(parameter DATA_WIDTH = 8, parameter prescale=1303)(
+module UART_Nexys #(parameter DATA_WIDTH = 32, parameter prescale=1303)(
     input  wire clk,
     input  wire rst,
     input wire locked,

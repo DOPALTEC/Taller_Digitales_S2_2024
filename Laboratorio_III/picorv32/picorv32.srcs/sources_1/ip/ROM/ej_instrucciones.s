@@ -51,8 +51,8 @@ loop: //label de bucle que revisa el valor de ctrl[1] hasta que sea 1
 lw x5, 0(x1) //0050A003 (Carga en x5 el dato recibido)
 
 //saca del bucle si el segundo bit de x5 es 1
-andi x6, x5, 2          // Aislar el segundo bit (x5[1] en x6)
-bne x6, x0, exit_loop   // Si x6 (x5[1]) no es cero, salir del bucle
+andi x6, x5, 2          //0022F313 Aislar el segundo bit (x5[1] en x6)
+bne x6, x0, exit_loop   //00430663  Si x6 (x5[1]) no es cero, salir del bucle
 
 jal x0, loop  //0000006F   Salta de nuevo a "loop" incondicionalmente
 

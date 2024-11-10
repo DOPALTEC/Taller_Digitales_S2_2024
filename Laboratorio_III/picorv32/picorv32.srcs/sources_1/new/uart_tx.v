@@ -5,7 +5,7 @@
 /*
  * AXI4-Stream UART
  */
-module uart_tx #(parameter DATA_WIDTH=8, parameter prescale=1303)
+module uart_tx #(parameter DATA_WIDTH=32, parameter prescale=1303)
 (
     input wire clk,
     input wire rst,

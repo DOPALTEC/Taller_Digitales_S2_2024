@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 //byte_count
-module ctrl_UART #(parameter palabra = 8, parameter prescale = 1303)
+module ctrl_UART #(parameter palabra = 32, parameter prescale = 1303)
 (
     input  wire clk,
     input  wire rst,
@@ -40,7 +40,7 @@ module ctrl_UART #(parameter palabra = 8, parameter prescale = 1303)
 
     
     UART_Nexys #(
-        .DATA_WIDTH(8), 
+        .DATA_WIDTH(palabra), 
         .prescale(prescale)
     ) UART_Nexys_inst (
         .clk(clk),
