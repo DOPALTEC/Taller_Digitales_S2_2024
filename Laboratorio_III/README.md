@@ -257,6 +257,7 @@ memory_initialization_vector=
 | 0000011  | lw          |   010   |
 | 0010011  | addi        |   000   |
 | 0110111  | lui         | na      |
+| 0010011  | andi        |   111   |
 
 
 
