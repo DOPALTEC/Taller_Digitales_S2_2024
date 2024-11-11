@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module Interfaz_UART_Nexys #(parameter palabra = 32, parameter prescale = 1303)(
+module Interfaz_UART_Nexys #(parameter palabra = 32, parameter prescale = 1302)(
     input  wire clk,
     input  wire rst,
     

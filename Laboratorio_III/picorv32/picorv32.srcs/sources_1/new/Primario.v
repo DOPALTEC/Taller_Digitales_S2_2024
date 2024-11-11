@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 
 
-module Primario #(parameter palabra=32, parameter prescale=1303
+module Primario #(parameter palabra=32, parameter prescale=1302
     //STACKADDR=32'h0007_FFFF, // Posicion especificada en el mapa de memoria para la RAM
     //PROGADDR_RESET=32'h 0000_0000, // Posicion inicial de la memoria de programa
     //PROGADDR_IRQ=0,

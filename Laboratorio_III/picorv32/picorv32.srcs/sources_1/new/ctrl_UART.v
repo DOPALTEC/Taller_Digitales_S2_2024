@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 //byte_count
-module ctrl_UART #(parameter palabra = 32, parameter prescale = 1303)
+module ctrl_UART #(parameter palabra = 32, parameter prescale = 1302)
 (
     input  wire clk,
     input  wire rst,

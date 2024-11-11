@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 
 module tb_Primario;
-    parameter prescale = 651;
+    parameter prescale = 1302;
     // Se�ales del testbench
     reg clk;
     reg rst;
@@ -42,10 +42,10 @@ module tb_Primario;
     rxd = 0;  #104167;
     rxd = 1;  #104167;
     rxd = 0;  #104167;
-    rxd = 1;  #104167;
     rxd = 0;  #104167;
     rxd = 1;  #104167;
     rxd = 0;  #104167;
+    rxd = 1;  #104167;
 
     // Stop bit
     rxd = 1;  #104167;
