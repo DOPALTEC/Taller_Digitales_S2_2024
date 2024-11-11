@@ -1,16 +1,12 @@
 `timescale 1ns / 1ps
 
 module tb_Primario;
-    parameter prescale = 1303;
+    parameter prescale = 651;
     // Se�ales del testbench
     reg clk;
     reg rst;
     reg rxd;
     wire txd;
-    //wire [31:0] rom_addr_o;
-    //wire mem_valid_o;
-    //wire mem_instr_o;
-    //wire [31:0] mem_rdata_i;
 
     // Instanciaci�n de la unidad bajo prueba
     Primario #(.prescale(prescale)) uut (
@@ -18,10 +14,6 @@ module tb_Primario;
         .rst(rst),
         .rxd(rxd),
         .txd(txd)
-        //.rom_addr_o(rom_addr_o),
-        //.mem_valid_o(mem_valid_o),
-        //.mem_instr_o(mem_instr_o)
-        //.mem_rdata_i(mem_rdata_i)
     );
 
     // Generaci�n de reloj

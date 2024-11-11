@@ -5,7 +5,7 @@
 /*
  * AXI4-Stream UART
  */
-module uart_rx #(parameter DATA_WIDTH = 32, parameter prescale=1303)
+module uart_rx #(parameter DATA_WIDTH = 8, parameter prescale=1302)
 (
     input  wire                   clk,
     input  wire                   rst,
@@ -52,7 +52,6 @@ assign overrun_error = overrun_error_reg;
 assign frame_error = frame_error_reg;
 
 always @(posedge clk) begin
-    //if (rst || !locked) begin
     if (rst) begin
         m_axis_tdata_reg <= 0;
         m_axis_tvalid_reg <= 0;

@@ -5,7 +5,7 @@
 /*
  * AXI4-Stream UART
  */
-module uart_tx #(parameter DATA_WIDTH=32, parameter prescale=1303)
+module uart_tx #(parameter DATA_WIDTH=8, parameter prescale=1302)
 (
     input wire clk,
     input wire rst,
@@ -42,7 +42,6 @@ assign txd = txd_reg;
 assign busy = busy_reg;
 
 always @(posedge clk) begin
-    //if (rst || !locked) begin
     if (rst) begin
         s_axis_tready_reg <= 0;
         txd_reg <= 1;

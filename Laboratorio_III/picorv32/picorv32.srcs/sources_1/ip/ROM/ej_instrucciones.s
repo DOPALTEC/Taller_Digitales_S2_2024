@@ -42,16 +42,19 @@ memory_initialization_vector=
 lui x1, 0x200  //000020B7 (Guarda en addr un 0x2000)
 addi x1,x1,16  //01008093 (Actualiza el valor en x1 a 0x2010)
 addi x2, x0, 2 //00200113 (Guarda en x2 un 2 que representa el bit de recepción de la UI de UART)
-addi x3, x0, 0x14 //01400193 (Guarda en x3 un 8 que representa el bit de recepción de datos de la UI de UART)
+addi x3, x0, 0x18 //01800193 (Guarda en x3 un 8 que representa el bit de recepción de datos de la UI de UART)
 
 //inicializar ctrl en 0
 sw x0, 0(x1) //0000A023
+
+addi x0, x0, 0 //00000013 (Guarda en x0 un 0)
 
 loop: //label de bucle que revisa el valor de ctrl[1] hasta que sea 1
 lw x5, 0(x1) //0000A283 (Carga en x5 el dato recibido)
 and x6, x5, x2 //0022F333 (Guarda en x6 el resultado de la operación AND entre x5 y x2)
 
-bne x6, x0, exit_loop   //00031B63 (Salta a "exit_loop" si x6 es distinto de 0)
+//bne x6, x0, exit_loop   //00031B63 (Salta a "exit_loop" si x6 es distinto de 0) el offset es de 1 instrucciones
+bne x6, x0, ?   //00031263 (Salta a "exit_loop" si x6 es distinto de 0) el offset es de 1 instrucciones
 
 jalr x0, x3, 0  //00018067 (Salta a la dirección de x3) a "loop"
 
@@ -59,8 +62,8 @@ exit_loop: //Label que indica salida del bucle, osea ctrl[1]=1
 
 //if (ctrl): Al tener ctrl[1]=1
 lui x1, 0x200  //000020B7 (Guarda en addr un 0x2000)
-addi x1,x1,28  //01808093 (Actualiza el valor en x1 a 0x2018)
-lw x4, 0(x1) //0040A003 (Carga en x4 el dato recibido)
+addi x1,x1,28  //01C08093 (Actualiza el valor en x1 a 0x201C)
+lw x4, 0(x1) //0000A203 (Carga en x4 el dato recibido)
 
 
 
