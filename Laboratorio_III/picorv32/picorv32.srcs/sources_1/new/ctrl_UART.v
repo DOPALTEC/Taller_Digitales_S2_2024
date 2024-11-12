@@ -125,18 +125,9 @@ module ctrl_UART #(parameter palabra = 32, parameter prescale = 1302)
                     new_rx<=0;
                     IN2_ctrl[1] <= new_rx;
                     WR2_ctrl <= 1;
-                    /*
-                    //IN2_data<=0;
-                    
-                    
-                    
-                    FALTA PONER EN CERO EL REGISTRO CUANDO SE SOLICITE EL DATO,
-                    HACER AQUÍ O EN REGISTRO DE DATOS?
-                    */
                     WR2_data<=1;
                     addr2<=1;
-                    
-                    
+                    recibir<=1;      
                     
                 end
                 else begin 
@@ -146,11 +137,11 @@ module ctrl_UART #(parameter palabra = 32, parameter prescale = 1302)
                     WR2_data<=1;
                     addr2<=1; 
                 end 
-            /*Añadir logica */
             end
             else begin
                 WR2_data<=0;
                 addr2<=0;
+                recibir<=0;  
                 if(reg_sel_i && !addr_i && wr_i)begin
                     hold_ctrl<=0;
                 end

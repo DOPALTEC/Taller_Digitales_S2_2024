@@ -26,26 +26,18 @@ addi x3,x0, 11 //00B00193
 sw x2, 0(x1) //0020A023
 sw x3, 0(x0) //00302023
 
-memory_initialization_radix=16;
-memory_initialization_vector=
-000400B7 
-
-00408093
-
-00A00113 
-
-0020A023;
 
 /////////////////////////////////RECEPCION DE DATOS DE INTERFAZ UART////////////////////////////////////////////7
 
 //loop que revisa el valor de ctrl[1]
 lui x1, 0x200  //000020B7 (Guarda en addr un 0x2000)
 addi x1,x1,16  //01008093 (Actualiza el valor en x1 a 0x2010)
+sw x0, 0(x1) //0000A023  
 addi x2, x0, 2 //00200113 (Guarda en x2 un 2 que representa el bit de recepción de la UI de UART)
-addi x3, x0, 0x18 //01800193 (Guarda en x3 un 8 que representa el bit de recepción de datos de la UI de UART)
-
+//addi x3, x0, 0x18 //01800193 (Guarda en x3 un 8 que representa el bit de recepción de datos de la UI de UART)
+//addi x3, x0, 0x1C //01C00193 (Guarda en x3 un 8 que representa el bit de recepción de datos de la UI de UART)
+addi x3, x0, 0x1A //01C00193 (Guarda en x3 un 8 que representa el bit de recepción de datos de la UI de UART)
 //inicializar ctrl en 0
-sw x0, 0(x1) //0000A023
 
 addi x0, x0, 0 //00000013 (Guarda en x0 un 0)
 
@@ -60,49 +52,20 @@ jalr x0, x3, 0  //00018067 (Salta a la dirección de x3) a "loop"
 
 exit_loop: //Label que indica salida del bucle, osea ctrl[1]=1
 
-//if (ctrl): Al tener ctrl[1]=1
+//Al tener ctrl[1]=1
 lui x1, 0x200  //000020B7 (Guarda en addr un 0x2000)
 addi x1,x1,28  //01C08093 (Actualiza el valor en x1 a 0x201C)
 lw x4, 0(x1) //0000A203 (Carga en x4 el dato recibido)
 
+//Escritura en RAM
+//lui x1, 0x4000  //000400B7
+//sw x4, 0(x1) //0040A023
+
+lui x10, 0x4000  //00040537 //Pasar lui al inicio o se perderá el valor de x10, mover los jumps en base a esto
+sw x4, 0(x10) //00452023
+addi x10,x10,4 //00450513
 
 
-//////////////////////////////////ENVIO DE DATOS PARA TRANSMITIR A INTERFAZ UART//////////////////////////////////
-lui x1, 0x200  //000020B7 (Guarda en addr un 0x2000)
-addi x1,x1,24  //01808093 (Actualiza el valor en x1 a 0x2018)
-
-addi x3,x0, 170 //0A500193 (Guarda en un registro el dato a enviar AA(10100101))
-sw x3, 0(x1) //0030A023  Envia la direccion correspodiente a datos para tx y envia el dato
-
-memory_initialization_radix=16;
-memory_initialization_vector=
-000020B7
-01808093
-0A500193
-0030A023;
-
-/////////////////////////////////ENVIO SEÑAL A CONTROL DE INTERFAZ UART/////////////////////////////////////////////
-//Siempre inicializar el ctrl en 0
-lui x1, 0x200  //000020B7 (Guarda en addr un 0x2000)
-addi x1,x1,16  //01008093 (Actualiza el valor en x1 a 0x2010)
-
-addi x3,x0, 1 //00100193 (Guarda en x3 un 1 que representa el bit send de la UI de UART)
-sw x3, 0(x1)  //0030A023 (Envía la direccion que desgina al control de UART y el valor de control)
-
-sw x0, 0(x1) //0000A023 Desactiva la transmisión de datos
-//Corroborar que ya implementado no genera problemas como en ocasiones anteriores
-memory_initialization_radix=16;
-memory_initialization_vector=
-000020B7 
-
-01008093
-
-00100193 
-
-0030A023
-
-0000A023
-;
 
 
 

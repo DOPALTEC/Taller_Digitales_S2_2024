@@ -157,6 +157,9 @@ always @(posedge clk or posedge rst) begin
     end
 end
 
+
+reg addr_i_delay;
+reg reg_sel_i_delay;
 //Designa perifericos
 
 always @(posedge clk or posedge rst) begin
@@ -180,9 +183,9 @@ always @(posedge clk or posedge rst) begin
         end
         else if (mem_valid && mem_addr == 32'h201C && ctrl[1] == 1) begin
             addr_i <= 1;           // Asigna addr_i a 1 si se cumple la condición
-            //wr_i <= 1;             // Señal de escritura en 1
             reg_sel_i <= 1;        // Señal de selección en 1
-            //mem_rdata <= {24'b0, data}; // Asigna 'data' a mem_rdata (8 bits) con 24 bits de ceros
+            addr_i_delay <= 1;     // Activa el retardo
+            reg_sel_i_delay <= 1;
         end
         else if (mem_valid && mem_addr == 32'h2004)begin
             LED<=mem_wdata[15:0];
@@ -191,6 +194,10 @@ always @(posedge clk or posedge rst) begin
             wr_i <= 0; 
             reg_sel_i<=0;
             addr_i<=0;    
+            reg_sel_i <= reg_sel_i_delay;
+            addr_i <= addr_i_delay;
+            reg_sel_i_delay <= 0; // Desactiva el retardo después de un ciclo
+            addr_i_delay <= 0;
         end
     end
 end

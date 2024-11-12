@@ -78,12 +78,15 @@ module ctrl_UART #(parameter palabra = 8, parameter prescale = 2604)
     reg hay_dato_tx_d;
     wire hay_dato_tx_edge;
     assign hay_dato_tx_edge = !hay_dato_tx_d & hay_dato_tx;
+    
+     //reg [palabra-1:0] IN2_data_internal; // Señal interna para IN2_data
+    //assign IN2_data = IN2_data_internal;  // Asignación continua para IN2_data
+    reg recibir_pulse;
     // Logica secuencial para transmisión y control de UART
     always @(posedge clk or posedge rst) begin
         if (rst || !locked) begin
             send_d<=0;
             transmitir <= 0;
-            recibir <= 0;
             WR2_data <= 0;
             addr2 <= 0;
             IN2_ctrl <= 0;     // Inicializa IN2_ctrl en 0
@@ -93,6 +96,9 @@ module ctrl_UART #(parameter palabra = 8, parameter prescale = 2604)
             m_axis_tvalid_d<=0;
             hay_dato_tx_d <= 0; 
             hold_ctrl<=0;
+            //IN2_data_internal <= 0;
+            recibir <= 0;
+            recibir_pulse <= 0;
         end else begin
             m_axis_tvalid_d <= m_axis_tvalid; //Almacena el estado anterior de m_axis_tvalid
             send_d<=send; //Almacena el Estado anterior de send
@@ -118,25 +124,17 @@ module ctrl_UART #(parameter palabra = 8, parameter prescale = 2604)
             
 
                 
-            if (m_axis_tvalid) begin
+           if (m_axis_tvalid) begin
+           //if (m_axis_tvalid_edge) begin
                 hold_ctrl<=1; 
                 if(reg_sel_i && addr_i)begin //Se solicita el dato rx
                     new_rx<=0;
                     IN2_ctrl[1] <= new_rx;
                     WR2_ctrl <= 1;
-                    /*
-                    //IN2_data<=0;
-                    
-                    
-                    
-                    FALTA PONER EN CERO EL REGISTRO CUANDO SE SOLICITE EL DATO,
-                    HACER AQUÍ O EN REGISTRO DE DATOS?
-                    */
                     WR2_data<=1;
                     addr2<=1;
-                    
-                    
-                    
+                    recibir<=1;
+                    //IN2_data_internal <= 0;
                 end
                 else begin 
                     new_rx<=1; 
@@ -150,6 +148,7 @@ module ctrl_UART #(parameter palabra = 8, parameter prescale = 2604)
             else begin
                 WR2_data<=0;
                 addr2<=0;
+                recibir<=0;
                 if(reg_sel_i && !addr_i && wr_i)begin
                     hold_ctrl<=0;
                 end

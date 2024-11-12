@@ -85,43 +85,31 @@ module Interfaz_UART_Nexys_tb;
     rxd= 1; #104167; //Stop Bit
 
         // Esperar el tiempo necesario para la transmisión
+    #2;
+    addr_i=1;
+    reg_sel_i=1;
     #50000;
-    rst=1;
-    #200000;
-     /* 
-    entrada_i = 8'h01;
-    wr_i=1;
+    addr_i=0;
     reg_sel_i=0;
-    
+    #50000;
+    addr_i=1;
+    #50000;
+    addr_i=0;
+    #50000;
+    ///Envío de Un Segundo Byte
     rxd = 0;  // Start bit
     #104167; // Tiempo entre bits para 9600 baudios
-    rxd = 1;  #104167;
     rxd = 0;  #104167;
-    rxd = 1;  #104167;
+    rxd = 0;  #104167;
+    rxd = 0;  #104167;
     rxd = 0;  #104167;
     rxd = 1;  #104167;  // Envío de 8 bits simulados
     rxd = 0;  #104167;
     rxd = 1;  #104167;
-    rxd = 0;  #104167;
+    rxd = 1;  #104167; 
     rxd= 1; #104167; //Stop Bit
-    
-        entrada_i = 8'h00;
-        #1000;
-        wr_i=0;
-        #50000;
-
-        #5000000; */
-
-        // Realizar más pruebas aquí si es necesario...
 
         // Finalizar simulación
         #100 $finish;
     end
-
-    // Monitor para ver las señales
-   /* initial begin
-        $monitor("Time: %0t | RST: %b | ENTRADA_i: %b | DATA: %h | WR2_DATA: %b | ADDR2: %b | IN2_DATA: %h | TXD: %b", 
-                 $time, rst, entrada_i, data, WR2_data, addr2, IN2_data, txd);
-    end*/
-
 endmodule
