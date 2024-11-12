@@ -146,6 +146,8 @@ assign mem_rdata =
                    (mem_addr == 32'h2000) ? {16'b0, SW} :
                    (mem_addr == 32'h2010) ? {24'b0, ctrl_A} :
                    (mem_addr == 32'h201C && ctrl_A[1]) ? {24'b0, data_A} :
+                   (mem_addr == 32'h2020) ? {24'b0, ctrl_B} :
+                   (mem_addr == 32'h202C && ctrl_B[1]) ? {24'b0, data_B} :
                    (mem_instr ? rom_rdata : ram_rdata);
 /*En base a mem_valid para cada uno de los perifericos debe haber un mem_ready, multiplexar 
 tambien quien envia esto
@@ -173,6 +175,9 @@ end
 
 reg addr_i_delay;
 reg reg_sel_i_delay;
+
+reg addr_i_delay_B;
+reg reg_sel_i_delay_B;
 //Designa perifericos
 
 always @(posedge clk or posedge rst) begin
@@ -188,6 +193,9 @@ always @(posedge clk or posedge rst) begin
             wr_i_A <= 1;              // Señal de escritura en 1
             reg_sel_i_A <= 0;         // Señal de selección en 0
         end 
+        else if (mem_valid && mem_addr == 32'h2004)begin
+            LED<=mem_wdata[15:0];
+        end
         else if (mem_valid && mem_addr == 32'h2018)begin
             entrada_i_data_A <= mem_wdata; // Asigna el dato de memoria a entrada_i
             wr_i_A <= 1;              // Señal de escritura en 1
@@ -200,8 +208,22 @@ always @(posedge clk or posedge rst) begin
             addr_i_delay <= 1;     // Activa el retardo
             reg_sel_i_delay <= 1;
         end
-        else if (mem_valid && mem_addr == 32'h2004)begin
-            LED<=mem_wdata[15:0];
+        if (mem_valid && mem_addr == 32'h2020) begin
+            entrada_i_B <= mem_wdata; // Asigna el dato de memoria a entrada_i
+            wr_i_B <= 1;              // Señal de escritura en 1
+            reg_sel_i_B <= 0;         // Señal de selección en 0
+        end 
+        else if (mem_valid && mem_addr == 32'h2028)begin
+            entrada_i_data_B <= mem_wdata; // Asigna el dato de memoria a entrada_i
+            wr_i_B <= 1;              // Señal de escritura en 1
+            reg_sel_i_B <= 1;         // Señal de selección en 1
+            addr_i_B <= 0;
+        end
+        else if (mem_valid && mem_addr == 32'h202C && ctrl_B[1] == 1) begin
+            addr_i_B <= 1;           // Asigna addr_i a 1 si se cumple la condición
+            reg_sel_i_B <= 1;        // Señal de selección en 1
+            addr_i_delay_B <= 1;     // Activa el retardo
+            reg_sel_i_delay_B <= 1;
         end
         else begin
             wr_i_A <= 0; 
@@ -211,6 +233,14 @@ always @(posedge clk or posedge rst) begin
             addr_i_A <= addr_i_delay;
             reg_sel_i_delay <= 0; // Desactiva el retardo después de un ciclo
             addr_i_delay <= 0;
+            
+            wr_i_B <= 0; 
+            reg_sel_i_B<=0;
+            addr_i_B<=0;    
+            reg_sel_i_B <= reg_sel_i_delay;
+            addr_i_B <= addr_i_delay;
+            reg_sel_i_delay_B <= 0; // Desactiva el retardo después de un ciclo
+            addr_i_delay_B <= 0;
         end
     end
 end
