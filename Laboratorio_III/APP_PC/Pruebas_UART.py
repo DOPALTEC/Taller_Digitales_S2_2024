@@ -6,6 +6,8 @@ import cv2
 img_path = "CHARMANDER.png"
 img_cv2 = cv2.imread(img_path)
 
+if img_cv2 is None:
+    raise ValueError("No se pudo cargar la imagen. Verifica la ruta.")
 
 ###########Tamanio de Imagen#####################
 # Obtener dimensiones de la imagen
@@ -17,15 +19,7 @@ width_hex = hex(width)[2:].zfill(6)  # Asegurarse de que tenga al menos 6 caract
 print(f"Tamaño de Imagen Hexa (Ancho): {width_hex}")
 print(f"Bytes individuales a enviar: {width_hex[3:6]}")
 
-##########Valores RGB de la Imagen###########################
 
-# Coordenadas fijas
-x, y = 120, 120
-b, g, r = img_cv2[y, x]
-
-# Obtener el valor RGB del píxel escogido:
-
-print(f"Pixel en Coordenadas: ({x}, {y}): (R={r}, G={g}, B={b})")
 
 # Configurar la conexión UART en el puerto COM4 y con un baudrate de 9600
 ser = serial.Serial('COM4', baudrate=9600, timeout=1)
@@ -35,20 +29,25 @@ time.sleep(2)
 
 
 ###############ENVIOS DE DATOS#########################
-# Enviar los tres bytes de forma separada
-# Primer byte
-#byte1 = int(width_hex[4:6], 16)  # Convertir a valor entero el primer byte
-#ser.write(bytes([byte1]))  # Enviar primer byte
 
-# Segundo byte
-#byte2 = int(width_hex[3], 16)  # Convertir a valor entero el segundo byte
-#ser.write(bytes([byte2]))  # Enviar segundo byte
+#x, y = 120, 120
+for y in range(height):
+        for x in range(width):
+            b, g, r = img_cv2[y, x]
+            print(f"Pixel en Coordenadas: ({x}, {y}): (R={r}, G={g}, B={b})")
+            ser.write(bytes([r])) #envia valor de r del pixel escogido
+            ser.write(bytes([g])) #envia valor de r del pixel escogido
+            ser.write(bytes([b])) #envia valor de r del pixel escogido
+            
 
+# Obtener el valor RGB del píxel escogido:
+
+#print(f"Pixel en Coordenadas: ({x}, {y}): (R={r}, G={g}, B={b})")
 #Byte r de ejemplo de la imagen
 #ser.write(bytes([r])) #envia valor de r del pixel escogido
 
 #Byte r de ejemplo de la imagen
-ser.write(bytes([g])) #envia valor de r del pixel escogido
+#ser.write(bytes([g])) #envia valor de r del pixel escogido
 
 #Byte r de ejemplo de la imagen
 #ser.write(bytes([b])) #envia valor de r del pixel escogido
