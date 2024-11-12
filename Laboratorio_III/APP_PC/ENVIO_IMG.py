@@ -3,7 +3,7 @@ import time
 import cv2
 
 # Cargar la imagen y obtener su tamaño con cv2
-img_path = "CHARMANDER.png"
+img_path = "CHARMANDER_LCD.png"
 img_cv2 = cv2.imread(img_path)
 
 if img_cv2 is None:
@@ -19,7 +19,11 @@ width_hex = hex(width)[2:].zfill(6)  # Asegurarse de que tenga al menos 6 caract
 print(f"Tamaño de Imagen Hexa (Ancho): {width_hex}")
 print(f"Bytes individuales a enviar: {width_hex[3:6]}")
 
-
+i, j = 200, 120
+b_test, g_test, r_test = img_cv2[i, j]
+print(f"Pixel en Coordenadas: ({i}, {j}): (R={r_test}, G={g_test}, B={b_test})")
+##amarillo : 255,193,7
+##rojo: 255,0,0
 
 # Configurar la conexión UART en el puerto COM4 y con un baudrate de 9600
 ser = serial.Serial('COM4', baudrate=9600, timeout=1)
@@ -30,11 +34,11 @@ time.sleep(2)
 
 ###############ENVIOS DE DATOS#########################
 
-#x, y = 120, 120
+
 for y in range(height):
         for x in range(width):
             b, g, r = img_cv2[y, x]
-            print(f"Pixel en Coordenadas: ({x}, {y}): (R={r}, G={g}, B={b})")
+            #print(f"Pixel en Coordenadas: ({x}, {y}): (R={r}, G={g}, B={b})")
             ser.write(bytes([r])) #envia valor de r del pixel escogido
             ser.write(bytes([g])) #envia valor de r del pixel escogido
             ser.write(bytes([b])) #envia valor de r del pixel escogido
