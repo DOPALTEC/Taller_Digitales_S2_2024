@@ -19,7 +19,7 @@ width_hex = hex(width)[2:].zfill(6)  # Asegurarse de que tenga al menos 6 caract
 print(f"Tamaño de Imagen Hexa (Ancho): {width_hex}")
 print(f"Bytes individuales a enviar: {width_hex[3:6]}")
 
-i, j = 200, 120
+i, j = 100, 120
 b_test, g_test, r_test = img_cv2[i, j]
 print(f"Pixel en Coordenadas: ({i}, {j}): (R={r_test}, G={g_test}, B={b_test})")
 ##amarillo : 255,193,7
