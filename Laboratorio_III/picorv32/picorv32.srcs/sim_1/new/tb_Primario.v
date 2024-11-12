@@ -38,14 +38,47 @@ module tb_Primario;
     #104167    // Tiempo para cada bit (ajustado seg?n baudrate)
 
     // Simulaci?n de bits de datos (env?a 8'hA5)
-    rxd = 1;  #104167;
-    rxd = 0;  #104167;
-    rxd = 1;  #104167;
-    rxd = 0;  #104167;
     rxd = 0;  #104167;
     rxd = 1;  #104167;
     rxd = 0;  #104167;
     rxd = 1;  #104167;
+    rxd = 1;  #104167;
+    rxd = 0;  #104167;
+    rxd = 1;  #104167;
+    rxd = 1;  #104167;
+
+    // Stop bit
+    rxd = 1;  #104167;
+    
+    #104167;
+    
+    rxd = 0;  // Start bit
+    #104167    // Tiempo para cada bit (ajustado seg?n baudrate)
+    rxd = 1;  #104167;
+    rxd = 0;  #104167;
+    rxd = 0;  #104167;
+    rxd = 0;  #104167;
+    rxd = 1;  #104167;
+    rxd = 1;  #104167;
+    rxd = 0;  #104167;
+    rxd = 1;  #104167;
+
+    // Stop bit
+    rxd = 1;  #104167;
+    
+    
+    #104167;
+    
+    rxd = 0;  // Start bit
+    #104167    // Tiempo para cada bit (ajustado seg?n baudrate)
+    rxd = 1;  #104167;
+    rxd = 0;  #104167;
+    rxd = 1;  #104167;
+    rxd = 1;  #104167;
+    rxd = 0;  #104167;
+    rxd = 0;  #104167;
+    rxd = 0;  #104167;
+    rxd = 0;  #104167;
 
     // Stop bit
     rxd = 1;  #104167;
