@@ -50,7 +50,7 @@ RAM_block RAM_inst (
   .clka(clk),    // input wire clka
   .ena(ena),      // input wire ena
   .wea(ram_we),      // input wire [0 : 0] wea
-  .addra(ram_addr_adj[15:0]),  // input wire [15 : 0] addra
+  .addra(ram_addr_adj[16:0]),  // input wire [15 : 0] addra
   .dina(ram_wdata),    // input wire [31 : 0] dina
   .douta(ram_rdata)  // output wire [31 : 0] douta
 );
@@ -186,9 +186,13 @@ always @(posedge clk or posedge rst) begin
         reg_sel_i_A <= 0;
         entrada_i_A <= 0;
         addr_i_A <= 0;
+        wr_i_B <= 0;
+        reg_sel_i_B <= 0;
+        entrada_i_B <= 0;
+        addr_i_B <= 0;
         ena<=0;
     end else begin
-        if (mem_valid && mem_addr == 32'h2010) begin
+        if ((mem_valid && mem_addr == 32'h2010) && (mem_wstrb[0] || mem_wstrb[1] || mem_wstrb[2] || mem_wstrb[3])) begin
             entrada_i_A <= mem_wdata; // Asigna el dato de memoria a entrada_i
             wr_i_A <= 1;              // Señal de escritura en 1
             reg_sel_i_A <= 0;         // Señal de selección en 0
@@ -208,7 +212,7 @@ always @(posedge clk or posedge rst) begin
             addr_i_delay <= 1;     // Activa el retardo
             reg_sel_i_delay <= 1;
         end
-        if (mem_valid && mem_addr == 32'h2020) begin
+        else if ((mem_valid && mem_addr == 32'h2020) && (mem_wstrb[0] || mem_wstrb[1] || mem_wstrb[2] || mem_wstrb[3])) begin
             entrada_i_B <= mem_wdata; // Asigna el dato de memoria a entrada_i
             wr_i_B <= 1;              // Señal de escritura en 1
             reg_sel_i_B <= 0;         // Señal de selección en 0
@@ -226,21 +230,29 @@ always @(posedge clk or posedge rst) begin
             reg_sel_i_delay_B <= 1;
         end
         else begin
-            wr_i_A <= 0; 
-            reg_sel_i_A<=0;
-            addr_i_A<=0;    
-            reg_sel_i_A <= reg_sel_i_delay;
-            addr_i_A <= addr_i_delay;
-            reg_sel_i_delay <= 0; // Desactiva el retardo después de un ciclo
-            addr_i_delay <= 0;
-            
-            wr_i_B <= 0; 
-            reg_sel_i_B<=0;
-            addr_i_B<=0;    
-            reg_sel_i_B <= reg_sel_i_delay;
-            addr_i_B <= addr_i_delay;
-            reg_sel_i_delay_B <= 0; // Desactiva el retardo después de un ciclo
-            addr_i_delay_B <= 0;
+        wr_i_A <= 0; 
+        wr_i_B <= 0;
+            if (addr_i_delay || reg_sel_i_delay) begin
+                reg_sel_i_A <= reg_sel_i_delay;
+                addr_i_A <= addr_i_delay;
+                reg_sel_i_delay <= 0;
+                addr_i_delay <= 0;
+            end 
+            else begin
+                reg_sel_i_A <= 0;
+                addr_i_A <= 0;
+            end
+
+            if (addr_i_delay_B || reg_sel_i_delay_B) begin
+                reg_sel_i_B <= reg_sel_i_delay_B;
+                addr_i_B <= addr_i_delay_B;
+                reg_sel_i_delay_B <= 0;
+                addr_i_delay_B <= 0;
+            end 
+            else begin
+                reg_sel_i_B <= 0;
+                addr_i_B <= 0;
+            end
         end
     end
 end

@@ -133,7 +133,7 @@ module ctrl_UART #(parameter palabra = 32, parameter prescale = 1302)
                 else begin 
                     new_rx<=1; 
                     IN2_ctrl[1] <= new_rx; 
-                    WR2_ctrl <= 1; //Genera solo un pulso de un ciclo para escribir
+                    WR2_ctrl <= 1;
                     WR2_data<=1;
                     addr2<=1; 
                 end 
