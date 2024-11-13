@@ -5,13 +5,20 @@ module Primario #(parameter palabra=32, parameter prescale=1302)
 (
     input  wire clk,
     input  wire rst,
-    //Switches x2000
+
     input wire [15:0] SW,
     output reg [15:0] LED,
     
-    //UART
+    input wire BTNU,
+    input wire BTNL,
+    input wire BTNR,
+    input wire BTND,
+    
     input  wire rxd, //Para el constraint
-    output wire txd //Para el constraint
+    output wire txd, //Para el constraint
+    
+    input wire rxd_B,
+    output wire txd_B
 );
 
 wire [31:0] mem_addr; //Direccion de memoria que lee 
@@ -34,17 +41,8 @@ reg [31:0] ram_wdata;
 wire [31:0] ram_addr; // Dirección ajustada para la RAM
 assign ram_addr = (mem_addr >= 32'h40000) ? (mem_addr - 32'h40000) : 32'h0; // Ajusta la dirección
 wire [31:0] ram_addr_adj = ram_addr >> 2; //Escala para que la direccion en RAM sea de 1 en 1
-
 wire [31:0] ram_rdata;
-//CAMBIAR A BLOCK
-//RAM RAM_inst (
-  //.a(ram_addr[16:0]),      // input wire [14 : 0] a
-//  .a(ram_addr_adj[16:0]),
-//  .d(ram_wdata),      // input wire [31 : 0] d
-//  .clk(clk),  // input wire clk
-//  .we(ram_we),    // input wire we
-//  .spo(ram_rdata)  // output wire [31 : 0] spo
-//);
+
 reg ena;
 RAM_block RAM_inst (
   .clka(clk),    // input wire clka
@@ -134,16 +132,9 @@ Interfaz_UART_Nexys #(
     .txd(txd_B)                 // TX de salida
 );                 
 
-
-/*
-Si se trata de un acceso a memoria de instruccion (mem_instr=1) 
-lee la salida de la ROM caso contrario lee los datos de la RAM
-*/
-//assign mem_rdata = (mem_instr) ? rom_rdata : ram_rdata; // Selecciona entre ROM o RAM para lecturas
-
-// Asignación de mem_rdata
+// Asignación de mem_rdata en base a la direccion que se quiere leer en memoria
 assign mem_rdata = 
-                   (mem_addr == 32'h2000) ? {16'b0, SW} :
+                   (mem_addr == 32'h2000) ? {12'b0,BTNU, BTNL, BTNR, BTND, SW} :
                    (mem_addr == 32'h2010) ? {24'b0, ctrl_A} :
                    (mem_addr == 32'h201C && ctrl_A[1]) ? {24'b0, data_A} :
                    (mem_addr == 32'h2020) ? {24'b0, ctrl_B} :
@@ -186,10 +177,16 @@ always @(posedge clk or posedge rst) begin
         reg_sel_i_A <= 0;
         entrada_i_A <= 0;
         addr_i_A <= 0;
+        reg_sel_i_delay <= 0;
+        addr_i_delay <= 0;
+        
         wr_i_B <= 0;
         reg_sel_i_B <= 0;
         entrada_i_B <= 0;
         addr_i_B <= 0;
+        reg_sel_i_delay_B <= 0;
+        addr_i_delay_B <= 0;
+        
         ena<=0;
     end else begin
         if ((mem_valid && mem_addr == 32'h2010) && (mem_wstrb[0] || mem_wstrb[1] || mem_wstrb[2] || mem_wstrb[3])) begin
