@@ -192,70 +192,9 @@ module picorv32 #(
 
 **Instrucciones para Carga de Datos en RAM**
 ```
-lui x1, 0x4000   //000400B7
-addi x2,x0, 10   //00A00113
-addi x3, x0, 11  //00B00193
-addi x4, x0, 12  //00C00213
-addi x5, x0, 13  //00D00293
-addi x6, x0, 14  //00E00313
-addi x7, x0, 15  //00F00393
-addi x8, x0, 16  //01000413
-addi x9, x0, 17  //01100493
-addi x10, x0, 18 //01200513
-addi x11, x0, 19 //01300593
-addi x12, x0, 20 //01400613
-
-sw x2, 0(x1)     //0020A023
-sw x3, 0(x1)     //0030A023
-sw x4, 0(x1)     //0040A023
-sw x5, 0(x1)     //0050A023 
-sw x6, 0(x1)     //0060A023
-sw x7, 0(x1)     //0070A023
-sw x8, 0(x1)     //0080A023
-sw x9, 0(x1)     //0090A023
-sw x10, 0(x1)    //00A0A023
-sw x11, 0(x1)    //00B0A023
-sw x12, 0(x1)    //00C0A023
-
 
 
 ```
-- Equivalente para .coe
-
-```
-memory_initialization_radix=16;
-memory_initialization_vector=
-000400B7 
-
-00A00113 
-00B00193 
-00C00213 
-00D00293 
-00E00313 
-00F00393 
-01000413
-01100493
-01200513
-1300593
-01400613
-
-0020A023 
-0030A023
-0040A023
-0050A023
-0060A023
-0070A023
-0080A023
-0090A023
-00A0A023
-00B0A023
-00C0A023
-00D0A023
-00E0A023
-00F0A023
-;
-```
-  
 
 
 
