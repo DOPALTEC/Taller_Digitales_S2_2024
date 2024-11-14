@@ -38,6 +38,29 @@ http://riscvbook.com/spanish/guia-practica-de-risc-v-1.0.5.pdf
 
 Set de instrucciones para probar funcionalidad de operaciones.
 
+### 3.N LCD y ST7789V
+#### 1. Encabezado del módulo
+```SystemVerilog
+
+```
+#### 2. Parámetros
+- Palabra: Denota el tamaño de bits de las entradas y salidas de los registros.
+
+#### 3. Entradas y salidas:
+- `entrada_i`: descripción de la entrada
+- `salida_i`: descripción de la salida
+
+#### 4. Criterios de diseño
+
+- La configuración elegida para el despliegue de imágenes de 16-bit/pixel (RGB 5-6-5-bit input)
+- El tamaño de la pantalla LCD es de 240x135. Cada palabra de RAM podría almacenar dos pixeles de 16bits cada uno, por tanto se requeriría de espacio en memoria 16.200 palabras por imagen.
+
+
+#### 5. Testbench
+
+Set de instrucciones para probar funcionalidad de operaciones.
+
+
 
 ### 3.N Iterfaz de Usuario para Protocolo UART
 #### 1. Encabezado del módulo
@@ -59,23 +82,9 @@ Set de instrucciones para probar funcionalidad de operaciones.
 
 
   1. En el constraint se aplica rxd y txd con respecto a la computadora, por tanto los valores de transmisión y recepción se invierten ya que los módulos están escritos con respecto a la FPGA.
-  2. Para la asignación del baudrate en el módulo se realiza el cálculo del valor que va a tomar "prescale" de la siguiente manera:
-
-  $$
-      prescale=\frac{clk}{8*baudios} \rightarrow
-  $$
-
-$$
-      prescale=\frac{200x10^6}{8*9600} \rightarrow
-  $$
-
-  $$
-      prescale=2604
-  $$
 
 
-
-  3. El registro de control no reconoce si el dato cambia y si se está transmitiendo un dato repetidas veces, toma la desición de enviar solamente si en el registro de control send está activo. Le es indiferente si ya se transmitió o no, ya que es obligación del RISCV tomar esto en cuenta.
+  2. El registro de control no reconoce si el dato cambia y si se está transmitiendo un dato repetidas veces, toma la desición de enviar solamente si en el registro de control send está activo. Le es indiferente si ya se transmitió o no, ya que es obligación del RISCV tomar esto en cuenta.
 
 #### 5. Testbench
 Descripción y resultados de las pruebas hechas
@@ -169,70 +178,9 @@ module picorv32 #(
 
 **Instrucciones para Carga de Datos en RAM**
 ```
-lui x1, 0x4000   //000400B7
-addi x2,x0, 10   //00A00113
-addi x3, x0, 11  //00B00193
-addi x4, x0, 12  //00C00213
-addi x5, x0, 13  //00D00293
-addi x6, x0, 14  //00E00313
-addi x7, x0, 15  //00F00393
-addi x8, x0, 16  //01000413
-addi x9, x0, 17  //01100493
-addi x10, x0, 18 //01200513
-addi x11, x0, 19 //01300593
-addi x12, x0, 20 //01400613
-
-sw x2, 0(x1)     //0020A023
-sw x3, 0(x1)     //0030A023
-sw x4, 0(x1)     //0040A023
-sw x5, 0(x1)     //0050A023 
-sw x6, 0(x1)     //0060A023
-sw x7, 0(x1)     //0070A023
-sw x8, 0(x1)     //0080A023
-sw x9, 0(x1)     //0090A023
-sw x10, 0(x1)    //00A0A023
-sw x11, 0(x1)    //00B0A023
-sw x12, 0(x1)    //00C0A023
-
 
 
 ```
-- Equivalente para .coe
-
-```
-memory_initialization_radix=16;
-memory_initialization_vector=
-000400B7 
-
-00A00113 
-00B00193 
-00C00213 
-00D00293 
-00E00313 
-00F00393 
-01000413
-01100493
-01200513
-1300593
-01400613
-
-0020A023 
-0030A023
-0040A023
-0050A023
-0060A023
-0070A023
-0080A023
-0090A023
-00A0A023
-00B0A023
-00C0A023
-00D0A023
-00E0A023
-00F0A023
-;
-```
-  
 
 
 
@@ -270,3 +218,6 @@ memory_initialization_vector=
 |        X         | XXXXXX   |  XXXXX   | XXXX|  X   |X |X         |X |  XXX   | XX  |  0100011  |
 |Imm[11] (Sign Ext)|Imm[10:5] |    rd    |    ?|rs1[0]|? |funct3[2]?|? |Imm[4:2]| ??  |  opcode   |
 
+### Apendice 6: Desglose Hexadecimal RGB
+Un valor rgb se compone de seis caracteres en hexadecimal (0xXXXXXX)
+![image](https://github.com/user-attachments/assets/f05733c3-0c6b-44b1-9b37-18d572eb178a)
