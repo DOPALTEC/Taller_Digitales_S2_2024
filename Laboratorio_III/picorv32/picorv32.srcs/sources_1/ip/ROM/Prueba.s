@@ -13,4 +13,23 @@ loop:   lw x5, 0(x1)          //0x20  //0000A283 (Carga en x5 el dato recibido) 
 exit_loop: lw x4, 0(x8)       //0x30  //00042203 //Carga en x4 el dato recibido por la UART //exit_loop=0x30
 sw x4, 0(x10)                 //0x34  //00452023
 addi x10,x10,4                //0x38  //00450513
-jalr x0, x3, loop             //0x3C  //00018067 (Salta a la dirección de x3) a "loop"
+
+
+bne xx,xx,img_recibida //97200 bytes recibidos, imagen completa, si no se hace el bucle de espera de datos continua
+jalr x0, x3, loop             //0x40  //00018067 (Salta a la dirección de x3) a "loop"
+img_recibida: //Aniadir instrucciones para encender el primer led
+
+
+lui x7, 0x200                 //0x44  //? Guarda en x7 un 0x2000
+addi x7,x7, 44                //0x48  //02C? Actualiza el valor en x7 a 0x2004
+addi x11,x11,1                //0x4C  //Almacena en x11 un 1, para comparar  con numero de imagen que se solicita
+loop_TANG_NANO: lw x9, 0(x7)  //0x50  //Carga en x9 el dato recibido por la Tang Nano
+                beq x11,x9,exit_loop_TANG_NANO //0x54  //Compara x11 con x9, si son iguales salta a exit_loop_TANG_NANO
+exit_loop_TANG_NANO:
+/*Iniciar transmision de la RAM*/
+
+
+
+
+
+                
