@@ -197,28 +197,7 @@ module picorv32 #(
 
 ![image](https://github.com/user-attachments/assets/5030179a-0007-42cb-a36e-270d80de65de)
 
-### Apendice 4: Tabla de Códigos de Operación de Distintas Instrucciones
-
-| Opcode   | Instrucción | funct 3 |
-|----------|-------------|---------|
-| 0100011  | sw          |   010   |
-| 0000011  | lw          |   010   |
-| 0010011  | addi        |   000   |
-| 0110111  | lui         | na      |
-| 0010011  | andi        |   111   |
-
-
-
-### Apendice 5: Desglose Posicionamiendo de bits en las Instrucciones
-**lui**
-
-**sw**
-|       31         |  30-25   |  24-20   |     | 15   |14|    13    |12|  11-9  | 8-7 |   6 - 0   |
-|------------------|----------|----------|-----|------|--|----------|--|--------|-----|-----------|
-|        X         | XXXXXX   |  XXXXX   | XXXX|  X   |X |X         |X |  XXX   | XX  |  0100011  |
-|Imm[11] (Sign Ext)|Imm[10:5] |    rd    |    ?|rs1[0]|? |funct3[2]?|? |Imm[4:2]| ??  |  opcode   |
-
-### Apendice 6: Posición en RAM que ocupará cada Imagen
+### Apendice 4: Posición en RAM que ocupará cada Imagen
 
 | Imagen # | Dirección de inicio | Dirección de fin |
 |----------|----------------------|------------------|
@@ -230,4 +209,15 @@ module picorv32 #(
 | 6        | 0x53608             | 0x5736F         |
 | 7        | 0x57370             | 0x5B0D7         |
 | 8        | 0x5B0D8             | 0x5EE3F         |
+
+
+### Apendice Auxiliar: Desglose Posicionamiendo de bits en las Instrucciones
+**lui**
+
+**sw**
+|       31         |  30-25   |  24-20   |     | 15   |14|    13    |12|  11-9  | 8-7 |   6 - 0   |
+|------------------|----------|----------|-----|------|--|----------|--|--------|-----|-----------|
+|        X         | XXXXXX   |  XXXXX   | XXXX|  X   |X |X         |X |  XXX   | XX  |  0100011  |
+|Imm[11] (Sign Ext)|Imm[10:5] |    rd    |    ?|rs1[0]|? |funct3[2]?|? |Imm[4:2]| ??  |  opcode   |
+
 
