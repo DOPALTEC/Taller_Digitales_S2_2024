@@ -197,19 +197,21 @@ module picorv32 #(
 
 ![image](https://github.com/user-attachments/assets/5030179a-0007-42cb-a36e-270d80de65de)
 
-### Apendice 4: Tabla de Códigos de Operación de Distintas Instrucciones
+### Apendice 4: Posición en RAM que ocupará cada Imagen
 
-| Opcode   | Instrucción | funct 3 |
-|----------|-------------|---------|
-| 0100011  | sw          |   010   |
-| 0000011  | lw          |   010   |
-| 0010011  | addi        |   000   |
-| 0110111  | lui         | na      |
-| 0010011  | andi        |   111   |
+| Imagen # | Dirección de inicio | Dirección de fin |
+|----------|----------------------|------------------|
+| 1        | 0x40000             | 0x43F67         |
+| 2        | 0x43F68             | 0x47ECF         |
+| 3        | 0x47ED0             | 0x4BC37         |
+| 4        | 0x4BC38             | 0x4F89F         |
+| 5        | 0x4F8A0             | 0x53607         |
+| 6        | 0x53608             | 0x5736F         |
+| 7        | 0x57370             | 0x5B0D7         |
+| 8        | 0x5B0D8             | 0x5EE3F         |
 
 
-
-### Apendice 5: Desglose Posicionamiendo de bits en las Instrucciones
+### Apendice Auxiliar: Desglose Posicionamiendo de bits en las Instrucciones
 **lui**
 
 **sw**
@@ -218,6 +220,4 @@ module picorv32 #(
 |        X         | XXXXXX   |  XXXXX   | XXXX|  X   |X |X         |X |  XXX   | XX  |  0100011  |
 |Imm[11] (Sign Ext)|Imm[10:5] |    rd    |    ?|rs1[0]|? |funct3[2]?|? |Imm[4:2]| ??  |  opcode   |
 
-### Apendice 6: Desglose Hexadecimal RGB
-Un valor rgb se compone de seis caracteres en hexadecimal (0xXXXXXX)
-![image](https://github.com/user-attachments/assets/f05733c3-0c6b-44b1-9b37-18d572eb178a)
+
