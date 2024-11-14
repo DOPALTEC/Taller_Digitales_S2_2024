@@ -15,7 +15,7 @@ sw x4, 0(x10)                 //0x34  //00452023
 addi x10,x10,4                //0x38  //00450513
 
 
-bne xx,xx,img_recibida //97200 bytes recibidos, imagen completa, si no se hace el bucle de espera de datos continua
+bne xx,xx,img_recibida //se deben hacer 64800 transmisiones (0xFD20 transmisiones), imagen completa, si no se hace el bucle de espera de datos continua
 jalr x0, x3, loop             //0x40  //00018067 (Salta a la dirección de x3) a "loop"
 img_recibida: //Aniadir instrucciones para encender el primer led
 

@@ -5,8 +5,8 @@ import cv2
 # Lista de imágenes disponibles
 images = {
     1: "CHARMANDER_LCD.png",
-    2: "A.png",
-    3: "B.png",
+    2: "MARIO_LCD.png",
+    3: "SQUIRTLE_LCD.png",
     4: "C.png",
     5: "D.png",
     6: "E.png",
