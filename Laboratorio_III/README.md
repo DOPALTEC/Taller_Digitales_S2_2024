@@ -82,23 +82,9 @@ Set de instrucciones para probar funcionalidad de operaciones.
 
 
   1. En el constraint se aplica rxd y txd con respecto a la computadora, por tanto los valores de transmisión y recepción se invierten ya que los módulos están escritos con respecto a la FPGA.
-  2. Para la asignación del baudrate en el módulo se realiza el cálculo del valor que va a tomar "prescale" de la siguiente manera:
-
-  $$
-      prescale=\frac{clk}{8*baudios} \rightarrow
-  $$
-
-$$
-      prescale=\frac{200x10^6}{8*9600} \rightarrow
-  $$
-
-  $$
-      prescale=2604
-  $$
 
 
-
-  3. El registro de control no reconoce si el dato cambia y si se está transmitiendo un dato repetidas veces, toma la desición de enviar solamente si en el registro de control send está activo. Le es indiferente si ya se transmitió o no, ya que es obligación del RISCV tomar esto en cuenta.
+  2. El registro de control no reconoce si el dato cambia y si se está transmitiendo un dato repetidas veces, toma la desición de enviar solamente si en el registro de control send está activo. Le es indiferente si ya se transmitió o no, ya que es obligación del RISCV tomar esto en cuenta.
 
 #### 5. Testbench
 Descripción y resultados de las pruebas hechas
