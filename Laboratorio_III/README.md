@@ -270,3 +270,6 @@ memory_initialization_vector=
 |        X         | XXXXXX   |  XXXXX   | XXXX|  X   |X |X         |X |  XXX   | XX  |  0100011  |
 |Imm[11] (Sign Ext)|Imm[10:5] |    rd    |    ?|rs1[0]|? |funct3[2]?|? |Imm[4:2]| ??  |  opcode   |
 
+### Apendice 6: Desglose Hexadecimal RGB
+Un valor rgb se compone de seis caracteres en hexadecimal (0xXXXXXX)
+![image](https://github.com/user-attachments/assets/f05733c3-0c6b-44b1-9b37-18d572eb178a)
