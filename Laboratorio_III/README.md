@@ -53,6 +53,7 @@ Set de instrucciones para probar funcionalidad de operaciones.
 #### 4. Criterios de diseño
 
 - La configuración elegida para el despliegue de imágenes de "8-bit data bus for 12-bit/pixel (RGB 4-4-4-bit input), 4K-Colors, 3Ah=”03h”" en la hoja de datos de la ST7789V (p. 68).
+- El tamaño de la pantalla LCD es de 240x135
 
 
 #### 5. Testbench
