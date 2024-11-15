@@ -34,18 +34,82 @@ module tb_Primario;
         #800;    // Simulaci�n de 10,000 ns (10 �s)
         
    #500;  // Tiempo para que el transmisor complete el env?o
+   
+   
+    
+ 
+     rxd = 0;  // Start bit
+    #104167    // Tiempo para cada bit (ajustado seg?n baudrate)
+    rxd = 0;  #104167;
+    rxd = 1;  #104167;
+    rxd = 0;  #104167;
+    rxd = 1;  #104167;
+    rxd = 0;  #104167;
+    rxd = 0;  #104167;
+    rxd = 1;  #104167;
+    rxd = 1;  #104167;
+
+    // Stop bit
+    rxd = 1;  #104167;
+    
+    
+        rxd = 0;  // Start bit
+    #104167    // Tiempo para cada bit (ajustado seg?n baudrate)
+    rxd = 0;  #104167;
+    rxd = 0;  #104167;
+    rxd = 0;  #104167;
+    rxd = 0;  #104167;
+    rxd = 1;  #104167;
+    rxd = 1;  #104167;
+    rxd = 1;  #104167;
+    rxd = 1;  #104167;
+
+    // Stop bit
+    rxd = 1;  #104167;
+    
+    
+        rxd = 0;  // Start bit
+    #104167    // Tiempo para cada bit (ajustado seg?n baudrate)
+    rxd = 0;  #104167;
+    rxd = 1;  #104167;
+    rxd = 1;  #104167;
+    rxd = 1;  #104167;
+    rxd = 1;  #104167;
+    rxd = 1;  #104167;
+    rxd = 0;  #104167;
+    rxd = 1;  #104167;
+
+    // Stop bit
+    rxd = 1;  #104167;
+    
+    
+            rxd = 0;  // Start bit
+    #104167    // Tiempo para cada bit (ajustado seg?n baudrate)
+    rxd = 0;  #104167;
+    rxd = 1;  #104167;
+    rxd = 1;  #104167;
+    rxd = 1;  #104167;
+    rxd = 1;  #104167;
+    rxd = 1;  #104167;
+    rxd = 0;  #104167;
+    rxd = 1;  #104167;
+
+    // Stop bit
+    rxd = 1;  #104167;
+//////////SEGUNDA PALABRA//////////////////
+   
     rxd = 0;  // Start bit
     #104167    // Tiempo para cada bit (ajustado seg?n baudrate)
 
     // Simulaci?n de bits de datos (env?a 8'hA5)
-    rxd = 0;  #104167;
     rxd = 1;  #104167;
     rxd = 0;  #104167;
     rxd = 1;  #104167;
     rxd = 1;  #104167;
+    rxd = 1;  #104167;
     rxd = 0;  #104167;
-    rxd = 1;  #104167;
-    rxd = 1;  #104167;
+    rxd = 0;  #104167;
+    rxd = 0;  #104167;
 
     // Stop bit
     rxd = 1;  #104167;
@@ -55,10 +119,10 @@ module tb_Primario;
     rxd = 0;  // Start bit
     #104167    // Tiempo para cada bit (ajustado seg?n baudrate)
     rxd = 1;  #104167;
-    rxd = 0;  #104167;
-    rxd = 0;  #104167;
+    rxd = 1;  #104167;
     rxd = 0;  #104167;
     rxd = 1;  #104167;
+    rxd = 0;  #104167;
     rxd = 1;  #104167;
     rxd = 0;  #104167;
     rxd = 1;  #104167;
@@ -82,6 +146,23 @@ module tb_Primario;
 
     // Stop bit
     rxd = 1;  #104167;
+    
+    rxd = 0;  // Start bit
+    #104167    // Tiempo para cada bit (ajustado seg?n baudrate)
+    rxd = 0;  #104167;
+    rxd = 0;  #104167;
+    rxd = 0;  #104167;
+    rxd = 0;  #104167;
+    rxd = 0;  #104167;
+    rxd = 0;  #104167;
+    rxd = 0;  #104167;
+    rxd = 0;  #104167;
+
+    // Stop bit
+    rxd = 1;  #104167;
+    
+    
+
 
         // Terminar la simulaci�n
         $finish;

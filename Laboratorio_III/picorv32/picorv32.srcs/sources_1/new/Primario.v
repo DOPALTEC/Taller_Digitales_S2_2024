@@ -39,7 +39,7 @@ ROM ROM_inst (
 reg ram_we;
 reg [31:0] ram_wdata;
 wire [31:0] ram_addr; // Dirección ajustada para la RAM
-assign ram_addr = (mem_addr >= 32'h40000) ? (mem_addr - 32'h40000) : 32'h0; // Ajusta la dirección
+assign ram_addr = (mem_addr >= 32'h40000) ? (mem_addr - 32'h40000) : 32'h0; // Ajusta la dirección para que inicie en 0x40000
 wire [31:0] ram_addr_adj = ram_addr >> 2; //Escala para que la direccion en RAM sea de 1 en 1
 wire [31:0] ram_rdata;
 
@@ -156,7 +156,19 @@ always @(posedge clk or posedge rst) begin
             mem_ready <= 1; // Habilita mem_ready si hay operaciï¿½n vï¿½lida
             if(!mem_instr && (mem_wstrb[0] || mem_wstrb[1]) || mem_wstrb[2] || mem_wstrb[3])begin
                 ena<=1;
-                ram_wdata <= mem_wdata; // Asigna los datos a escribir en RAM
+            //    ram_wdata <= mem_wdata; // Asigna los datos a escribir en RAM
+                if (mem_wstrb[0])begin
+                    ram_wdata[7:0] <= mem_wdata[7:0]; // Asigna los datos a escribir en RAM
+                end
+                if (mem_wstrb[1])begin
+                    ram_wdata[15:8] <= mem_wdata[15:8]; // Asigna los datos a escribir en RAM
+                end
+                if (mem_wstrb[2])begin
+                    ram_wdata[23:16] <= mem_wdata[23:16]; // Asigna los datos a escribir en RAM
+                end
+                if (mem_wstrb[3])begin
+                    ram_wdata[31:24] <= mem_wdata[31:24]; // Asigna los datos a escribir en RAM
+                end 
                 ram_we <= 1; // Habilita escritura en RAM
             end
         end
@@ -190,7 +202,19 @@ always @(posedge clk or posedge rst) begin
         ena<=0;
     end else begin
         if ((mem_valid && mem_addr == 32'h2010) && (mem_wstrb[0] || mem_wstrb[1] || mem_wstrb[2] || mem_wstrb[3])) begin
-            entrada_i_A <= mem_wdata; // Asigna el dato de memoria a entrada_i
+            //entrada_i_A <= mem_wdata; // Asigna el dato de memoria a entrada_i
+            if (mem_wstrb[0]) begin
+                entrada_i_A[7:0] <= mem_wdata[7:0];
+            end
+            if (mem_wstrb[1]) begin
+                entrada_i_A[15:8] <= mem_wdata[15:8];
+            end
+            if (mem_wstrb[2]) begin
+                entrada_i_A[23:16] <= mem_wdata[23:16];
+            end
+            if (mem_wstrb[3]) begin
+                entrada_i_A[31:24] <= mem_wdata[31:24];
+            end
             wr_i_A <= 1;              // Señal de escritura en 1
             reg_sel_i_A <= 0;         // Señal de selección en 0
         end 
@@ -210,7 +234,19 @@ always @(posedge clk or posedge rst) begin
             reg_sel_i_delay <= 1;
         end
         else if ((mem_valid && mem_addr == 32'h2020) && (mem_wstrb[0] || mem_wstrb[1] || mem_wstrb[2] || mem_wstrb[3])) begin
-            entrada_i_B <= mem_wdata; // Asigna el dato de memoria a entrada_i
+            //entrada_i_B <= mem_wdata; // Asigna el dato de memoria a entrada_i
+            if (mem_wstrb[0]) begin
+                entrada_i_B[7:0] <= mem_wdata[7:0];
+            end
+            if (mem_wstrb[1]) begin
+                entrada_i_B[15:8] <= mem_wdata[15:8];
+            end
+            if (mem_wstrb[2]) begin
+                entrada_i_B[23:16] <= mem_wdata[23:16];
+            end
+            if (mem_wstrb[3]) begin
+                entrada_i_B[31:24] <= mem_wdata[31:24];
+            end
             wr_i_B <= 1;              // Señal de escritura en 1
             reg_sel_i_B <= 0;         // Señal de selección en 0
         end 
