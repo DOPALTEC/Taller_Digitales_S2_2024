@@ -13,25 +13,32 @@ addi x11, x0, loop  //(SIN USO)             //0x2C  04800593 (Direccion de instr
 addi x12, x0, 4                             //0x30  00400613 (Referencia para contador de bytes en una word de RAM)
 addi x13, x0, 0                             //0x34  00000693 (Contador de bytes en una palabra RAM)
 lui x14, 0x4000                             //0x38  00040737 (Tamanio de Imagen 1 en RAM upper)
-addi x14, x0, 0x007                         //0x3C  00700713 (Tamanio de Imagen 1 en RAM lower)
+addi x14, x14, 0x008                        //0x3C  00870713 (Tamanio de Imagen 1 en RAM lower)
 addi x15, x0, 0                             //0x40  00000793 (Inicializar Contador de transmisiones totales)
 lui x19, 0x4000                             //0x44  000409B7 (Recorre la RAM en +0x4)
 loop:   lw x16, 0(x4)                       //0x48  00022803 (Carga el valor actual de ctrl)
         and x17, x16, x10                   //0x4C  00A878B3 (Aisla el bit ctrl[1])  
         bne x17, x0, exit_loop              //0x50  00089463 (Sale de "loop" si ctrl==1)
         jalr x0, x0, 0x48                   //0X54  04800067 (Salta a "loop")
-exit_loop:lw x18, 0(x6)                     //0x58  00032903
-sb x18, 0(x19)                              //0x5C  01298023
-addi x19, x19, 1                            //0x60  00198993
-beq x19, x14, imagen_enviada                //0x64  00E98463
-jalr x0, x0, 0x48                           //0x68  04800067
-
+exit_loop:lw x18, 0(x6)                     //0x58  00032903 Carga el dato recibido
+sb x18, 0(x19)                              //0x5C  01298023 Guarda el dato en la direccion de RAM de en un byte
+addi x19, x19, 1                            //0x60  00198993 Aumenta en 1 la direccion de byte en la RAM
+beq x19, x14, imagen_enviada                //0x64  00E98463 Si todo el tamaño de imagen ya se guardo completo salta a "imagen_enviada"
+jalr x0, x0, 0x48                           //0x68  04800067 Salta a "loop" si la imagen aun no se ha guardado por completo
 /*Enviar al final de la transmision el numero de imagen que es
 para escribir ese numero en los leds
-*/
+*/    
+imagen_enviada:addi x20,x0,1                //0x6C  00100A13    Representa el numero de imagen para mostrarlo en led
+sw x20 ,0(x3)                               //0x70  01418023    Enciende los leds de el numero de imagen recibido
+loop_tang:      lw x21, 0(x7)               //0x74  0003AA83    Carga ctrl de la tang
+                and x17, x21,x10            //0x78  00AAF8B3    Aisla ctrl[1]
+                bne x17, x0, exit_loop_tang //0x7C  00089463    Si no es igual a cero sale de "loop_tang"
+                jalr x0, x0, 0x6c           //0x80  07000067    Si hay un dato recibido desde la tang nano sale de "loop_tang"
 
-                        
-imagen_enviada:addi x20,x0,1                //0x6C
-x20, sw ,0(x3)                              //0x70
 
-loop_tang:      lw x21, 0(x7)               //0x74
+exit_loop_tang:lui x19, 0x4000              //0x44  000409B7 Inicializa el contador que Recorre la RAM en +0x4
+addi x22, x0, 1
+loop_send_tang: lw x18, 0(x19)
+                sb x18, 0(x8)
+                sw x22, 0(x7)
+                

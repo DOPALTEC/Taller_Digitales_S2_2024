@@ -154,7 +154,7 @@ always @(posedge clk or posedge rst) begin
         ram_we<=0;
         if (mem_valid && !mem_ready) begin
             mem_ready <= 1; // Habilita mem_ready si hay operaci�n v�lida
-            if(!mem_instr && (mem_wstrb[0] || mem_wstrb[1]) || mem_wstrb[2] || mem_wstrb[3])begin
+            if(!mem_instr && (mem_wstrb[0] || mem_wstrb[1] || mem_wstrb[2] || mem_wstrb[3]) && mem_addr>=32'h40000)begin
                 ena<=1;
             //    ram_wdata <= mem_wdata; // Asigna los datos a escribir en RAM
                 if (mem_wstrb[0])begin
