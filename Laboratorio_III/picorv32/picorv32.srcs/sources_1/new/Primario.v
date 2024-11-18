@@ -44,6 +44,7 @@ wire [31:0] ram_addr_adj = ram_addr >> 2; //Escala para que la direccion en RAM 
 wire [31:0] ram_rdata;
 
 reg ena;
+
 RAM_block RAM_inst (
   .clka(clk),    // input wire clka
   .ena(ena),      // input wire ena
@@ -156,8 +157,8 @@ always @(posedge clk or posedge rst) begin
             mem_ready <= 1; // Habilita mem_ready si hay operaci�n v�lida
             if(!mem_instr && (mem_wstrb[0] || mem_wstrb[1] || mem_wstrb[2] || mem_wstrb[3]) && mem_addr>=32'h40000)begin
                 ena<=1;
-            //    ram_wdata <= mem_wdata; // Asigna los datos a escribir en RAM
                 if (mem_wstrb[0])begin
+                    ram_wdata<=0;
                     ram_wdata[7:0] <= mem_wdata[7:0]; // Asigna los datos a escribir en RAM
                 end
                 if (mem_wstrb[1])begin
@@ -174,6 +175,7 @@ always @(posedge clk or posedge rst) begin
         end
     end
 end
+
 
 
 reg addr_i_delay;

@@ -23,22 +23,50 @@ loop:   lw x16, 0(x4)                       //0x48  00022803 (Carga el valor act
 exit_loop:lw x18, 0(x6)                     //0x58  00032903 Carga el dato recibido
 sb x18, 0(x19)                              //0x5C  01298023 Guarda el dato en la direccion de RAM de en un byte
 addi x19, x19, 1                            //0x60  00198993 Aumenta en 1 la direccion de byte en la RAM
-beq x19, x14, imagen_enviada                //0x64  00E98463 Si todo el tamaño de imagen ya se guardo completo salta a "imagen_enviada"
+beq x19, x14, imagen_escrita                //0x64  00E98463 Si todo el tamaño de imagen ya se guardo completo salta a "imagen_enviada"
 jalr x0, x0, 0x48                           //0x68  04800067 Salta a "loop" si la imagen aun no se ha guardado por completo
 /*Enviar al final de la transmision el numero de imagen que es
 para escribir ese numero en los leds
 */    
-imagen_enviada:addi x20,x0,1                //0x6C  00100A13    Representa el numero de imagen para mostrarlo en led
+imagen_escrita:addi x20,x0,1                //0x6C  00100A13    Representa el numero de imagen para mostrarlo en led
 sw x20 ,0(x3)                               //0x70  01418023    Enciende los leds de el numero de imagen recibido
 loop_tang:      lw x21, 0(x7)               //0x74  0003AA83    Carga ctrl de la tang
                 and x17, x21,x10            //0x78  00AAF8B3    Aisla ctrl[1]
+        
+        
                 bne x17, x0, exit_loop_tang //0x7C  00089463    Si no es igual a cero sale de "loop_tang"
-                jalr x0, x0, 0x6c           //0x80  07000067    Si hay un dato recibido desde la tang nano sale de "loop_tang"
+                jalr x0, x0, 0x74           //0x80  07400067    Si hay un dato recibido desde la tang nano sale de "loop_tang"
 
 
-exit_loop_tang:lui x19, 0x4000              //0x44  000409B7 Inicializa el contador que Recorre la RAM en +0x4
-addi x22, x0, 1
-loop_send_tang: lw x18, 0(x19)
-                sb x18, 0(x8)
-                sw x22, 0(x7)
-                
+
+
+
+exit_loop_tang:addi x25, x2, 0              //0x84  00010C93     Inicializa el contador que Recorre la RAM en +0x4
+
+
+
+addi x22, x0, 1                             //0x88  00100B13
+add x23, x23, x8                            //0x8C  008783B3
+addi x24, x24, 0                            //0x90  000C0C13
+
+/*Se debe agregar que al recibir el numero especifico
+de la imagen se envie esa imagen
+lw x25, 0(x9)
+bne x25,x22, loop_tang
+*/
+
+loop_send_tang: lw x18, 0(x25)              //0x94  000CA903  
+                sb x18, 0(x8)               //0x98  01240023
+                addi x25,x25,1              //0x9C  001C8C93
+                addi x24, x24, 1            //0xA0  001C0C13
+                beq x24, x12, byte_escrito  //0xA4  00CB0463
+                jalr x0,x0, 0x94            //0xA8  09400067
+byte_escrito:   lui x24, 0                  //0xAC  00000C37
+sw x22, 0(x7)                               //0xB0  01638023
+beq x25, x14, imagen_enviada                //0xB4  
+
+jalr x0, x0, 0x94                           //0xB8  09400067
+imagen_enviada:
+
+
+
