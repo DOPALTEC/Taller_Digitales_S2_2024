@@ -36,37 +36,27 @@ loop_tang:      lw x21, 0(x7)               //0x74  0003AA83    Carga ctrl de la
         
                 bne x17, x0, exit_loop_tang //0x7C  00089463    Si no es igual a cero sale de "loop_tang"
                 jalr x0, x0, 0x74           //0x80  07400067    Si hay un dato recibido desde la tang nano sale de "loop_tang"
+exit_loop_tang:lui x25, 0x4000              //0x84  00040CB7     Inicializa el contador que Recorre la RAM en +0x4
+addi x22, x0, 1                             //0x88  00100B13     Valor para transmitir datos ctrl[0]=1=>send
 
 
 
-
-
-exit_loop_tang:addi x25, x2, 0              //0x84  00010C93     Inicializa el contador que Recorre la RAM en +0x4
-
-
-
-addi x22, x0, 1                             //0x88  00100B13
-add x23, x23, x8                            //0x8C  008783B3
-addi x24, x24, 0                            //0x90  000C0C13
-
+add x23, x8, x0                             //0x8C  00040BB3    No cambia, es la direccion UART B DATA_2
+addi x24, x0, 0                             //0x90  00000C13    Contador hasta 4
 /*Se debe agregar que al recibir el numero especifico
 de la imagen se envie esa imagen
 lw x25, 0(x9)
 bne x25,x22, loop_tang
 */
-
-loop_send_tang: lw x18, 0(x25)              //0x94  000CA903  
-                sb x18, 0(x8)               //0x98  01240023
+loop_send_tang: lb x18, 0(x25)              //0x94  000C8903      Carga primer byte de la RAM
                 addi x25,x25,1              //0x9C  001C8C93
-                addi x24, x24, 1            //0xA0  001C0C13
-                beq x24, x12, byte_escrito  //0xA4  00CB0463
-                jalr x0,x0, 0x94            //0xA8  09400067
-byte_escrito:   lui x24, 0                  //0xAC  00000C37
-sw x22, 0(x7)                               //0xB0  01638023
-beq x25, x14, imagen_enviada                //0xB4  
+                addi x24, x24, 1            //0xA0  001C0C13    Contador hasta 4
+                sb x18, 0(x23)              //0x98  012B8023
 
-jalr x0, x0, 0x94                           //0xB8  09400067
-imagen_enviada:
+
+                sw x22, 0(x7)               //0x    0163A023
+                beq x24, x3, salto_ram      //
+                salto_ram:
 
 
 
