@@ -30,7 +30,7 @@ module ctrl_UART #(parameter palabra = 32, parameter prescale = 1302)
 );
 
 
-    // Señales UART
+    // Seï¿½ales UART
     wire hay_dato_tx;
     reg transmitir; // Cambiado a reg
     wire m_axis_tvalid; 
@@ -46,11 +46,11 @@ module ctrl_UART #(parameter palabra = 32, parameter prescale = 1302)
         .clk(clk),
         .rst(rst),
         .locked(locked),
-        .dato_tx(data[7:0]), // Es de 8 bits por tanto se debe empaquetar el envío de la palabra
+        .dato_tx(data[7:0]), // Es de 8 bits por tanto se debe empaquetar el envï¿½o de la palabra
         .hay_dato_tx(hay_dato_tx), // Se activa cuando hay un dato ingresado para enviar
-        .transmitir(transmitir), // En alto transmite el dato, para pruebas un botón
+        .transmitir(transmitir), // En alto transmite el dato, para pruebas un botï¿½n
 
-        .dato_rx(IN2_data[7:0]), 
+        .dato_rx(IN2_data[7:0]),
         .m_axis_tvalid(m_axis_tvalid),
         .recibir(recibir), // NO afecta
 
@@ -78,7 +78,7 @@ module ctrl_UART #(parameter palabra = 32, parameter prescale = 1302)
     reg hay_dato_tx_d;
     wire hay_dato_tx_edge;
     assign hay_dato_tx_edge = !hay_dato_tx_d & hay_dato_tx;
-    // Logica secuencial para transmisión y control de UART
+    // Logica secuencial para transmisiï¿½n y control de UART
     always @(posedge clk or posedge rst) begin
         if (rst) begin
             send_d<=0;
@@ -103,7 +103,7 @@ module ctrl_UART #(parameter palabra = 32, parameter prescale = 1302)
                 
                 transmitir <= 1;  // Pulso de un ciclo
             end else begin
-                transmitir <= 0;  // Volver a 0 después del pulso
+                transmitir <= 0;  // Volver a 0 despuï¿½s del pulso
             end
             
             WR2_data <= 0;      
