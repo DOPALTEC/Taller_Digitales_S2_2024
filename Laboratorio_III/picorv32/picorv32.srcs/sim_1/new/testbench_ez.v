@@ -191,6 +191,7 @@ module tb_Lab_III;
     // Stop bit
     rxd_B = 1;  #104167;
 
+    #3004167;
         // Terminar la simulaci�n
         $finish;
     end

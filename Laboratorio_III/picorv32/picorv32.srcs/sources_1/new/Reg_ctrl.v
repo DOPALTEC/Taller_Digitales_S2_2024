@@ -23,6 +23,7 @@ module Reg_ctrl #(parameter palabra = 32) (
             if (WR2) begin
                 //out[0] <= IN2[0];
                 out[1] <= IN2[1];        // Actualiza el bit 1 de out
+                out[2] <= IN2[2];        // Actualiza el bit 1 de out
             end
             if (WR1) begin
                 //out[0] <= IN2[0];

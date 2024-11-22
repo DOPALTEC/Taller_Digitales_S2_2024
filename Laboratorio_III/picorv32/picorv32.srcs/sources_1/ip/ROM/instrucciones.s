@@ -31,39 +31,44 @@ para escribir ese numero en los leds
 imagen_escrita:addi x20,x0,1                //0x6C  00100A13    Representa el numero de imagen para mostrarlo en led
 sw x20 ,0(x3)                               //0x70  01418023    Enciende los leds de el numero de imagen recibido
 loop_tang:      lw x21, 0(x7)               //0x74  0003AA83    Carga ctrl de la tang
-                and x17, x21,x10            //0x78  00AAF8B3    Aisla ctrl[1]
-        
-        
+                and x17, x21, x10           //0x78  00AAF8B3    Aisla ctrl[1]
                 bne x17, x0, exit_loop_tang //0x7C  00089463    Si no es igual a cero sale de "loop_tang"
                 jalr x0, x0, 0x74           //0x80  07400067    Si hay un dato recibido desde la tang nano sale de "loop_tang"
-exit_loop_tang:lw x16, 0(x9)                //0x84  0004A803
-/*AL cargar data_2 se debe corroborar si es 1 si no, salta
-otra vez al loop_tang*/               
-lui x25, 0x4000                             //0x  00040CB7     Inicializa el contador que Recorre la RAM en +0x4
-addi x22, x0, 1                             //0x  00100B13     Valor para transmitir datos ctrl[0]=1=>send
-/*Escribir cero en crtl[0] para limpiar y evitar que
-se siga enviando*/
-
-add x23, x8, x0                             //0x  00040BB3    No cambia, es la direccion UART B DATA_2
-addi x24, x0, 0                             //0x  00000C13    Contador hasta 4
-/*Se debe agregar que al recibir el numero especifico
+exit_loop_tang:lw x16, 0(x9)                //0x84  0004A803    
+addi x22, x0, 1                             //0x88  00100B13     Valor para transmitir datos ctrl[0]=1=>send      
+beq x16, x22, 0x8                           //0x8C  01680463
+jalr x0, x0, 0x74                           //0x90  07400067    Si hay un dato recibido desde la tang nano sale de "loop_tang"
+lui x25, 0x4000                             //0x94  00040CB7     Inicializa el contador que Recorre la RAM en +0x4
+add x23, x8, x0                             //0x98  00040BB3    No cambia, es la direccion UART B DATA_2
+addi x24, x0, 0                             //0x9C  00000C13    Contador hasta 4
+/*
+Se debe agregar que al recibir el numero especifico
 de la imagen se envie esa imagen
 lw x25, 0(x9)
 bne x25,x22, loop_tang
 */
-loop_send_tang: lb x18, 0(x25)              //0x  000C8903      Carga primer byte de la RAM
-                addi x25,x25,1              //0x  001C8C93
-                addi x24, x24, 1            //0x  001C0C13    Contador hasta 4
-                sb x18, 0(x23)              //0x  012B8023
-
-
-                sw x22, 0(x7)               //0x   0163A023
+loop_send_tang: lb x18, 0(x25)              //0xA0  000C8903      Carga primer byte de la RAM
+                sb x18, 0(x23)              //0xA4  012B8023
+                sw x22, 0(x7)               //0xA8  0163A023
+                sw x0,  0(x7)               //0xAC  00038023
 
 
 
-                
-                beq x24, x3, salto_ram     //
-                salto_ram:
+
+
+                loop_busy_tx:   lw x26, 0(x7)               //0xB0  0003AD03    //Carga ctrl de la tang
+                                and x17, x26, x12           //0xB4  00CD78B3    //Aisla ctrl[2]
+                                beq x17, x0, 0x8            //0xB8  00088463    //Si ctrl[2]==0 (busy_tx) sale de "loop_busy_tx"
+                                jalr x0, x0, 0xB0           //0xBC  0B000067    //Continua corroborando valor de ctrl[2]
+
+
+
+                exit_loop_busy_tx:
+                addi x25,x25,1              //0xC0  001C8C93
+                addi x24, x24, 1            //0xC4  001C0C13    
+                beq x25,x14,img_transmitida //0xC8  00EC8463 salto de +x8
+                jalr x0, x0, 0xA0           //0xCC  0A000067
+img_transmitida:
 
 
 

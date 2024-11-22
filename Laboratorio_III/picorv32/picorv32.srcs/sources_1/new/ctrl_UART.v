@@ -78,6 +78,11 @@ module ctrl_UART #(parameter palabra = 32, parameter prescale = 1302)
     reg hay_dato_tx_d;
     wire hay_dato_tx_edge;
     assign hay_dato_tx_edge = !hay_dato_tx_d & hay_dato_tx;
+    
+    reg tx_busy_d;           // Almacena el estado anterior de tx_busy
+    wire tx_busy_edge;       // Detecta cambio en tx_busy
+    reg pulse_wr2_ctrl;      // Pulso de un ciclo para WR2_ctrl
+    assign tx_busy_edge = tx_busy ^ tx_busy_d;
     // Logica secuencial para transmisi�n y control de UART
     always @(posedge clk or posedge rst) begin
         if (rst) begin
@@ -94,10 +99,14 @@ module ctrl_UART #(parameter palabra = 32, parameter prescale = 1302)
             hay_dato_tx_d <= 0; 
             hold_ctrl<=0;
             //IN2_data<=0;
+            tx_busy_d <= 0;
+            pulse_wr2_ctrl <= 0;
+            IN2_ctrl[2] <= 0;
         end else begin
             m_axis_tvalid_d <= m_axis_tvalid; //Almacena el estado anterior de m_axis_tvalid
             send_d<=send; //Almacena el Estado anterior de send
             hay_dato_tx_d<=hay_dato_tx;
+            tx_busy_d <= tx_busy;
             
             if (send_edge) begin
                 
@@ -117,6 +126,24 @@ module ctrl_UART #(parameter palabra = 32, parameter prescale = 1302)
                 send<=ctrl[0];
             end
             
+
+            if (tx_busy) begin
+                //if (IN2_ctrl[2])begin
+                //    WR2_ctrl <= 0;
+                //end
+                //else begin
+                    WR2_ctrl <= 1;
+                //end  
+                IN2_ctrl[2] <=1;
+            end else begin
+                if (IN2_ctrl[2])begin
+                    WR2_ctrl <= 1;
+                end
+                else begin
+                    WR2_ctrl <= 0;
+                end  
+                IN2_ctrl[2] <=0;
+            end
 
                 
             if (m_axis_tvalid) begin
