@@ -145,18 +145,21 @@ assign mem_rdata =
 tambien quien envia esto
 */
 //RAM
+reg [1:0] ram_wait_state;
 always @(posedge clk or posedge rst) begin
     if (rst) begin
         mem_ready <= 0; // Inicializa mem_ready en 0 al reset
         ram_we<=0;
         ena<=0;
+        ram_wait_state <= 0;
     end else begin
         mem_ready <= 0; // Por defecto, mem_ready es 0
         ram_we<=0;
         if (mem_valid && !mem_ready) begin
-            mem_ready <= 1; // Habilita mem_ready si hay operaciï¿½n vï¿½lida
+            mem_ready <= 1;
             if(!mem_instr && (mem_wstrb[0] || mem_wstrb[1] || mem_wstrb[2] || mem_wstrb[3]) && mem_addr>=32'h40000)begin
                 ena<=1;
+                //mem_ready <= 1;
                 if (mem_wstrb[0])begin
                     ram_wdata<=0;
                     ram_wdata[7:0] <= mem_wdata[7:0]; // Asigna los datos a escribir en RAM
@@ -173,6 +176,21 @@ always @(posedge clk or posedge rst) begin
                 ram_we <= 1; // Habilita escritura en RAM
             end
         end
+        if(!mem_instr && !mem_wstrb && (mem_addr >= 32'h40000)) begin
+            ena<=1;
+            if (ram_wait_state == 2) begin
+                mem_ready <= 1;
+                ram_wait_state <=0;
+            end
+            else begin
+                mem_ready <=0;
+                ram_wait_state <= ram_wait_state+1;
+            end
+        end
+        /*else begin
+            mem_ready <=1;
+            ram_wait_state <=0;
+        end*/
     end
 end
 
@@ -252,7 +270,7 @@ always @(posedge clk or posedge rst) begin
             wr_i_B <= 1;              // Señal de escritura en 1
             reg_sel_i_B <= 0;         // Señal de selección en 0
         end 
-        else if (mem_valid && mem_addr == 32'h2028)begin
+        else if (mem_valid && mem_addr == 32'h2028 && (mem_wstrb[0] || mem_wstrb[1] || mem_wstrb[2] || mem_wstrb[3]))begin
             entrada_i_data_B <= mem_wdata; // Asigna el dato de memoria a entrada_i
             wr_i_B <= 1;              // Señal de escritura en 1
             reg_sel_i_B <= 1;         // Señal de selección en 1
