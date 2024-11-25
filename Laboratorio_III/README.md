@@ -173,6 +173,7 @@ module picorv32 #(
 - Para las instrucciones sw, solamente se obtienen direcciones de escritura de múltiplos de 4 por lo tanto debe haber una traducción para la RAM.
 - El procesador no soporta 200MHz. Se comporta correctamente con 100MHz
 - Despues de dos saltos de instrucción pc+4 si solo hay ceros, el procesador se detiene el mismo.
+- El tamaño de una imagen es de 64800 transmisiones. A estas transmisiones se le envía un número al final que corresponde a el número de imagen.
 
 **SOFTWARE PARA PROCESAR LAS IMÁGENES**
 ```
