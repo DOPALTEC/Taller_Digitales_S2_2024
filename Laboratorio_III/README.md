@@ -167,20 +167,23 @@ module picorv32 #(
 
 - La memoria ROM va de address en address, mientras que el Contador de Programa de RV32 va de 4 bytes en 4 bytes, se debe por tanto, dividir el archivo de instrucciones en 4 partes por instrucción, para que así la dirección ingresada corresponda a un formato de bytes. 
 - Para los accesos a memorias como RAM debido a que estan en direcciones de valor alto en el mapa de memoria se debe accesar a ellas cargando parte de ellas en un registro base con una instrucción `lui` y luego aplicar el desplazamiento necesario ya que un inmediato solo llega hasta 12 bits. La RV32 no reconoce direcciones de memoria de 0x40000. Se debe hacer un tratamiento a una señal de escritura basada en sus limites. `FFF`.
-- La salida del sw propiamente ocurre después de que la instrucción que le procede se haya ejecutado. Para el inmediato los primeros 5 bits van al final de la instrucción, y los últimos 7 bits al principio.
+- La salida del sw propiamente ocurre después de que la instrucción que le procede se haya ejecutado. 
 - En el mapa de memoria la RAM se encuentra entre 0x40000 y 0x80000 dando como resultado que se el tamaño que abarcan las direcciones de memoria es 0x40000. Esta cantidad de direcciones tiene un valor de 262144 bytes. Por cada instruccion se requieren 4 bytes dando como resultado entonces que se pueden almacenar 65536 direcciones, por ende esa misma cantidad de palabras. El IP core posee exactamente este límite por lo cual solo es necesario utilizar una RAM.
 - El último bit del inmediato representa la extensión de signo por tanto el inmediato solo puede llegar hasta 0x7FF = 2047.
 - Para las instrucciones sw, solamente se obtienen direcciones de escritura de múltiplos de 4 por lo tanto debe haber una traducción para la RAM.
+- El procesador no soporta 200MHz. Se comporta correctamente con 100MHz
+- Despues de dos saltos de instrucción pc+4 si solo hay ceros, el procesador se detiene el mismo.
+- El tamaño de una imagen es de 64800 transmisiones. A estas transmisiones se le envía un número al final que corresponde a el número de imagen.
+
+**SOFTWARE PARA PROCESAR LAS IMÁGENES**
+```
 
 
+```
 
 #### 5. Testbench
 
-**Instrucciones para Carga de Datos en RAM**
-```
 
-
-```
 
 
 
@@ -209,15 +212,5 @@ module picorv32 #(
 | 6        | 0x53608             | 0x5736F         |
 | 7        | 0x57370             | 0x5B0D7         |
 | 8        | 0x5B0D8             | 0x5EE3F         |
-
-
-### Apendice Auxiliar: Desglose Posicionamiendo de bits en las Instrucciones
-**lui**
-
-**sw**
-|       31         |  30-25   |  24-20   |     | 15   |14|    13    |12|  11-9  | 8-7 |   6 - 0   |
-|------------------|----------|----------|-----|------|--|----------|--|--------|-----|-----------|
-|        X         | XXXXXX   |  XXXXX   | XXXX|  X   |X |X         |X |  XXX   | XX  |  0100011  |
-|Imm[11] (Sign Ext)|Imm[10:5] |    rd    |    ?|rs1[0]|? |funct3[2]?|? |Imm[4:2]| ??  |  opcode   |
 
 
