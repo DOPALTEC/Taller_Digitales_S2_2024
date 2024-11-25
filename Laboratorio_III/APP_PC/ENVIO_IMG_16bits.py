@@ -91,6 +91,10 @@ while True:
         print("Imagen enviada correctamente.")
         print("Tamaño en Transmisiones de Imagen:")
         print(cont)
+        #Enviar Numero de Imagen Elegida
+        print(f"Enviando número de imagen: {choice}")
+        #ser.write(bytes([choice]))  # Enviar el número de imagen como un byte
+
     except Exception as e:
         print(f"Ocurrió un error durante el envío de la imagen: {e}")
     # Preguntar si el usuario desea enviar otra imagen

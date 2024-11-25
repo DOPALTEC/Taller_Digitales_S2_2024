@@ -23,12 +23,20 @@ loop:   lw x16, 0(x4)                       //0x48  00022803 (Carga el valor act
 exit_loop:lw x18, 0(x6)                     //0x58  00032903 Carga el dato recibido
 sb x18, 0(x19)                              //0x5C  01298023 Guarda el dato en la direccion de RAM de en un byte
 addi x19, x19, 1                            //0x60  00198993 Aumenta en 1 la direccion de byte en la RAM
-beq x19, x14, imagen_escrita                //0x64  00E98463 Si todo el tamaño de imagen ya se guardo completo salta a "imagen_enviada"
+beq x19, x14, num img                       //0x64  00E98463 Si todo el tamaño de imagen ya se guardo completo salta a "imagen_enviada"
 jalr x0, x0, 0x48                           //0x68  04800067 Salta a "loop" si la imagen aun no se ha guardado por completo
 /*Enviar al final de la transmision el numero de imagen que es
 para escribir ese numero en los leds
-*/    
-imagen_escrita:addi x20,x0,1                //0x6C  00100A13    Representa el numero de imagen para mostrarlo en led
+*/   
+
+/////////////////////////////////////////////////////////////////
+num_img: 
+lw x16, 0(x4)
+and x17, x16,0(x4)
+bne x17, x0, exit_loop_num_img
+exit_loop_num_img:lw x20,0(x6)
+/////////////////////////////////////////////////////////////////
+imagen_escrita: //addi x20,x0,1             //0x6C  00100A13    Representa el numero de imagen para mostrarlo en led
 sw x20 ,0(x3)                               //0x70  01418023    Enciende los leds de el numero de imagen recibido
 loop_tang:      lw x21, 0(x7)               //0x74  0003AA83    Carga ctrl de la tang
                 and x17, x21, x10           //0x78  00AAF8B3    Aisla ctrl[1]
@@ -47,27 +55,20 @@ de la imagen se envie esa imagen
 lw x25, 0(x9)
 bne x25,x22, loop_tang
 */
-loop_send_tang: lb x18, 0(x25)              //0xA0  000C8903      Carga primer byte de la RAM
-                sw x18, 0(x23)              //0xA4  012B8023
-                sw x22, 0(x7)               //0xA8  0163A023
-                sw x0,  0(x7)               //0xAC  00038023
-
-
-
-
-
-                loop_busy_tx:   lw x26, 0(x7)               //0xB0  0003AD03    //Carga ctrl de la tang
-                                and x17, x26, x12           //0xB4  00CD78B3    //Aisla ctrl[2]
-                                beq x17, x0, 0x8            //0xB8  00088463    //Si ctrl[2]==0 (busy_tx) sale de "loop_busy_tx"
-                                jalr x0, x0, 0xB0           //0xBC  0B000067    //Continua corroborando valor de ctrl[2]
-
-
-
-                exit_loop_busy_tx:
-                addi x25,x25, 1              //0xC0  001C8C93
-                addi x24, x24, 1             //0xC4  001C0C13    
-                beq x25,x14,img_transmitida  //0xC8  00EC8463 salto de +x8
-                jalr x0, x0, 0xA0            //0xCC  0A000067
+loop_send_tang: lb x18, 0(x25)              //0xA0  000C8903    Carga primer byte de la RAM
+                sw x18, 0(x23)              //0xA4  012B8023    Guarda el byte en 0x2028 (UART B DATA_1)
+                sw x22, 0(x7)               //0xA8  0163A023    Activa la transmision a la TANG
+                sw x0,  0(x7)               //0xAC  00038023    Desactiva el bit de transmision para evitar transmisiones repetidas
+                loop_busy_tx:   
+                        lw x26, 0(x7)       //0xB0  0003AD03    //Carga ctrl de la tang
+                        and x17, x26, x12   //0xB4  00CD78B3    //Aisla ctrl[2]
+                        beq x17, x0, 0x8    //0xB8  00088463    //Si ctrl[2]==0 (busy_tx) sale de "loop_busy_tx"
+                        jalr x0, x0, 0xB0   //0xBC  0B000067    //Continua corroborando valor de ctrl[2]
+                exit_loop_busy_tx:           
+                addi x25,x25, 1             //0xC0  001C8C93    Contador de bytes transmitidos de la imagen en RAM
+                addi x24, x24, 1            //0xC4  001C0C13    BORRAR LO RELACIONADO AL REGISTRO, NO SE USA!!!!
+                beq x25,x14,img_transmitida //0xC8  00EC8463 salto de +x8
+                jalr x0, x0, 0xA0           //0xCC  0A000067
 img_transmitida:
 
 
