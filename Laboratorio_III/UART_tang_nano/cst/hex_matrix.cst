@@ -1,6 +1,26 @@
-IO_LOC  "uart_tx" 17;
+IO_LOC  "resetn" 4;
+IO_PORT "resetn" PULL_MODE=UP;
 
-IO_LOC  "uart_rx" 18;
+IO_LOC  "ser_rx" 18;
+IO_PORT "ser_rx" PULL_MODE=UP;
+
+IO_LOC  "lcd_resetn" 47;
+IO_PORT "lcd_resetn" DRIVE=8 PULL_MODE=UP;
+
+IO_LOC  "lcd_clk" 76;
+IO_PORT "lcd_clk" DRIVE=8 PULL_MODE=UP;
+
+IO_LOC  "lcd_cs" 48;
+IO_PORT "lcd_cs" DRIVE=8 PULL_MODE=UP;
+
+IO_LOC  "lcd_rs" 49;
+IO_PORT "lcd_rs" DRIVE=8 PULL_MODE=UP;
+
+IO_LOC  "lcd_data" 77;
+IO_PORT "lcd_data" DRIVE=8 PULL_MODE=UP;
+
+IO_LOC  "uart_tx" 17;
+IO_PORT "uart_tx" DRIVE=8 PULL_MODE=UP;
 
 IO_LOC  "count_bit1_reg" 13;
 
@@ -21,15 +41,3 @@ IO_LOC  "rst_n" 3;
 IO_LOC  "count[1]" 39;
 
 IO_LOC  "count[0]" 26;
-
-IO_LOC "lcd_data" 77;
-
-IO_LOC  "lcd_resetn" 47; 
-
-IO_LOC  "received_color" 5; 
-
-IO_LOC  "lcd_clk" 76; 
-
-IO_LOC  "lcd_cs" 48; 
-
-IO_LOC  "lcd_rs" 49; 

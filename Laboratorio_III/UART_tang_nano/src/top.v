@@ -1,4 +1,5 @@
-module top_viejo (
+module top
+    (
     input clk,
     input rst_n,
     input [1:0] enable,  
@@ -8,31 +9,64 @@ module top_viejo (
     output reg enable_bit1_reg,
     output reg enable_bit0_reg,
     output uart_tx,
-    input uart_rx,  // Entrada para UART RX
-    output ser_tx,   // Salida para UART TX
+
+    input resetn,
+    input ser_rx,
     output lcd_resetn,
     output lcd_clk,
     output lcd_cs,
     output lcd_rs,
-    output lcd_data
+    output lcd_data 
 );
-
+// spi 
+    wire [7:0] uart_data;
+    wire byte_ready;
+    wire [15:0] color;
+//uart transmisión 
     wire slow_clk;
     wire [1:0] key_pressed;
     wire any_key_pressed;
-    wire [2:0] received_color; // Color recibido del módulo uart_rx
-    wire data_ready; // Señal de que hay datos listos
     reg [1:0] count_internal;
     reg key_pressed_prev;
 
-    // Instanciar el módulo clk divider
+     // Instancia del receptor UART
+    uart_receiver #(
+        .DELAY_FRAMES(234)
+    ) uart_inst1 (
+        .clk(clk),
+        .ser_rx(ser_rx),
+        .dataIn(uart_data),
+        .byteReady(byte_ready)
+    );
+
+     // Instancia del controlador de color
+    color_controller color_inst (
+        .clk(clk),
+        .byteReady(byte_ready),
+        .dataIn(uart_data),
+        .current_color(color)
+    );
+
+     // Instancia del controlador LCD
+    lcd_controller lcd_inst (
+        .clk(clk),
+        .resetn(resetn),
+        .current_color(color),
+        .lcd_resetn(lcd_resetn),
+        .lcd_clk(lcd_clk),
+        .lcd_cs(lcd_cs),
+        .lcd_rs(lcd_rs),
+        .lcd_data(lcd_data)
+    );
+
+    // Instacia del módulo clk divider
     clock_divider clk_div_inst (
         .clk(clk),
         .rst_n(rst_n),
         .slow_clk(slow_clk)
     );
 
-    // Instanciar el módulo key debounce
+    // Instacia del módulo key debounce
     key_debounce key_debounce_0 (
         .clk(clk),
         .rst_n(rst_n),
@@ -49,7 +83,7 @@ module top_viejo (
 
     assign any_key_pressed = key_pressed[0] | key_pressed[1];
 
-    // Instanciar el módulo contador de 2 bits
+    // Instaciar el módulo contador de 2 bits
     counter_2bit counter_inst (
         .clk(slow_clk),
         .rst_n(rst_n),
@@ -58,9 +92,7 @@ module top_viejo (
     );
 
     assign count = count_internal;
-
-    // Instanciar el módulo uart_tx
-    uart_tx uart_tx_inst (
+ uart uart_inst2 (
         .clk(clk),
         .rst_n(rst_n),
         .uart_tx(uart_tx),
@@ -71,30 +103,7 @@ module top_viejo (
         .any_key_pressed(any_key_pressed)
     );
 
-    // Instanciar el módulo uart_rx
-    uart_rx uart_rx_inst (
-        .clk(clk),
-        .rst_n(rst_n),
-        .uart_rx(uart_rx),
-        .received_color(received_color),
-        .data_ready(data_ready)
-    );
-
-    // Instanciar el módulo lcd114_test
-    lcd114_test lcd_inst (
-        .clk(clk), // Utiliza el reloj de entrada
-        .resetn(rst_n),
-        .key_value(received_color), // Enviar el color recibido al LCD
-        .ser_tx(uart_tx), // Salida para el transmisor UART
-        .ser_rx(uart_rx), // Recepción UART (opcional)
-        .lcd_resetn(lcd_resetn),
-        .lcd_clk(lcd_clk),
-        .lcd_cs(lcd_cs),
-        .lcd_rs(lcd_rs),
-        .lcd_data(lcd_data)
-    );
-
-    // Almacenar los datos de la tecla presionada en los registros
+   // Almacenar los datos de la tecla presionada en los registros
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             count_bit1_reg <= 1'b0;
@@ -114,4 +123,3 @@ module top_viejo (
     end
 
 endmodule
-
