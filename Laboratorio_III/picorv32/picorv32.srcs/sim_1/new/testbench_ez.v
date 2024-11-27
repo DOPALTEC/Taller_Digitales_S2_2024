@@ -48,7 +48,19 @@ module tb_Lab_III;
    #500;  // Tiempo para que el transmisor complete el env?o
    
    
-   
+           rxd = 0;  // Start bit
+    #104167    // Tiempo para cada bit (ajustado seg?n baudrate)
+    rxd = 1;  #104167;
+    rxd = 0;  #104167;
+    rxd = 0;  #104167;
+    rxd = 0;  #104167;
+    rxd = 0;  #104167;
+    rxd = 0;  #104167;
+    rxd = 0;  #104167;
+    rxd = 0;  #104167;
+
+    // Stop bit
+    rxd = 1;  #104167;
     
     
         rxd = 0;  // Start bit
@@ -161,8 +173,7 @@ module tb_Lab_III;
     rxd = 1;  #104167;
     
     #104167;
-    
-    //Numero de Imagen
+
         rxd = 0;  // Start bit
     #104167    // Tiempo para cada bit (ajustado seg?n baudrate)
     rxd = 0;  #104167;
@@ -177,19 +188,7 @@ module tb_Lab_III;
     // Stop bit
     rxd = 1;  #104167;
     
-        rxd = 0;  // Start bit
-    #104167    // Tiempo para cada bit (ajustado seg?n baudrate)
-    rxd = 1;  #104167;
-    rxd = 0;  #104167;
-    rxd = 0;  #104167;
-    rxd = 0;  #104167;
-    rxd = 0;  #104167;
-    rxd = 0;  #104167;
-    rxd = 0;  #104167;
-    rxd = 0;  #104167;
 
-    // Stop bit
-    rxd = 1;  #104167;
     
     #104167;
   
