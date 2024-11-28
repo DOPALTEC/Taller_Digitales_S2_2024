@@ -50,8 +50,8 @@ module tb_Lab_III;
    
            rxd = 0;  // Start bit
     #104167    // Tiempo para cada bit (ajustado seg?n baudrate)
-    rxd = 1;  #104167;
     rxd = 0;  #104167;
+    rxd = 1;  #104167;
     rxd = 0;  #104167;
     rxd = 0;  #104167;
     rxd = 0;  #104167;
@@ -62,6 +62,8 @@ module tb_Lab_III;
     // Stop bit
     rxd = 1;  #104167;
     
+    
+    ///////PRIMERA PALABRA//////////////
     
         rxd = 0;  // Start bit
     #104167    // Tiempo para cada bit (ajustado seg?n baudrate)
