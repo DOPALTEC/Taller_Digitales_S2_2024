@@ -87,7 +87,7 @@ Set de instrucciones para probar funcionalidad de operaciones.
   2. El registro de control no reconoce si el dato cambia y si se está transmitiendo un dato repetidas veces, toma la desición de enviar solamente si en el registro de control send está activo. Le es indiferente si ya se transmitió o no, ya que es obligación del RISCV tomar esto en cuenta.
 
 #### 5. Testbench
-Descripción y resultados de las pruebas hechas
+
 
 
 ### 3.N Microprocesador RV32 
@@ -401,6 +401,9 @@ img_transmitida:
 
 ![image](https://github.com/user-attachments/assets/7da6e027-7507-4c3c-b3c7-8d5b9f118650)
 
+Para el periferico LED, se enciende el posicionado en el tercer espacio, mediante un valor binario de 4, justo despues de recibir la imagen completa. 
+
+![image](https://github.com/user-attachments/assets/a721858b-b0e0-4831-b786-62c9db0f3a29)
 
 
 ## Apendices:
