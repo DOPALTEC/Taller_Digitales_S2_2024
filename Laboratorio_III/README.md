@@ -38,7 +38,52 @@ http://riscvbook.com/spanish/guia-practica-de-risc-v-1.0.5.pdf
 
 Set de instrucciones para probar funcionalidad de operaciones.
 
-### 3.N LCD y ST7789V
+### 3.1 Interfaz de Protocolo UART para la Tang Nano 9k
+#### 1. Encabezado del módulo
+```SystemVerilog
+module top
+    (
+    input clk,
+    input rst_n,
+    input [1:0] enable,  
+    output [1:0] count,
+    output reg count_bit1_reg,
+    output reg count_bit0_reg,
+    output reg enable_bit1_reg,
+    output reg enable_bit0_reg,
+    output uart_tx,
+
+    input resetn,
+    input ser_rx,
+    output lcd_resetn,
+    output lcd_clk,
+    output lcd_cs,
+    output lcd_rs,
+    output lcd_data 
+);
+```
+#### 2. Parámetros
+- 
+
+#### 3. Entradas y salidas:
+- `clk`: Señal de reloj del sistema que sincroniza las operaciones del módulo.
+- `rst_n`: Señal de reset global para reiniciar el sistema.
+- `enable`: Controla la habilitación de ciertas operaciones dentro del módulo.
+- `resten`: Señal de reset específica para ciertas partes del módulo, posiblemente independiente de rst_n.
+- `ser_rx`: Recibe datos en serie para la UART desde un dispositivo externo.
+- `count`: Proporciona el valor actual de un contador.
+- `count_bit1_reg`: Valor del bit 1 del registro del contador.
+- `count_bit0_reg`: Valor del bit 0 del registro del contador.
+- `enable_bit1_reg`: Refleja el estado del bit 1 del registro de habilitación.
+- `enable_bit0_reg`: Refleja el estado del bit 0 del registro de habilitación.
+- `uart_tx`: Transmite datos en serie desde la UART hacia un dispositivo externo.
+- `lcd_resetn`: Señal de reset para el módulo LCD.
+- `lcd_clk`: Señal de reloj para el módulo LCD.
+- `lcd_cs`: Señal de selección de chip para el módulo LCD.
+- `lcd_rs`: Señal para seleccionar entre comandos o datos para el LCD.
+- `lcd_data`: Línea de datos para el módulo LCD.
+
+### 3.2 LCD y ST7789V
 #### 1. Encabezado del módulo
 ```SystemVerilog
 module lcd_controller (
@@ -54,11 +99,18 @@ module lcd_controller (
     output wire lcd_data
 ```
 #### 2. Parámetros
-- Palabra: Denota el tamaño de bits de las entradas y salidas de los registros.
+- 
 
 #### 3. Entradas y salidas:
-- `entrada_i`: descripción de la entrada
-- `salida_i`: descripción de la salida
+- `clk`: Señal de reloj del sistema que sincroniza todas las operaciones del controlador LCD.
+- `resetn`: Señal de reinicio para reestablecer el módulo.
+- `uart_data`: Contiene los datos recibidos por UART que deben procesarse o enviarse al LCD.
+- `byte_ready`: Señal que indica que un nuevo byte de datos está listo para ser procesado.
+- `lcd_resetn`: Señal de reset para el módulo LCD que permite reiniciar el hardware del display.
+- `lcd_clk`: Señal de reloj enviada al LCD, utilizada para sincronizar las comunicaciones.
+- `lcd_cs`: Señal de selección de chip para el LCD. Indica cuándo el módulo LCD está siendo activamente controlado.
+- `lcd_rs`: Señal de selección de registro para distinguir entre comandos y datos enviados al LCD
+- `lcd_data`: Línea que transporta los datos enviados al LCD para ser mostrados o utilizados en comandos.
 
 #### 4. Criterios de diseño
 
@@ -66,13 +118,7 @@ module lcd_controller (
 - El tamaño de la pantalla LCD es de 240x135. Cada palabra de RAM podría almacenar dos pixeles de 16bits cada uno, por tanto se requeriría de espacio en memoria 16.200 palabras por imagen.
 
 
-#### 5. Testbench
-
-Set de instrucciones para probar funcionalidad de operaciones.
-
-
-
-### 3.2 Iterfaz para Protocolo UART
+### 3.3 Iterfaz para Protocolo UART
 #### 1. Encabezado del módulo
 ```SystemVerilog
 module Interfaz_UART_Nexys #(parameter palabra = 32, parameter prescale = 1302)(
