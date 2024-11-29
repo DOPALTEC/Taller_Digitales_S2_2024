@@ -167,7 +167,7 @@ module Interfaz_UART_Nexys #(parameter palabra = 32, parameter prescale = 1302)(
   ![image](https://github.com/user-attachments/assets/58d428bd-0bec-4c68-91db-675d3e6cd3ea)
 
 
-### 3.3 Microprocesador RV32 
+### 3.4 Microprocesador RV32 
 #### 1. Encabezado del módulo
 ```SystemVerilog
 module picorv32 #(
