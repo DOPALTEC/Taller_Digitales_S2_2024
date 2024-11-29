@@ -18,26 +18,6 @@
 
 ## 3. Desarrollo
 
-### 3.N PLANTILLA PARA MODULOS (COPIAR Y PEGAR)
-#### 1. Encabezado del módulo
-```SystemVerilog
-
-```
-#### 2. Parámetros
-- Palabra: Denota el tamaño de bits de las entradas y salidas de los registros.
-
-#### 3. Entradas y salidas:
-- `entrada_i`: descripción de la entrada
-- `salida_i`: descripción de la salida
-
-#### 4. Criterios de diseño
-
-
-
-#### 5. Testbench
-
-Set de instrucciones para probar funcionalidad de operaciones.
-
 ### 3.1 Interfaz de Protocolo UART para la Tang Nano 9k
 #### 1. Encabezado del módulo
 ```SystemVerilog
@@ -187,7 +167,7 @@ module Interfaz_UART_Nexys #(parameter palabra = 32, parameter prescale = 1302)(
   ![image](https://github.com/user-attachments/assets/58d428bd-0bec-4c68-91db-675d3e6cd3ea)
 
 
-### 3.3 Microprocesador RV32 
+### 3.4 Microprocesador RV32 
 #### 1. Encabezado del módulo
 ```SystemVerilog
 module picorv32 #(
