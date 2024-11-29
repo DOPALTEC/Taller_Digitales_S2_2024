@@ -62,18 +62,39 @@ Set de instrucciones para probar funcionalidad de operaciones.
 
 
 
-### 3.N Iterfaz para Protocolo UART
+### 3.2 Iterfaz para Protocolo UART
 #### 1. Encabezado del módulo
 ```SystemVerilog
-
+module Interfaz_UART_Nexys #(parameter palabra = 32, parameter prescale = 1302)(
+    input  wire clk,
+    input  wire rst,
+    input wire wr_i,
+    input wire reg_sel_i,
+    input wire addr_i,
+    input wire [palabra-1:0] entrada_i,
+    input wire [palabra-1:0] entrada_i_data,
+    output wire [palabra-1:0] ctrl,
+    output wire [palabra-1:0] data,
+    input  wire rxd,
+    output wire txd
+    );
 ```
 #### 2. Parámetros
-- Palabra: Denota el tamaño de bits de las entradas y salidas de los registros.
+- `palabra`: Tamaño solicitado de 32 bits para los valores de la interfaz, tanto para los datos como para la señal de control
+- `prescale`: Escala equivalente para realizar comunicaciones a 9600 baudios
 
 #### 3. Entradas y salidas:
-- `entrada_i`: descripción de la entrada
-- `salida_i`: descripción de la salida
-
+- `clk`: Reloj utilizado para sincronizar los pulsos
+- `rst`: Botón asignado al reseteo del sistema
+- `wr_i`: Representa la escritura ya sea en el registro de datos o de control
+- `reg_sel_i`: Selecciona a cual de los dos registros se le va a aplicar el proceso solicitado
+- `addr_i`: Elige entre las dos direcciones disponibles que tiene el registro de datos, ya sea del dato que se va a enviar o el dato que se recibió
+- `entrada_i`: Representa el codigo de control que se le va a envíar al registro de control, usado para activar el bit "send" y transmitir lo que esté guardado en el registro de datos
+- `entrada_i_data`: Representa el dato que se va a enviar vía UART mediante tx
+- `ctrl`: Representa la salida del registro de control
+- `data`: Representa la salida del registro de datos
+- `rxd`: Representa los pulsos correspondientes al recibimiento de datos en protocolo UART
+- `txd`: Denota los bits de transmisión en formato UART
 #### 4. Criterios de diseño
 
 
@@ -110,7 +131,7 @@ Set de instrucciones para probar funcionalidad de operaciones.
   ![image](https://github.com/user-attachments/assets/58d428bd-0bec-4c68-91db-675d3e6cd3ea)
 
 
-### 3.N Microprocesador RV32 
+### 3.3 Microprocesador RV32 
 #### 1. Encabezado del módulo
 ```SystemVerilog
 module picorv32 #(
