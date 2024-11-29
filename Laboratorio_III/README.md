@@ -18,26 +18,6 @@
 
 ## 3. Desarrollo
 
-### 3.N PLANTILLA PARA MODULOS (COPIAR Y PEGAR)
-#### 1. Encabezado del módulo
-```SystemVerilog
-
-```
-#### 2. Parámetros
-- Palabra: Denota el tamaño de bits de las entradas y salidas de los registros.
-
-#### 3. Entradas y salidas:
-- `entrada_i`: descripción de la entrada
-- `salida_i`: descripción de la salida
-
-#### 4. Criterios de diseño
-
-
-
-#### 5. Testbench
-
-Set de instrucciones para probar funcionalidad de operaciones.
-
 ### 3.1 Interfaz de Protocolo UART para la Tang Nano 9k
 #### 1. Encabezado del módulo
 ```SystemVerilog
