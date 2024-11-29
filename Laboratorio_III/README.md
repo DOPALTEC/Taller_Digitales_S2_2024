@@ -98,6 +98,17 @@ Set de instrucciones para probar funcionalidad de operaciones.
 
 ![image](https://github.com/user-attachments/assets/3de98e04-53e6-44d9-97d1-639f1c26a731)
 
+- Para el caso de la comunicación con la TANG NANO, se habilitó otro módulo duplicado de esta interfaz.
+- Al detectar que se recibe algo, con la ayuda del procesador si es uno de los numeros correspondiente a una imagen, procede a transmitir lo que esté guardado en la posición específica de la RAM que se le asigno a ese número de imagen.
+- Recorre la RAM y envía el tamaño de la imagen
+ 
+
+![image](https://github.com/user-attachments/assets/14c8a1b2-ea67-430f-94a1-a848c6437238)
+
+- El bit send se activa las veces necesarias para transmitir la cantidad de bytes que tenga la imagen.
+
+  ![image](https://github.com/user-attachments/assets/58d428bd-0bec-4c68-91db-675d3e6cd3ea)
+
 
 ### 3.N Microprocesador RV32 
 #### 1. Encabezado del módulo
