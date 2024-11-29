@@ -2,13 +2,17 @@
 module lcd_controller (
     input wire clk,
     input wire resetn,
-    input wire [15:0] current_color,
+    input wire [7:0] uart_data,
+    input wire byte_ready,
     output wire lcd_resetn,
+    
     output wire lcd_clk,
     output wire lcd_cs,
     output wire lcd_rs,
     output wire lcd_data
 );
+
+    
     localparam MAX_CMDS = 69;
     wire [8:0] init_cmd[MAX_CMDS:0];
     
@@ -111,12 +115,30 @@ module lcd_controller (
     reg lcd_rs_r;
     reg lcd_reset_r;
     reg [7:0] spi_data;
+    reg state;
+    reg [15:0] pixel_data;
+    reg [7:0] first_byte;
 
     assign lcd_resetn = lcd_reset_r;
     assign lcd_clk    = ~clk;
     assign lcd_cs     = lcd_cs_r;
     assign lcd_rs     = lcd_rs_r;
     assign lcd_data   = spi_data[7];
+
+    always @(posedge clk or negedge resetn) begin
+        if (!resetn) begin
+            state <= 0;
+            pixel_data <= 16'h0000;
+        end else if (byte_ready) begin
+            if (!state) begin
+                first_byte <= uart_data;
+                state <= 1;
+            end else begin
+                pixel_data <= {first_byte, uart_data};
+                state <= 0;
+            end
+        end
+    end
 
     always@(posedge clk or negedge resetn) begin
         if (~resetn) begin
@@ -197,29 +219,29 @@ module lcd_controller (
                 end
             end
                 
-                INIT_DONE: begin
-                    if (pixel_cnt == 32400) begin
-                        pixel_cnt <= 0;
+            INIT_DONE: begin
+                if (pixel_cnt == 32400) begin
+                    pixel_cnt <= 0;
+                end else begin
+                    if (bit_loop == 0) begin
+                        lcd_cs_r <= 0;
+                        lcd_rs_r <= 1;
+                        spi_data <= pixel_data[15:8];
+                        bit_loop <= bit_loop + 1;
+                    end else if (bit_loop == 8) begin
+                        spi_data <= pixel_data[7:0];
+                        bit_loop <= bit_loop + 1;
+                    end else if (bit_loop == 16) begin
+                        lcd_cs_r <= 1;
+                        lcd_rs_r <= 1;
+                        bit_loop <= 0;
+                        pixel_cnt <= pixel_cnt + 1;
                     end else begin
-                        if (bit_loop == 0) begin
-                            lcd_cs_r <= 0;
-                            lcd_rs_r <= 1;
-                            spi_data <= current_color[15:8];
-                            bit_loop <= bit_loop + 1;
-                        end else if (bit_loop == 8) begin
-                            spi_data <= current_color[7:0];
-                            bit_loop <= bit_loop + 1;
-                        end else if (bit_loop == 16) begin
-                            lcd_cs_r <= 1;
-                            lcd_rs_r <= 1;
-                            bit_loop <= 0;
-                            pixel_cnt <= pixel_cnt + 1;
-                        end else begin
-                            spi_data <= { spi_data[6:0], 1'b1 };
-                            bit_loop <= bit_loop + 1;
-                        end
+                        spi_data <= {spi_data[6:0], 1'b1};
+                        bit_loop <= bit_loop + 1;
                     end
                 end
+            end
                 default: begin
                     // Reset a un estado seguro
                     init_state <= INIT_RESET;

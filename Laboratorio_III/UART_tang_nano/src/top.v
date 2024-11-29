@@ -18,16 +18,23 @@ module top
     output lcd_rs,
     output lcd_data 
 );
+
+    wire [7:0] uart_data;
+    wire byte_ready;
+
 // spi 
     wire [7:0] uart_data;
     wire byte_ready;
-    wire [15:0] color;
+
 //uart transmisión 
     wire slow_clk;
     wire [1:0] key_pressed;
     wire any_key_pressed;
     reg [1:0] count_internal;
     reg key_pressed_prev;
+
+ 
+
 
      // Instancia del receptor UART
     uart_receiver #(
@@ -39,19 +46,12 @@ module top
         .byteReady(byte_ready)
     );
 
-     // Instancia del controlador de color
-    color_controller color_inst (
-        .clk(clk),
-        .byteReady(byte_ready),
-        .dataIn(uart_data),
-        .current_color(color)
-    );
-
      // Instancia del controlador LCD
-    lcd_controller lcd_inst (
+    lcd_controller lcd_ctrl (
         .clk(clk),
         .resetn(resetn),
-        .current_color(color),
+        .uart_data(uart_data),
+        .byte_ready(byte_ready),
         .lcd_resetn(lcd_resetn),
         .lcd_clk(lcd_clk),
         .lcd_cs(lcd_cs),
