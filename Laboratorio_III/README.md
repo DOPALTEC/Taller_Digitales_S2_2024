@@ -406,6 +406,11 @@ Para el periferico LED, se enciende el posicionado en el tercer espacio, mediant
 ![image](https://github.com/user-attachments/assets/a721858b-b0e0-4831-b786-62c9db0f3a29)
 
 
+Correspondientemente a la imagen 3, esta se almacena en la posición especificada en el apendice 4. La cual hace referencia a la imagen 3. Entre cada dirección existe un distanciamiento de 0xFD20, lo cual corresponde al tamaño real de una imagen. 
+
+![image](https://github.com/user-attachments/assets/38756519-77bc-482a-bde6-377a04edfb94)
+
+
 ## Apendices:
 ### Apendice 1: Tabla de Valores Decimal/Binario/Hexadecimal
 
