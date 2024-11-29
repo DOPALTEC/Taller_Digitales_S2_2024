@@ -407,7 +407,8 @@ img_transmitida:
 
 #### 5. Testbench
 
-A gran escala, se observa el recibimiento de una imagen simulada con tamaño de 8 bytes. La cual se transmite a la TANG nano al solicitarse una de las imagenes, en este caso la #3.
+- A gran escala, se observa el recibimiento de una imagen simulada con tamaño de 8 bytes. La cual se transmite a la TANG nano al solicitarse una de las imagenes, en este caso la #3.
+- Adicionalmente, se muestran los pulsos donde se escriben en la memoria RAM los datos, así como su consulta cuando se van transmitiendo.
 
 ![image](https://github.com/user-attachments/assets/7da6e027-7507-4c3c-b3c7-8d5b9f118650)
 
