@@ -152,6 +152,7 @@ always @(posedge clk or posedge rst) begin
         ram_we<=0;
         ena<=0;
         ram_wait_state <= 0;
+        LED<=0;
     end else begin
         mem_ready <= 0; // Por defecto, mem_ready es 0
         ram_we<=0;
@@ -239,7 +240,31 @@ always @(posedge clk or posedge rst) begin
             reg_sel_i_A <= 0;         // Señal de selección en 0
         end 
         else if (mem_valid && mem_addr == 32'h2004)begin
-            LED<=mem_wdata[15:0];
+            if (mem_wdata==1) begin
+                LED[0]<=1;
+            end
+            else if (mem_wdata==2) begin
+                LED[1]<=1;
+            end
+            else if (mem_wdata==3) begin
+                LED[2]<=1;
+            end
+            else if (mem_wdata==4) begin
+                LED[3]<=1;
+            end
+            else if (mem_wdata==5) begin
+                LED[4]<=1;
+            end
+            else if (mem_wdata==6) begin
+                LED[5]<=1;
+            end
+            else if (mem_wdata==7) begin
+                LED[6]<=1;
+            end
+            else if (mem_wdata==8) begin
+                LED[7]<=1;
+            end
+            //LED<=mem_wdata[15:0];
         end
         else if (mem_valid && mem_addr == 32'h2018)begin
             entrada_i_data_A <= mem_wdata; // Asigna el dato de memoria a entrada_i

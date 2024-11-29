@@ -73,6 +73,9 @@ while True:
 
     # Enviar cada píxel de la imagen en formato RGB565
     try:
+        print(f"Enviando número de imagen: {choice}")
+        #ser.write(bytes([choice]))  # Enviar el número de imagen como un byte
+
         for y in range(height):
             for x in range(width):
                 b, g, r = img_cv2[y, x]
@@ -92,9 +95,7 @@ while True:
         print("Tamaño en Transmisiones de Imagen:")
         print(cont)
         #Enviar Numero de Imagen Elegida
-        print(f"Enviando número de imagen: {choice}")
-        #ser.write(bytes([choice]))  # Enviar el número de imagen como un byte
-
+        
     except Exception as e:
         print(f"Ocurrió un error durante el envío de la imagen: {e}")
     # Preguntar si el usuario desea enviar otra imagen
