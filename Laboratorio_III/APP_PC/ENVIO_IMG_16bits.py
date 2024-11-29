@@ -24,12 +24,12 @@ def rgb888_to_rgb565(r, g, b):
     rgb_565 = (r_565 << 11) | (g_565 << 5) | b_565  # Desplazamiento y combinación
     return rgb_565
 
-##try:
-##    ser = serial.Serial('COM4', baudrate=9600, timeout=1)
-##    time.sleep(2)  # Esperar un momento para asegurar la conexión
-##    print("Conexión UART establecida.")
-##except serial.SerialException:
-##    raise ValueError("No se pudo establecer conexión en COM4. Verifica el puerto.")
+try:
+    ser = serial.Serial('COM4', baudrate=9600, timeout=1)
+    time.sleep(2)  # Esperar un momento para asegurar la conexión
+    print("Conexión UART establecida.")
+except serial.SerialException:
+    raise ValueError("No se pudo establecer conexión en COM4. Verifica el puerto.")
 
 
 
@@ -74,7 +74,7 @@ while True:
     # Enviar cada píxel de la imagen en formato RGB565
     try:
         print(f"Enviando número de imagen: {choice}")
-        #ser.write(bytes([choice]))  # Enviar el número de imagen como un byte
+        ser.write(bytes([choice]))  # Enviar el número de imagen como un byte
 
         for y in range(height):
             for x in range(width):
@@ -88,8 +88,8 @@ while True:
                 print(f"Pixel en Coordenadas: ({x}, {y}): (R={r}, G={g}, B={b}) -> RGB565={hex(rgb_565)}")
             
             # Enviar los 2 bytes (MSB y LSB) de RGB565
-                ##ser.write(bytes([msb]))  # Enviar byte más significativo
-                ##ser.write(bytes([lsb]))  # Enviar byte menos significativo
+                ser.write(bytes([msb]))  # Enviar byte más significativo
+                ser.write(bytes([lsb]))  # Enviar byte menos significativo
             
         print("Imagen enviada correctamente.")
         print("Tamaño en Transmisiones de Imagen:")
@@ -105,5 +105,5 @@ while True:
             break
 
 # Cerrar la conexión serial
-##ser.close()
+ser.close()
 print("Conexión UART cerrada.")
