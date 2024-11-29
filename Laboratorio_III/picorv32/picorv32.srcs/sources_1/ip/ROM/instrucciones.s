@@ -28,10 +28,6 @@ check:  lw x16, 0(x4)                       //0x5C  00022803 Carga el valor actu
         lw x21, 0(x7)                       //0x68  0003AA83 Carga ctrl de la tang
         and x17, x21, x10                   //0x6C  00AAF8B3 Aisla ctrl[1]
         bne x17, x0, exit_loop_tang         //0x70  10089A63 Si no es igual a cero sale de "loop_tang" (0x20 instrucciones adelante *4)
-        /*
-        lw x22, 0(x1)                       //0x70  Carga los valores de los switches
-
-        */
         jalr x0, x0, check                  //0x74  05C00067 Salta a "check"
 
 exit_loop_num_img:
@@ -134,14 +130,13 @@ lw x16, 0(x9)                               //0x194  0004A803    Carga el numero
 
 beq x16, x11, img_1_tx                      //0x198  02B80263
 beq x16, x10, img_2_tx                      //0x19C  02A80463
-/////////////////////////////////////////////////////////////
 beq x16, x28, img_3_tx                      //0x1A0  03C80863
 beq x16, x12, img_4_tx                      //0x1A4  02C80E63
 beq x16, x29, img_5_tx                      //0x1A8  05D80663
 beq x16, x30, img_6_tx                      //0x1AC  07E80063
 beq x16, x31, img_7_tx                      //0x1B0  07F80C63
 beq x16, x23, img_8_tx                      //0x1B4  09780A63
-/////////////////////////////////////////////////////////////
+
 jalr x0, x0, check                          //0x1B8  05C00067   Si no se cumple que se reciba un numero valido de imagen, vuelve al checkeo
 
 
@@ -152,7 +147,7 @@ img_2_tx:
         add x25, x25, x27                   //0x1C4  01BC8CB3
         addi x24, x25, 0x008                //0x1C8  008C8C13
         jalr x0,x0, loop_send_tang          //0x1CC  26C00067
-//////////////////////////////////////////////////////////////////////////
+
 img_3_tx:
         add x25, x25, x27                   //0x1D0  01BC8CB3
         add x25, x25, x27                   //0x1D4  01BC8CB3
@@ -202,8 +197,6 @@ img_8_tx:
         add x25, x25, x27                   //0x260  01BC8CB3
         addi x24, x25, 0x008                //0x264  008C8C13
         jalr x0,x0, loop_send_tang          //0x268  26C00067
-
-///////////////////////////////////////////////////////////////////////////
 
 loop_send_tang: lb x18, 0(x25)              //0x26C  000C8903 Carga byte de la RAM
                 sw x18, 0(x8)               //0x270  01242023 Guarda el byte en 0x2028 (UART B DATA_1)
