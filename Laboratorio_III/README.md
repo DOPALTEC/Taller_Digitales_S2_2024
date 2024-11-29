@@ -4,17 +4,17 @@
 - **FPGA**: Field Programmable Gate Arrays
 
 ## 2. Referencias
-[0] David Harris y Sarah Harris. *Digital Design and Computer Architecture. RISC-V Edition.* Morgan Kaufmann, 2022. ISBN: 978-0-12-820064-3
+[1] David Harris y Sarah Harris. Digital Design and Computer Architecture. RISC-V Edition. Morgan Kaufmann, 2022. ISBN: 978-0-12-820064-3.
 
-https://cs.uns.edu.ar/materias/se/2019/descargas/teoria/clase01-introduccion-handouts.pdf
+[2] Universidad Nacional del Sur. Clase 01: Introducción. Disponible en: https://cs.uns.edu.ar/materias/se/2019/descargas/teoria/clase01-introduccion-handouts.pdf.
 
-https://shadowcode.io/how-to-package-picorv32-vivado-ip-integrator/
+[3] ShadowCode. How to Package PicoRV32 for Vivado IP Integrator. Disponible en: https://shadowcode.io/how-to-package-picorv32-vivado-ip-integrator/.
 
-https://riscv.org/wp-content/uploads/2017/05/riscv-spec-v2.2.pdf
+[4] RISC-V Foundation. The RISC-V Instruction Set Manual, Volume I: User-Level ISA, Version 2.2. Disponible en: https://riscv.org/wp-content/uploads/2017/05/riscv-spec-v2.2.pdf.
 
-http://www.riscvbook.com/greencard-20181213.pdf
+[5] RISC-V Foundation. RISC-V Green Card. Disponible en: http://www.riscvbook.com/greencard-20181213.pdf.
 
-http://riscvbook.com/spanish/guia-practica-de-risc-v-1.0.5.pdf
+[6] Wilson Wong. Guía Práctica de RISC-V, versión 1.0.5. Disponible en: http://riscvbook.com/spanish/guia-practica-de-risc-v-1.0.5.pdf.
 
 ## 3. Desarrollo
 
