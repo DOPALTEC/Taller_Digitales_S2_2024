@@ -28,6 +28,10 @@ check:  lw x16, 0(x4)                       //0x5C  00022803 Carga el valor actu
         lw x21, 0(x7)                       //0x68  0003AA83 Carga ctrl de la tang
         and x17, x21, x10                   //0x6C  00AAF8B3 Aisla ctrl[1]
         bne x17, x0, exit_loop_tang         //0x70  10089A63 Si no es igual a cero sale de "loop_tang" (0x20 instrucciones adelante *4)
+        /*
+        lw x22, 0(x1)                       //0x70  Carga los valores de los switches
+
+        */
         jalr x0, x0, check                  //0x74  05C00067 Salta a "check"
 
 exit_loop_num_img:
@@ -128,54 +132,92 @@ lui x25, 0x40000                            //0x18C  00040CB7      Inicializa el
 addi x25, x25, 0                            //0x190  000C8C93
 lw x16, 0(x9)                               //0x194  0004A803    Carga el numero de la imagen solicitado por tang
 
-beq x16, x11, img_1_tx                      //0x198  00B80663
-beq x16, x10, img_2_tx                      //0x19C  00A80863
-/*
-beq x16, x28, img_3_tx
-beq x16, x12, img_4_tx
-beq x16, x29, img_5_tx
-beq x16, x30, img_6_tx
-beq x16, x31, img_7_tx
-beq x16, x23, img_8_tx
-*/
-
-jalr x0, x0, check                          //0x1A0  05C00067   Si no se cumple que se reciba un numero valido de imagen, vuelve al checkeo
+beq x16, x11, img_1_tx                      //0x198  02B80263
+beq x16, x10, img_2_tx                      //0x19C  02A80463
+/////////////////////////////////////////////////////////////
+beq x16, x28, img_3_tx                      //0x1A0  03C80863
+beq x16, x12, img_4_tx                      //0x1A4  02C80E63
+beq x16, x29, img_5_tx                      //0x1A8  05D80663
+beq x16, x30, img_6_tx                      //0x1AC  07E80063
+beq x16, x31, img_7_tx                      //0x1B0  07F80C63
+beq x16, x23, img_8_tx                      //0x1B4  09780A63
+/////////////////////////////////////////////////////////////
+jalr x0, x0, check                          //0x1B8  05C00067   Si no se cumple que se reciba un numero valido de imagen, vuelve al checkeo
 
 
 img_1_tx:
-        addi x24, x24, 0x008                //0x1A4  008C0C13
-        jalr x0,x0, loop_send_tang          //0x1A8  1B800067
+        addi x24, x24, 0x008                //0x1BC  008C0C13
+        jalr x0,x0, loop_send_tang          //0x1C0  26C00067
 img_2_tx:
-        add x25, x25, x27                   //0x1AC  01BC8CB3
-        addi x24, x25, 0x008                //0x1B0  008C8C13
-        jalr x0,x0, loop_send_tang          //0x1B4  1B800067
-/*
+        add x25, x25, x27                   //0x1C4  01BC8CB3
+        addi x24, x25, 0x008                //0x1C8  008C8C13
+        jalr x0,x0, loop_send_tang          //0x1CC  26C00067
+//////////////////////////////////////////////////////////////////////////
 img_3_tx:
-
+        add x25, x25, x27                   //0x1D0  01BC8CB3
+        add x25, x25, x27                   //0x1D4  01BC8CB3
+        addi x24, x25, 0x008                //0x1D8  008C8C13
+        jalr x0,x0, loop_send_tang          //0x1DC  26C00067
 img_4_tx:
+        add x25, x25, x27                   //0x1E0  01BC8CB3
+        add x25, x25, x27                   //0x1E4  01BC8CB3
+        add x25, x25, x27                   //0x1E8  01BC8CB3
+        addi x24, x25, 0x008                //0x1EC  008C8C13
+        jalr x0,x0, loop_send_tang          //0x1F0  26C00067
 
 img_5_tx:
+        add x25, x25, x27                   //0x1F4  01BC8CB3
+        add x25, x25, x27                   //0x1F8  01BC8CB3
+        add x25, x25, x27                   //0x1FC  01BC8CB3
+        add x25, x25, x27                   //0x200  01BC8CB3
+        addi x24, x25, 0x008                //0x204  008C8C13
+        jalr x0,x0, loop_send_tang          //0x208  26C00067
 
 img_6_tx:
+        add x25, x25, x27                   //0x20C  01BC8CB3
+        add x25, x25, x27                   //0x210  01BC8CB3
+        add x25, x25, x27                   //0x214  01BC8CB3
+        add x25, x25, x27                   //0x218  01BC8CB3
+        add x25, x25, x27                   //0x21C  01BC8CB3
+        addi x24, x25, 0x008                //0x220  008C8C13
+        jalr x0,x0, loop_send_tang          //0x224  26C00067
 
 img_7_tx:
+        add x25, x25, x27                   //0x228  01BC8CB3
+        add x25, x25, x27                   //0x22C  01BC8CB3
+        add x25, x25, x27                   //0x230  01BC8CB3
+        add x25, x25, x27                   //0x234  01BC8CB3
+        add x25, x25, x27                   //0x238  01BC8CB3
+        add x25, x25, x27                   //0x23C  01BC8CB3
+        addi x24, x25, 0x008                //0x240  008C8C13
+        jalr x0,x0, loop_send_tang          //0x244  26C00067
 
 img_8_tx:
-*/
+        add x25, x25, x27                   //0x248  01BC8CB3
+        add x25, x25, x27                   //0x24C  01BC8CB3
+        add x25, x25, x27                   //0x250  01BC8CB3
+        add x25, x25, x27                   //0x254  01BC8CB3
+        add x25, x25, x27                   //0x258  01BC8CB3
+        add x25, x25, x27                   //0x25C  01BC8CB3
+        add x25, x25, x27                   //0x260  01BC8CB3
+        addi x24, x25, 0x008                //0x264  008C8C13
+        jalr x0,x0, loop_send_tang          //0x268  26C00067
 
-loop_send_tang: lb x18, 0(x25)              //0x1B8  000C8903 Carga byte de la RAM
-                sw x18, 0(x8)               //0x1BC  01242023 Guarda el byte en 0x2028 (UART B DATA_1)
-                sw x11, 0(x7)               //0x1C0  00B3A023 Activa la transmision a la TANG
-                sw x0,  0(x7)               //0x1C4  00038023 Desactiva el bit de transmision para evitar transmisiones repetidas
+///////////////////////////////////////////////////////////////////////////
+
+loop_send_tang: lb x18, 0(x25)              //0x26C  000C8903 Carga byte de la RAM
+                sw x18, 0(x8)               //0x270  01242023 Guarda el byte en 0x2028 (UART B DATA_1)
+                sw x11, 0(x7)               //0x274  00B3A023 Activa la transmision a la TANG
+                sw x0,  0(x7)               //0x278  00038023 Desactiva el bit de transmision para evitar transmisiones repetidas
                 loop_busy_tx:   
-                        lw x26, 0(x7)             //0x1C8  0003AD03 Carga ctrl de la tang
-                        and x17, x26, x12         //0x1CC  00CD78B3 Aisla ctrl[2]
-                        beq x17, x0, 0x8          //0x1D0  00088463 Si ctrl[2]==0 (busy_tx) sale de "loop_busy_tx"
-                        jalr x0, x0, loop_busy_tx //0x1D4  1C800067 Continua corroborando valor de ctrl[2]
+                        lw x26, 0(x7)             //0x27C  0003AD03 Carga ctrl de la tang
+                        and x17, x26, x12         //0x280  00CD78B3 Aisla ctrl[2]
+                        beq x17, x0, 0x8          //0x284  00088463 Si ctrl[2]==0 (busy_tx) sale de "loop_busy_tx"
+                        jalr x0, x0, loop_busy_tx //0x288  27C00067 Continua corroborando valor de ctrl[2]
                 exit_loop_busy_tx:           
-                addi x25,x25, 1             //0x1D8  001C8C93 Contador de bytes transmitidos de la imagen en RAM
-                beq x25,x24,img_transmitida //0x1DC  018C8463 Si el conteo de bytes transmitidos es igual al tamanio de la imagen en RAM, sale de "loop_send_tang"
-                jalr x0, x0, loop_send_tang //0x1E0  1B800067 Continua transmitiendo bytes de la imagen en RAM A tang
+                addi x25,x25, 1             //0x28C  001C8C93 Contador de bytes transmitidos de la imagen en RAM
+                beq x25,x24,img_transmitida //0x290  018C8463 Si el conteo de bytes transmitidos es igual al tamanio de la imagen en RAM, sale de "loop_send_tang"
+                jalr x0, x0, loop_send_tang //0x294  26C00067 Continua transmitiendo bytes de la imagen en RAM A tang
 img_transmitida:
 
 
