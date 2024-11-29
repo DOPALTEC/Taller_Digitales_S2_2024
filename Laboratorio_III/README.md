@@ -62,7 +62,7 @@ Set de instrucciones para probar funcionalidad de operaciones.
 
 
 
-### 3.N Iterfaz de Usuario para Protocolo UART
+### 3.N Iterfaz para Protocolo UART
 #### 1. Encabezado del módulo
 ```SystemVerilog
 
@@ -87,7 +87,16 @@ Set de instrucciones para probar funcionalidad de operaciones.
   2. El registro de control no reconoce si el dato cambia y si se está transmitiendo un dato repetidas veces, toma la desición de enviar solamente si en el registro de control send está activo. Le es indiferente si ya se transmitió o no, ya que es obligación del RISCV tomar esto en cuenta.
 
 #### 5. Testbench
+- Usando el mismo tb correspondiente a la sección del procesadro RV32, se realizó una simulación de una imagen con un tamaño de 8 bytes, denotada como la imagen 3.
+- Al activarse reg_sel y addr_i, indica que se solicita un dato recibido lo cual inmediatamente limpia el valor del registro de datos.
+- El valor de ctrl[1] se activa en alto para indicar que se recibió un byte nuevo y se desactiva cuando se solicita ese dato.
 
+
+![image](https://github.com/user-attachments/assets/0a45dacf-529a-4fc9-aacb-433880dc25e4)
+
+- new_rx es activado en alto el cual representa el valor de ctrl[1] y a su vez WR2_ctrl e IN2_ctrl se activan para actualizar el valor de la salida de control.
+
+![image](https://github.com/user-attachments/assets/3de98e04-53e6-44d9-97d1-639f1c26a731)
 
 
 ### 3.N Microprocesador RV32 
