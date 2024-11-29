@@ -41,7 +41,17 @@ Set de instrucciones para probar funcionalidad de operaciones.
 ### 3.N LCD y ST7789V
 #### 1. Encabezado del módulo
 ```SystemVerilog
-
+module lcd_controller (
+    input wire clk,
+    input wire resetn,
+    input wire [7:0] uart_data,
+    input wire byte_ready,
+    output wire lcd_resetn,
+    
+    output wire lcd_clk,
+    output wire lcd_cs,
+    output wire lcd_rs,
+    output wire lcd_data
 ```
 #### 2. Parámetros
 - Palabra: Denota el tamaño de bits de las entradas y salidas de los registros.
